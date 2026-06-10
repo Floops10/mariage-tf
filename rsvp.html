@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Confirmer ma venue — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="Confirmez votre présence au mariage de Thomy & Florian — réponse souhaitée avant le 1er août 2026.">
+<link rel="icon" type="image/png" href="Logo.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* ═══════════════════════════════════════════════
+   RSVP
+   ═══════════════════════════════════════════════ */
+.rsvp-wrap { max-width: 680px; margin: 0 auto; }
+
+.deadline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .9rem;
+  margin-bottom: 2.6rem;
+}
+.deadline .line { flex: 1; max-width: 70px; height: 1px; background: var(--gold-border2); }
+.deadline p {
+  font-family: var(--font-sub);
+  font-size: .7rem;
+  letter-spacing: .2em;
+  line-height: 2;
+  color: var(--gold2);
+  text-align: center;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.6rem; }
+
+/* ─── Bloc « qui vient » : une ligne par personne ─── */
+#people { margin-bottom: .4rem; }
+.field-hint {
+  font-size: .74rem;
+  font-style: italic;
+  color: var(--text-light);
+  margin: -.25rem 0 .8rem;
+}
+.person {
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--gold-border2);
+  padding: 1.1rem 1.2rem .35rem;
+  margin-bottom: .9rem;
+  transition: border-color var(--dur-mid) ease, opacity var(--dur-mid) ease;
+}
+.person:focus-within { border-left-color: var(--gold); }
+.person-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  flex-wrap: wrap;
+  margin-bottom: .7rem;
+}
+.person-tag {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  color: var(--gold2);
+}
+/* présence individuelle */
+.person-presence select {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: .72rem;
+  color: var(--navy);
+  background: transparent;
+  border: 1px solid var(--border2);
+  padding: .32rem 1.5rem .32rem .65rem;
+  border-radius: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234F6D8A' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .45rem center;
+  transition: border-color var(--dur-mid) ease;
+}
+.person-presence select:focus { outline: none; border-color: var(--gold); }
+.person.absent { border-left-color: rgba(138,59,74,.45); }
+.person.absent [data-p="diet"] { opacity: .45; }
+.person.absent .person-presence select { color: #8A3B4A; border-color: rgba(138,59,74,.4); }
+.person .form-row { gap: 0 1.2rem; }
+.person .field { margin-bottom: 1.1rem; }
+.person .field-label { font-size: .58rem; }
+
+#sendBtn { width: 100%; margin-top: .6rem; }
+#sendBtn[disabled] { opacity: .55; cursor: wait; }
+
+.form-note {
+  text-align: center;
+  font-family: var(--font-sub);
+  font-size: .66rem;
+  letter-spacing: .12em;
+  line-height: 2.1;
+  color: var(--text-light);
+  margin-top: 1.4rem;
+}
+
+/* déjà répondu */
+#prevAnswer {
+  display: none;
+  border: 1px solid var(--green-border);
+  background: var(--green-bg);
+  padding: 1rem 1.3rem;
+  margin-bottom: 2rem;
+  font-size: .85rem;
+  color: var(--green);
+}
+#prevAnswer b { font-weight: 500; }
+
+/* erreur */
+#sendError {
+  display: none;
+  border: 1px solid rgba(107,32,53,.3);
+  background: rgba(107,32,53,.05);
+  padding: 1rem 1.3rem;
+  margin-top: 1.4rem;
+  font-size: .85rem;
+  color: #6B2035;
+}
+#sendError a { text-decoration: underline; }
+
+/* ─── Confirmation ─── */
+#confirm {
+  display: none;
+  text-align: center;
+  padding: 1.5rem 0 .5rem;
+}
+#confirm.show { display: block; }
+#confirm .logo-mask {
+  width: 96px; height: 96px;
+  margin: 0 auto 1.4rem;
+}
+#confirm h2 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  color: var(--navy);
+  margin-bottom: .8rem;
+}
+#confirm .c-sub {
+  font-size: .95rem;
+  color: var(--text-mid);
+  max-width: 30rem;
+  margin: 0 auto 1.6rem;
+}
+#confirm .c-detail {
+  font-family: var(--font-sub);
+  font-size: .68rem;
+  letter-spacing: .14em;
+  line-height: 2;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+#confirm .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .person .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══ OVERLAY DE TRANSITION ═══ -->
+<div id="t-overlay" aria-hidden="true">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <span class="t-eyebrow" id="t-eyebrow"></span>
+    <span class="t-title" id="t-title"></span>
+    <span class="t-quote" id="t-quote"></span>
+    <span class="t-quote-ref" id="t-quote-ref"></span>
+  </div>
+</div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="Logo.png" alt="T & F">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html">Venir & Dormir</a></li>
+    <li><a href="dresscode.html">Dress code</a></li>
+    <li><a href="histoire.html">Notre histoire</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta" aria-current="page">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <a href="index.html">Accueil</a>
+  <a href="programme.html">Le Programme</a>
+  <a href="sejour.html">Venir & Dormir</a>
+  <a href="dresscode.html">Dress code</a>
+  <a href="histoire.html">Notre histoire</a>
+  <a href="rsvp.html">Confirmer ma venue</a>
+  <span class="menu-rule" aria-hidden="true"></span>
+  <span class="menu-date">12 · 12 · 2026</span>
+</div>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<header class="page-hero">
+  <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow reveal">Serez-vous des nôtres&nbsp;?</span>
+    <h1 class="page-title reveal reveal-delay-1">Confirmer ma venue</h1>
+    <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
+      <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+    </div>
+    <span class="page-sub reveal reveal-delay-3">Dites-nous tout</span>
+  </div>
+</header>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+    <div class="rsvp-wrap">
+
+      <div class="deadline reveal">
+        <span class="line"></span>
+        <p>Réponse souhaitée<br>avant le 1ᵉʳ août 2026</p>
+        <span class="line"></span>
+      </div>
+
+      <div id="prevAnswer" role="status"></div>
+
+      <!-- ═══ FORMULAIRE ═══ -->
+      <form id="rsvpForm" novalidate>
+
+        <div class="form-row">
+          <div class="field reveal">
+            <label class="field-label" for="fName">Qui répond&nbsp;? <span class="req">*</span></label>
+            <input type="text" id="fName" name="name" required autocomplete="name" placeholder="Prénom & Nom">
+          </div>
+          <div class="field reveal reveal-delay-1">
+            <label class="field-label" for="fContact">Téléphone ou e-mail</label>
+            <input type="text" id="fContact" name="contact" autocomplete="tel" placeholder="pour vous joindre si besoin">
+          </div>
+        </div>
+
+        <div class="field reveal">
+          <span class="field-label">Votre réponse <span class="req">*</span></span>
+          <div class="choice-row" role="radiogroup" aria-label="Votre réponse">
+            <label class="choice">
+              <input type="radio" name="presence" value="oui" required>
+              <span><b>Avec grande joie</b><small>nous serons là</small></span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="presence" value="non">
+              <span><b>À regret, non</b><small>nous penserons à vous</small></span>
+            </label>
+          </div>
+        </div>
+
+        <div id="ouiBlock">
+          <div class="form-row">
+            <div class="field reveal">
+              <label class="field-label" for="fAdults">Adultes</label>
+              <select id="fAdults" name="adults">
+                <option>1</option><option selected>2</option><option>3</option>
+                <option>4</option><option>5</option><option>6</option>
+              </select>
+            </div>
+            <div class="field reveal reveal-delay-1">
+              <label class="field-label" for="fKids">Enfants</label>
+              <select id="fKids" name="kids">
+                <option selected>0</option><option>1</option><option>2</option>
+                <option>3</option><option>4</option><option>5</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Une ligne par personne : prénom & nom + présence + allergies -->
+          <div class="field reveal">
+            <span class="field-label">Votre tablée, un par un</span>
+            <p class="field-hint">Quelqu'un du foyer ne peut pas venir&nbsp;? Indiquez-le sur sa ligne — les autres restent les bienvenus.</p>
+            <div id="people"></div>
+          </div>
+
+          <div class="field" id="rowCar">
+            <label class="field-label" for="fCar">Covoiturage</label>
+            <select id="fCar" name="covoiturage">
+              <option value="" selected>Non concerné·e</option>
+              <option value="propose">Je propose des places dans ma voiture</option>
+              <option value="cherche">Je cherche une place</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field reveal">
+          <label class="field-label" for="fMsg">Un petit mot pour les mariés</label>
+          <textarea id="fMsg" name="message" placeholder="à cœur ouvert…"></textarea>
+        </div>
+
+        <button type="submit" id="sendBtn" class="btn btn-primary reveal">Envoyer notre réponse</button>
+
+        <div id="sendError" role="alert"></div>
+
+        <p class="form-note reveal">
+          Une réponse pour tout le foyer suffit — vous pourrez la modifier
+          en revenant sur cette page.
+        </p>
+      </form>
+
+      <!-- ═══ CONFIRMATION ═══ -->
+      <section id="confirm" aria-live="polite">
+        <span class="logo-mask" role="img" aria-label="Monogramme T & F"></span>
+        <h2 id="cTitle">Quelle joie&nbsp;!</h2>
+        <p class="c-sub" id="cSub"></p>
+        <p class="c-detail" id="cDetail"></p>
+        <div class="btns">
+          <a href="programme.html" class="btn btn-outline">Voir le programme</a>
+          <a href="sejour.html" class="btn btn-outline">Venir & dormir</a>
+          <button type="button" id="editBtn" class="btn btn-primary">Modifier ma réponse</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy &amp; Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir & Dormir</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Notre histoire</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════
+   RSVP — une ligne par personne (nom + allergies),
+   enregistrement Firebase (/rsvp) + repli mailto.
+   ═══════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var FB_BASE = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp/';
+  var LS_KEY  = 'tf_rsvp';
+  var MAIL    = 'florian.bouchart10@icloud.com';
+
+  var form     = document.getElementById('rsvpForm');
+  var confirm_ = document.getElementById('confirm');
+  var prevBox  = document.getElementById('prevAnswer');
+  var errBox   = document.getElementById('sendError');
+  var sendBtn  = document.getElementById('sendBtn');
+  var peopleEl = document.getElementById('people');
+  var ouiBlock = document.getElementById('ouiBlock');
+
+  function slugify(s) {
+    return s.toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      .slice(0, 60) || 'invite';
+  }
+
+  /* ─── Lignes « personne » ───
+     Regénère les blocs selon le nombre d'adultes/enfants
+     en conservant ce qui a déjà été saisi. */
+  function personRow(kind, i) {
+    var label = (kind === 'a' ? 'Adulte ' : 'Enfant ') + (i + 1);
+    var div = document.createElement('div');
+    div.className = 'person';
+    div.setAttribute('data-kind', kind);
+    div.innerHTML =
+      '<div class="person-head">' +
+        '<span class="person-tag">' + label + '</span>' +
+        '<label class="person-presence" aria-label="Présence de ' + label + '">' +
+          '<select data-p="present">' +
+            '<option value="oui" selected>Sera présent·e</option>' +
+            '<option value="non">Ne pourra pas venir</option>' +
+          '</select>' +
+        '</label>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<div class="field">' +
+          '<label class="field-label">Prénom & Nom</label>' +
+          '<input type="text" data-p="name" placeholder="' + (kind === 'a' ? 'Camille Dupont' : 'Jules Dupont') + '">' +
+        '</div>' +
+        '<div class="field">' +
+          '<label class="field-label">Allergies ou régime</label>' +
+          '<input type="text" data-p="diet" placeholder="aucun·e">' +
+        '</div>' +
+      '</div>';
+    return div;
+  }
+
+  function readPeople() {
+    var out = { adults: [], kids: [] };
+    peopleEl.querySelectorAll('.person').forEach(function (row) {
+      var entry = {
+        name: row.querySelector('[data-p="name"]').value.trim(),
+        diet: row.querySelector('[data-p="diet"]').value.trim(),
+        present: row.querySelector('[data-p="present"]').value
+      };
+      (row.getAttribute('data-kind') === 'a' ? out.adults : out.kids).push(entry);
+    });
+    return out;
+  }
+
+  /* griser une personne marquée absente */
+  peopleEl.addEventListener('change', function (e) {
+    if (e.target.matches('[data-p="present"]')) {
+      e.target.closest('.person').classList.toggle('absent', e.target.value === 'non');
+    }
+  });
+
+  function renderPeople(saved) {
+    var prev = saved || readPeople();
+    var nA = parseInt(document.getElementById('fAdults').value, 10) || 0;
+    var nK = parseInt(document.getElementById('fKids').value, 10) || 0;
+    peopleEl.innerHTML = '';
+    for (var i = 0; i < nA; i++) {
+      var row = personRow('a', i);
+      if (prev.adults && prev.adults[i]) {
+        row.querySelector('[data-p="name"]').value = prev.adults[i].name || '';
+        row.querySelector('[data-p="diet"]').value = prev.adults[i].diet || '';
+        row.querySelector('[data-p="present"]').value = prev.adults[i].present || 'oui';
+        row.classList.toggle('absent', prev.adults[i].present === 'non');
+      }
+      peopleEl.appendChild(row);
+    }
+    for (var j = 0; j < nK; j++) {
+      var rowK = personRow('k', j);
+      if (prev.kids && prev.kids[j]) {
+        rowK.querySelector('[data-p="name"]').value = prev.kids[j].name || '';
+        rowK.querySelector('[data-p="diet"]').value = prev.kids[j].diet || '';
+        rowK.querySelector('[data-p="present"]').value = prev.kids[j].present || 'oui';
+        rowK.classList.toggle('absent', prev.kids[j].present === 'non');
+      }
+      peopleEl.appendChild(rowK);
+    }
+  }
+
+  /* Le nom de la personne qui répond pré-remplit l'adulte 1 */
+  document.getElementById('fName').addEventListener('blur', function () {
+    var first = peopleEl.querySelector('.person[data-kind="a"] [data-p="name"]');
+    if (first && !first.value.trim()) first.value = this.value.trim();
+  });
+
+  document.getElementById('fAdults').addEventListener('change', function () { renderPeople(); });
+  document.getElementById('fKids').addEventListener('change', function () { renderPeople(); });
+
+  function getData() {
+    var presence = (form.querySelector('input[name="presence"]:checked') || {}).value || '';
+    var ppl = readPeople();
+    return {
+      name:      document.getElementById('fName').value.trim(),
+      contact:   document.getElementById('fContact').value.trim(),
+      presence:  presence,
+      adults:    document.getElementById('fAdults').value,
+      kids:      document.getElementById('fKids').value,
+      people:    ppl,
+      covoiturage: document.getElementById('fCar').value,
+      message:   document.getElementById('fMsg').value.trim(),
+      ts:        new Date().toISOString()
+    };
+  }
+
+  function fillForm(d) {
+    if (!d) return;
+    document.getElementById('fName').value = d.name || '';
+    document.getElementById('fContact').value = d.contact || '';
+    if (d.presence) {
+      var r = form.querySelector('input[name="presence"][value="' + d.presence + '"]');
+      if (r) r.checked = true;
+    }
+    if (d.adults) document.getElementById('fAdults').value = d.adults;
+    if (d.kids !== undefined) document.getElementById('fKids').value = d.kids;
+    renderPeople(d.people || null);
+    document.getElementById('fCar').value = d.covoiturage || '';
+    document.getElementById('fMsg').value = d.message || '';
+    syncOuiBlock();
+  }
+
+  function frDate(iso) {
+    try {
+      return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch (e) { return ''; }
+  }
+
+  function peopleNames(d) {
+    var names = [], absents = [];
+    var all = (d.people && d.people.adults || []).concat(d.people && d.people.kids || []);
+    all.forEach(function (p) {
+      if (!p.name) return;
+      (p.present === 'non' ? absents : names).push(p.name);
+    });
+    return { present: names, absents: absents };
+  }
+
+  function showConfirm(d) {
+    form.style.display = 'none';
+    prevBox.style.display = 'none';
+    confirm_.classList.add('show');
+    var oui = d.presence === 'oui';
+    document.getElementById('cTitle').textContent = oui ? 'Quelle joie !' : 'Merci pour votre réponse';
+    document.getElementById('cSub').textContent = oui
+      ? 'Votre réponse est bien arrivée — on vous garde une place au chaud pour le 12 décembre 2026.'
+      : 'Vous nous manquerez le 12 décembre — merci d’avoir pris le temps de répondre.';
+    var names = peopleNames(d);
+    var who = oui
+      ? (names.present.length
+          ? names.present.join(' · ')
+          : (+d.adults || 0) + ' adulte(s)' + (+d.kids ? ' · ' + d.kids + ' enfant(s)' : ''))
+      : d.name;
+    if (oui && names.absents.length) {
+      who += ' — sans ' + names.absents.join(' ni ');
+    }
+    document.getElementById('cDetail').textContent =
+      (who || '') + (d.ts ? ' — envoyé le ' + frDate(d.ts) : '');
+    if (window.scrollTo) window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(function () { window.dispatchEvent(new Event('scroll')); }, 80);
+  }
+
+  function syncOuiBlock() {
+    var p = (form.querySelector('input[name="presence"]:checked') || {}).value;
+    ouiBlock.style.display = p === 'non' ? 'none' : '';
+  }
+  form.addEventListener('change', function (e) {
+    if (e.target.name === 'presence') syncOuiBlock();
+  });
+
+  /* Déjà répondu ? */
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+  if (saved && saved.name) {
+    fillForm(saved);
+    prevBox.style.display = 'block';
+    prevBox.innerHTML = '<b>Vous avez déjà répondu</b> (' +
+      (saved.presence === 'oui' ? 'présent·s' : 'absent·s') + ', le ' + frDate(saved.ts) +
+      ') — vous pouvez modifier votre réponse ci-dessous, elle remplacera la précédente.';
+  } else {
+    renderPeople();
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errBox.style.display = 'none';
+
+    var d = getData();
+    if (!d.name) { document.getElementById('fName').focus(); return; }
+    if (!d.presence) {
+      form.querySelector('input[name="presence"]').focus();
+      return;
+    }
+
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Envoi en cours…';
+
+    fetch(FB_BASE + slugify(d.name) + '.json', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(d)
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        try { localStorage.setItem(LS_KEY, JSON.stringify(d)); } catch (e2) {}
+        showConfirm(d);
+      })
+      .catch(function () {
+        var lines = ['RSVP Mariage T & F', '',
+          'Répondant : ' + d.name,
+          'Réponse : ' + (d.presence === 'oui' ? 'présents' : 'absents'),
+          'Adultes : ' + d.adults, 'Enfants : ' + d.kids];
+        (d.people.adults || []).forEach(function (p, i) {
+          lines.push('Adulte ' + (i + 1) + ' : ' + (p.name || '—')
+            + (p.present === 'non' ? ' [ABSENT·E]' : '')
+            + (p.diet ? ' (' + p.diet + ')' : ''));
+        });
+        (d.people.kids || []).forEach(function (p, i) {
+          lines.push('Enfant ' + (i + 1) + ' : ' + (p.name || '—')
+            + (p.present === 'non' ? ' [ABSENT·E]' : '')
+            + (p.diet ? ' (' + p.diet + ')' : ''));
+        });
+        lines.push('Covoiturage : ' + (d.covoiturage || '—'));
+        lines.push('Contact : ' + (d.contact || '—'));
+        lines.push('Message : ' + (d.message || '—'));
+        var body = encodeURIComponent(lines.join('\n'));
+        errBox.style.display = 'block';
+        errBox.innerHTML = 'Oups — votre réponse n’a pas pu partir (connexion ?). Réessayez dans un instant, ou ' +
+          '<a href="mailto:' + MAIL + '?subject=RSVP%20Mariage%20T%20%26%20F&body=' + body + '">envoyez-la-nous par e-mail en un clic</a>.';
+      })
+      .finally(function () {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Envoyer notre réponse';
+      });
+  });
+
+  document.getElementById('editBtn').addEventListener('click', function () {
+    confirm_.classList.remove('show');
+    form.style.display = '';
+    var d2 = null;
+    try { d2 = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+    fillForm(d2);
+  });
+}());
+</script>
+<script src="toile.js"></script>
+<script src="transitions.js"></script>
+
+</body>
+</html>

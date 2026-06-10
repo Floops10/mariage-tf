@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Venir & Dormir — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="Itinéraires depuis Valenciennes, Lille et Cambrai, temps de trajet et idées d'hébergement autour du Domaine les Hauts de Vertigneul à Romeries.">
+<link rel="icon" type="image/png" href="Logo.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* ═══════════════════════════════════════════════
+   VENIR & DORMIR
+   ═══════════════════════════════════════════════ */
+
+/* ─── Adresse du domaine ─── */
+.dom-box {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  border: 1px solid var(--border2);
+  overflow: hidden;
+}
+.dom-left {
+  padding: 2.2rem 2rem;
+  border-right: 1px solid var(--border);
+}
+.dom-name {
+  font-family: var(--font-title);
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  color: var(--navy);
+  margin-bottom: .6rem;
+}
+.dom-addr {
+  font-family: var(--font-sub);
+  font-size: .8rem;
+  letter-spacing: .12em;
+  color: var(--text-mid);
+  line-height: 2.1;
+  margin-bottom: 1.4rem;
+}
+.dom-btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+/* panneau toile + médaillon crème */
+.dom-right {
+  position: relative;
+  background: var(--toile-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  overflow: hidden;
+}
+.dom-badge {
+  position: relative;
+  z-index: 1;
+  width: 132px; height: 132px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 1px solid var(--border3);
+  box-shadow: 0 0 0 5px var(--cream), 0 0 0 6px var(--gold-border2), 0 14px 34px rgba(23,36,55,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--navy);
+}
+.dom-badge svg { width: 76px; height: 76px; }
+
+/* ─── Carte routière stylisée ─── */
+.map-frame {
+  position: relative;
+  border: 1px solid var(--border2);
+  background:
+    radial-gradient(ellipse 80% 70% at 70% 40%, rgba(191,212,230,.25) 0%, transparent 70%),
+    var(--cream);
+  padding: clamp(.6rem, 2vw, 1.6rem);
+}
+.map-frame::after {
+  content: '';
+  position: absolute; inset: 8px;
+  border: 1px solid var(--gold-border);
+  pointer-events: none;
+}
+#routemap { width: 100%; height: auto; display: block; }
+#routemap .road {
+  stroke: var(--gold2);
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  opacity: .9;
+}
+#routemap .city-dot { fill: var(--navy); }
+#routemap .city-ring { fill: none; stroke: var(--navy); stroke-width: 1; opacity: .35; }
+#routemap .city-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  fill: var(--ocean2);
+}
+#routemap .time-label {
+  font-family: var(--font-sub);
+  font-size: 12.5px;
+  letter-spacing: .06em;
+  fill: var(--gold2);
+}
+#routemap .dom-label {
+  font-family: var(--font-title);
+  font-size: 17px;
+  fill: var(--navy);
+}
+
+/* ─── Cartes trajets — aérées pour rester lisibles ─── */
+.tj-grid { gap: 1.4rem; }
+.tj-grid .card { padding: 1.7rem 1.6rem 1.5rem; }
+.tj-grid .card-title { margin-bottom: .6rem; }
+.tj-time {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.9rem;
+  color: var(--gold2);
+  line-height: 1.15;
+  display: block;
+  margin-bottom: .4rem;
+}
+.tj-km {
+  font-family: var(--font-sub);
+  font-size: .66rem;
+  letter-spacing: .08em;
+  line-height: 1.8;
+  color: var(--text-light);
+  display: block;
+  margin-bottom: .9rem;
+}
+
+/* ─── Conseils de décembre — quatre sur une ligne ─── */
+.tips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem 1.4rem; }
+.tip-ico { display: block; width: 21px; height: 21px; color: var(--gold2); margin-bottom: .55rem; }
+.tip-ico svg { width: 100%; height: 100%; display: block; }
+.tip h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: .98rem;
+  color: var(--navy);
+  margin-bottom: .3rem;
+}
+.tip p { font-size: .8rem; color: var(--text-mid); }
+
+/* ─── Train ─── */
+.train-box {
+  display: flex;
+  gap: 1.6rem;
+  align-items: flex-start;
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--gold);
+  padding: 1.6rem 1.8rem;
+}
+.train-box .tr-ico { width: 38px; height: 38px; flex-shrink: 0; color: var(--ocean2); margin-top: .2rem; }
+.train-box .tr-ico svg { width: 100%; height: 100%; }
+.train-box p { font-size: .88rem; color: var(--text-mid); margin-bottom: .5rem; }
+.train-box p:last-child { margin-bottom: 0; }
+.train-box b { font-weight: 400; color: var(--navy); }
+
+.note-line {
+  font-family: var(--font-sub);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  line-height: 2;
+  color: var(--text-light);
+  margin-top: 1.3rem;
+}
+
+.cta-band {
+  text-align: center;
+  border-top: 1px solid var(--gold-border);
+  padding-top: 2.6rem;
+  margin-top: 3.4rem;
+}
+.cta-band p {
+  font-family: var(--font-sub);
+  font-size: .78rem;
+  letter-spacing: .14em;
+  color: var(--text-mid);
+  margin-bottom: 1.4rem;
+}
+.cta-band .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 760px) {
+  .dom-box { grid-template-columns: 1fr; }
+  .dom-left { border-right: none; border-bottom: 1px solid var(--border); }
+  .dom-right { min-height: 190px; }
+  .train-box { flex-direction: column; gap: .8rem; }
+  .tips { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 440px) {
+  .tips { grid-template-columns: 1fr; gap: 1.3rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══ OVERLAY DE TRANSITION ═══ -->
+<div id="t-overlay" aria-hidden="true">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <span class="t-eyebrow" id="t-eyebrow"></span>
+    <span class="t-title" id="t-title"></span>
+    <span class="t-quote" id="t-quote"></span>
+    <span class="t-quote-ref" id="t-quote-ref"></span>
+  </div>
+</div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="Logo.png" alt="T & F">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html" aria-current="page">Venir & Dormir</a></li>
+    <li><a href="dresscode.html">Dress code</a></li>
+    <li><a href="histoire.html">Notre histoire</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <a href="index.html">Accueil</a>
+  <a href="programme.html">Le Programme</a>
+  <a href="sejour.html">Venir & Dormir</a>
+  <a href="dresscode.html">Dress code</a>
+  <a href="histoire.html">Notre histoire</a>
+  <a href="rsvp.html">Confirmer ma venue</a>
+  <span class="menu-rule" aria-hidden="true"></span>
+  <span class="menu-date">12 · 12 · 2026</span>
+</div>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<header class="page-hero">
+  <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow reveal">Itinéraires, trajets & nuitées</span>
+    <h1 class="page-title reveal reveal-delay-1">Venir &amp; Dormir</h1>
+    <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
+      <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+    </div>
+    <span class="page-sub reveal reveal-delay-3">Tous les chemins mènent à Vertigneul</span>
+  </div>
+</header>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+
+    <!-- ═══ LE DOMAINE ═══ -->
+    <section class="section" aria-labelledby="dom-title">
+      <span class="section-eyebrow reveal">Le lieu de la fête</span>
+      <h2 class="section-title reveal" id="dom-title">Le Domaine les Hauts de Vertigneul</h2>
+      <p class="section-intro reveal">
+        Niché dans un écrin de verdure du Cambrésis, entre Valenciennes et Cambrai,
+        au bord d'une petite rivière et de sa chapelle — c'est là que tout se passera,
+        du vin d'honneur au bout de la nuit.
+      </p>
+      <div class="dom-box reveal">
+        <div class="dom-left">
+          <h3 class="dom-name">Domaine les Hauts de Vertigneul</h3>
+          <p class="dom-addr">
+            5 hameau de Vertigneul<br>
+            59730 Romeries — Nord
+          </p>
+          <div class="dom-btns">
+            <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Domaine+les+Hauts+de+Vertigneul,+5+Hameau+de+Vertigneul,+59730+Romeries&travelmode=driving">Google Maps</a>
+            <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://waze.com/ul?q=Domaine%20les%20Hauts%20de%20Vertigneul%2C%20Romeries&navigate=yes">Waze</a>
+            <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=5+Hameau+de+Vertigneul,+59730+Romeries">Plans</a>
+          </div>
+        </div>
+        <div class="dom-right" aria-hidden="true">
+          <div class="toile-img blue"></div>
+          <div class="dom-badge">
+            <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="1400" data-draw-stagger="120">
+              <path d="M30 92 V 56 M 90 92 V 56"/>
+              <path d="M24 58 L 60 30 L 96 58"/>
+              <path d="M60 30 V 18 M 54.5 23.5 H 65.5"/>
+              <circle cx="60" cy="52" r="6"/>
+              <path d="M52 92 v-18 a 8 8 0 0 1 16 0 v 18"/>
+              <path d="M22 92 H 98"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CARTE ROUTIÈRE ═══ -->
+    <section class="section" aria-labelledby="map-title">
+      <span class="section-eyebrow reveal">Par la route</span>
+      <h2 class="section-title reveal" id="map-title">Tous les chemins mènent au domaine</h2>
+      <p class="section-intro reveal">
+        Le domaine se trouve à mi-chemin entre Valenciennes et Cambrai, juste au-dessus
+        de Solesmes. Voici les routes — elles se dessinent sous vos yeux.
+      </p>
+
+      <div class="map-frame reveal">
+        <svg id="routemap" viewBox="0 0 760 540" data-draw data-draw-dur="1500" data-draw-stagger="60" role="img" aria-label="Carte stylisée des routes vers le domaine depuis Lille, Valenciennes, Cambrai, Le Quesnoy et Le Cateau">
+          <!-- routes -->
+          <path class="road" d="M 135 83 C 230 130 330 185 440 240 Q 488 258 523 270"/>
+          <path class="road" d="M 523 270 C 530 305 544 342 557 374"/>
+          <path class="road" d="M 279 395 C 360 401 450 401 507 395 Q 535 390 557 374"/>
+          <path class="road" d="M 625 347 C 602 356 574 364 557 374"/>
+          <path class="road" d="M 540 451 C 545 425 551 398 557 374"/>
+
+          <!-- villes -->
+          <g>
+            <circle class="city-dot" cx="135" cy="83" r="4.5"/><circle class="city-ring" cx="135" cy="83" r="9"/>
+            <circle class="city-dot" cx="523" cy="270" r="4.5"/><circle class="city-ring" cx="523" cy="270" r="9"/>
+            <circle class="city-dot" cx="279" cy="395" r="4.5"/><circle class="city-ring" cx="279" cy="395" r="9"/>
+            <circle class="city-dot" cx="625" cy="347" r="3.6"/><circle class="city-ring" cx="625" cy="347" r="7.5"/>
+            <circle class="city-dot" cx="507" cy="395" r="3"/>
+            <circle class="city-dot" cx="540" cy="451" r="3.6"/><circle class="city-ring" cx="540" cy="451" r="7.5"/>
+          </g>
+
+          <!-- le domaine : médaillon au cœur -->
+          <g>
+            <circle cx="557" cy="374" r="13" fill="none" stroke="#C9A86C" stroke-width="1.6"/>
+            <circle cx="557" cy="374" r="17.5" fill="none" stroke="#C9A86C" stroke-width=".8" opacity=".6"/>
+            <path d="M557 380.2 C 553.4 377.4 551.7 375.2 552.5 373.3 C 553.1 371.9 554.7 371.5 555.8 372.3 C 556.5 372.8 556.9 373.4 557 374 C 557.1 373.4 557.5 372.8 558.2 372.3 C 559.3 371.5 560.9 371.9 561.5 373.3 C 562.3 375.2 560.6 377.4 557 380.2 Z"
+                  fill="none" stroke="#1F2F44" stroke-width="1.3" stroke-linejoin="round"/>
+          </g>
+
+          <!-- libellés -->
+          <g>
+            <text class="city-label" x="120" y="62">Lille</text>
+            <text class="city-label" x="448" y="252">Valenciennes</text>
+            <text class="city-label" x="226" y="424">Cambrai</text>
+            <text class="city-label" x="600" y="328">Le Quesnoy</text>
+            <text class="city-label" x="430" y="416" font-size="11">Solesmes</text>
+            <text class="city-label" x="496" y="478">Le Cateau</text>
+            <text class="dom-label" x="582" y="398">Le Domaine</text>
+          </g>
+          <g>
+            <text class="time-label" x="300" y="148">≈ 1 H 10 — A23 PUIS D958</text>
+            <text class="time-label" x="420" y="318">≈ 30 MIN</text>
+            <text class="time-label" x="350" y="383">≈ 35 MIN</text>
+            <text class="time-label" x="612" y="364">≈ 15 MIN</text>
+            <text class="time-label" x="565" y="440">≈ 20 MIN</text>
+          </g>
+
+          <!-- rose des vents -->
+          <g transform="translate(706,62)" stroke="#4F6D8A" stroke-width="1.2" fill="none" opacity=".7">
+            <path d="M0 16 V-16 M0 -16 L-5 -6 M0 -16 L5 -6"/>
+            <text x="-4" y="-22" style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:.1em" fill="#4F6D8A" stroke="none">N</text>
+          </g>
+        </svg>
+      </div>
+      <p class="note-line reveal">
+        Temps estimés un samedi, hors météo surprise — voir nos conseils de décembre plus bas.
+      </p>
+    </section>
+
+    <!-- ═══ TEMPS DE TRAJET ═══ -->
+    <section class="section" aria-labelledby="tj-title">
+      <span class="section-eyebrow reveal">En voiture</span>
+      <h2 class="section-title reveal" id="tj-title">Temps de trajet jusqu'au domaine</h2>
+      <div class="section-flourish reveal" aria-hidden="true">
+        <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
+          <path d="M4 9 H48"/>
+          <path d="M84 9 H128"/>
+          <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
+          <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div class="card-grid tj-grid">
+        <div class="card reveal">
+          <h3 class="card-title">Depuis Valenciennes</h3>
+          <span class="tj-time">≈ 30 min</span>
+          <span class="tj-km">≈ 24 km — D958 vers Solesmes</span>
+          <p class="card-txt">Sortie sud par la D958, direction Solesmes, puis Romeries et son hameau de Vertigneul.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Valenciennes&destination=Domaine+les+Hauts+de+Vertigneul,+5+Hameau+de+Vertigneul,+59730+Romeries&travelmode=driving">Itinéraire</a>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <h3 class="card-title">Depuis Lille</h3>
+          <span class="tj-time">≈ 1 h 10</span>
+          <span class="tj-km">≈ 85 km — A23 puis D958</span>
+          <p class="card-txt">A23 jusqu'à Valenciennes, puis cap au sud par la D958. Prévoyez un peu de marge le samedi.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Lille&destination=Domaine+les+Hauts+de+Vertigneul,+5+Hameau+de+Vertigneul,+59730+Romeries&travelmode=driving">Itinéraire</a>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <h3 class="card-title">Depuis Cambrai</h3>
+          <span class="tj-time">≈ 35 min</span>
+          <span class="tj-km">≈ 27 km — par Solesmes</span>
+          <p class="card-txt">Direction Solesmes par la D942/D958, puis Romeries — la campagne du Cambrésis défile.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Cambrai&destination=Domaine+les+Hauts+de+Vertigneul,+5+Hameau+de+Vertigneul,+59730+Romeries&travelmode=driving">Itinéraire</a>
+        </div>
+        <div class="card reveal">
+          <h3 class="card-title">Depuis Le Quesnoy</h3>
+          <span class="tj-time">≈ 15 min</span>
+          <span class="tj-km">≈ 11 km</span>
+          <p class="card-txt">Un saut de puce à travers le bocage — idéal si vous logez côté Avesnois.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Le+Quesnoy&destination=Domaine+les+Hauts+de+Vertigneul,+5+Hameau+de+Vertigneul,+59730+Romeries&travelmode=driving">Itinéraire</a>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <h3 class="card-title">Depuis Le Cateau-Cambrésis</h3>
+          <span class="tj-time">≈ 20 min</span>
+          <span class="tj-km">≈ 15 km</span>
+          <p class="card-txt">Tout droit vers le nord par Solesmes — la route la plus tranquille.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Le+Cateau-Cambresis&destination=Domaine+les+Hauts+de+Vertigneul,+5+Hameau+de+Vertigneul,+59730+Romeries&travelmode=driving">Itinéraire</a>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <h3 class="card-title">Depuis Paris</h3>
+          <span class="tj-time">≈ 2 h 15</span>
+          <span class="tj-km">≈ 200 km — A1 puis A2</span>
+          <p class="card-txt">A1 direction Lille, A2 vers Valenciennes, sortie Cambrésis — ou le TGV jusqu'à Valenciennes.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Paris&destination=Domaine+les+Hauts+de+Vertigneul,+5+Hameau+de+Vertigneul,+59730+Romeries&travelmode=driving">Itinéraire</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ EN TRAIN ═══ -->
+    <section class="section" aria-labelledby="train-title">
+      <span class="section-eyebrow reveal">Sans voiture</span>
+      <h2 class="section-title reveal" id="train-title">Venir en train</h2>
+      <div class="train-box reveal">
+        <span class="tr-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110">
+            <path d="M6.5 3.5 h11 A1.8 1.8 0 0 1 19.3 5.3 V14.6 a2.4 2.4 0 0 1 -2.4 2.4 H7.1 a2.4 2.4 0 0 1 -2.4 -2.4 V5.3 A1.8 1.8 0 0 1 6.5 3.5 Z"/>
+            <path d="M7.4 6.2 h9.2 v4.4 H7.4 Z"/>
+            <circle cx="8.6" cy="13.9" r="1"/><circle cx="15.4" cy="13.9" r="1"/>
+            <path d="M8.2 17 L6 20.6 M15.8 17 L18 20.6 M6.8 19.2 H17.2"/>
+          </svg>
+        </span>
+        <div>
+          <p><b>Gare de Valenciennes</b> — la plus pratique : TGV directs depuis Paris (≈ 1 h 50)
+          et TER depuis Lille, puis ≈ 30 minutes de route jusqu'au domaine.</p>
+          <p><b>Gares de Lille Flandres / Lille Europe</b> — pour ceux qui arrivent de plus loin,
+          puis ≈ 1 h 10 de route.</p>
+          <p>Pas de voiture pour le dernier kilomètre&nbsp;? Anticipez un taxi (rares en campagne le soir)
+          — ou dites-le-nous dans votre réponse&nbsp;: il se trouvera toujours un coffre ami pour vous.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ OÙ DORMIR ═══ -->
+    <section class="section" aria-labelledby="dodo-title">
+      <span class="section-eyebrow reveal">Pour ceux qui restent</span>
+      <h2 class="section-title reveal" id="dodo-title">Où dormir</h2>
+      <p class="section-intro reveal">
+        La plupart d'entre vous rentreront dormir au chaud — mais pour les invités venus de loin
+        ou les amoureux de grasses matinées, voici quelques adresses fiables, de la plus proche
+        à la plus citadine. Aucune chambre n'est réservée par nos soins&nbsp;:
+        premier arrivé, premier couché.
+      </p>
+      <div class="card-grid">
+        <div class="card reveal">
+          <span class="card-tag">Romeries · ≈ 3 min</span>
+          <h3 class="card-title">La Chaiserie</h3>
+          <p class="card-sub">Chambres d'hôtes — Gîtes de France</p>
+          <p class="card-txt">Dans le village même du domaine : on se couche à trois minutes de la piste de danse.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.gites-de-france-nord-pas-de-calais.fr/location-vacances-Chambre-d-hotes-La-Chaiserie-a-Romeries-59G592120.html">Voir l'adresse</a>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <span class="card-tag">Entre Le Quesnoy & Solesmes · ≈ 10 min</span>
+          <h3 class="card-title">Les Perce-Neige</h3>
+          <p class="card-sub">Chambres d'hôtes de charme</p>
+          <p class="card-txt">Maison restaurée au calme du bocage, à dix minutes du domaine.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="http://lespercesneiges.e-monsite.com/">Voir l'adresse</a>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <span class="card-tag">Valenciennes · ≈ 30 min</span>
+          <h3 class="card-title">Royal Hainaut Spa &amp; Resort</h3>
+          <p class="card-sub">L'adresse de prestige de la région</p>
+          <p class="card-txt">Dans l'ancien hôpital royal du XVIII<sup>e</sup> — spa, voûtes et grands lits pour lendemains difficiles.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/Royal+Hainaut+Spa+%26+Resort+Hotel+Valenciennes">Voir l'adresse</a>
+        </div>
+        <div class="card reveal">
+          <span class="card-tag">Valenciennes · ≈ 30 min</span>
+          <h3 class="card-title">Hôtels du centre de Valenciennes</h3>
+          <p class="card-sub">Toutes les enseignes classiques</p>
+          <p class="card-txt">Mercure, ibis, Novotel & co — le choix le plus large, pratique pour repartir vers Lille ou Paris.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/h%C3%B4tels+Valenciennes">Voir les hôtels</a>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <span class="card-tag">Cambrai · ≈ 35 min</span>
+          <h3 class="card-title">Château de la Motte Fénelon</h3>
+          <p class="card-sub">Hôtel de charme dans son parc</p>
+          <p class="card-txt">Dormir dans un château après un mariage au domaine — la cohérence est totale.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/Ch%C3%A2teau+de+la+Motte+F%C3%A9nelon+Cambrai">Voir l'adresse</a>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <span class="card-tag">Autour de Solesmes · 10–20 min</span>
+          <h3 class="card-title">Gîtes & chambres d'hôtes du Cambrésis</h3>
+          <p class="card-sub">Pour les tribus et les groupes d'amis</p>
+          <p class="card-txt">Louer un gîte à plusieurs autour de Solesmes ou du Cateau : convivial, malin, et souvent moins cher.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.gites-de-france.com/fr/hauts-de-france/nord">Chercher un gîte</a>
+        </div>
+      </div>
+      <p class="note-line reveal">
+        Les petites structures n'ont que quelques chambres — si vous comptez dormir sur place,
+        réservez tôt et dites-nous-le dans votre réponse.
+      </p>
+    </section>
+
+    <!-- ═══ CONSEILS DE DÉCEMBRE ═══ -->
+    <section class="section" aria-labelledby="tips-title">
+      <span class="section-eyebrow reveal">Un samedi de décembre</span>
+      <h2 class="section-title reveal" id="tips-title">Petits conseils pratiques</h2>
+      <div class="section-flourish reveal" aria-hidden="true">
+        <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
+          <path d="M4 9 H48"/>
+          <path d="M84 9 H128"/>
+          <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
+          <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <div class="tips">
+        <div class="tip reveal">
+          <span class="tip-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="850" data-draw-stagger="100"><path d="M13.4 3.6 a8.4 8.4 0 1 0 7 12.4 a7 7 0 0 1 -7 -12.4 Z"/><circle cx="17.4" cy="5.8" r=".5" fill="currentColor" stroke="none"/></svg></span>
+          <h3>La nuit tombe tôt</h3>
+          <p>Vers 17 h en décembre — la route du retour se fera de nuit, prévoyez de la marge.</p>
+        </div>
+        <div class="tip reveal reveal-delay-1">
+          <span class="tip-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="850" data-draw-stagger="100"><path d="M10.3 4.8 a1.7 1.7 0 0 1 3.4 0 V13.4 a3.9 3.9 0 1 1 -3.4 0 Z"/><path d="M12 8.2 V14.9"/><circle cx="12" cy="16.4" r="1.55" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Routes fraîches</h3>
+          <p>Campagne oblige : si la météo se gâte, ajoutez dix minutes — et de la magie aux photos.</p>
+        </div>
+        <div class="tip reveal reveal-delay-2">
+          <span class="tip-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="850" data-draw-stagger="100"><rect x="4.5" y="4.5" width="15" height="15" rx="2.2"/><path d="M9.6 16.8 V7.6 h3.1 a2.7 2.7 0 0 1 0 5.4 H9.6"/></svg></span>
+          <h3>Parking sur place</h3>
+          <p>Le domaine dispose de son parking — votre voiture peut même y passer la nuit, elle.</p>
+        </div>
+        <div class="tip reveal reveal-delay-3">
+          <span class="tip-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="850" data-draw-stagger="100"><circle cx="12" cy="12" r="7.4"/><circle cx="12" cy="12" r="2.1"/><path d="M12 4.6 V9.9 M5 14.1 L9.95 12.9 M19 14.1 L14.05 12.9"/></svg></span>
+          <h3>Capitaine de soirée</h3>
+          <p>Le champagne se savoure mieux quand quelqu'un d'autre conduit — covoiturez, et dites-le dans votre RSVP.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- bandeau CTA -->
+    <div class="cta-band reveal">
+      <p>Vous savez comment venir — il ne reste qu'à nous dire oui, nous serons là.</p>
+      <div class="btns">
+        <a href="programme.html" class="btn btn-outline">Le programme</a>
+        <a href="rsvp.html" class="btn btn-primary">Confirmer ma venue</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy &amp; Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir & Dormir</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Notre histoire</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
+  </div>
+</footer>
+
+<script src="toile.js"></script>
+<script src="transitions.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Le Dress Code — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="Les couleurs du mariage de Thomy & Florian — celles des mariés, celles du cortège et la palette recommandée aux invités.">
+<link rel="icon" type="image/png" href="Logo.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* ═══════════════════════════════════════════════
+   DRESS CODE — trois paliers de couleurs
+   ═══════════════════════════════════════════════ */
+
+/* ─── Palier (illustration + palette) ─── */
+.tier {
+  position: relative;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: clamp(1.4rem, 4vw, 3rem);
+  align-items: center;
+  border: 1px solid var(--border2);
+  padding: clamp(1.5rem, 3.5vw, 2.4rem);
+  margin-bottom: 1.6rem;
+}
+.tier::after {
+  content: '';
+  position: absolute; inset: 8px;
+  border: 1px solid var(--gold-border);
+  pointer-events: none;
+}
+.tier > * { position: relative; z-index: 1; }
+
+.tier-fig svg {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  color: var(--ocean2);
+}
+.tier-fig .gold { stroke: var(--gold2); }
+.tier-fig .gold-fill { fill: var(--gold2); stroke: none; }
+.fig-caption {
+  text-align: center;
+  font-family: var(--font-sub);
+  font-size: .6rem;
+  letter-spacing: .18em;
+  color: var(--text-light);
+  margin-top: .7rem;
+}
+
+.tier-tag {
+  display: inline-block;
+  font-family: var(--font-sub);
+  font-size: .6rem;
+  letter-spacing: .2em;
+  padding: .32rem .85rem;
+  border: 1px solid;
+  margin-bottom: 1rem;
+}
+.tier-tag.ban { color: #8A3B4A; border-color: rgba(138,59,74,.4);  background: rgba(138,59,74,.05); }
+.tier-tag.res { color: var(--ocean2); border-color: rgba(79,109,138,.4); background: rgba(79,109,138,.06); }
+.tier-tag.rec { color: var(--green); border-color: var(--green-border); background: var(--green-bg); }
+
+.tier h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+  color: var(--navy);
+  margin-bottom: .55rem;
+}
+.tier-txt {
+  font-size: .88rem;
+  color: var(--text-mid);
+  max-width: 34rem;
+  margin-bottom: 1.3rem;
+}
+
+/* ─── Pastilles de couleur ─── */
+.swatches { display: flex; flex-wrap: wrap; gap: 1rem 1.2rem; }
+.swatch { width: 78px; text-align: center; }
+.swatch i {
+  position: relative;
+  display: block;
+  width: 46px; height: 46px;
+  margin: 0 auto .5rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(31,47,68,.16), 0 5px 12px rgba(31,47,68,.14);
+}
+/* à bannir : une fine barre diagonale */
+.swatch.ban i::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(45deg, transparent 47%, rgba(138,59,74,.75) 47% 53%, transparent 53%);
+}
+.swatch span {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .56rem;
+  letter-spacing: .1em;
+  line-height: 1.7;
+  color: var(--text-mid);
+}
+
+/* sous-groupes du cortège */
+.sw-groups { display: flex; gap: 2.6rem; flex-wrap: wrap; }
+.sw-group h4 {
+  font-family: var(--font-sub);
+  font-weight: 400;
+  font-size: .62rem;
+  letter-spacing: .16em;
+  color: var(--gold2);
+  margin-bottom: .8rem;
+}
+
+.note-line {
+  font-family: var(--font-sub);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  line-height: 2;
+  color: var(--text-light);
+  margin-top: 1.6rem;
+  text-align: center;
+}
+
+.cta-band {
+  text-align: center;
+  border-top: 1px solid var(--gold-border);
+  padding-top: 2.6rem;
+  margin-top: 3.4rem;
+}
+.cta-band p {
+  font-family: var(--font-sub);
+  font-size: .78rem;
+  letter-spacing: .14em;
+  color: var(--text-mid);
+  margin-bottom: 1.4rem;
+}
+.cta-band .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 760px) {
+  .tier { grid-template-columns: 1fr; gap: 1.2rem; }
+  .tier-fig svg { max-width: 200px; }
+  .sw-groups { gap: 1.6rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══ OVERLAY DE TRANSITION ═══ -->
+<div id="t-overlay" aria-hidden="true">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <span class="t-eyebrow" id="t-eyebrow"></span>
+    <span class="t-title" id="t-title"></span>
+    <span class="t-quote" id="t-quote"></span>
+    <span class="t-quote-ref" id="t-quote-ref"></span>
+  </div>
+</div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="Logo.png" alt="T & F">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html">Venir & Dormir</a></li>
+    <li><a href="dresscode.html" aria-current="page">Dress code</a></li>
+    <li><a href="histoire.html">Notre histoire</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <a href="index.html">Accueil</a>
+  <a href="programme.html">Le Programme</a>
+  <a href="sejour.html">Venir & Dormir</a>
+  <a href="dresscode.html">Dress code</a>
+  <a href="histoire.html">Notre histoire</a>
+  <a href="rsvp.html">Confirmer ma venue</a>
+  <span class="menu-rule" aria-hidden="true"></span>
+  <span class="menu-date">12 · 12 · 2026</span>
+</div>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<header class="page-hero">
+  <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow reveal">Pour vous faire beaux</span>
+    <h1 class="page-title reveal reveal-delay-1">Le Dress Code</h1>
+    <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
+      <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+    </div>
+    <span class="page-sub reveal reveal-delay-3">Pour que le tableau soit parfait</span>
+  </div>
+</header>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+
+    <section class="section" aria-labelledby="dc-title">
+      <span class="section-eyebrow reveal">S'habiller pour un 12 décembre</span>
+      <h2 class="section-title reveal" id="dc-title">Trois palettes, un seul tableau</h2>
+      <div class="section-flourish reveal" aria-hidden="true">
+        <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
+          <path d="M4 9 H48"/>
+          <path d="M84 9 H128"/>
+          <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
+          <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <p class="section-intro reveal">
+        Pour que les photos soient belles et que chacun trouve sa place dans le décor,
+        voici les couleurs du jour&nbsp;: celles des mariés — qu'on ne touche pas —,
+        celles réservées au cortège, et la palette que nous recommandons à nos invités.
+      </p>
+
+      <!-- ═══ 1 · LES MARIÉS ═══ -->
+      <div class="tier reveal" aria-labelledby="tier-maries">
+        <div class="tier-fig" aria-hidden="true">
+          <svg viewBox="0 0 220 230" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="1500" data-draw-stagger="70">
+            <!-- la mariée -->
+            <path d="M 78 30 C 62 38 55 64 57 96 C 57.5 108 59 118 61 125" opacity=".75"/>
+            <path d="M 81 33 C 69 42 64 64 65 92" opacity=".4"/>
+            <circle cx="82" cy="44" r="10"/>
+            <path d="M 73 62 Q 82 58.5 91 62 L 94 92 Q 82 97 70 92 Z"/>
+            <path d="M 70 92 C 62 134 52 172 46 198 Q 82 208 118 198 C 112 172 102 134 94 92"/>
+            <path d="M 53 188 Q 82 197 111 188" opacity=".45"/>
+            <path d="M 91 66 C 102 73 110 79 116 84"/>
+            <path d="M 73 66 C 66 76 64 86 66 94"/>
+            <!-- le bouquet -->
+            <circle class="gold" cx="118" cy="86" r="5.5"/>
+            <circle class="gold-fill" cx="116" cy="84.5" r="1.1"/>
+            <circle class="gold-fill" cx="120" cy="85.5" r="1.1"/>
+            <circle class="gold-fill" cx="118" cy="88" r="1.1"/>
+            <path class="gold" d="M 118 91.5 q -2.5 4.5 -1 8.5" stroke-width="1.1"/>
+            <!-- le marié -->
+            <circle cx="152" cy="42" r="10"/>
+            <path d="M 138 57 Q 152 53.5 166 57"/>
+            <path d="M 138 57 C 132 61 130 68 129 76 L 127 106"/>
+            <path d="M 166 57 C 172 61 174 68 175 76 L 177 106"/>
+            <path d="M 127 106 Q 152 112 177 106"/>
+            <path d="M 145 56.5 L 152 72 L 159 56.5"/>
+            <path d="M 152 59.5 L 147 56.3 V 62.7 Z M 152 59.5 L 157 56.3 V 62.7 Z" stroke-width="1.1"/>
+            <path d="M 152 72 V 106" opacity=".45"/>
+            <path d="M 138 61 C 128 69 122 77 118 84"/>
+            <path d="M 166 61 C 172 71 174 82 172 92"/>
+            <path d="M 143 106 C 142 140 141 172 140 198"/>
+            <path d="M 161 106 C 162 140 163 172 164 198"/>
+            <path d="M 152 112 V 196" opacity=".35"/>
+            <path d="M 133 200 H 147 M 157 200 H 171"/>
+            <!-- petit cœur -->
+            <path class="gold" d="M 117 26 C 113.4 23.2 112.6 20.8 114.2 19.2 C 115.4 18 117 18.8 117 20.2 C 117 18.8 118.6 18 119.8 19.2 C 121.4 20.8 120.6 23.2 117 26 Z" stroke-width="1.2"/>
+            <path d="M 36 206 H 184" opacity=".3"/>
+          </svg>
+          <p class="fig-caption">Les mariés</p>
+        </div>
+        <div>
+          <span class="tier-tag ban">À bannir — réservées aux mariés</span>
+          <h3 id="tier-maries">Les couleurs des mariés</h3>
+          <p class="tier-txt">
+            Ce sont les teintes que nous porterons ce jour-là. Par élégance pour vos hôtes —
+            et pour que personne ne nous vole la vedette sur les photos — merci de ne pas
+            vous habiller dans ces couleurs.
+          </p>
+          <div class="swatches">
+            <div class="swatch ban"><i style="background:#FAF5EF"></i><span>Blanc<br>& ivoire</span></div>
+            <div class="swatch ban"><i style="background:#1F2F44"></i><span>Bleu<br>nuit</span></div>
+            <div class="swatch ban"><i style="background:#C9A86C"></i><span>Or</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ 2 · LE CORTÈGE ═══ -->
+      <div class="tier reveal" aria-labelledby="tier-cortege">
+        <div class="tier-fig" aria-hidden="true">
+          <svg viewBox="0 0 220 230" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="1400" data-draw-stagger="70">
+            <!-- fille d'honneur -->
+            <circle cx="78" cy="52" r="9.5"/>
+            <circle class="gold-fill" cx="71.5" cy="44.5" r="1.2"/>
+            <circle class="gold-fill" cx="78" cy="42.2" r="1.2"/>
+            <circle class="gold-fill" cx="84.5" cy="44.5" r="1.2"/>
+            <path d="M 70.5 69 Q 78 65.5 85.5 69 L 88 92 Q 78 96 68 92 Z"/>
+            <path d="M 68 92 C 64 116 60 136 58 150 Q 78 157 98 150 C 96 136 92 116 88 92"/>
+            <path d="M 63 142 Q 78 148 93 142" opacity=".4"/>
+            <path d="M 71 152 V 184 M 85 152 V 184"/>
+            <path d="M 66 186 H 76 M 80 186 H 90"/>
+            <path d="M 70.5 72 C 64 80 62 90 64 98"/>
+            <path d="M 85.5 72 C 92 80 94 90 92 98"/>
+            <circle class="gold" cx="92" cy="101" r="3.4" stroke-width="1.2"/>
+            <!-- garçon d'honneur -->
+            <circle cx="148" cy="50" r="9.5"/>
+            <path d="M 135 64 Q 148 60.5 161 64"/>
+            <path d="M 135 64 C 130 68 128.5 74 128 81 L 126.5 104"/>
+            <path d="M 161 64 C 166 68 167.5 74 168 81 L 169.5 104"/>
+            <path d="M 126.5 104 Q 148 109 169.5 104"/>
+            <path d="M 142 63 L 148 76 L 154 63"/>
+            <path d="M 148 65 l -1.8 2.8 1.8 13.5 1.8 -13.5 Z" stroke-width="1.1"/>
+            <path d="M 135 68 C 129 76 127 86 129 94"/>
+            <path d="M 161 68 C 167 76 169 86 167 94"/>
+            <path d="M 140 104 C 139.5 132 139 158 138.5 182"/>
+            <path d="M 156 104 C 156.5 132 157 158 157.5 182"/>
+            <path d="M 131 184 H 145 M 151 184 H 165"/>
+            <circle class="gold-fill" cx="140.5" cy="70" r="1.3"/>
+            <path d="M 44 192 H 180" opacity=".3"/>
+          </svg>
+          <p class="fig-caption">Le cortège</p>
+        </div>
+        <div>
+          <span class="tier-tag res">Réservées au cortège</span>
+          <h3 id="tier-cortege">Filles &amp; garçons d'honneur</h3>
+          <p class="tier-txt">
+            Le cortège aura ses couleurs bien à lui, pour qu'on le reconnaisse au premier
+            regard. Si vous n'en faites pas partie, laissez-leur ces teintes — elles sont
+            à eux pour la journée.
+          </p>
+          <div class="sw-groups">
+            <div class="sw-group">
+              <h4>Filles d'honneur</h4>
+              <div class="swatches">
+                <div class="swatch"><i style="background:#BFD4E6"></i><span>Bleu<br>poudré</span></div>
+              </div>
+            </div>
+            <div class="sw-group">
+              <h4>Garçons d'honneur</h4>
+              <div class="swatches">
+                <div class="swatch"><i style="background:#2E4B3F"></i><span>Vert<br>sapin</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ 3 · LES INVITÉS ═══ -->
+      <div class="tier reveal" aria-labelledby="tier-invites">
+        <div class="tier-fig" aria-hidden="true">
+          <svg viewBox="0 0 220 230" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="1400" data-draw-stagger="60">
+            <!-- invitée en robe midi -->
+            <circle cx="60" cy="58" r="9"/>
+            <path d="M 53 74.5 Q 60 71.5 67 74.5 L 69.5 95 Q 60 99 50.5 95 Z"/>
+            <path d="M 50.5 95 C 47 122 44 144 42.5 158 Q 60 164 77.5 158 C 76 144 73 122 69.5 95"/>
+            <path d="M 54 160 V 186 M 66 160 V 186"/>
+            <path d="M 49 188 H 59 M 61 188 H 71"/>
+            <path d="M 53 77 C 47 85 45.5 94 47.5 101"/>
+            <path d="M 67 77 C 73 85 74.5 94 72.5 101"/>
+            <circle class="gold-fill" cx="51.5" cy="58" r=".9"/>
+            <circle class="gold-fill" cx="68.5" cy="58" r=".9"/>
+            <!-- invité en costume -->
+            <circle cx="115" cy="48" r="9.5"/>
+            <path d="M 102 62 Q 115 58.5 128 62"/>
+            <path d="M 102 62 C 97 66 95.5 72 95 79 L 93.5 103"/>
+            <path d="M 128 62 C 133 66 134.5 72 135 79 L 136.5 103"/>
+            <path d="M 93.5 103 Q 115 108 136.5 103"/>
+            <path d="M 109 61 L 115 74 L 121 61"/>
+            <path d="M 115 74 V 103" opacity=".45"/>
+            <path d="M 102 66 C 96 74 94 84 96 92"/>
+            <path d="M 128 66 C 134 74 136 84 134 92"/>
+            <path d="M 107 103 C 106.5 132 106 160 105.5 186"/>
+            <path d="M 123 103 C 123.5 132 124 160 124.5 186"/>
+            <path d="M 98 188 H 112 M 118 188 H 132"/>
+            <!-- invitée en tailleur pantalon -->
+            <circle cx="172" cy="56" r="9"/>
+            <path d="M 164.5 72 Q 172 69 179.5 72 L 182 108 Q 172 112 162 108 Z"/>
+            <path d="M 164.5 75 C 158 83 156 93 158 101"/>
+            <path d="M 179.5 75 C 186 83 188 93 186 101"/>
+            <path d="M 162 108 C 161 134 160 160 159.5 182"/>
+            <path d="M 182 108 C 183 134 184 160 184.5 182"/>
+            <path d="M 172 112 V 182" opacity=".4"/>
+            <path d="M 152 184 H 166 M 178 184 H 192"/>
+            <circle class="gold" cx="186" cy="104" r="3" stroke-width="1.2"/>
+            <path d="M 30 196 H 196" opacity=".3"/>
+          </svg>
+          <p class="fig-caption">Nos invités</p>
+        </div>
+        <div>
+          <span class="tier-tag rec">Recommandées pour vous</span>
+          <h3 id="tier-invites">Nos invités</h3>
+          <p class="tier-txt">
+            Pour le reste, faites-vous plaisir dans une palette d'hiver élégante&nbsp;:
+            tons profonds, matières chaudes — le velours est le bienvenu. De quoi être
+            superbes sans marcher sur nos plates-bandes.
+          </p>
+          <div class="swatches">
+            <div class="swatch"><i style="background:#C7A98B"></i><span>Camel</span></div>
+            <div class="swatch"><i style="background:#8A7B6E"></i><span>Taupe</span></div>
+            <div class="swatch"><i style="background:#B9BDC4"></i><span>Gris<br>perle</span></div>
+            <div class="swatch"><i style="background:#94A78F"></i><span>Vert<br>sauge</span></div>
+            <div class="swatch"><i style="background:#6E2F3C"></i><span>Bordeaux</span></div>
+            <div class="swatch"><i style="background:#5C4356"></i><span>Prune</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note-line reveal">
+        Les palettes exactes seront confirmées ici très bientôt — l'esprit, lui, ne changera pas.
+      </p>
+    </section>
+
+    <!-- bandeau CTA -->
+    <div class="cta-band reveal">
+      <p>La tenue est trouvée&nbsp;? Il ne reste qu'à nous dire oui.</p>
+      <div class="btns">
+        <a href="histoire.html" class="btn btn-outline">Notre histoire</a>
+        <a href="rsvp.html" class="btn btn-primary">Confirmer ma venue</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy &amp; Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir & Dormir</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Notre histoire</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
+  </div>
+</footer>
+
+<script src="toile.js"></script>
+<script src="transitions.js"></script>
+
+</body>
+</html>

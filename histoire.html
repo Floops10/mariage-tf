@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Notre Histoire — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="L'histoire de Thomy & Florian, de la rencontre au grand oui — et le poème des mariés.">
+<link rel="icon" type="image/png" href="Logo.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* ═══════════════════════════════════════════════
+   NOTRE HISTOIRE — fil conducteur + poème
+   ═══════════════════════════════════════════════ */
+
+#timeline {
+  position: relative;
+  padding: 1rem 0 2rem;
+}
+#fil-svg {
+  position: absolute;
+  top: 0; left: 50%;
+  width: 120px;
+  height: 100%;
+  transform: translateX(-50%);
+  overflow: visible;
+  pointer-events: none;
+}
+#fil-path {
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  fill: none;
+  opacity: .85;
+}
+#fil-ghost {
+  stroke: rgba(31,47,68,.1);
+  stroke-width: 1;
+  fill: none;
+  stroke-dasharray: 3 6;
+}
+/* Marqueur : un cœur qui remonte le fil de notre histoire */
+#fil-marker {
+  position: absolute;
+  top: 0; left: 0;
+  width: 30px; height: 30px;
+  margin: -15px 0 0 -15px;
+  color: var(--gold2);
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(201,168,108,.55));
+  z-index: 3;
+}
+#fil-marker svg { width: 100%; height: 100%; }
+
+/* ─── Chapitres ─── */
+.ev {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 76px 1fr;
+  align-items: center;
+  margin-bottom: clamp(2.6rem, 7vh, 4.2rem);
+}
+.ev:last-child { margin-bottom: 0; }
+
+.ev-node {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 1px solid var(--border3);
+  box-shadow: 0 0 0 5px var(--cream), 0 4px 14px rgba(31,47,68,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ocean2);
+  position: relative;
+  z-index: 2;
+}
+.ev-node svg { width: 26px; height: 26px; }
+
+.ev-content { grid-row: 1; padding: 0 .4rem; max-width: 360px; }
+.ev:nth-child(odd)  .ev-content { grid-column: 1; text-align: right; justify-self: end; }
+.ev:nth-child(even) .ev-content { grid-column: 3; text-align: left; justify-self: start; }
+
+.ev-chap {
+  font-family: var(--font-sub);
+  font-size: .64rem;
+  letter-spacing: .22em;
+  color: var(--gold2);
+  display: block;
+  margin-bottom: .35rem;
+}
+.ev-title {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--navy);
+  line-height: 1.3;
+  margin-bottom: .3rem;
+}
+.ev-txt {
+  font-size: .84rem;
+  color: var(--text-mid);
+  line-height: 1.65;
+}
+.ev-soon {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .58rem;
+  letter-spacing: .16em;
+  color: var(--text-light);
+  margin-top: .5rem;
+}
+
+.tl-note {
+  text-align: center;
+  font-family: var(--font-sub);
+  font-size: .72rem;
+  letter-spacing: .12em;
+  line-height: 2.1;
+  color: var(--text-light);
+  max-width: 36rem;
+  margin: 0 auto 3rem;
+}
+
+/* ─── Le poème des mariés ─── */
+.poem-sec { text-align: center; }
+.poem-sec .section-eyebrow,
+.poem-sec .section-title { text-align: center; }
+
+.poem-photo {
+  position: relative;
+  max-width: 440px;
+  margin: 0 auto 2.2rem;
+  aspect-ratio: 4 / 5;
+  background: var(--cream2);
+  border: 1px solid var(--border2);
+  box-shadow: 0 18px 50px rgba(23,36,55,.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  overflow: hidden;
+}
+.poem-photo::after {
+  content: '';
+  position: absolute; inset: 10px;
+  border: 1px solid var(--gold-border2);
+  pointer-events: none;
+}
+.poem-photo .logo-mask {
+  width: 72px; height: 72px;
+  opacity: .8;
+  position: relative; z-index: 1;
+}
+.poem-photo span {
+  position: relative; z-index: 1;
+  font-family: var(--font-sub);
+  font-size: .62rem;
+  letter-spacing: .2em;
+  color: var(--text-light);
+}
+
+.poem-text {
+  font-family: var(--font-sub);
+  font-size: clamp(.74rem, 1.8vw, .86rem);
+  letter-spacing: .12em;
+  line-height: 2.6;
+  color: var(--ocean2);
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+/* anneaux entrelacés en point final */
+.poem-rings {
+  width: 54px; height: 44px;
+  margin: 2.4rem auto 0;
+  color: var(--gold2);
+}
+.poem-rings svg { width: 100%; height: 100%; }
+
+.cta-band {
+  text-align: center;
+  border-top: 1px solid var(--gold-border);
+  padding-top: 2.6rem;
+  margin-top: 3.4rem;
+}
+.cta-band p {
+  font-family: var(--font-sub);
+  font-size: .78rem;
+  letter-spacing: .14em;
+  color: var(--text-mid);
+  margin-bottom: 1.4rem;
+}
+.cta-band .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 760px) {
+  #fil-svg { left: 27px; transform: none; width: 54px; }
+  .ev { grid-template-columns: 54px 1fr; }
+  .ev-node { grid-column: 1; width: 48px; height: 48px; }
+  .ev-node svg { width: 22px; height: 22px; }
+  .ev:nth-child(odd) .ev-content,
+  .ev:nth-child(even) .ev-content {
+    grid-column: 2; text-align: left; justify-self: start;
+    padding-left: 1.1rem; max-width: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══ OVERLAY DE TRANSITION ═══ -->
+<div id="t-overlay" aria-hidden="true">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <span class="t-eyebrow" id="t-eyebrow"></span>
+    <span class="t-title" id="t-title"></span>
+    <span class="t-quote" id="t-quote"></span>
+    <span class="t-quote-ref" id="t-quote-ref"></span>
+  </div>
+</div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="Logo.png" alt="T & F">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html">Venir & Dormir</a></li>
+    <li><a href="dresscode.html">Dress code</a></li>
+    <li><a href="histoire.html" aria-current="page">Notre histoire</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <a href="index.html">Accueil</a>
+  <a href="programme.html">Le Programme</a>
+  <a href="sejour.html">Venir & Dormir</a>
+  <a href="dresscode.html">Dress code</a>
+  <a href="histoire.html">Notre histoire</a>
+  <a href="rsvp.html">Confirmer ma venue</a>
+  <span class="menu-rule" aria-hidden="true"></span>
+  <span class="menu-date">12 · 12 · 2026</span>
+</div>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<header class="page-hero">
+  <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow reveal">Il était une fois</span>
+    <h1 class="page-title reveal reveal-delay-1">Notre Histoire</h1>
+    <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
+      <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+    </div>
+    <span class="page-sub reveal reveal-delay-3">Quatre chapitres avant le plus beau</span>
+  </div>
+</header>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+
+    <p class="tl-note reveal">
+      Cette page s'écrit en ce moment même — les chapitres complets
+      arriveront très bientôt. En attendant, suivez le cœur&hellip;
+    </p>
+
+    <!-- ═══ TIMELINE — fil de notre histoire ═══ -->
+    <section id="timeline" data-fil aria-label="Les chapitres de notre histoire">
+
+      <svg id="fil-svg" viewBox="0 0 120 1100" preserveAspectRatio="none" aria-hidden="true">
+        <path id="fil-ghost" d="M 60 0 C 96 92 24 183 60 275 C 96 367 24 458 60 550 C 96 642 24 733 60 825 C 96 917 24 1008 60 1100"/>
+        <path id="fil-path"  d="M 60 0 C 96 92 24 183 60 275 C 96 367 24 458 60 550 C 96 642 24 733 60 825 C 96 917 24 1008 60 1100"/>
+      </svg>
+      <div id="fil-marker" aria-hidden="true">
+        <svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M0 8.4 C -8 2.4 -9.2 -3.4 -5.2 -5.8 C -2.4 -7.4 0 -5 0 -3 C 0 -5 2.4 -7.4 5.2 -5.8 C 9.2 -3.4 8 2.4 0 8.4 Z"/>
+        </svg>
+      </div>
+
+      <!-- I · La rencontre -->
+      <article class="ev">
+        <div class="ev-node reveal-fade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="9.2" cy="12.6" r="5.1"/><circle cx="14.8" cy="12.6" r="5.1"/><path d="M12 3.4 l .4 1 1 .4 -1 .4 -.4 1 -.4 -1 -1 -.4 1 -.4 Z" stroke-width="1.1"/></svg></div>
+        <div class="ev-content reveal">
+          <span class="ev-chap">Chapitre I</span>
+          <h2 class="ev-title">La rencontre</h2>
+          <p class="ev-txt">Le jour où nos routes se sont croisées — et où, sans le savoir, tout a commencé.</p>
+          <span class="ev-soon">Récit complet à venir</span>
+        </div>
+      </article>
+
+      <!-- II · Les débuts -->
+      <article class="ev">
+        <div class="ev-node reveal-fade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M12 20.5 V 9.8"/><path d="M12 14.2 C 9.2 13.8 7.5 11.9 7.3 9.2 C 10 9.4 11.8 11.2 12 14"/><path d="M12 12 C 14.8 11.6 16.5 9.7 16.7 7 C 14 7.2 12.2 9 12 11.8"/><path d="M12 9.8 C 9.9 8.4 9.5 6.2 11.1 4.9 C 11.6 4.5 12.4 4.5 12.9 4.9 C 14.5 6.2 14.1 8.4 12 9.8 Z"/></svg></div>
+        <div class="ev-content reveal">
+          <span class="ev-chap">Chapitre II</span>
+          <h2 class="ev-title">Les débuts</h2>
+          <p class="ev-txt">Premiers rendez-vous, premiers fous rires, premières évidences.</p>
+          <span class="ev-soon">Récit complet à venir</span>
+        </div>
+      </article>
+
+      <!-- III · La demande -->
+      <article class="ev">
+        <div class="ev-node reveal-fade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="12" cy="14.4" r="4.4"/><path d="M12 6.6 l 2.1 2.6 -2.1 2.3 -2.1 -2.3 Z"/><path d="M4.6 6.4 l .35 .85 .85 .35 -.85 .35 -.35 .85 -.35 -.85 -.85 -.35 .85 -.35 Z" stroke-width="1"/><path d="M19.4 4.8 l .35 .85 .85 .35 -.85 .35 -.35 .85 -.35 -.85 -.85 -.35 .85 -.35 Z" stroke-width="1"/></svg></div>
+        <div class="ev-content reveal">
+          <span class="ev-chap">Chapitre III</span>
+          <h2 class="ev-title">La demande</h2>
+          <p class="ev-txt">Un genou à terre, un cœur qui bat très fort, et un oui qui n'a pas hésité.</p>
+          <span class="ev-soon">Récit complet à venir</span>
+        </div>
+      </article>
+
+      <!-- IV · Le grand oui -->
+      <article class="ev">
+        <div class="ev-node reveal-fade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="9.4" cy="13.6" r="4.6"/><circle cx="14.6" cy="11.4" r="4.6"/><path d="M14.6 4.4 l 1.4 1.8 -1.4 1.5 -1.4 -1.5 Z" stroke-width="1.2"/></svg></div>
+        <div class="ev-content reveal">
+          <span class="ev-chap">Chapitre IV · 12 décembre 2026</span>
+          <h2 class="ev-title">Le grand oui</h2>
+          <p class="ev-txt">Le plus beau chapitre — celui que nous écrirons avec vous, au Domaine les Hauts de Vertigneul.</p>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ═══ LE POÈME DES MARIÉS — toute dernière section ═══ -->
+    <section class="section poem-sec" aria-labelledby="poem-title" style="margin-top: clamp(3.4rem, 8vh, 5.6rem)">
+      <span class="section-eyebrow reveal">En guise de mot de la fin</span>
+      <h2 class="section-title reveal" id="poem-title">Le poème des mariés</h2>
+      <div class="section-flourish center reveal" aria-hidden="true">
+        <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
+          <path d="M4 9 H48"/>
+          <path d="M84 9 H128"/>
+          <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
+          <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+
+      <!-- la photo des mariés (à venir) -->
+      <figure class="poem-photo reveal" aria-label="Photo des mariés — à venir">
+        <div class="toile-img faded" aria-hidden="true"></div>
+        <span class="logo-mask" aria-hidden="true"></span>
+        <span>Notre photo arrive ici très bientôt</span>
+      </figure>
+
+      <!-- le poème (à venir) -->
+      <p class="poem-text reveal">
+        Quelques vers écrits avec amour pour les mariés<br>
+        viendront se poser ici, juste sous la photo.<br>
+        Patience — les plus belles rimes se font attendre.
+      </p>
+
+      <div class="poem-rings reveal" aria-hidden="true">
+        <svg viewBox="0 0 54 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" data-draw data-draw-dur="1500" data-draw-stagger="200">
+          <circle cx="21" cy="24" r="13"/>
+          <circle cx="33" cy="20" r="13"/>
+          <path d="M33 3.2 l 2.6 3.2 -2.6 2.8 -2.6 -2.8 Z" stroke-width="1.2"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- bandeau CTA -->
+    <div class="cta-band reveal">
+      <p>Vous savez (presque) tout — il ne manque plus que vous.</p>
+      <div class="btns">
+        <a href="programme.html" class="btn btn-outline">Le programme</a>
+        <a href="rsvp.html" class="btn btn-primary">Confirmer ma venue</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy &amp; Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir & Dormir</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Notre histoire</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
+  </div>
+</footer>
+
+<script src="toile.js"></script>
+<script src="transitions.js"></script>
+
+</body>
+</html>

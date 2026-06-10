@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Les réponses — Espace des mariés</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="Logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<!-- SheetJS pour l'export Excel (.xlsx) ; repli CSV si indisponible -->
+<script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════
+   ESPACE DES MARIÉS — réponses RSVP en direct
+   (page privée, non reliée au menu du site)
+   ═══════════════════════════════════════════════ */
+body { background: var(--cream2); }
+
+.adm-hero {
+  position: relative;
+  background: var(--toile-tint);
+  overflow: hidden;
+  padding: 2.4rem var(--page-pad) 2.2rem;
+  text-align: center;
+}
+.adm-hero .logo-mask { width: 54px; height: 54px; margin: 0 auto .8rem; }
+.adm-hero h1 {
+  position: relative;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  color: var(--navy);
+}
+.adm-hero p {
+  position: relative;
+  font-family: var(--font-sub);
+  font-size: .66rem;
+  letter-spacing: .2em;
+  color: var(--ocean2);
+  margin-top: .4rem;
+}
+.adm-hero > * { position: relative; z-index: 1; }
+
+.adm-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2.2rem clamp(.9rem, 3vw, 2.4rem) 4rem;
+}
+
+/* ─── Porte d'entrée (code) ─── */
+#gate {
+  max-width: 380px;
+  margin: 3rem auto;
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  padding: 2.2rem 2rem;
+  text-align: center;
+}
+#gate .field-label { text-align: left; }
+#gate .btn { width: 100%; margin-top: 1rem; }
+#gateErr {
+  display: none;
+  font-size: .78rem;
+  color: #8A3B4A;
+  margin-top: .9rem;
+}
+
+/* ─── Barre d'actions ─── */
+.adm-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+.adm-bar .left {
+  font-family: var(--font-sub);
+  font-size: .66rem;
+  letter-spacing: .14em;
+  color: var(--text-mid);
+}
+.adm-bar .btns { display: flex; gap: .6rem; flex-wrap: wrap; }
+
+/* ─── Cartes de stats ─── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: .9rem;
+  margin-bottom: 1.8rem;
+}
+.stat {
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  border-top: 2px solid var(--gold-border2);
+  padding: 1rem 1.1rem .9rem;
+}
+.stat b {
+  display: block;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.9rem;
+  line-height: 1.1;
+  color: var(--navy);
+}
+.stat span {
+  font-family: var(--font-sub);
+  font-size: .56rem;
+  letter-spacing: .14em;
+  color: var(--text-mid);
+  line-height: 1.7;
+  display: block;
+  margin-top: .25rem;
+}
+.stat.green b { color: var(--green); }
+.stat.red b { color: #8A3B4A; }
+
+/* ─── Tableau ─── */
+.tbl-wrap {
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .78rem;
+  min-width: 980px;
+}
+thead th {
+  font-family: var(--font-sub);
+  font-weight: 400;
+  font-size: .56rem;
+  letter-spacing: .14em;
+  text-align: left;
+  color: var(--gold2);
+  background: rgba(31,47,68,.04);
+  padding: .75rem .8rem;
+  border-bottom: 1px solid var(--border2);
+  white-space: nowrap;
+}
+tbody td {
+  padding: .7rem .8rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text-mid);
+}
+tbody tr:hover td { background: rgba(201,168,108,.05); }
+td.foyer { font-weight: 400; color: var(--navy); white-space: nowrap; }
+td.num { text-align: center; font-weight: 400; color: var(--navy); }
+.pill {
+  display: inline-block;
+  font-family: var(--font-sub);
+  font-size: .56rem;
+  letter-spacing: .12em;
+  padding: .2rem .55rem;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.pill.oui { color: var(--green); border-color: var(--green-border); background: var(--green-bg); }
+.pill.non { color: #8A3B4A; border-color: rgba(138,59,74,.35); background: rgba(138,59,74,.05); }
+.pers { line-height: 1.8; min-width: 200px; }
+.pers .ok::before  { content: '✓ '; color: var(--green); }
+.pers .ko { color: #8A3B4A; }
+.pers .ko::before  { content: '✗ '; }
+.pers .diet { color: var(--gold2); font-style: italic; }
+td.msg { max-width: 260px; font-style: italic; }
+td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
+
+#empty {
+  display: none;
+  text-align: center;
+  padding: 3rem 1rem;
+  font-family: var(--font-sub);
+  font-size: .74rem;
+  letter-spacing: .14em;
+  color: var(--text-light);
+}
+#loadErr {
+  display: none;
+  border: 1px solid rgba(138,59,74,.3);
+  background: rgba(138,59,74,.05);
+  color: #8A3B4A;
+  padding: 1rem 1.3rem;
+  font-size: .85rem;
+  margin-bottom: 1.4rem;
+}
+.adm-note {
+  font-family: var(--font-sub);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  line-height: 2;
+  color: var(--text-light);
+  margin-top: 1.2rem;
+  text-align: center;
+}
+#dash { display: none; }
+</style>
+</head>
+
+<body>
+
+<header class="adm-hero">
+  <div class="toile-img blue" aria-hidden="true"></div>
+  <span class="logo-mask" aria-hidden="true"></span>
+  <h1>Les réponses</h1>
+  <p>Espace des mariés — mise à jour automatique</p>
+</header>
+
+<div class="adm-wrap">
+
+  <!-- ═══ CODE D'ACCÈS ═══ -->
+  <section id="gate" aria-label="Accès réservé">
+    <div class="field">
+      <label class="field-label" for="gateCode">Code des mariés</label>
+      <input type="password" id="gateCode" inputmode="numeric" autocomplete="off" placeholder="····">
+    </div>
+    <button type="button" id="gateBtn" class="btn btn-primary">Entrer</button>
+    <p id="gateErr">Ce n'est pas le bon code — indice&nbsp;: la date du grand jour.</p>
+  </section>
+
+  <!-- ═══ TABLEAU DE BORD ═══ -->
+  <section id="dash" aria-label="Réponses reçues">
+
+    <div class="adm-bar">
+      <span class="left" id="lastSync">Chargement…</span>
+      <div class="btns">
+        <button type="button" id="refreshBtn" class="btn btn-outline btn-sm">Actualiser</button>
+        <button type="button" id="xlsBtn" class="btn btn-primary btn-sm">Télécharger en Excel</button>
+      </div>
+    </div>
+
+    <div id="loadErr"></div>
+
+    <div class="stats" id="stats" aria-label="Statistiques"></div>
+
+    <div class="tbl-wrap">
+      <table aria-label="Détail des réponses">
+        <thead>
+          <tr>
+            <th>Foyer (répondant)</th>
+            <th>Réponse</th>
+            <th>Adultes</th>
+            <th>Enfants</th>
+            <th>Convives, un par un</th>
+            <th>Covoiturage</th>
+            <th>Contact</th>
+            <th>Message</th>
+            <th>Reçu le</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p id="empty">Aucune réponse pour le moment — elles apparaîtront ici toutes seules.</p>
+    </div>
+
+    <p class="adm-note">
+      Les compteurs ne comptent que les personnes réellement présentes —
+      une personne marquée « ne pourra pas venir » dans un foyer n'est pas comptée.
+      Page privée&nbsp;: gardez le lien pour vous.
+    </p>
+
+  </section>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var FB_URL = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp.json';
+  var CODE = '1212';                  /* la date du grand jour */
+  var GATE_KEY = 'tf_admin_ok';
+  var REFRESH_MS = 60000;             /* mise à jour automatique : chaque minute */
+
+  var gate = document.getElementById('gate');
+  var dash = document.getElementById('dash');
+  var rowsEl = document.getElementById('rows');
+  var statsEl = document.getElementById('stats');
+  var emptyEl = document.getElementById('empty');
+  var errEl = document.getElementById('loadErr');
+  var syncEl = document.getElementById('lastSync');
+
+  var entries = [];                   /* dernières données chargées */
+
+  /* ─── Porte d'entrée ─── */
+  function tryCode() {
+    if (document.getElementById('gateCode').value.trim() === CODE) {
+      try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+      openDash();
+    } else {
+      document.getElementById('gateErr').style.display = 'block';
+    }
+  }
+  document.getElementById('gateBtn').addEventListener('click', tryCode);
+  document.getElementById('gateCode').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') tryCode();
+  });
+
+  function openDash() {
+    gate.style.display = 'none';
+    dash.style.display = 'block';
+    load();
+    setInterval(load, REFRESH_MS);
+  }
+
+  /* ─── Lecture des personnes d'un foyer ─── */
+  function peopleOf(d) {
+    var out = [];
+    ((d.people && d.people.adults) || []).forEach(function (p) {
+      out.push({ type: 'Adulte', name: p.name || '', diet: p.diet || '', present: p.present !== 'non' });
+    });
+    ((d.people && d.people.kids) || []).forEach(function (p) {
+      out.push({ type: 'Enfant', name: p.name || '', diet: p.diet || '', present: p.present !== 'non' });
+    });
+    return out;
+  }
+
+  /* nombre d'adultes / enfants qui viennent vraiment */
+  function counts(d) {
+    if (d.presence !== 'oui') return { a: 0, k: 0 };
+    var ppl = peopleOf(d);
+    if (!ppl.length) return { a: +d.adults || 0, k: +d.kids || 0 };
+    var a = 0, k = 0;
+    ppl.forEach(function (p) {
+      if (!p.present) return;
+      if (p.type === 'Adulte') a++; else k++;
+    });
+    return { a: a, k: k };
+  }
+
+  function frDateTime(iso) {
+    try {
+      return new Date(iso).toLocaleString('fr-FR', {
+        day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+      });
+    } catch (e) { return ''; }
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  var CAR = { propose: 'Propose des places', cherche: 'Cherche une place', '': '—' };
+
+  /* ─── Affichage ─── */
+  function render() {
+    /* stats */
+    var nOui = 0, nNon = 0, a = 0, k = 0, allerg = 0, carP = 0, carC = 0;
+    entries.forEach(function (d) {
+      if (d.presence === 'oui') nOui++; else nNon++;
+      var c = counts(d);
+      a += c.a; k += c.k;
+      peopleOf(d).forEach(function (p) {
+        if (p.present && p.diet && !/^aucun/i.test(p.diet.trim())) allerg++;
+      });
+      if (d.presence === 'oui') {
+        if (d.covoiturage === 'propose') carP++;
+        if (d.covoiturage === 'cherche') carC++;
+      }
+    });
+    statsEl.innerHTML =
+      '<div class="stat"><b>' + entries.length + '</b><span>Réponses reçues</span></div>' +
+      '<div class="stat green"><b>' + nOui + '</b><span>Foyers présents</span></div>' +
+      '<div class="stat red"><b>' + nNon + '</b><span>Foyers absents</span></div>' +
+      '<div class="stat"><b>' + a + '</b><span>Adultes qui viennent</span></div>' +
+      '<div class="stat"><b>' + k + '</b><span>Enfants qui viennent</span></div>' +
+      '<div class="stat"><b>' + (a + k) + '</b><span>Couverts au total</span></div>' +
+      '<div class="stat"><b>' + allerg + '</b><span>Allergies / régimes</span></div>' +
+      '<div class="stat"><b>' + carP + ' / ' + carC + '</b><span>Covoit. offre / demande</span></div>';
+
+    /* lignes */
+    rowsEl.innerHTML = entries.map(function (d) {
+      var c = counts(d);
+      var ppl = peopleOf(d).map(function (p) {
+        if (!p.name && !p.diet) return '';
+        return '<span class="' + (p.present ? 'ok' : 'ko') + '">' + esc(p.name || '(sans nom)') +
+          (p.present
+            ? (p.diet ? ' — <span class="diet">' + esc(p.diet) + '</span>' : '')
+            : ' (absent·e)') +
+          '</span>';
+      }).filter(Boolean).join('<br>');
+      return '<tr>' +
+        '<td class="foyer">' + esc(d.name || '—') + '</td>' +
+        '<td><span class="pill ' + (d.presence === 'oui' ? 'oui">Présents' : 'non">Absents') + '</span></td>' +
+        '<td class="num">' + c.a + '</td>' +
+        '<td class="num">' + c.k + '</td>' +
+        '<td class="pers">' + (ppl || '—') + '</td>' +
+        '<td>' + esc(CAR[d.covoiturage] || d.covoiturage || '—') + '</td>' +
+        '<td>' + esc(d.contact || '—') + '</td>' +
+        '<td class="msg">' + esc(d.message || '—') + '</td>' +
+        '<td class="when">' + frDateTime(d.ts) + '</td>' +
+        '</tr>';
+    }).join('');
+    emptyEl.style.display = entries.length ? 'none' : 'block';
+  }
+
+  /* ─── Chargement Firebase ─── */
+  function load() {
+    fetch(FB_URL)
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        entries = Object.keys(data || {}).map(function (key) { return data[key]; })
+          .filter(function (d) { return d && typeof d === 'object'; })
+          .sort(function (x, y) { return (y.ts || '').localeCompare(x.ts || ''); });
+        errEl.style.display = 'none';
+        syncEl.textContent = 'À jour — ' + new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+          + ' · ' + entries.length + ' réponse(s)';
+        render();
+      })
+      .catch(function (e) {
+        errEl.style.display = 'block';
+        errEl.textContent = 'Impossible de charger les réponses (' + e.message + ') — vérifiez la connexion puis « Actualiser ».';
+      });
+  }
+  document.getElementById('refreshBtn').addEventListener('click', load);
+
+  /* ─── Export Excel (.xlsx via SheetJS, repli CSV) ─── */
+  function exportExcel() {
+    var stamp = new Date().toISOString().slice(0, 10);
+
+    var foyers = entries.map(function (d) {
+      var c = counts(d);
+      return {
+        'Répondant': d.name || '',
+        'Réponse': d.presence === 'oui' ? 'Présents' : 'Absents',
+        'Adultes qui viennent': c.a,
+        'Enfants qui viennent': c.k,
+        'Total couverts': c.a + c.k,
+        'Covoiturage': CAR[d.covoiturage] || d.covoiturage || '',
+        'Contact': d.contact || '',
+        'Message': d.message || '',
+        'Reçu le': frDateTime(d.ts)
+      };
+    });
+
+    var personnes = [];
+    entries.forEach(function (d) {
+      peopleOf(d).forEach(function (p) {
+        if (!p.name && !p.diet) return;
+        personnes.push({
+          'Foyer': d.name || '',
+          'Type': p.type,
+          'Prénom & Nom': p.name || '',
+          'Vient': d.presence === 'oui' && p.present ? 'Oui' : 'Non',
+          'Allergies / régime': p.diet || ''
+        });
+      });
+    });
+
+    if (window.XLSX) {
+      var wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(foyers), 'Foyers');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(personnes), 'Personnes');
+      XLSX.writeFile(wb, 'RSVP-Mariage-TF-' + stamp + '.xlsx');
+      return;
+    }
+
+    /* repli : CSV (s'ouvre dans Excel) */
+    var cols = Object.keys(foyers[0] || { 'Répondant': '' });
+    var csv = '﻿' + cols.join(';') + '\n' + foyers.map(function (r) {
+      return cols.map(function (cName) {
+        return '"' + String(r[cName] == null ? '' : r[cName]).replace(/"/g, '""') + '"';
+      }).join(';');
+    }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    var aEl = document.createElement('a');
+    aEl.href = URL.createObjectURL(blob);
+    aEl.download = 'RSVP-Mariage-TF-' + stamp + '.csv';
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+  }
+  document.getElementById('xlsBtn').addEventListener('click', exportExcel);
+
+  /* déjà entré pendant cette session ? */
+  var ok = false;
+  try { ok = sessionStorage.getItem(GATE_KEY) === '1'; } catch (e) {}
+  if (ok) openDash();
+}());
+</script>
+
+</body>
+</html>
