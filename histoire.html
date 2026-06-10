@@ -120,6 +120,59 @@
   margin-top: .5rem;
 }
 
+/* ─── Polaroïds — emplacements pour le shooting ─── */
+.polaroid {
+  display: inline-block;
+  background: #fff;
+  padding: 9px 9px 11px;
+  box-shadow: 0 14px 32px rgba(23,36,55,.16), 0 3px 8px rgba(23,36,55,.1);
+  transform: rotate(var(--tilt, -2.4deg)) scale(1);
+  width: min(225px, 82%);
+  margin-top: 1.2rem;
+}
+.polaroid.reveal-zoom { transform: rotate(var(--tilt, -2.4deg)) scale(.94); }
+.polaroid.reveal-zoom.in-view { transform: rotate(var(--tilt, -2.4deg)) scale(1); }
+.polaroid .ph {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  aspect-ratio: 1 / 1;
+  background: var(--cream3);
+  overflow: hidden;
+}
+.polaroid .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.polaroid .ph .logo-mask { width: 34px; height: 34px; opacity: .28; }
+.polaroid .ph i {
+  font-style: normal;
+  font-family: var(--font-sub);
+  font-size: .5rem;
+  letter-spacing: .18em;
+  color: var(--text-light);
+}
+.polaroid .ph-cap {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .56rem;
+  letter-spacing: .16em;
+  text-align: center;
+  color: var(--ocean2);
+  padding-top: .6rem;
+}
+
+/* rangée de polaroïds après la timeline */
+.pola-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(.9rem, 4vw, 2.4rem);
+  flex-wrap: wrap;
+  margin: 3.4rem 0 .6rem;
+}
+.pola-row .polaroid { margin-top: 0; width: 200px; }
+
 .tl-note {
   text-align: center;
   font-family: var(--font-sub);
@@ -303,48 +356,80 @@
 
       <!-- I · La rencontre -->
       <article class="ev">
-        <div class="ev-node reveal-fade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="9.2" cy="12.6" r="5.1"/><circle cx="14.8" cy="12.6" r="5.1"/><path d="M12 3.4 l .4 1 1 .4 -1 .4 -.4 1 -.4 -1 -1 -.4 1 -.4 Z" stroke-width="1.1"/></svg></div>
+        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="9.2" cy="12.6" r="5.1"/><circle cx="14.8" cy="12.6" r="5.1"/><path d="M12 3.4 l .4 1 1 .4 -1 .4 -.4 1 -.4 -1 -1 -.4 1 -.4 Z" stroke-width="1.1"/></svg></div>
         <div class="ev-content reveal">
           <span class="ev-chap">Chapitre I</span>
           <h2 class="ev-title">La rencontre</h2>
           <p class="ev-txt">Le jour où nos routes se sont croisées — et où, sans le savoir, tout a commencé.</p>
           <span class="ev-soon">Récit complet à venir</span>
+          <div class="polaroid reveal-zoom" style="--tilt:-2.6deg" data-photo="chapitre-1">
+            <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+            <span class="ph-cap">La rencontre</span>
+          </div>
         </div>
       </article>
 
       <!-- II · Les débuts -->
       <article class="ev">
-        <div class="ev-node reveal-fade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M12 20.5 V 9.8"/><path d="M12 14.2 C 9.2 13.8 7.5 11.9 7.3 9.2 C 10 9.4 11.8 11.2 12 14"/><path d="M12 12 C 14.8 11.6 16.5 9.7 16.7 7 C 14 7.2 12.2 9 12 11.8"/><path d="M12 9.8 C 9.9 8.4 9.5 6.2 11.1 4.9 C 11.6 4.5 12.4 4.5 12.9 4.9 C 14.5 6.2 14.1 8.4 12 9.8 Z"/></svg></div>
+        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M12 20.5 V 9.8"/><path d="M12 14.2 C 9.2 13.8 7.5 11.9 7.3 9.2 C 10 9.4 11.8 11.2 12 14"/><path d="M12 12 C 14.8 11.6 16.5 9.7 16.7 7 C 14 7.2 12.2 9 12 11.8"/><path d="M12 9.8 C 9.9 8.4 9.5 6.2 11.1 4.9 C 11.6 4.5 12.4 4.5 12.9 4.9 C 14.5 6.2 14.1 8.4 12 9.8 Z"/></svg></div>
         <div class="ev-content reveal">
           <span class="ev-chap">Chapitre II</span>
           <h2 class="ev-title">Les débuts</h2>
           <p class="ev-txt">Premiers rendez-vous, premiers fous rires, premières évidences.</p>
           <span class="ev-soon">Récit complet à venir</span>
+          <div class="polaroid reveal-zoom" style="--tilt:2.1deg" data-photo="chapitre-2">
+            <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+            <span class="ph-cap">Les débuts</span>
+          </div>
         </div>
       </article>
 
       <!-- III · La demande -->
       <article class="ev">
-        <div class="ev-node reveal-fade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="12" cy="14.4" r="4.4"/><path d="M12 6.6 l 2.1 2.6 -2.1 2.3 -2.1 -2.3 Z"/><path d="M4.6 6.4 l .35 .85 .85 .35 -.85 .35 -.35 .85 -.35 -.85 -.85 -.35 .85 -.35 Z" stroke-width="1"/><path d="M19.4 4.8 l .35 .85 .85 .35 -.85 .35 -.35 .85 -.35 -.85 -.85 -.35 .85 -.35 Z" stroke-width="1"/></svg></div>
+        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="12" cy="14.4" r="4.4"/><path d="M12 6.6 l 2.1 2.6 -2.1 2.3 -2.1 -2.3 Z"/><path d="M4.6 6.4 l .35 .85 .85 .35 -.85 .35 -.35 .85 -.35 -.85 -.85 -.35 .85 -.35 Z" stroke-width="1"/><path d="M19.4 4.8 l .35 .85 .85 .35 -.85 .35 -.35 .85 -.35 -.85 -.85 -.35 .85 -.35 Z" stroke-width="1"/></svg></div>
         <div class="ev-content reveal">
           <span class="ev-chap">Chapitre III</span>
           <h2 class="ev-title">La demande</h2>
           <p class="ev-txt">Un genou à terre, un cœur qui bat très fort, et un oui qui n'a pas hésité.</p>
           <span class="ev-soon">Récit complet à venir</span>
+          <div class="polaroid reveal-zoom" style="--tilt:-1.8deg" data-photo="chapitre-3">
+            <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+            <span class="ph-cap">La demande</span>
+          </div>
         </div>
       </article>
 
       <!-- IV · Le grand oui -->
       <article class="ev">
-        <div class="ev-node reveal-fade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="9.4" cy="13.6" r="4.6"/><circle cx="14.6" cy="11.4" r="4.6"/><path d="M14.6 4.4 l 1.4 1.8 -1.4 1.5 -1.4 -1.5 Z" stroke-width="1.2"/></svg></div>
+        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="9.4" cy="13.6" r="4.6"/><circle cx="14.6" cy="11.4" r="4.6"/><path d="M14.6 4.4 l 1.4 1.8 -1.4 1.5 -1.4 -1.5 Z" stroke-width="1.2"/></svg></div>
         <div class="ev-content reveal">
           <span class="ev-chap">Chapitre IV · 12 décembre 2026</span>
           <h2 class="ev-title">Le grand oui</h2>
           <p class="ev-txt">Le plus beau chapitre — celui que nous écrirons avec vous, au Domaine les Hauts de Vertigneul.</p>
+          <div class="polaroid reveal-zoom" style="--tilt:2.4deg" data-photo="chapitre-4">
+            <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+            <span class="ph-cap">Vertigneul, nous voilà</span>
+          </div>
         </div>
       </article>
 
     </section>
+
+    <!-- ═══ rangée façon shooting — emplacements photos ═══ -->
+    <div class="pola-row" data-stagger="130" aria-label="Photos du shooting, à venir">
+      <div class="polaroid reveal-zoom" style="--tilt:-3.1deg" data-photo="shooting-1">
+        <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+        <span class="ph-cap">Le shooting arrive</span>
+      </div>
+      <div class="polaroid reveal-zoom" style="--tilt:1.7deg" data-photo="shooting-2">
+        <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+        <span class="ph-cap">Souvenirs en préparation</span>
+      </div>
+      <div class="polaroid reveal-zoom" style="--tilt:-1.4deg" data-photo="shooting-3">
+        <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+        <span class="ph-cap">Un peu de patience&hellip;</span>
+      </div>
+    </div>
 
     <!-- ═══ LE POÈME DES MARIÉS — toute dernière section ═══ -->
     <section class="section poem-sec" aria-labelledby="poem-title" style="margin-top: clamp(3.4rem, 8vh, 5.6rem)">
@@ -352,16 +437,16 @@
       <h2 class="section-title reveal" id="poem-title">Le poème des mariés</h2>
       <div class="section-flourish center reveal" aria-hidden="true">
         <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
-          <path d="M4 9 H48"/>
-          <path d="M84 9 H128"/>
-          <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
-          <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
-          <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          <path d="M6 9 C 20 4 34 14 48 9"/>
+          <path d="M84 9 C 98 4 112 14 126 9"/>
+          <path d="M66 13.8 C 61.8 10.5 60.9 7.6 62.8 5.9 C 64.2 4.7 66 5.6 66 7.1 C 66 5.6 67.8 4.7 69.2 5.9 C 71.1 7.6 70.2 10.5 66 13.8 Z"/>
+          <circle cx="55" cy="9" r="1.1" fill="currentColor" stroke="none"/>
+          <circle cx="77" cy="9" r="1.1" fill="currentColor" stroke="none"/>
         </svg>
       </div>
 
       <!-- la photo des mariés (à venir) -->
-      <figure class="poem-photo reveal" aria-label="Photo des mariés — à venir">
+      <figure class="poem-photo reveal-zoom" aria-label="Photo des mariés — à venir">
         <div class="toile-img faded" aria-hidden="true"></div>
         <span class="logo-mask" aria-hidden="true"></span>
         <span>Notre photo arrive ici très bientôt</span>

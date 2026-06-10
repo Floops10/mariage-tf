@@ -20,8 +20,16 @@
      et tout élément déjà dépassé est révélé immédiatement.
      ═════════════════════════════════════════════ */
   var pendingReveal = Array.prototype.slice.call(
-    document.querySelectorAll('.reveal, .reveal-fade, .reveal-left, .reveal-right')
+    document.querySelectorAll('.reveal, .reveal-fade, .reveal-left, .reveal-right, .reveal-zoom, .reveal-pop')
   );
+
+  /* [data-stagger] : les enfants d'un groupe apparaissent en cascade */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-stagger]'), function (group) {
+    var step = parseFloat(group.getAttribute('data-stagger') || '80');
+    Array.prototype.forEach.call(group.children, function (child, i) {
+      child.style.transitionDelay = Math.round(i * step) + 'ms';
+    });
+  });
 
   function checkReveals() {
     if (!pendingReveal.length) return;
@@ -132,6 +140,37 @@
   }
 
   /* ═════════════════════════════════════════════
+     FEUILLE QUI S'OUVRE — en haut de page la feuille garde ses
+     marges ; au fil du scroll elle s'élargit en douceur jusqu'aux
+     bords de l'écran (custom property --sheet-zoom, amortie).
+     ═════════════════════════════════════════════ */
+  var pageBody = document.querySelector('.page-body');
+  var zoomCur = 0, zoomTgt = 0, zoomRunning = false;
+
+  function zoomTick() {
+    zoomCur += (zoomTgt - zoomCur) * 0.13;
+    if (Math.abs(zoomTgt - zoomCur) < 0.002) {
+      zoomCur = zoomTgt;
+      zoomRunning = false;
+    }
+    pageBody.style.setProperty('--sheet-zoom', zoomCur.toFixed(4));
+    /* l'élargissement déplace la mise en page : on resynchronise */
+    checkReveals();
+    checkDraws();
+    if (filWrap && filPath) updateFil();
+    if (zoomRunning) requestAnimationFrame(zoomTick);
+  }
+
+  function kickSheetZoom(y) {
+    if (!pageBody || reduceMotion || window.innerWidth <= 1020) return;
+    zoomTgt = Math.max(0, Math.min(1, (y - 30) / 460));
+    if (!zoomRunning && zoomTgt !== zoomCur) {
+      zoomRunning = true;
+      requestAnimationFrame(zoomTick);
+    }
+  }
+
+  /* ═════════════════════════════════════════════
      PARALLAXE — [data-parallax="0.15"] glisse à une fraction du scroll
      ═════════════════════════════════════════════ */
   var paraEls = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
@@ -159,6 +198,7 @@
       checkDraws();
       if (filWrap && filPath) updateFil();
       if (paraEls.length && !reduceMotion) updateParallax(y);
+      kickSheetZoom(y);
       ticking = false;
     });
   }

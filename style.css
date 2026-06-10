@@ -488,8 +488,22 @@ ul, ol { list-style: none; }
 }
 .reveal-right.in-view { opacity: 1; transform: translateX(0); }
 
+/* apparition en douceur, légèrement agrandie */
+.reveal-zoom {
+  opacity: 0; transform: scale(.94);
+  transition: opacity .85s var(--ease-out), transform .85s var(--ease-out);
+}
+.reveal-zoom.in-view { opacity: 1; transform: scale(1); }
+
+/* petit rebond élégant (médaillons, pastilles) */
+.reveal-pop {
+  opacity: 0; transform: scale(.55);
+  transition: opacity .5s var(--ease-out), transform .7s var(--ease-spring);
+}
+.reveal-pop.in-view { opacity: 1; transform: scale(1); }
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-fade, .reveal-left, .reveal-right {
+  .reveal, .reveal-fade, .reveal-left, .reveal-right, .reveal-zoom, .reveal-pop {
     opacity: 1 !important; transform: none !important; transition: none !important;
   }
 }
@@ -589,6 +603,8 @@ ul, ol { list-style: none; }
 .page-body {
   position: relative;
   background: var(--cream2);
+  /* 0 = feuille avec marges (haut de page) → 1 = pleine largeur (au scroll) */
+  --sheet-zoom: 0;
 }
 
 .sheet {
@@ -601,6 +617,12 @@ ul, ol { list-style: none; }
   border-right: 1px solid var(--border);
   box-shadow: 0 0 60px rgba(31,47,68,.07);
   padding: clamp(2.6rem, 6vw, 5rem) clamp(1.4rem, 5vw, 4.6rem) clamp(3rem, 7vw, 5.4rem);
+}
+/* la feuille s'ouvre en douceur jusqu'aux bords de l'écran (piloté par toile.js) */
+@media (min-width: 1021px) {
+  .page-body .sheet {
+    max-width: calc(1020px + (100vw - 1020px) * var(--sheet-zoom));
+  }
 }
 
 .section { margin-bottom: clamp(3.4rem, 8vh, 5.6rem); }
