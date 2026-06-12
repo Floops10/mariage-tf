@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -83,9 +83,9 @@
   margin-bottom: 1.3rem;
 }
 
-/* ─── Pastilles de couleur ─── */
+/* ─── Pastilles de couleur (cliquables → déclinaisons) ─── */
 .swatches { display: flex; flex-wrap: wrap; gap: 1rem 1.2rem; }
-.swatch { width: 78px; text-align: center; }
+.swatch { width: 78px; text-align: center; cursor: pointer; }
 .swatch i {
   position: relative;
   display: block;
@@ -93,6 +93,12 @@
   margin: 0 auto .5rem;
   border-radius: 50%;
   box-shadow: inset 0 0 0 1px rgba(31,47,68,.16), 0 5px 12px rgba(31,47,68,.14);
+  transition: transform .35s var(--ease-spring), box-shadow .3s ease;
+}
+.swatch:hover i,
+.swatch:focus-visible i {
+  transform: scale(1.12);
+  box-shadow: inset 0 0 0 1px rgba(31,47,68,.16), 0 8px 18px rgba(31,47,68,.22), 0 0 0 3px var(--gold-border2);
 }
 /* à bannir : une fine barre diagonale */
 .swatch.ban i::after {
@@ -151,6 +157,110 @@
   .tier-fig svg { max-width: 200px; }
   .sw-groups { gap: 1.6rem; }
 }
+
+/* ─── Pop-up des déclinaisons ─── */
+#shade-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  background: rgba(23,36,55,.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .35s ease, visibility 0s linear .35s;
+}
+#shade-modal.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .35s ease;
+}
+.sm-card {
+  position: relative;
+  width: min(540px, 100%);
+  max-height: 88svh;
+  overflow-y: auto;
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  box-shadow: 0 30px 80px rgba(23,36,55,.4);
+  padding: 2.4rem 2rem 2rem;
+  text-align: center;
+  transform: scale(.92) translateY(12px);
+  transition: transform .45s var(--ease-out);
+}
+#shade-modal.open .sm-card { transform: scale(1) translateY(0); }
+.sm-card::after {
+  content: '';
+  position: absolute; inset: 9px;
+  border: 1px solid var(--gold-border2);
+  pointer-events: none;
+}
+.sm-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 36px; height: 36px;
+  z-index: 2;
+}
+.sm-close span {
+  position: absolute;
+  left: 9px; top: 17px;
+  width: 18px; height: 1.5px;
+  background: var(--navy);
+}
+.sm-close span:nth-child(1) { transform: rotate(45deg); }
+.sm-close span:nth-child(2) { transform: rotate(-45deg); }
+#smName {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--navy);
+  margin: .8rem 0 .35rem;
+}
+#smSub {
+  font-family: var(--font-sub);
+  font-size: .64rem;
+  letter-spacing: .14em;
+  line-height: 2;
+  color: var(--text-mid);
+  margin-bottom: 1.5rem;
+}
+.sm-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem .8rem;
+}
+.sm-chip i {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(31,47,68,.14), 0 4px 10px rgba(31,47,68,.12);
+}
+/* couleurs interdites : la barre diagonale sur chaque déclinaison */
+#shade-modal.ban .sm-chip i::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(45deg, transparent 47%, rgba(138,59,74,.7) 47% 53%, transparent 53%);
+}
+.sm-chip span {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .5rem;
+  letter-spacing: .08em;
+  color: var(--text-light);
+  margin-top: .4rem;
+}
+@media (max-width: 480px) {
+  .sm-grid { grid-template-columns: repeat(4, 1fr); gap: .7rem .5rem; }
+  .sm-card { padding: 2.2rem 1.2rem 1.6rem; }
+}
 </style>
 </head>
 
@@ -176,7 +286,7 @@
   <ul class="nav-links" role="list">
     <li><a href="index.html">Accueil</a></li>
     <li><a href="programme.html">Le Programme</a></li>
-    <li><a href="sejour.html">Venir & Dormir</a></li>
+    <li><a href="sejour.html">Venir au Domaine</a></li>
     <li><a href="dresscode.html" aria-current="page">Dress code</a></li>
     <li><a href="histoire.html">Notre histoire</a></li>
   </ul>
@@ -192,7 +302,7 @@
   <span class="logo-mask menu-logo" aria-hidden="true"></span>
   <a href="index.html">Accueil</a>
   <a href="programme.html">Le Programme</a>
-  <a href="sejour.html">Venir & Dormir</a>
+  <a href="sejour.html">Venir au Domaine</a>
   <a href="dresscode.html">Dress code</a>
   <a href="histoire.html">Notre histoire</a>
   <a href="rsvp.html">Confirmer ma venue</a>
@@ -235,6 +345,7 @@
         Pour que les photos soient belles et que chacun trouve sa place dans le décor,
         voici les couleurs du jour&nbsp;: celles des mariés — qu'on ne touche pas —,
         celles réservées au cortège, et la palette que nous recommandons à nos invités.
+        <b>Cliquez sur une pastille</b> pour voir toutes les déclinaisons de la couleur.
       </p>
 
       <!-- ═══ 1 · LES MARIÉS ═══ -->
@@ -281,14 +392,14 @@
           <span class="tier-tag ban">À bannir — réservées aux mariés</span>
           <h3 id="tier-maries">Les couleurs des mariés</h3>
           <p class="tier-txt">
-            Ce sont les teintes que nous porterons ce jour-là. Par élégance pour vos hôtes —
-            et pour que personne ne nous vole la vedette sur les photos — merci de ne pas
-            vous habiller dans ces couleurs.
+            Le blanc et l'ivoire habilleront la mariée, le bleu marine habillera le marié.
+            Ces couleurs sont réservées — <b>la teinte exacte comme toutes ses déclinaisons</b>,
+            plus claires ou plus foncées. Merci de ne pas les porter, ni de près ni de loin.
           </p>
           <div class="swatches" data-stagger="70">
-            <div class="swatch ban reveal-zoom"><i style="background:#FAF5EF"></i><span>Blanc<br>& ivoire</span></div>
-            <div class="swatch ban reveal-zoom"><i style="background:#1F2F44"></i><span>Bleu<br>nuit</span></div>
-            <div class="swatch ban reveal-zoom"><i style="background:#C9A86C"></i><span>Or</span></div>
+            <div class="swatch ban reveal-zoom"><i style="background:#FFFFFF"></i><span>Blanc<br>la mariée</span></div>
+            <div class="swatch ban reveal-zoom"><i style="background:#F2E9D8"></i><span>Ivoire<br>la mariée</span></div>
+            <div class="swatch ban reveal-zoom"><i style="background:#1F2440"></i><span>Bleu marine<br>le marié</span></div>
           </div>
         </div>
       </div>
@@ -329,24 +440,24 @@
           <p class="fig-caption">Le cortège</p>
         </div>
         <div>
-          <span class="tier-tag res">Réservées au cortège</span>
+          <span class="tier-tag res">Réservées au cortège — à éviter aussi</span>
           <h3 id="tier-cortege">Filles &amp; garçons d'honneur</h3>
           <p class="tier-txt">
-            Le cortège aura ses couleurs bien à lui, pour qu'on le reconnaisse au premier
-            regard. Si vous n'en faites pas partie, laissez-leur ces teintes — elles sont
-            à eux pour la journée.
+            Les filles d'honneur seront en bleu ciel, les garçons d'honneur en beige sable —
+            pour qu'on reconnaisse le cortège au premier regard. Ces deux teintes,
+            <b>déclinaisons comprises</b>, leur sont réservées&nbsp;: laissez-les-leur pour la journée.
           </p>
           <div class="sw-groups">
             <div class="sw-group">
               <h4>Filles d'honneur</h4>
               <div class="swatches" data-stagger="70">
-                <div class="swatch reveal-zoom"><i style="background:#BFD4E6"></i><span>Bleu<br>poudré</span></div>
+                <div class="swatch reveal-zoom"><i style="background:#BFD4E6"></i><span>Bleu ciel<br>Soft Sky</span></div>
               </div>
             </div>
             <div class="sw-group">
               <h4>Garçons d'honneur</h4>
               <div class="swatches" data-stagger="70">
-                <div class="swatch reveal-zoom"><i style="background:#2E4B3F"></i><span>Vert<br>sapin</span></div>
+                <div class="swatch reveal-zoom"><i style="background:#D8CFC4"></i><span>Beige sable<br>Warm Sand</span></div>
               </div>
             </div>
           </div>
@@ -395,26 +506,35 @@
           <p class="fig-caption">Nos invités</p>
         </div>
         <div>
-          <span class="tier-tag rec">Recommandées pour vous</span>
+          <span class="tier-tag rec">Conseillées pour vous</span>
           <h3 id="tier-invites">Nos invités</h3>
           <p class="tier-txt">
-            Pour le reste, faites-vous plaisir dans une palette d'hiver élégante&nbsp;:
-            tons profonds, matières chaudes — le velours est le bienvenu. De quoi être
-            superbes sans marcher sur nos plates-bandes.
+            Pour vous, un large choix de teintes profondes et chaleureuses. Ce sont des
+            conseils&nbsp;: <b>chaque couleur s'entend avec toutes ses déclinaisons</b>.
+            Deux règles seulement — rester loin des couleurs des mariés et du cortège,
+            et <b>bannir les tons pastel</b>&nbsp;: préférez des teintes franches et profondes.
           </p>
-          <div class="swatches" data-stagger="70">
-            <div class="swatch reveal-zoom"><i style="background:#C7A98B"></i><span>Camel</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#8A7B6E"></i><span>Taupe</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#B9BDC4"></i><span>Gris<br>perle</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#94A78F"></i><span>Vert<br>sauge</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#6E2F3C"></i><span>Bordeaux</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#5C4356"></i><span>Prune</span></div>
+          <div class="swatches" data-stagger="55">
+            <div class="swatch reveal-zoom"><i style="background:#351E28"></i><span>Cassis</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#6A5155"></i><span>Cocoa<br>Powder</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#2D6362"></i><span>Teal</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#1B4733"></i><span>Vert<br>sapin</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#FF4D00"></i><span>Red<br>Orange</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#A47DAB"></i><span>Lilac</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#C7C7C7"></i><span>Gris<br>perle</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#2E2418"></i><span>Chocolat</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#A60D3F"></i><span>Framboise</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#C4548F"></i><span>Rose<br>orchidée</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#1A5B41"></i><span>Vert<br>anglais</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#D9A521"></i><span>Moutarde</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#471950"></i><span>Prune</span></div>
           </div>
         </div>
       </div>
 
       <p class="note-line reveal">
-        Les palettes exactes seront confirmées ici très bientôt — l'esprit, lui, ne changera pas.
+        En résumé&nbsp;: blanc, ivoire, bleu marine, bleu ciel, beige sable et tons pastel
+        sont à éviter — déclinaisons comprises. Tout le reste de l'hiver est à vous.
       </p>
     </section>
 
@@ -435,12 +555,12 @@
   <div class="footer-inner">
     <span class="logo-mask footer-logo" aria-hidden="true"></span>
     <span class="footer-script">Thomy &amp; Florian</span>
-    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-date"><a href="reponses.html">12 · XII · MMXXVI</a></p>
     <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
       <a href="programme.html">Le Programme</a>
-      <a href="sejour.html">Venir & Dormir</a>
+      <a href="sejour.html">Venir au Domaine</a>
       <a href="dresscode.html">Dress code</a>
       <a href="histoire.html">Notre histoire</a>
       <a href="rsvp.html">RSVP</a>
@@ -449,8 +569,136 @@
   </div>
 </footer>
 
-<script src="toile.js"></script>
-<script src="transitions.js"></script>
+<!-- ═══ POP-UP DES DÉCLINAISONS ═══ -->
+<div id="shade-modal" aria-hidden="true">
+  <div class="sm-card" role="dialog" aria-modal="true" aria-labelledby="smName">
+    <button type="button" class="sm-close" aria-label="Fermer"><span></span><span></span></button>
+    <span class="tier-tag" id="smTag"></span>
+    <h3 id="smName"></h3>
+    <p id="smSub"></p>
+    <div class="sm-grid" id="smGrid"></div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   DÉCLINAISONS — un clic sur une pastille ouvre le
+   pop-up avec la couleur déclinée du clair au foncé.
+   ═══════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var modal = document.getElementById('shade-modal');
+  var grid  = document.getElementById('smGrid');
+  var tagEl = document.getElementById('smTag');
+  var nameEl = document.getElementById('smName');
+  var subEl  = document.getElementById('smSub');
+
+  var KINDS = {
+    ban: { tag: 'À bannir — réservées aux mariés',
+           sub: 'La couleur et toutes ces déclinaisons sont à éviter — sur toutes leurs tonalités.' },
+    res: { tag: 'Réservées au cortège',
+           sub: 'Ces tonalités habilleront le cortège — merci de les leur laisser, déclinaisons comprises.' },
+    rec: { tag: 'Conseillée pour vous',
+           sub: 'Toutes ces tonalités sont les bienvenues — des teintes franches, jamais pastel.' }
+  };
+
+  /* ─── Déclinaisons choisies à la main : chaque couleur reste
+         dans sa famille tonale (jamais vers le blanc ni le noir) ─── */
+  var PALETTES = {
+    /* la mariée */
+    '#FFFFFF': ['#FFFFFF', '#FDFAF4', '#FAF6ED', '#F8F2E5', '#F5EEDE', '#F3EAD6', '#F0E6CF', '#EDE2C7'],
+    '#F2E9D8': ['#F7F1E4', '#F2E9D8', '#EDE2CC', '#E8DAC0', '#E3D3B4', '#DECBA8', '#D9C49C', '#D4BC90'],
+    /* le marié : du bleu marine au bleu royal */
+    '#1F2440': ['#1F2440', '#252447', '#2B2A55', '#2F2C66', '#2F2C79', '#302C9B', '#2C28AC', '#2823BC'],
+    /* le cortège */
+    '#BFD4E6': ['#CFDFEE', '#C7DAEA', '#BFD4E6', '#B2CBE0', '#A5C2DA', '#98B9D4', '#8BB0CE', '#7EA7C8'],
+    '#D8CFC4': ['#E2DBD1', '#DDD5CA', '#D8CFC4', '#CFC4B6', '#C6B9A8', '#BDAE9A', '#B4A38C', '#AB987E'],
+    /* les invités */
+    '#351E28': ['#6B4656', '#5F3E4C', '#533642', '#472E38', '#3B262E', '#351E28', '#2E1A23', '#27161E'],
+    '#6A5155': ['#937B7F', '#887074', '#7D656A', '#735B5F', '#6A5155', '#5F484C', '#544043', '#49383A'],
+    '#2D6362': ['#4E8E8D', '#458381', '#3C7876', '#346D6C', '#2D6362', '#275857', '#214D4C', '#1B4241'],
+    '#1B4733': ['#3B7A5C', '#347052', '#2D6648', '#265C3F', '#205136', '#1B4733', '#163D2C', '#113325'],
+    '#FF4D00': ['#FF7033', '#FF6624', '#FF5C14', '#FF4D00', '#F04800', '#E04300', '#D03E00', '#C03900'],
+    '#A47DAB': ['#BD9EC3', '#B492BB', '#AB88B3', '#A47DAB', '#99719F', '#8D6693', '#815B87', '#75507B'],
+    '#C7C7C7': ['#D6D6D6', '#CFCFCF', '#C7C7C7', '#BBBBBB', '#AFAFAF', '#A3A3A3', '#979797', '#8B8B8B'],
+    '#2E2418': ['#5C4A34', '#52422E', '#483A28', '#3E3222', '#352B1D', '#2E2418', '#271E14', '#201810'],
+    '#A60D3F': ['#D42658', '#C92052', '#BE1A4B', '#B31345', '#A60D3F', '#970B39', '#880A33', '#79092D'],
+    '#C4548F': ['#DC7BAC', '#D572A4', '#CE699C', '#C75E95', '#C4548F', '#B44983', '#A43F77', '#94356B'],
+    '#1A5B41': ['#338A66', '#2C7F5D', '#267455', '#21694C', '#1D6246', '#1A5B41', '#15503A', '#114532'],
+    '#D9A521': ['#E8BC4A', '#E3B43A', '#DEAC2D', '#D9A521', '#CC9A1E', '#BF8F1B', '#B28418', '#A57915'],
+    '#471950': ['#6F2C7C', '#662871', '#5D2466', '#54205B', '#471950', '#3F1647', '#37133E', '#2F1035']
+  };
+
+  function parseRgb(str) {
+    var m = str.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+    return m ? [+m[1], +m[2], +m[3]] : [0, 0, 0];
+  }
+  function mix(c, t, k) {
+    return c.map(function (v, i) { return Math.round(v + (t[i] - v) * k); });
+  }
+  function toHex(c) {
+    return '#' + c.map(function (v) { return v.toString(16).padStart(2, '0'); }).join('').toUpperCase();
+  }
+  function shades(base) {
+    var hex = toHex(base);
+    if (PALETTES[hex]) return PALETTES[hex];
+    /* repli prudent : on reste tout près de la couleur d'origine */
+    var W = [255, 255, 255], B = [20, 16, 12];
+    return [mix(base, W, .22), mix(base, W, .11), base.slice(), mix(base, B, .12), mix(base, B, .24)]
+      .map(toHex);
+  }
+
+  function openModal(sw) {
+    var base = parseRgb(getComputedStyle(sw.querySelector('i')).backgroundColor);
+    var name = sw.querySelector('span').innerHTML.replace(/<br\s*\/?>/gi, ' — ').replace(/<[^>]+>/g, '').trim()
+      .replace(/ — (Soft Sky|Warm Sand)/, ' · $1')
+      .replace(/(Cocoa) — (Powder)|(Red) — (Orange)|(Gris) — (perle)|(Rose) — (orchidée)|(Vert) — (sapin|anglais)/g,
+        function (m) { return m.replace(' — ', ' '); });
+    var tagClass = (sw.closest('.tier').querySelector('.tier-tag').className.match(/\b(ban|res|rec)\b/) || ['rec'])[1];
+    /* une pastille barrée reste "à bannir" même chez les mariés */
+    if (sw.classList.contains('ban')) tagClass = 'ban';
+
+    tagEl.className = 'tier-tag ' + tagClass;
+    tagEl.textContent = KINDS[tagClass].tag;
+    nameEl.textContent = name;
+    subEl.textContent = KINDS[tagClass].sub;
+    modal.className = tagClass === 'ban' ? 'ban' : '';
+
+    grid.innerHTML = shades(base).map(function (h) {
+      return '<div class="sm-chip"><i style="background:' + h + '"></i><span>' + h + '</span></div>';
+    }).join('');
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.swatch'), function (sw) {
+    sw.setAttribute('role', 'button');
+    sw.setAttribute('tabindex', '0');
+    sw.setAttribute('aria-haspopup', 'dialog');
+    sw.addEventListener('click', function () { openModal(sw); });
+    sw.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(sw); }
+    });
+  });
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal || e.target.closest('.sm-close')) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+}());
+</script>
+
+<script src="toile.js?v=4"></script>
+<script src="transitions.js?v=4"></script>
 
 </body>
 </html>

@@ -11,7 +11,7 @@
   const PAGES = {
     'index.html':     { eyebrow: '12 décembre 2026',        title: 'Thomy & Florian' },
     'programme.html': { eyebrow: 'Le jour J',               title: 'Le Programme' },
-    'sejour.html':    { eyebrow: 'Itinéraires & nuitées',   title: 'Venir & Dormir' },
+    'sejour.html':    { eyebrow: 'La route du domaine',     title: 'Venir au Domaine' },
     'dresscode.html': { eyebrow: 'Pour vous faire beaux',   title: 'Le Dress Code' },
     'histoire.html':  { eyebrow: 'Il était une fois',       title: 'Notre Histoire' },
     'rsvp.html':      { eyebrow: 'Avant le 1ᵉʳ août 2026',  title: 'Confirmer ma venue' },
@@ -116,6 +116,8 @@
       if (!href) return;
       if (/^(#|https?:|mailto:|tel:|javascript)/i.test(href)) return;
       if (a.hasAttribute('target')) return;
+      /* l'espace des mariés n'a pas de portes : navigation directe */
+      if (/reponses\.html/i.test(href)) return;
 
       e.preventDefault();
       e.stopPropagation();

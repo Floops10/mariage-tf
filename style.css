@@ -835,6 +835,8 @@ ul, ol { list-style: none; }
   color: rgba(250,245,239,.55);
   margin-bottom: 1.4rem;
 }
+/* la date est un lien discret (espace des mariés) — rien ne doit le trahir */
+.footer-date a { color: inherit; cursor: default; }
 .footer-place {
   font-family: var(--font-body);
   font-weight: 300;

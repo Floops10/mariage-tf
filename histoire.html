@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -222,16 +222,38 @@
   letter-spacing: .2em;
   color: var(--text-light);
 }
+/* avec la vraie photo : le cadre épouse l'image */
+.poem-photo.has-photo {
+  aspect-ratio: auto;
+  display: block;
+  padding: 14px;
+  background: var(--cream);
+}
+.poem-photo.has-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* titre du poème, comme sur le faire-part */
+.poem-title-script {
+  font-family: var(--font-script);
+  font-size: clamp(1.7rem, 4.6vw, 2.4rem);
+  color: var(--navy);
+  margin-bottom: 1.1rem;
+}
 
 .poem-text {
   font-family: var(--font-sub);
   font-size: clamp(.74rem, 1.8vw, .86rem);
   letter-spacing: .12em;
-  line-height: 2.6;
+  line-height: 2.5;
   color: var(--ocean2);
   max-width: 36rem;
   margin: 0 auto;
 }
+.poem-text p { margin-bottom: 1.5rem; }
+.poem-text p:last-child { margin-bottom: 0; }
 
 /* anneaux entrelacés en point final */
 .poem-rings {
@@ -256,6 +278,40 @@
 }
 .cta-band .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
 
+/* ═══ OUVERTURE — un cœur qui s'ouvre sur l'histoire ═══ */
+#heart-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 30%, rgba(79,109,138,.4) 0%, transparent 60%),
+    var(--navy);
+  transition: opacity .9s ease .35s, visibility 0s linear 1.3s;
+}
+#heart-intro svg {
+  width: min(44vmin, 320px);
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 18px rgba(201,168,108,.35));
+  transition: transform 1.25s cubic-bezier(.7, 0, .84, .35), opacity .9s ease .3s;
+}
+#heart-intro path {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: hiDraw 1.05s var(--ease-out) .15s forwards;
+}
+@keyframes hiDraw { to { stroke-dashoffset: 0; } }
+#heart-intro.open { opacity: 0; visibility: hidden; }
+#heart-intro.open svg { transform: scale(30); opacity: 0; }
+@media (prefers-reduced-motion: reduce) { #heart-intro { display: none; } }
+
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 760px) {
   #fil-svg { left: 27px; transform: none; width: 54px; }
@@ -272,6 +328,28 @@
 </head>
 
 <body>
+
+<!-- ═══ OUVERTURE — un cœur qui s'ouvre sur l'histoire ═══ -->
+<div id="heart-intro" aria-hidden="true">
+  <svg viewBox="0 0 100 100">
+    <path pathLength="100" d="M50 78 C 27 61.5 18.5 48 23.5 37.2 C 27 29.6 36.2 27.2 42.5 31.9 C 46.6 35 49 39.4 50 43.6 C 51 39.4 53.4 35 57.5 31.9 C 63.8 27.2 73 29.6 76.5 37.2 C 81.5 48 73 61.5 50 78 Z"/>
+  </svg>
+</div>
+<script>
+/* le cœur se dessine, puis grandit jusqu'à laisser place à l'histoire */
+(function () {
+  var hi = document.getElementById('heart-intro');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { hi.remove(); return; }
+  var prev = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+  setTimeout(function () { hi.classList.add('open'); }, 1400);
+  setTimeout(function () {
+    hi.remove();
+    document.body.style.overflow = prev;
+    window.dispatchEvent(new Event('scroll'));
+  }, 2750);
+}());
+</script>
 
 <!-- ═══ OVERLAY DE TRANSITION ═══ -->
 <div id="t-overlay" aria-hidden="true">
@@ -293,7 +371,7 @@
   <ul class="nav-links" role="list">
     <li><a href="index.html">Accueil</a></li>
     <li><a href="programme.html">Le Programme</a></li>
-    <li><a href="sejour.html">Venir & Dormir</a></li>
+    <li><a href="sejour.html">Venir au Domaine</a></li>
     <li><a href="dresscode.html">Dress code</a></li>
     <li><a href="histoire.html" aria-current="page">Notre histoire</a></li>
   </ul>
@@ -309,7 +387,7 @@
   <span class="logo-mask menu-logo" aria-hidden="true"></span>
   <a href="index.html">Accueil</a>
   <a href="programme.html">Le Programme</a>
-  <a href="sejour.html">Venir & Dormir</a>
+  <a href="sejour.html">Venir au Domaine</a>
   <a href="dresscode.html">Dress code</a>
   <a href="histoire.html">Notre histoire</a>
   <a href="rsvp.html">Confirmer ma venue</a>
@@ -326,7 +404,7 @@
     <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
       <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
     </div>
-    <span class="page-sub reveal reveal-delay-3">Quatre chapitres avant le plus beau</span>
+    <span class="page-sub reveal reveal-delay-3">De la rencontre au grand oui</span>
   </div>
 </header>
 
@@ -337,16 +415,16 @@
   <main class="sheet">
 
     <p class="tl-note reveal">
-      Cette page s'écrit en ce moment même — les chapitres complets
-      arriveront très bientôt. En attendant, suivez le cœur&hellip;
+      Notre histoire, racontée à grands traits — l'essentiel tient
+      en six chapitres. Suivez le cœur&hellip;
     </p>
 
     <!-- ═══ TIMELINE — fil de notre histoire ═══ -->
     <section id="timeline" data-fil aria-label="Les chapitres de notre histoire">
 
-      <svg id="fil-svg" viewBox="0 0 120 1100" preserveAspectRatio="none" aria-hidden="true">
-        <path id="fil-ghost" d="M 60 0 C 96 92 24 183 60 275 C 96 367 24 458 60 550 C 96 642 24 733 60 825 C 96 917 24 1008 60 1100"/>
-        <path id="fil-path"  d="M 60 0 C 96 92 24 183 60 275 C 96 367 24 458 60 550 C 96 642 24 733 60 825 C 96 917 24 1008 60 1100"/>
+      <svg id="fil-svg" viewBox="0 0 120 1650" preserveAspectRatio="none" aria-hidden="true">
+        <path id="fil-ghost" d="M 60 0 C 96 92 24 183 60 275 C 96 367 24 458 60 550 C 96 642 24 733 60 825 C 96 917 24 1008 60 1100 C 96 1192 24 1283 60 1375 C 96 1467 24 1558 60 1650"/>
+        <path id="fil-path"  d="M 60 0 C 96 92 24 183 60 275 C 96 367 24 458 60 550 C 96 642 24 733 60 825 C 96 917 24 1008 60 1100 C 96 1192 24 1283 60 1375 C 96 1467 24 1558 60 1650"/>
       </svg>
       <div id="fil-marker" aria-hidden="true">
         <svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -354,59 +432,98 @@
         </svg>
       </div>
 
-      <!-- I · La rencontre -->
+      <!-- I · La princesse -->
       <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="9.2" cy="12.6" r="5.1"/><circle cx="14.8" cy="12.6" r="5.1"/><path d="M12 3.4 l .4 1 1 .4 -1 .4 -.4 1 -.4 -1 -1 -.4 1 -.4 Z" stroke-width="1.1"/></svg></div>
+        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M5.2 16.5 L4.2 8.2 L8.7 11.3 L12 6.2 L15.3 11.3 L19.8 8.2 L18.8 16.5 Z"/><path d="M6 19 H18"/><circle cx="4.2" cy="6.4" r=".9"/><circle cx="12" cy="4.4" r=".9"/><circle cx="19.8" cy="6.4" r=".9"/></svg></div>
         <div class="ev-content reveal">
           <span class="ev-chap">Chapitre I</span>
-          <h2 class="ev-title">La rencontre</h2>
-          <p class="ev-txt">Le jour où nos routes se sont croisées — et où, sans le savoir, tout a commencé.</p>
-          <span class="ev-soon">Récit complet à venir</span>
+          <h2 class="ev-title">La princesse</h2>
+          <p class="ev-txt">Il y a des soirées qui ne paient pas de mine — et qui pourtant
+          changent une vie. Au détour de l'une d'elles, une nouvelle venue rejoint la bande
+          d'amis&nbsp;: Thomy, que l'on surnommait déjà «&nbsp;princesse&nbsp;». Personne ne
+          se doutait que la princesse allait rester.</p>
           <div class="polaroid reveal-zoom" style="--tilt:-2.6deg" data-photo="chapitre-1">
             <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
-            <span class="ph-cap">La rencontre</span>
+            <span class="ph-cap">La princesse</span>
           </div>
         </div>
       </article>
 
-      <!-- II · Les débuts -->
+      <!-- II · Les rendez-vous playlist -->
       <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M12 20.5 V 9.8"/><path d="M12 14.2 C 9.2 13.8 7.5 11.9 7.3 9.2 C 10 9.4 11.8 11.2 12 14"/><path d="M12 12 C 14.8 11.6 16.5 9.7 16.7 7 C 14 7.2 12.2 9 12 11.8"/><path d="M12 9.8 C 9.9 8.4 9.5 6.2 11.1 4.9 C 11.6 4.5 12.4 4.5 12.9 4.9 C 14.5 6.2 14.1 8.4 12 9.8 Z"/></svg></div>
+        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M4.6 14 V12 a7.4 7.4 0 0 1 14.8 0 v2"/><rect x="3.4" y="13.6" width="3.6" height="6.2" rx="1.6"/><rect x="17" y="13.6" width="3.6" height="6.2" rx="1.6"/><path d="M12 16.6 v-3.4 l2.4 -.65 v3.3" stroke-width="1.2"/><circle cx="11" cy="16.8" r="1" stroke-width="1.2"/><circle cx="13.4" cy="16" r="1" stroke-width="1.2"/></svg></div>
         <div class="ev-content reveal">
           <span class="ev-chap">Chapitre II</span>
-          <h2 class="ev-title">Les débuts</h2>
-          <p class="ev-txt">Premiers rendez-vous, premiers fous rires, premières évidences.</p>
-          <span class="ev-soon">Récit complet à venir</span>
+          <h2 class="ev-title">Les rendez-vous playlist</h2>
+          <p class="ev-txt">Le courant passe, simplement. Elle revient, soir après soir,
+          et trouve sa place comme une évidence. Pour s'offrir des moments rien qu'à deux,
+          ils inventent les «&nbsp;rendez-vous playlist&nbsp;»&nbsp;: écouter de la musique
+          ensemble, juste eux — la plus jolie des excuses.</p>
           <div class="polaroid reveal-zoom" style="--tilt:2.1deg" data-photo="chapitre-2">
             <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
-            <span class="ph-cap">Les débuts</span>
+            <span class="ph-cap">Les rendez-vous playlist</span>
           </div>
         </div>
       </article>
 
-      <!-- III · La demande -->
+      <!-- III · Main dans la main -->
+      <article class="ev">
+        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M12 5.6 L21 9.4 L12 13.2 L3 9.4 Z"/><path d="M7 11.2 V15.4 C 7 16.8 9.2 18 12 18 C 14.8 18 17 16.8 17 15.4 V11.2"/><path d="M21 9.4 V14.4"/><circle cx="21" cy="15.5" r=".9" fill="currentColor" stroke="none"/></svg></div>
+        <div class="ev-content reveal">
+          <span class="ev-chap">Chapitre III</span>
+          <h2 class="ev-title">Main dans la main</h2>
+          <p class="ev-txt">Même école de management, même BDE, même projet entrepreneurial —
+          et un diplôme décroché main dans la main, avec une soutenance à deux&hellip; et la
+          meilleure note de la promotion. Certains duos s'accordent sans avoir besoin de mots.</p>
+          <div class="polaroid reveal-zoom" style="--tilt:-1.8deg" data-photo="chapitre-3">
+            <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+            <span class="ph-cap">Main dans la main</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- IV · La promesse -->
+      <article class="ev">
+        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M9.6 17.4 C 5.4 14.2 3.8 11.4 4.8 9.1 C 5.5 7.5 7.4 7 8.7 8 C 9.4 8.5 9.8 9.2 9.9 9.9 C 10 9.2 10.4 8.5 11.1 8 C 11.6 7.6 12.2 7.5 12.8 7.6"/><path d="M14.4 19.2 C 10.2 16 8.6 13.2 9.6 10.9 C 10.3 9.3 12.2 8.8 13.5 9.8 C 14.2 10.3 14.6 11 14.7 11.7 C 14.8 11 15.2 10.3 15.9 9.8 C 17.2 8.8 19.1 9.3 19.8 10.9 C 20.8 13.2 19.2 16 14.4 19.2 Z"/><path d="M12 4.6 l .35 .9 .9 .35 -.9 .35 -.35 .9 -.35 -.9 -.9 -.35 .9 -.35 Z" stroke-width="1"/></svg></div>
+        <div class="ev-content reveal">
+          <span class="ev-chap">Chapitre IV</span>
+          <h2 class="ev-title">La promesse</h2>
+          <p class="ev-txt">Longtemps après, l'évidence s'est dite à voix haute&nbsp;:
+          aller plus loin. Ils se sont promis d'être ensemble pour la vie, de se marier,
+          de s'aimer au quotidien — et d'être toujours là, l'un pour l'autre.</p>
+          <div class="polaroid reveal-zoom" style="--tilt:2.4deg" data-photo="chapitre-4">
+            <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
+            <span class="ph-cap">La promesse</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- V · Les fiançailles -->
       <article class="ev">
         <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="12" cy="14.4" r="4.4"/><path d="M12 6.6 l 2.1 2.6 -2.1 2.3 -2.1 -2.3 Z"/><path d="M4.6 6.4 l .35 .85 .85 .35 -.85 .35 -.35 .85 -.35 -.85 -.85 -.35 .85 -.35 Z" stroke-width="1"/><path d="M19.4 4.8 l .35 .85 .85 .35 -.85 .35 -.35 .85 -.35 -.85 -.85 -.35 .85 -.35 Z" stroke-width="1"/></svg></div>
         <div class="ev-content reveal">
-          <span class="ev-chap">Chapitre III</span>
-          <h2 class="ev-title">La demande</h2>
-          <p class="ev-txt">Un genou à terre, un cœur qui bat très fort, et un oui qui n'a pas hésité.</p>
-          <span class="ev-soon">Récit complet à venir</span>
-          <div class="polaroid reveal-zoom" style="--tilt:-1.8deg" data-photo="chapitre-3">
+          <span class="ev-chap">Chapitre V</span>
+          <h2 class="ev-title">Les fiançailles</h2>
+          <p class="ev-txt">Le 28 février, sous une arche, genou gauche à terre, un cœur qui
+          bat très fort — et un oui qui n'a pas hésité une seconde. Les promis sont
+          devenus fiancés.</p>
+          <div class="polaroid reveal-zoom" style="--tilt:-2.2deg" data-photo="chapitre-5">
             <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
-            <span class="ph-cap">La demande</span>
+            <span class="ph-cap">Les fiançailles</span>
           </div>
         </div>
       </article>
 
-      <!-- IV · Le grand oui -->
+      <!-- VI · Le grand oui -->
       <article class="ev">
         <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><circle cx="9.4" cy="13.6" r="4.6"/><circle cx="14.6" cy="11.4" r="4.6"/><path d="M14.6 4.4 l 1.4 1.8 -1.4 1.5 -1.4 -1.5 Z" stroke-width="1.2"/></svg></div>
         <div class="ev-content reveal">
-          <span class="ev-chap">Chapitre IV · 12 décembre 2026</span>
+          <span class="ev-chap">Chapitre VI · 12 décembre 2026</span>
           <h2 class="ev-title">Le grand oui</h2>
-          <p class="ev-txt">Le plus beau chapitre — celui que nous écrirons avec vous, au Domaine les Hauts de Vertigneul.</p>
-          <div class="polaroid reveal-zoom" style="--tilt:2.4deg" data-photo="chapitre-4">
+          <p class="ev-txt">Un amour pur et lucide, fort de toutes leurs différences, des mêmes
+          valeurs et du même amour pour ceux qui les entourent. Le 12 décembre 2026, les fiancés
+          deviendront mariés — pour poursuivre leur vie à deux, dans le saint nom de Jésus-Christ.</p>
+          <div class="polaroid reveal-zoom" style="--tilt:1.9deg" data-photo="chapitre-6">
             <span class="ph"><span class="logo-mask" aria-hidden="true"></span><i>Photo à venir</i></span>
             <span class="ph-cap">Vertigneul, nous voilà</span>
           </div>
@@ -445,19 +562,29 @@
         </svg>
       </div>
 
-      <!-- la photo des mariés (à venir) -->
-      <figure class="poem-photo reveal-zoom" aria-label="Photo des mariés — à venir">
-        <div class="toile-img faded" aria-hidden="true"></div>
-        <span class="logo-mask" aria-hidden="true"></span>
-        <span>Notre photo arrive ici très bientôt</span>
+      <!-- la photo des futurs mariés -->
+      <figure class="poem-photo has-photo reveal-zoom">
+        <img src="poeme-photo.jpg" alt="Thomy et Florian — la demande en fiançailles, sous une arche de jardin">
       </figure>
 
-      <!-- le poème (à venir) -->
-      <p class="poem-text reveal">
-        Quelques vers écrits avec amour pour les mariés<br>
-        viendront se poser ici, juste sous la photo.<br>
-        Patience — les plus belles rimes se font attendre.
-      </p>
+      <!-- le poème -->
+      <p class="poem-title-script reveal">Dans quelques mois</p>
+      <div class="poem-text reveal">
+        <p>Et si nos chemins<br>
+        se rejoignaient enfin<br>
+        pour ne plus faire qu'un<br>
+        en saison des jasmins&nbsp;?</p>
+
+        <p>Nous pourrions sans doute<br>
+        prendre la route<br>
+        vers un bel avenir<br>
+        et ce qu'il a à offrir</p>
+
+        <p>La main du bon Dieu,<br>
+        l'étreinte de nos proches,<br>
+        comme il nous tarde<br>
+        d'entendre sonner les cloches.</p>
+      </div>
 
       <div class="poem-rings reveal" aria-hidden="true">
         <svg viewBox="0 0 54 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" data-draw data-draw-dur="1500" data-draw-stagger="200">
@@ -485,12 +612,12 @@
   <div class="footer-inner">
     <span class="logo-mask footer-logo" aria-hidden="true"></span>
     <span class="footer-script">Thomy &amp; Florian</span>
-    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-date"><a href="reponses.html">12 · XII · MMXXVI</a></p>
     <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
       <a href="programme.html">Le Programme</a>
-      <a href="sejour.html">Venir & Dormir</a>
+      <a href="sejour.html">Venir au Domaine</a>
       <a href="dresscode.html">Dress code</a>
       <a href="histoire.html">Notre histoire</a>
       <a href="rsvp.html">RSVP</a>
@@ -499,8 +626,8 @@
   </div>
 </footer>
 
-<script src="toile.js"></script>
-<script src="transitions.js"></script>
+<script src="toile.js?v=4"></script>
+<script src="transitions.js?v=4"></script>
 
 </body>
 </html>

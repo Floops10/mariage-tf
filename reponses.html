@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 <!-- SheetJS pour l'export Excel (.xlsx) ; repli CSV si indisponible -->
 <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
@@ -181,6 +181,89 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
   letter-spacing: .14em;
   color: var(--text-light);
 }
+
+/* ─── Supprimer une réponse ─── */
+.row-del {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: .8rem;
+  line-height: 1;
+  color: var(--text-light);
+  border: 1px solid transparent;
+  transition: color .25s ease, border-color .25s ease, background .25s ease;
+}
+.row-del:hover {
+  color: #8A3B4A;
+  border-color: rgba(138,59,74,.35);
+  background: rgba(138,59,74,.06);
+}
+
+#del-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  background: rgba(23,36,55,.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+}
+#del-modal.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .3s ease;
+}
+.dm-card {
+  position: relative;
+  width: min(420px, 100%);
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  box-shadow: 0 30px 80px rgba(23,36,55,.4);
+  padding: 2.2rem 1.8rem 1.8rem;
+  text-align: center;
+  transform: scale(.92) translateY(10px);
+  transition: transform .4s var(--ease-out);
+}
+#del-modal.open .dm-card { transform: scale(1) translateY(0); }
+.dm-card::after {
+  content: '';
+  position: absolute; inset: 8px;
+  border: 1px solid rgba(138,59,74,.3);
+  pointer-events: none;
+}
+.dm-card h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.35rem;
+  color: var(--navy);
+  margin-bottom: .6rem;
+}
+.dm-card p {
+  font-size: .85rem;
+  color: var(--text-mid);
+  margin-bottom: .4rem;
+}
+.dm-card p b { font-weight: 500; color: var(--navy); }
+.dm-card .dm-note {
+  font-family: var(--font-sub);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+.dm-btns { display: flex; gap: .7rem; justify-content: center; position: relative; z-index: 1; }
+.btn-danger {
+  color: var(--cream);
+  background: #8A3B4A;
+  padding: .8rem 1.6rem;
+}
+.btn-danger:hover { background: #6E2F3C; }
+.btn-danger[disabled] { opacity: .55; cursor: wait; }
 #loadErr {
   display: none;
   border: 1px solid rgba(138,59,74,.3);
@@ -218,10 +301,10 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
   <section id="gate" aria-label="Accès réservé">
     <div class="field">
       <label class="field-label" for="gateCode">Code des mariés</label>
-      <input type="password" id="gateCode" inputmode="numeric" autocomplete="off" placeholder="····">
+      <input type="password" id="gateCode" inputmode="numeric" autocomplete="off" placeholder="········">
     </div>
     <button type="button" id="gateBtn" class="btn btn-primary">Entrer</button>
-    <p id="gateErr">Ce n'est pas le bon code — indice&nbsp;: la date du grand jour.</p>
+    <p id="gateErr">Ce n'est pas le bon code.</p>
   </section>
 
   <!-- ═══ TABLEAU DE BORD ═══ -->
@@ -252,6 +335,7 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
             <th>Contact</th>
             <th>Message</th>
             <th>Reçu le</th>
+            <th aria-label="Supprimer"></th>
           </tr>
         </thead>
         <tbody id="rows"></tbody>
@@ -268,12 +352,27 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
   </section>
 </div>
 
+<!-- ═══ CONFIRMATION DE SUPPRESSION ═══ -->
+<div id="del-modal" aria-hidden="true">
+  <div class="dm-card" role="alertdialog" aria-modal="true" aria-labelledby="dmTitle">
+    <h3 id="dmTitle">Supprimer cette réponse&nbsp;?</h3>
+    <p>La réponse de <b id="dmName"></b> sera définitivement effacée.</p>
+    <p class="dm-note">La personne pourra toujours répondre à nouveau sur le site.</p>
+    <div class="dm-btns">
+      <button type="button" id="dmCancel" class="btn btn-outline btn-sm">Non, annuler</button>
+      <button type="button" id="dmYes" class="btn btn-danger btn-sm">Oui, supprimer</button>
+    </div>
+    <p id="dmErr" style="display:none;margin-top:1rem;font-size:.78rem;color:#8A3B4A"></p>
+  </div>
+</div>
+
 <script>
 (function () {
   'use strict';
 
-  var FB_URL = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp.json';
-  var CODE = '1212';                  /* la date du grand jour */
+  var FB_URL  = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp.json';
+  var FB_ROOT = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp/';
+  var CODE = '10090203';              /* code des mariés */
   var GATE_KEY = 'tf_admin_ok';
   var REFRESH_MS = 60000;             /* mise à jour automatique : chaque minute */
 
@@ -395,6 +494,9 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
         '<td>' + esc(d.contact || '—') + '</td>' +
         '<td class="msg">' + esc(d.message || '—') + '</td>' +
         '<td class="when">' + frDateTime(d.ts) + '</td>' +
+        '<td><button type="button" class="row-del" data-key="' + esc(d.__key || '') + '"' +
+          ' data-name="' + esc(d.name || '') + '"' +
+          ' title="Supprimer cette réponse" aria-label="Supprimer la réponse de ' + esc(d.name || '') + '">✕</button></td>' +
         '</tr>';
     }).join('');
     emptyEl.style.display = entries.length ? 'none' : 'block';
@@ -408,7 +510,11 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
         return r.json();
       })
       .then(function (data) {
-        entries = Object.keys(data || {}).map(function (key) { return data[key]; })
+        entries = Object.keys(data || {}).map(function (key) {
+            var d = data[key];
+            if (d && typeof d === 'object') d.__key = key;
+            return d;
+          })
           .filter(function (d) { return d && typeof d === 'object'; })
           .sort(function (x, y) { return (y.ts || '').localeCompare(x.ts || ''); });
         errEl.style.display = 'none';
@@ -480,6 +586,53 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
     document.body.removeChild(aEl);
   }
   document.getElementById('xlsBtn').addEventListener('click', exportExcel);
+
+  /* ─── Supprimer une réponse — confirmation obligatoire ─── */
+  var delModal = document.getElementById('del-modal');
+  var delKey = null;
+
+  rowsEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('.row-del');
+    if (!btn) return;
+    delKey = btn.getAttribute('data-key');
+    document.getElementById('dmName').textContent = btn.getAttribute('data-name') || 'ce foyer';
+    document.getElementById('dmErr').style.display = 'none';
+    delModal.classList.add('open');
+  });
+
+  function closeDel() {
+    delModal.classList.remove('open');
+    delKey = null;
+  }
+  document.getElementById('dmCancel').addEventListener('click', closeDel);
+  delModal.addEventListener('click', function (e) {
+    if (e.target === delModal) closeDel();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeDel();
+  });
+
+  document.getElementById('dmYes').addEventListener('click', function () {
+    if (!delKey) return;
+    var btn = this;
+    btn.disabled = true;
+    btn.textContent = 'Suppression…';
+    fetch(FB_ROOT + encodeURIComponent(delKey) + '.json', { method: 'DELETE' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        closeDel();
+        load();
+      })
+      .catch(function (e2) {
+        var err = document.getElementById('dmErr');
+        err.textContent = 'La suppression a échoué (' + e2.message + ') — réessayez.';
+        err.style.display = 'block';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = 'Oui, supprimer';
+      });
+  });
 
   /* déjà entré pendant cette session ? */
   var ok = false;

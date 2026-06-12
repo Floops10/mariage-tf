@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 <!-- génération de l'invitation PDF (rendu fidèle de la carte + export) -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -95,6 +95,66 @@
   font-size: .8rem;
   color: #8A3B4A;
   text-align: center;
+}
+
+/* ─── Confirmation avant envoi ─── */
+#send-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  background: rgba(23,36,55,.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+}
+#send-modal.open { opacity: 1; visibility: visible; transition: opacity .3s ease; }
+.sd-card {
+  position: relative;
+  width: min(440px, 100%);
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  box-shadow: 0 30px 80px rgba(23,36,55,.4);
+  padding: 2.3rem 1.9rem 1.9rem;
+  text-align: center;
+  transform: scale(.92) translateY(10px);
+  transition: transform .4s var(--ease-out);
+}
+#send-modal.open .sd-card { transform: scale(1) translateY(0); }
+.sd-card::after {
+  content: '';
+  position: absolute; inset: 8px;
+  border: 1px solid var(--gold-border2);
+  pointer-events: none;
+}
+.sd-card h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.4rem;
+  color: var(--navy);
+  margin-bottom: .7rem;
+}
+.sd-card p { font-size: .88rem; color: var(--text-mid); margin-bottom: .5rem; }
+.sd-card .sd-note {
+  font-family: var(--font-sub);
+  font-size: .64rem;
+  letter-spacing: .1em;
+  line-height: 2;
+  color: var(--gold2);
+  margin: .4rem 0 1.5rem;
+}
+.sd-btns {
+  display: flex;
+  gap: .7rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 /* ─── Bloc « qui vient » : une ligne par personne ─── */
@@ -291,6 +351,66 @@
   margin-top: 1.4rem;
 }
 
+/* ─── réponses closes ─── */
+#closedBox {
+  text-align: center;
+  border: 1px solid var(--border2);
+  padding: 2.6rem 1.6rem;
+}
+#closedBox .logo-mask { width: 64px; height: 64px; margin: 0 auto 1.1rem; }
+#closedBox h2 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  color: var(--navy);
+  margin-bottom: .7rem;
+}
+#closedBox p { font-size: .88rem; color: var(--text-mid); max-width: 30rem; margin: 0 auto; }
+#closedBox a { color: var(--gold2); border-bottom: 1px solid var(--gold-border2); }
+
+/* ─── retrouver son invitation ─── */
+#recover {
+  text-align: center;
+  margin-top: 2.6rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--gold-border);
+}
+#recToggle {
+  font-family: var(--font-sub);
+  font-size: .64rem;
+  letter-spacing: .16em;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border2);
+  padding-bottom: 2px;
+  transition: color var(--dur-mid) ease, border-color var(--dur-mid) ease;
+}
+#recToggle:hover { color: var(--gold2); border-color: var(--gold); }
+#recBox { max-width: 430px; margin: 1.4rem auto 0; }
+#recBox .rec-hint {
+  font-size: .78rem;
+  font-style: italic;
+  color: var(--text-light);
+  margin-bottom: .9rem;
+}
+.rec-row { display: flex; gap: .7rem; align-items: stretch; }
+.rec-row input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: .95rem;
+  color: var(--navy);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border2);
+  padding: .45rem .1rem;
+  border-radius: 0;
+  transition: border-color var(--dur-mid) ease;
+}
+.rec-row input:focus { outline: none; border-color: var(--gold); }
+#recBtn[disabled] { opacity: .55; cursor: wait; }
+#recErr { display: none; margin-top: .9rem; font-size: .78rem; color: #8A3B4A; }
+
 /* déjà répondu */
 #prevAnswer {
   display: none;
@@ -378,7 +498,7 @@
   <ul class="nav-links" role="list">
     <li><a href="index.html">Accueil</a></li>
     <li><a href="programme.html">Le Programme</a></li>
-    <li><a href="sejour.html">Venir & Dormir</a></li>
+    <li><a href="sejour.html">Venir au Domaine</a></li>
     <li><a href="dresscode.html">Dress code</a></li>
     <li><a href="histoire.html">Notre histoire</a></li>
   </ul>
@@ -394,7 +514,7 @@
   <span class="logo-mask menu-logo" aria-hidden="true"></span>
   <a href="index.html">Accueil</a>
   <a href="programme.html">Le Programme</a>
-  <a href="sejour.html">Venir & Dormir</a>
+  <a href="sejour.html">Venir au Domaine</a>
   <a href="dresscode.html">Dress code</a>
   <a href="histoire.html">Notre histoire</a>
   <a href="rsvp.html">Confirmer ma venue</a>
@@ -524,9 +644,31 @@
 
         <p class="form-note reveal">
           Une réponse pour tout le foyer suffit — vous pourrez la modifier
-          en revenant sur cette page.
+          en revenant sur cette page, jusqu'au 1ᵉʳ août 2026.
         </p>
       </form>
+
+      <!-- ═══ RÉPONSES CLOSES — après le 1ᵉʳ août 2026 ═══ -->
+      <div id="closedBox" hidden>
+        <span class="logo-mask" aria-hidden="true"></span>
+        <h2>Les réponses sont closes</h2>
+        <p>La date limite était le 1ᵉʳ août 2026 — le plan de table est désormais
+        entre les mains des mariés. Un imprévu, une question&nbsp;?
+        Écrivez-nous&nbsp;: <a href="mailto:florian.bouchart10@icloud.com">florian.bouchart10@icloud.com</a></p>
+      </div>
+
+      <!-- ═══ RETROUVER SON INVITATION ═══ -->
+      <div id="recover" class="reveal">
+        <button type="button" id="recToggle">Je n'ai pas enregistré mon invitation</button>
+        <div id="recBox" hidden>
+          <p class="rec-hint">Entrez le nom utilisé pour votre réponse — on retrouve tout, l'invitation comprise.</p>
+          <div class="rec-row">
+            <input type="text" id="recName" autocomplete="name" placeholder="Prénom & Nom">
+            <button type="button" id="recBtn" class="btn btn-outline btn-sm">Retrouver</button>
+          </div>
+          <p id="recErr" role="alert"></p>
+        </div>
+      </div>
 
       <!-- ═══ CONFIRMATION ═══ -->
       <section id="confirm" aria-live="polite">
@@ -551,12 +693,12 @@
   <div class="footer-inner">
     <span class="logo-mask footer-logo" aria-hidden="true"></span>
     <span class="footer-script">Thomy &amp; Florian</span>
-    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-date"><a href="reponses.html">12 · XII · MMXXVI</a></p>
     <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
       <a href="programme.html">Le Programme</a>
-      <a href="sejour.html">Venir & Dormir</a>
+      <a href="sejour.html">Venir au Domaine</a>
       <a href="dresscode.html">Dress code</a>
       <a href="histoire.html">Notre histoire</a>
       <a href="rsvp.html">RSVP</a>
@@ -566,6 +708,21 @@
 </footer>
 
 <!-- ═══ CARTE D'INVITATION — rendue hors écran, exportée en PDF ═══ -->
+<!-- ═══ CONFIRMATION AVANT ENVOI ═══ -->
+<div id="send-modal" aria-hidden="true">
+  <div class="sd-card" role="alertdialog" aria-modal="true" aria-labelledby="sdTitle">
+    <h3 id="sdTitle">Envoyer votre réponse&nbsp;?</h3>
+    <p>C'est votre réponse officielle pour le mariage — celle qui comptera
+    pour la liste des invités.</p>
+    <p class="sd-note">Vous pourrez encore la modifier sur cette page jusqu'au
+    1ᵉʳ août 2026.<br>Passé cette date, la liste devient définitive.</p>
+    <div class="sd-btns">
+      <button type="button" id="sdCancel" class="btn btn-outline">Pas encore</button>
+      <button type="button" id="sdYes" class="btn btn-primary">Oui, envoyer</button>
+    </div>
+  </div>
+</div>
+
 <div id="inv-card" aria-hidden="true">
   <div class="inv-inner">
     <span class="inv-corner tl"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
@@ -600,6 +757,11 @@
   var FB_BASE = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp/';
   var LS_KEY  = 'tf_rsvp';
   var MAIL    = 'florian.bouchart10@icloud.com';
+
+  /* après le 1ᵉʳ août 2026, on ne peut plus répondre ni modifier
+     (l'invitation, elle, reste récupérable) ; ?closed=1 pour prévisualiser */
+  var DEADLINE = new Date('2026-08-02T00:00:00+02:00').getTime();
+  var CLOSED   = Date.now() > DEADLINE || /[?&]closed=1\b/.test(location.search);
 
   var form     = document.getElementById('rsvpForm');
   var confirm_ = document.getElementById('confirm');
@@ -798,9 +960,12 @@
   function showConfirm(d) {
     form.style.display = 'none';
     prevBox.style.display = 'none';
+    document.getElementById('closedBox').hidden = true;
+    document.getElementById('recover').style.display = 'none';
     confirm_.classList.add('show');
     var oui = d.presence === 'oui';
     document.getElementById('invBtn').style.display = oui ? '' : 'none';
+    document.getElementById('editBtn').style.display = CLOSED ? 'none' : '';
     document.getElementById('cTitle').textContent = oui ? 'Quelle joie !' : 'Merci pour votre réponse';
     document.getElementById('cSub').textContent = oui
       ? 'Votre réponse est bien arrivée — on vous garde une place au chaud pour le 12 décembre 2026.'
@@ -829,10 +994,14 @@
     if (e.target.name === 'presence') syncOuiBlock();
   });
 
-  /* Déjà répondu ? */
+  /* Déjà répondu ? Réponses closes ? */
   var saved = null;
   try { saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
-  if (saved && saved.name) {
+  if (CLOSED) {
+    form.style.display = 'none';
+    document.getElementById('closedBox').hidden = false;
+    if (saved && saved.name) showConfirm(saved);
+  } else if (saved && saved.name) {
     fillForm(saved);
     prevBox.style.display = 'block';
     prevBox.innerHTML = '<b>Vous avez déjà répondu</b> (' +
@@ -842,13 +1011,33 @@
     renderPeople();
   }
 
+  /* avant d'envoyer : une confirmation, pour que chacun sache
+     que c'est sa réponse officielle (modifiable jusqu'au 1ᵉʳ août) */
+  var sendModal = document.getElementById('send-modal');
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     errBox.style.display = 'none';
 
     var d = getData();
     if (!d.name || !d.presence) { setStep(1); return; }
+    sendModal.classList.add('open');
+  });
 
+  function closeSendModal() { sendModal.classList.remove('open'); }
+  document.getElementById('sdCancel').addEventListener('click', closeSendModal);
+  sendModal.addEventListener('click', function (e) {
+    if (e.target === sendModal) closeSendModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSendModal();
+  });
+  document.getElementById('sdYes').addEventListener('click', function () {
+    closeSendModal();
+    doSend(getData());
+  });
+
+  function doSend(d) {
     sendBtn.disabled = true;
     sendBtn.textContent = 'Envoi en cours…';
 
@@ -889,15 +1078,66 @@
         sendBtn.disabled = false;
         sendBtn.textContent = 'Envoyer notre réponse';
       });
-  });
+  }
 
   document.getElementById('editBtn').addEventListener('click', function () {
     confirm_.classList.remove('show');
     form.style.display = '';
+    document.getElementById('recover').style.display = '';
     var d2 = null;
     try { d2 = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
     fillForm(d2);
     setStep(1);
+  });
+
+  /* ═══════════════════════════════════════════════
+     RETROUVER SON INVITATION — on cherche la réponse
+     par le nom dans Firebase, puis on raffiche la
+     confirmation (invitation + modification si ouvert).
+     ═══════════════════════════════════════════════ */
+  document.getElementById('recToggle').addEventListener('click', function () {
+    var box = document.getElementById('recBox');
+    box.hidden = !box.hidden;
+    if (!box.hidden) document.getElementById('recName').focus();
+  });
+
+  function doRecover() {
+    var recErr = document.getElementById('recErr');
+    recErr.style.display = 'none';
+    var name = document.getElementById('recName').value.trim();
+    if (!name) { document.getElementById('recName').focus(); return; }
+
+    var btn = document.getElementById('recBtn');
+    btn.disabled = true;
+    btn.textContent = 'Recherche…';
+
+    fetch(FB_BASE + slugify(name) + '.json')
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        if (!d || !d.name) {
+          recErr.textContent = 'Aucune réponse trouvée à ce nom — essayez l’orthographe exacte utilisée en répondant.';
+          recErr.style.display = 'block';
+          return;
+        }
+        try { localStorage.setItem(LS_KEY, JSON.stringify(d)); } catch (e) {}
+        fillForm(d);
+        showConfirm(d);
+      })
+      .catch(function () {
+        recErr.textContent = 'Impossible de vérifier pour le moment — réessayez dans un instant.';
+        recErr.style.display = 'block';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = 'Retrouver';
+      });
+  }
+  document.getElementById('recBtn').addEventListener('click', doRecover);
+  document.getElementById('recName').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); doRecover(); }
   });
 
   /* ═══════════════════════════════════════════════
@@ -963,8 +1203,8 @@
   });
 }());
 </script>
-<script src="toile.js"></script>
-<script src="transitions.js"></script>
+<script src="toile.js?v=4"></script>
+<script src="transitions.js?v=4"></script>
 
 </body>
 </html>
