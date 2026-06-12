@@ -137,6 +137,93 @@
   text-align: center;
 }
 
+/* ─── Trouvez votre couleur (analyse colorimétrique) ─── */
+.cq-cta { margin: -.4rem 0 2rem; }
+.colorquiz {
+  position: relative;
+  border: 1px solid var(--border2);
+  padding: clamp(1.6rem, 4vw, 2.6rem);
+}
+.colorquiz::after {
+  content: '';
+  position: absolute; inset: 8px;
+  border: 1px solid var(--gold-border);
+  pointer-events: none;
+}
+.colorquiz > * { position: relative; z-index: 1; }
+.cq-q { margin-bottom: 1.6rem; }
+.cq-label {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .66rem;
+  letter-spacing: .18em;
+  color: var(--gold2);
+  margin-bottom: .7rem;
+}
+.cq-chips { display: flex; flex-wrap: wrap; gap: .55rem; }
+.cq-chip {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: .78rem;
+  color: var(--ocean2);
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  padding: .55rem 1.05rem;
+  cursor: pointer;
+  transition: border-color .25s ease, color .25s ease, background .25s ease;
+}
+.cq-chip:hover { border-color: var(--gold); color: var(--navy); }
+.cq-chip.on { background: var(--navy); border-color: var(--navy); color: var(--cream); }
+
+#cq-result {
+  text-align: center;
+  border-top: 1px solid var(--gold-border);
+  margin-top: 2rem;
+  padding-top: 1.9rem;
+}
+#cq-result.show { animation: cqIn .7s var(--ease-out); }
+@keyframes cqIn { from { opacity: 0; transform: translateY(14px); } }
+.cq-eyebrow {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .62rem;
+  letter-spacing: .2em;
+  color: var(--gold2);
+}
+#cqSeason {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  color: var(--navy);
+  margin: .35rem 0 .45rem;
+}
+#cqDesc {
+  font-size: .88rem;
+  color: var(--text-mid);
+  max-width: 30rem;
+  margin: 0 auto 1.5rem;
+}
+#cqSwatches { justify-content: center; }
+.cq-note {
+  font-family: var(--font-sub);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  line-height: 2;
+  color: var(--text-light);
+  margin-top: 1.3rem;
+}
+#cqReset {
+  margin-top: .7rem;
+  font-family: var(--font-sub);
+  font-size: .6rem;
+  letter-spacing: .16em;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border2);
+  padding-bottom: 2px;
+  transition: color .25s ease, border-color .25s ease;
+}
+#cqReset:hover { color: var(--gold2); border-color: var(--gold); }
+
 .cta-band {
   text-align: center;
   border-top: 1px solid var(--gold-border);
@@ -347,6 +434,9 @@
         celles réservées au cortège, et la palette que nous recommandons à nos invités.
         <b>Cliquez sur une pastille</b> pour voir toutes les déclinaisons de la couleur.
       </p>
+      <p class="cq-cta reveal">
+        <a class="btn btn-primary btn-sm" href="#ma-couleur">Quelles couleurs me vont&nbsp;? Faire le test&nbsp;↓</a>
+      </p>
 
       <!-- ═══ 1 · LES MARIÉS ═══ -->
       <div class="tier reveal-left" aria-labelledby="tier-maries">
@@ -509,25 +599,27 @@
           <span class="tier-tag rec">Conseillées pour vous</span>
           <h3 id="tier-invites">Nos invités</h3>
           <p class="tier-txt">
-            Pour vous, un large choix de teintes profondes et chaleureuses. Ce sont des
-            conseils&nbsp;: <b>chaque couleur s'entend avec toutes ses déclinaisons</b>.
-            Deux règles seulement — rester loin des couleurs des mariés et du cortège,
-            et <b>bannir les tons pastel</b>&nbsp;: préférez des teintes franches et profondes.
+            Pour vous, une palette d'hiver feutrée, accordée au décor de la salle&nbsp;:
+            des tons chauds et des tons froids, riches et veloutés — pour que chacun
+            brille autant. Ce sont des conseils&nbsp;: <b>chaque couleur s'entend avec
+            toutes ses déclinaisons</b>. Deux règles seulement — rester loin des couleurs
+            des mariés et du cortège, et <b>bannir les tons pastel comme les teintes
+            criardes</b>.
           </p>
           <div class="swatches" data-stagger="55">
-            <div class="swatch reveal-zoom"><i style="background:#351E28"></i><span>Cassis</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#6A5155"></i><span>Cocoa<br>Powder</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#2D6362"></i><span>Teal</span></div>
             <div class="swatch reveal-zoom"><i style="background:#1B4733"></i><span>Vert<br>sapin</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#FF4D00"></i><span>Red<br>Orange</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#A47DAB"></i><span>Lilac</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#C7C7C7"></i><span>Gris<br>perle</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#2E2418"></i><span>Chocolat</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#A60D3F"></i><span>Framboise</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#C4548F"></i><span>Rose<br>orchidée</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#1A5B41"></i><span>Vert<br>anglais</span></div>
-            <div class="swatch reveal-zoom"><i style="background:#D9A521"></i><span>Moutarde</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#2D6362"></i><span>Teal<br>fumé</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#1F4E5F"></i><span>Bleu<br>paon</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#87898E"></i><span>Gris<br>flanelle</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#8A6E96"></i><span>Mauve<br>fumé</span></div>
             <div class="swatch reveal-zoom"><i style="background:#471950"></i><span>Prune</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#351E28"></i><span>Cassis</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#5C1F2A"></i><span>Bordeaux</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#8E1B3C"></i><span>Grenat</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#A85A74"></i><span>Vieux<br>rose</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#9D5B3B"></i><span>Cannelle</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#C29438"></i><span>Ocre<br>doré</span></div>
+            <div class="swatch reveal-zoom"><i style="background:#3A2B1F"></i><span>Chocolat</span></div>
           </div>
         </div>
       </div>
@@ -536,6 +628,77 @@
         En résumé&nbsp;: blanc, ivoire, bleu marine, bleu ciel, beige sable et tons pastel
         sont à éviter — déclinaisons comprises. Tout le reste de l'hiver est à vous.
       </p>
+    </section>
+
+    <!-- ═══ TROUVEZ VOTRE COULEUR — analyse colorimétrique ═══ -->
+    <section class="section" id="ma-couleur" aria-labelledby="cq-title">
+      <span class="section-eyebrow reveal">Selon les règles des coloristes</span>
+      <h2 class="section-title reveal" id="cq-title">Trouvez les couleurs qui vous vont</h2>
+      <div class="section-flourish reveal" aria-hidden="true">
+        <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
+          <path d="M4 9 H48"/>
+          <path d="M84 9 H128"/>
+          <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
+          <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <p class="section-intro reveal">
+        Teint, sous-ton de peau, yeux, cheveux&nbsp;: c'est ce que les experts en
+        colorimétrie utilisent pour déterminer la palette de chacun. Répondez à ces
+        quatre questions, et nous vous dirons — parmi nos couleurs conseillées —
+        celles qui vous mettront le plus en valeur.
+      </p>
+
+      <div class="colorquiz reveal">
+        <div class="cq-q" data-q="teint">
+          <span class="cq-label">1 · Votre teint</span>
+          <div class="cq-chips">
+            <button type="button" class="cq-chip" data-v="light">Clair</button>
+            <button type="button" class="cq-chip" data-v="medium">Médium</button>
+            <button type="button" class="cq-chip" data-v="deep">Mat à foncé</button>
+          </div>
+        </div>
+        <div class="cq-q" data-q="veines">
+          <span class="cq-label">2 · Les veines de votre poignet</span>
+          <div class="cq-chips">
+            <button type="button" class="cq-chip" data-v="warm2">Plutôt vertes</button>
+            <button type="button" class="cq-chip" data-v="cool2">Plutôt bleues ou violettes</button>
+            <button type="button" class="cq-chip" data-v="neutral">Difficile à dire</button>
+          </div>
+        </div>
+        <div class="cq-q" data-q="yeux">
+          <span class="cq-label">3 · Vos yeux</span>
+          <div class="cq-chips">
+            <button type="button" class="cq-chip" data-v="deepcool">Noirs ou marron foncé</button>
+            <button type="button" class="cq-chip" data-v="warm">Noisette ou dorés</button>
+            <button type="button" class="cq-chip" data-v="warmlight">Verts</button>
+            <button type="button" class="cq-chip" data-v="coollight">Bleus ou gris</button>
+          </div>
+        </div>
+        <div class="cq-q" data-q="cheveux">
+          <span class="cq-label">4 · Vos cheveux</span>
+          <div class="cq-chips">
+            <button type="button" class="cq-chip" data-v="deepcool">Noirs</button>
+            <button type="button" class="cq-chip" data-v="deep">Bruns</button>
+            <button type="button" class="cq-chip" data-v="warm">Châtains, roux ou dorés</button>
+            <button type="button" class="cq-chip" data-v="light">Blonds</button>
+            <button type="button" class="cq-chip" data-v="coollight">Gris ou blancs</button>
+          </div>
+        </div>
+
+        <div id="cq-result" hidden>
+          <span class="cq-eyebrow">Votre palette</span>
+          <h3 id="cqSeason"></h3>
+          <p id="cqDesc"></p>
+          <div class="swatches" id="cqSwatches" aria-live="polite"></div>
+          <p class="cq-note">
+            Cliquez sur une couleur pour découvrir toutes ses déclinaisons.<br>
+            Et si une autre teinte de la palette vous fait de l'œil, suivez votre cœur.
+          </p>
+          <button type="button" id="cqReset">Recommencer le test</button>
+        </div>
+      </div>
     </section>
 
     <!-- bandeau CTA -->
@@ -606,28 +769,28 @@
   /* ─── Déclinaisons choisies à la main : chaque couleur reste
          dans sa famille tonale (jamais vers le blanc ni le noir) ─── */
   var PALETTES = {
-    /* la mariée */
-    '#FFFFFF': ['#FFFFFF', '#FDFAF4', '#FAF6ED', '#F8F2E5', '#F5EEDE', '#F3EAD6', '#F0E6CF', '#EDE2C7'],
-    '#F2E9D8': ['#F7F1E4', '#F2E9D8', '#EDE2CC', '#E8DAC0', '#E3D3B4', '#DECBA8', '#D9C49C', '#D4BC90'],
+    /* la mariée — de vrais blancs et de vrais ivoires, lumineux, jamais beiges */
+    '#FFFFFF': ['#FFFFFF', '#FEFEFC', '#FDFCF9', '#FBFAF6', '#FAF8F3', '#F8F6F0', '#F7F4ED', '#F5F2EA'],
+    '#F2E9D8': ['#FBF7EE', '#F9F4E8', '#F7F1E3', '#F5EDDD', '#F2E9D8', '#F0E7D4', '#EFE4CF', '#EDE1CB'],
     /* le marié : du bleu marine au bleu royal */
     '#1F2440': ['#1F2440', '#252447', '#2B2A55', '#2F2C66', '#2F2C79', '#302C9B', '#2C28AC', '#2823BC'],
     /* le cortège */
     '#BFD4E6': ['#CFDFEE', '#C7DAEA', '#BFD4E6', '#B2CBE0', '#A5C2DA', '#98B9D4', '#8BB0CE', '#7EA7C8'],
     '#D8CFC4': ['#E2DBD1', '#DDD5CA', '#D8CFC4', '#CFC4B6', '#C6B9A8', '#BDAE9A', '#B4A38C', '#AB987E'],
-    /* les invités */
-    '#351E28': ['#6B4656', '#5F3E4C', '#533642', '#472E38', '#3B262E', '#351E28', '#2E1A23', '#27161E'],
-    '#6A5155': ['#937B7F', '#887074', '#7D656A', '#735B5F', '#6A5155', '#5F484C', '#544043', '#49383A'],
-    '#2D6362': ['#4E8E8D', '#458381', '#3C7876', '#346D6C', '#2D6362', '#275857', '#214D4C', '#1B4241'],
+    /* les invités — tons bijou assourdis, du froid au chaud */
     '#1B4733': ['#3B7A5C', '#347052', '#2D6648', '#265C3F', '#205136', '#1B4733', '#163D2C', '#113325'],
-    '#FF4D00': ['#FF7033', '#FF6624', '#FF5C14', '#FF4D00', '#F04800', '#E04300', '#D03E00', '#C03900'],
-    '#A47DAB': ['#BD9EC3', '#B492BB', '#AB88B3', '#A47DAB', '#99719F', '#8D6693', '#815B87', '#75507B'],
-    '#C7C7C7': ['#D6D6D6', '#CFCFCF', '#C7C7C7', '#BBBBBB', '#AFAFAF', '#A3A3A3', '#979797', '#8B8B8B'],
-    '#2E2418': ['#5C4A34', '#52422E', '#483A28', '#3E3222', '#352B1D', '#2E2418', '#271E14', '#201810'],
-    '#A60D3F': ['#D42658', '#C92052', '#BE1A4B', '#B31345', '#A60D3F', '#970B39', '#880A33', '#79092D'],
-    '#C4548F': ['#DC7BAC', '#D572A4', '#CE699C', '#C75E95', '#C4548F', '#B44983', '#A43F77', '#94356B'],
-    '#1A5B41': ['#338A66', '#2C7F5D', '#267455', '#21694C', '#1D6246', '#1A5B41', '#15503A', '#114532'],
-    '#D9A521': ['#E8BC4A', '#E3B43A', '#DEAC2D', '#D9A521', '#CC9A1E', '#BF8F1B', '#B28418', '#A57915'],
-    '#471950': ['#6F2C7C', '#662871', '#5D2466', '#54205B', '#471950', '#3F1647', '#37133E', '#2F1035']
+    '#2D6362': ['#4E8E8D', '#458381', '#3C7876', '#346D6C', '#2D6362', '#275857', '#214D4C', '#1B4241'],
+    '#1F4E5F': ['#41768B', '#38697D', '#2F5C6F', '#275564', '#1F4E5F', '#1A4554', '#153C49', '#10333E'],
+    '#87898E': ['#A6A8AD', '#9C9EA3', '#929499', '#87898E', '#7C7E83', '#717378', '#666A6F', '#5B5F64'],
+    '#8A6E96': ['#A78FB2', '#9D83A8', '#93789F', '#8A6E96', '#7F648B', '#745A80', '#695075', '#5E466A'],
+    '#471950': ['#6F2C7C', '#662871', '#5D2466', '#54205B', '#471950', '#3F1647', '#37133E', '#2F1035'],
+    '#351E28': ['#6B4656', '#5F3E4C', '#533642', '#472E38', '#3B262E', '#351E28', '#2E1A23', '#27161E'],
+    '#5C1F2A': ['#8A3A48', '#7E333F', '#722C37', '#662530', '#5C1F2A', '#511B25', '#461720', '#3B131B'],
+    '#8E1B3C': ['#B23A5C', '#A93253', '#A02A4B', '#971F43', '#8E1B3C', '#801836', '#721530', '#64122A'],
+    '#A85A74': ['#C5849A', '#BD7990', '#B56F86', '#AE647D', '#A85A74', '#9A506A', '#8C4660', '#7E3C56'],
+    '#9D5B3B': ['#BD7E5C', '#B57252', '#AD6747', '#A5613F', '#9D5B3B', '#8F5135', '#81472F', '#733D29'],
+    '#C29438': ['#D5AE5E', '#CFA64F', '#C99D43', '#C29438', '#B58931', '#A87E2B', '#9B7325', '#8E681F'],
+    '#3A2B1F': ['#6B5440', '#5F4A38', '#534030', '#473628', '#3A2B1F', '#33251B', '#2C1F17', '#251913']
   };
 
   function parseRgb(str) {
@@ -655,7 +818,11 @@
       .replace(/ — (Soft Sky|Warm Sand)/, ' · $1')
       .replace(/(Cocoa) — (Powder)|(Red) — (Orange)|(Gris) — (perle)|(Rose) — (orchidée)|(Vert) — (sapin|anglais)/g,
         function (m) { return m.replace(' — ', ' '); });
-    var tagClass = (sw.closest('.tier').querySelector('.tier-tag').className.match(/\b(ban|res|rec)\b/) || ['rec'])[1];
+    /* les pastilles du test ne sont pas dans un palier : conseillées par défaut */
+    var tierEl = sw.closest('.tier');
+    var tagClass = tierEl
+      ? (tierEl.querySelector('.tier-tag').className.match(/\b(ban|res|rec)\b/) || [0, 'rec'])[1]
+      : 'rec';
     /* une pastille barrée reste "à bannir" même chez les mariés */
     if (sw.classList.contains('ban')) tagClass = 'ban';
 
@@ -694,6 +861,100 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeModal();
   });
+
+  /* ═══════════════════════════════════════════════
+     TROUVEZ VOTRE COULEUR — analyse colorimétrique
+     (méthode des saisons : sous-ton chaud/froid ×
+     profondeur claire/profonde → palette conseillée)
+     ═══════════════════════════════════════════════ */
+  var SEASONS = {
+    printemps: {
+      name: 'Printemps',
+      desc: 'Sous-ton chaud, éclat lumineux — les teintes dorées et lumineuses vous illuminent.',
+      colors: [['Ocre doré', '#C29438'], ['Cannelle', '#9D5B3B'], ['Vieux rose', '#A85A74'], ['Teal fumé', '#2D6362'], ['Grenat', '#8E1B3C']]
+    },
+    ete: {
+      name: 'Été',
+      desc: 'Sous-ton froid, douceur naturelle — les teintes douces et veloutées vous subliment.',
+      colors: [['Gris flanelle', '#87898E'], ['Mauve fumé', '#8A6E96'], ['Vieux rose', '#A85A74'], ['Bleu paon', '#1F4E5F'], ['Teal fumé', '#2D6362']]
+    },
+    automne: {
+      name: 'Automne',
+      desc: 'Sous-ton chaud, profondeur chaleureuse — les teintes riches et épicées sont faites pour vous.',
+      colors: [['Chocolat', '#3A2B1F'], ['Cannelle', '#9D5B3B'], ['Ocre doré', '#C29438'], ['Bordeaux', '#5C1F2A'], ['Cassis', '#351E28']]
+    },
+    hiver: {
+      name: 'Hiver',
+      desc: 'Sous-ton froid, contraste affirmé — les teintes profondes et franches vous mettent en valeur.',
+      colors: [['Prune', '#471950'], ['Grenat', '#8E1B3C'], ['Vert sapin', '#1B4733'], ['Bleu paon', '#1F4E5F'], ['Cassis', '#351E28']]
+    }
+  };
+  /* chaque réponse pèse sur deux axes : W chaud / C froid · L clair / D profond */
+  var SCORES = {
+    light: { L: 1 }, medium: {}, deep: { D: 1 },
+    warm2: { W: 2 }, cool2: { C: 2 }, neutral: {},
+    warm: { W: 1 }, cool: { C: 1 },
+    deepcool: { D: 1, C: 1 }, warmlight: { W: 1, L: 1 }, coollight: { C: 1, L: 1 }
+  };
+
+  var quiz = document.querySelector('.colorquiz');
+  var answers = {};
+
+  function showSeason() {
+    var s = { W: 0, C: 0, L: 0, D: 0 };
+    Object.keys(answers).forEach(function (q) {
+      var add = SCORES[answers[q]] || {};
+      Object.keys(add).forEach(function (k) { s[k] += add[k]; });
+    });
+    var season = (s.W >= s.C)
+      ? (s.L > s.D ? 'printemps' : 'automne')
+      : (s.L >= s.D ? 'ete' : 'hiver');
+    var data = SEASONS[season];
+    document.getElementById('cqSeason').textContent = 'Palette ' + data.name;
+    document.getElementById('cqDesc').textContent = data.desc;
+    document.getElementById('cqSwatches').innerHTML = data.colors.map(function (c) {
+      return '<div class="swatch" role="button" tabindex="0" aria-haspopup="dialog">' +
+        '<i style="background:' + c[1] + '"></i><span>' + c[0] + '</span></div>';
+    }).join('');
+    var res = document.getElementById('cq-result');
+    res.hidden = false;
+    res.classList.remove('show');
+    void res.offsetWidth;            /* relancer l'animation d'apparition */
+    res.classList.add('show');
+    res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  if (quiz) {
+    quiz.addEventListener('click', function (e) {
+      var chip = e.target.closest('.cq-chip');
+      if (chip) {
+        var q = chip.closest('.cq-q');
+        Array.prototype.forEach.call(q.querySelectorAll('.cq-chip'), function (c) {
+          c.classList.remove('on');
+        });
+        chip.classList.add('on');
+        answers[q.getAttribute('data-q')] = chip.getAttribute('data-v');
+        if (Object.keys(answers).length === 4) showSeason();
+        return;
+      }
+      /* les pastilles du résultat ouvrent les déclinaisons */
+      var sw = e.target.closest('.swatch');
+      if (sw) openModal(sw);
+    });
+    quiz.addEventListener('keydown', function (e) {
+      var sw = e.target.closest('.swatch');
+      if (sw && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openModal(sw); }
+    });
+    document.getElementById('cqReset').addEventListener('click', function () {
+      answers = {};
+      Array.prototype.forEach.call(quiz.querySelectorAll('.cq-chip.on'), function (c) {
+        c.classList.remove('on');
+      });
+      var res = document.getElementById('cq-result');
+      res.hidden = true;
+      res.classList.remove('show');
+    });
+  }
 }());
 </script>
 
