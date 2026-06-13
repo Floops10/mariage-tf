@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 <!-- génération de l'invitation PDF (rendu fidèle de la carte + export) -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -651,9 +651,9 @@
       <!-- ═══ RÉPONSES CLOSES — après le 1ᵉʳ août 2026 ═══ -->
       <div id="closedBox" hidden>
         <span class="logo-mask" aria-hidden="true"></span>
-        <h2>Les réponses sont closes</h2>
-        <p>La date limite était le 1ᵉʳ août 2026 — le plan de table est désormais
-        entre les mains des mariés. Un imprévu, une question&nbsp;?
+        <h2>La confirmation se fait ailleurs</h2>
+        <p>Les réponses ne se prennent pas sur cette page&nbsp;: vous avez reçu — ou recevrez —
+        le lien pour confirmer votre présence. Une question&nbsp;?
         Écrivez-nous&nbsp;: <a href="mailto:florian.bouchart10@icloud.com">florian.bouchart10@icloud.com</a></p>
       </div>
 
@@ -760,8 +760,12 @@
 
   /* après le 1ᵉʳ août 2026, on ne peut plus répondre ni modifier
      (l'invitation, elle, reste récupérable) ; ?closed=1 pour prévisualiser */
+  /* Le RSVP se fait désormais sur un autre site → réponse désactivée ici.
+     POUR RÉACTIVER LE RSVP SUR CE SITE : repasser RSVP_OPEN à true,
+     ET retirer le bloc qui masque a[href="rsvp.html"] dans style.css. */
+  var RSVP_OPEN = false;
   var DEADLINE = new Date('2026-08-02T00:00:00+02:00').getTime();
-  var CLOSED   = Date.now() > DEADLINE || /[?&]closed=1\b/.test(location.search);
+  var CLOSED   = !RSVP_OPEN || Date.now() > DEADLINE || /[?&]closed=1\b/.test(location.search);
 
   var form     = document.getElementById('rsvpForm');
   var confirm_ = document.getElementById('confirm');
@@ -999,8 +1003,9 @@
   try { saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
   if (CLOSED) {
     form.style.display = 'none';
+    var dl = document.querySelector('.deadline'); if (dl) dl.style.display = 'none';
+    document.getElementById('recover').style.display = 'none';
     document.getElementById('closedBox').hidden = false;
-    if (saved && saved.name) showConfirm(saved);
   } else if (saved && saved.name) {
     fillForm(saved);
     prevBox.style.display = 'block';
@@ -1203,8 +1208,8 @@
   });
 }());
 </script>
-<script src="toile.js?v=6"></script>
-<script src="transitions.js?v=6"></script>
+<script src="toile.js?v=7"></script>
+<script src="transitions.js?v=7"></script>
 
 </body>
 </html>

@@ -168,6 +168,15 @@ ul, ol { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   RSVP CONFIÉ À UN AUTRE SITE — on masque TOUT accès à rsvp.html
+   (bouton de nav, lien du menu, bouton de bas de page, lien du footer).
+   POUR RÉACTIVER LE RSVP SUR CE SITE : supprimer ce seul bloc,
+   ET repasser RSVP_OPEN à true dans rsvp.html.
+   ═══════════════════════════════════════════════════════════════ */
+a[href="rsvp.html"],
+a[href^="rsvp.html?"] { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════
    NAVIGATION
    ═══════════════════════════════════════════════════════════════ */
 .nav {

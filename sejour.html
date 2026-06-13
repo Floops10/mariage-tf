@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=6">
+<link rel="stylesheet" href="style.css?v=7">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -174,6 +174,22 @@
   color: var(--text-light);
   margin-top: 1.3rem;
 }
+
+/* ─── Réserver en ligne (liens pré-filtrés) ─── */
+.lodge-search {
+  text-align: center;
+  border: 1px dashed var(--gold-border2);
+  padding: 1.5rem 1.2rem 1.6rem;
+  margin-top: 1.8rem;
+}
+.lodge-search p {
+  font-family: var(--font-sub);
+  font-size: .72rem;
+  letter-spacing: .12em;
+  color: var(--text-mid);
+  margin-bottom: 1.1rem;
+}
+.lodge-search .btns { display: flex; gap: .7rem; justify-content: center; flex-wrap: wrap; }
 
 .cta-band {
   text-align: center;
@@ -457,11 +473,86 @@
           <p><b>Gares de Lille Flandres / Lille Europe</b> — pour ceux qui arrivent de plus loin,
           puis ≈ 1 h 10 de route.</p>
           <p>Pas de voiture pour le dernier kilomètre&nbsp;? Anticipez un taxi (rares en campagne le soir)
-          — ou dites-le-nous dans votre réponse&nbsp;: il se trouvera toujours un coffre ami pour vous.</p>
+          — il se trouvera toujours un coffre ami pour vous.</p>
         </div>
       </div>
     </section>
 
+
+    <!-- ═══ OÙ DORMIR — à 15 min max, tous budgets ═══ -->
+    <section class="section" aria-labelledby="dodo-title">
+      <span class="section-eyebrow reveal">Pour ceux qui dorment sur place</span>
+      <h2 class="section-title reveal" id="dodo-title">Où dormir tout près</h2>
+      <div class="section-flourish reveal" aria-hidden="true">
+        <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
+          <path d="M4 9 H48"/><path d="M84 9 H128"/>
+          <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
+          <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <p class="section-intro reveal">
+        Une poignée d'adresses à quinze minutes maximum du domaine, pour tous les budgets —
+        de la chambre d'hôtes de charme au gîte à partager entre amis. Les petites structures
+        sont vite complètes&nbsp;: pensez à réserver tôt.
+      </p>
+      <div class="card-grid">
+        <div class="card reveal">
+          <span class="card-tag">Romeries · ≈ 2 min</span>
+          <h3 class="card-title">La Chaiserie</h3>
+          <p class="card-sub">Chambre d'hôtes · Gîtes de France</p>
+          <p class="card-txt">Dans le village même du domaine, au calme d'un grand parc. L'adresse la plus proche de la piste de danse.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.gites-de-france-nord.fr/location-vacances-Chambre-d-hotes-Romeries-La-Chaiserie-59G592120.html">Voir &amp; contacter</a>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <span class="card-tag">Romeries · ≈ 2 min</span>
+          <h3 class="card-title">Gîte de Romeries</h3>
+          <p class="card-sub">Gîte 2 chambres · familles &amp; petits groupes</p>
+          <p class="card-txt">Maison équipée rue de Solesmes — pratique à plusieurs et d'un très bon rapport qualité-prix.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=g%C3%AEte%2012%20rue%20de%20Solesmes%20Romeries%2059730">Voir sur la carte</a>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <span class="card-tag">Escarmain · ≈ 8 min</span>
+          <h3 class="card-title">Les Perce-Neige</h3>
+          <p class="card-sub">Chambres d'hôtes de charme</p>
+          <p class="card-txt">Belle maison restaurée entre Solesmes et Le Quesnoy, au calme du bocage.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="http://lespercesneiges.e-monsite.com/">Voir l'adresse</a>
+        </div>
+        <div class="card reveal">
+          <span class="card-tag">Le Quesnoy · ≈ 15 min</span>
+          <h3 class="card-title">Le Gîte des Remparts</h3>
+          <p class="card-sub">Gîte jusqu'à 10 personnes</p>
+          <p class="card-txt">Au cœur de la cité fortifiée — idéal pour loger une tribu ou une bande d'amis, dès ≈ 450 €/semaine.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.gites.fr/gites_gite-des-remparts-10-km-de-valenciennes_le-quesnoy_38223.htm">Voir le gîte</a>
+        </div>
+        <div class="card reveal reveal-delay-1">
+          <span class="card-tag">Le Quesnoy · ≈ 15 min</span>
+          <h3 class="card-title">Les Vergers Tellier</h3>
+          <p class="card-sub">Chambres d'hôtes</p>
+          <p class="card-txt">Étape paisible aux portes de la ville fortifiée et de son lac, parfaite pour un couple.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Les%20Vergers%20Tellier%20Le%20Quesnoy">Voir l'adresse</a>
+        </div>
+        <div class="card reveal reveal-delay-2">
+          <span class="card-tag">Le Quesnoy · ≈ 15 min</span>
+          <h3 class="card-title">Hôtels &amp; meublés du Quesnoy</h3>
+          <p class="card-sub">La petite ville la plus proche</p>
+          <p class="card-txt">Quelques hôtels, duplex et appartements en centre-ville — le choix le plus large à un quart d'heure.</p>
+          <a class="card-link" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.fr.html?ss=Le+Quesnoy&checkin=2026-12-12&checkout=2026-12-13&group_adults=2">Voir les dispos</a>
+        </div>
+      </div>
+
+      <div class="lodge-search reveal">
+        <p>Réserver en ligne autour du domaine — dates du mariage déjà pré-réglées&nbsp;:</p>
+        <div class="btns">
+          <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.airbnb.fr/s/Romeries--France/homes?checkin=2026-12-12&checkout=2026-12-13&adults=2">Airbnb à proximité</a>
+          <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.fr.html?ss=Romeries&checkin=2026-12-12&checkout=2026-12-13&group_adults=2">Booking.com</a>
+          <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.gites-de-france-nord.fr/">Gîtes de France</a>
+        </div>
+      </div>
+      <p class="note-line reveal">
+        Temps de route indicatifs depuis le domaine. Envie d'un hôtel-spa&nbsp;? Valenciennes (≈ 30 min) en compte de très beaux, pour qui préfère la ville.
+      </p>
+    </section>
 
     <!-- ═══ CONSEILS DE DÉCEMBRE ═══ -->
     <section class="section" aria-labelledby="tips-title">
@@ -496,17 +587,17 @@
         <div class="tip reveal reveal-delay-3">
           <span class="tip-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="850" data-draw-stagger="100"><circle cx="12" cy="12" r="7.4"/><circle cx="12" cy="12" r="2.1"/><path d="M12 4.6 V9.9 M5 14.1 L9.95 12.9 M19 14.1 L14.05 12.9"/></svg></span>
           <h3>Capitaine de soirée</h3>
-          <p>Le champagne se savoure mieux quand quelqu'un d'autre conduit — covoiturez, et dites-le dans votre RSVP.</p>
+          <p>Le champagne se savoure mieux quand quelqu'un d'autre conduit — pensez au covoiturage.</p>
         </div>
       </div>
     </section>
 
     <!-- bandeau CTA -->
     <div class="cta-band reveal">
-      <p>Vous savez comment venir — il ne reste qu'à nous dire oui, nous serons là.</p>
+      <p>Vous savez comment venir et où poser vos valises — au plaisir de vous y retrouver.</p>
       <div class="btns">
         <a href="programme.html" class="btn btn-outline">Le programme</a>
-        <a href="rsvp.html" class="btn btn-primary">Confirmer ma venue</a>
+        <a href="dresscode.html" class="btn btn-outline">Le dress code</a>
       </div>
     </div>
 
@@ -532,8 +623,8 @@
   </div>
 </footer>
 
-<script src="toile.js?v=6"></script>
-<script src="transitions.js?v=6"></script>
+<script src="toile.js?v=7"></script>
+<script src="transitions.js?v=7"></script>
 
 </body>
 </html>
