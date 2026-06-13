@@ -213,7 +213,7 @@
   margin-top: 1.3rem;
 }
 #cqReset {
-  margin-top: .7rem;
+  margin-top: 1.2rem;
   font-family: var(--font-sub);
   font-size: .6rem;
   letter-spacing: .16em;
@@ -223,6 +223,51 @@
   transition: color .25s ease, border-color .25s ease;
 }
 #cqReset:hover { color: var(--gold2); border-color: var(--gold); }
+
+/* conseils du quotidien — visuellement à part, pour éviter toute confusion */
+.cq-daily {
+  margin-top: 1.9rem;
+  padding: 1.4rem 1.2rem 1.3rem;
+  border: 1px dashed var(--border3);
+  background: rgba(31,47,68,.025);
+}
+.cq-daily-tag {
+  display: inline-block;
+  font-family: var(--font-sub);
+  font-size: .58rem;
+  letter-spacing: .18em;
+  color: #8A3B4A;
+  border: 1px solid rgba(138,59,74,.35);
+  background: rgba(138,59,74,.05);
+  padding: .3rem .75rem;
+  margin-bottom: .9rem;
+}
+.cq-daily-txt {
+  font-size: .8rem;
+  color: var(--text-mid);
+  max-width: 32rem;
+  margin: 0 auto 1rem;
+}
+.cq-daily-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem 1rem;
+  justify-content: center;
+}
+.cq-dchip {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-family: var(--font-sub);
+  font-size: .6rem;
+  letter-spacing: .1em;
+  color: var(--text-mid);
+}
+.cq-dchip i {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(31,47,68,.18);
+}
 
 .cta-band {
   text-align: center;
@@ -644,10 +689,10 @@
         </svg>
       </div>
       <p class="section-intro reveal">
-        Teint, sous-ton de peau, yeux, cheveux&nbsp;: c'est ce que les experts en
-        colorimétrie utilisent pour déterminer la palette de chacun. Répondez à ces
-        quatre questions, et nous vous dirons — parmi nos couleurs conseillées —
-        celles qui vous mettront le plus en valeur.
+        Teint, sous-ton, bijoux, yeux, cheveux, contraste&nbsp;: ce sont les six critères
+        qu'utilisent les coloristes professionnels — la méthode des douze saisons.
+        Répondez à ces six questions, et nous vous dirons précisément quelle est votre
+        saison, et quelles couleurs de notre palette vous mettront le plus en valeur.
       </p>
 
       <div class="colorquiz reveal">
@@ -667,8 +712,16 @@
             <button type="button" class="cq-chip" data-v="neutral">Difficile à dire</button>
           </div>
         </div>
+        <div class="cq-q" data-q="bijoux">
+          <span class="cq-label">3 · Les bijoux qui vous illuminent le teint</span>
+          <div class="cq-chips">
+            <button type="button" class="cq-chip" data-v="warm">L'or</button>
+            <button type="button" class="cq-chip" data-v="cool">L'argent</button>
+            <button type="button" class="cq-chip" data-v="neutral">Les deux me vont</button>
+          </div>
+        </div>
         <div class="cq-q" data-q="yeux">
-          <span class="cq-label">3 · Vos yeux</span>
+          <span class="cq-label">4 · Vos yeux</span>
           <div class="cq-chips">
             <button type="button" class="cq-chip" data-v="deepcool">Noirs ou marron foncé</button>
             <button type="button" class="cq-chip" data-v="warm">Noisette ou dorés</button>
@@ -677,13 +730,21 @@
           </div>
         </div>
         <div class="cq-q" data-q="cheveux">
-          <span class="cq-label">4 · Vos cheveux</span>
+          <span class="cq-label">5 · Vos cheveux</span>
           <div class="cq-chips">
             <button type="button" class="cq-chip" data-v="deepcool">Noirs</button>
             <button type="button" class="cq-chip" data-v="deep">Bruns</button>
             <button type="button" class="cq-chip" data-v="warm">Châtains, roux ou dorés</button>
             <button type="button" class="cq-chip" data-v="light">Blonds</button>
             <button type="button" class="cq-chip" data-v="coollight">Gris ou blancs</button>
+          </div>
+        </div>
+        <div class="cq-q" data-q="contraste">
+          <span class="cq-label">6 · Le contraste entre vos cheveux, vos yeux et votre peau</span>
+          <div class="cq-chips">
+            <button type="button" class="cq-chip" data-v="bright">Fort — tout tranche nettement</button>
+            <button type="button" class="cq-chip" data-v="neutral">Moyen</button>
+            <button type="button" class="cq-chip" data-v="muted">Doux — tout se fond</button>
           </div>
         </div>
 
@@ -696,6 +757,18 @@
             Cliquez sur une couleur pour découvrir toutes ses déclinaisons.<br>
             Et si une autre teinte de la palette vous fait de l'œil, suivez votre cœur.
           </p>
+
+          <!-- conseils pour la vie de tous les jours — bien séparés du mariage -->
+          <div class="cq-daily">
+            <span class="cq-daily-tag">Pour votre quotidien — pas pour le 12 décembre</span>
+            <p class="cq-daily-txt">
+              À titre d'information, voici les teintes de votre saison qui vous iront à
+              merveille <b>tous les jours</b>. Le jour du mariage, en revanche, on s'en
+              tient strictement à la palette du mariage, juste au-dessus.
+            </p>
+            <div class="cq-daily-chips" id="cqDaily"></div>
+          </div>
+
           <button type="button" id="cqReset">Recommencer le test</button>
         </div>
       </div>
@@ -867,33 +940,89 @@
      (méthode des saisons : sous-ton chaud/froid ×
      profondeur claire/profonde → palette conseillée)
      ═══════════════════════════════════════════════ */
-  var SEASONS = {
-    printemps: {
-      name: 'Printemps',
-      desc: 'Sous-ton chaud, éclat lumineux — les teintes dorées et lumineuses vous illuminent.',
-      colors: [['Ocre doré', '#C29438'], ['Cannelle', '#9D5B3B'], ['Vieux rose', '#A85A74'], ['Teal fumé', '#2D6362'], ['Grenat', '#8E1B3C']]
+  /* ─── Méthode des douze saisons : chaque profil croise
+         le sous-ton (W/C), la profondeur (L/D) et le contraste (B/M) ─── */
+  var SUBS = {
+    'printemps-clair': {
+      name: 'Printemps clair',
+      desc: 'Chaleur délicate et clarté — les teintes dorées et douces, jamais lourdes, éclairent votre visage.',
+      mariage: [['Ocre doré', '#C29438'], ['Cannelle', '#9D5B3B'], ['Vieux rose', '#A85A74'], ['Teal fumé', '#2D6362']],
+      quotidien: [['Pêche', '#F5B98F'], ['Corail clair', '#F08A6B'], ['Turquoise claire', '#6FC8C0'], ['Vert amande', '#9BBF6A'], ['Camel doré', '#C8975C']]
     },
-    ete: {
-      name: 'Été',
-      desc: 'Sous-ton froid, douceur naturelle — les teintes douces et veloutées vous subliment.',
-      colors: [['Gris flanelle', '#87898E'], ['Mauve fumé', '#8A6E96'], ['Vieux rose', '#A85A74'], ['Bleu paon', '#1F4E5F'], ['Teal fumé', '#2D6362']]
+    'printemps-vrai': {
+      name: 'Printemps vrai',
+      desc: 'Sous-ton chaud affirmé et fraîcheur de teint — les teintes dorées et toniques sont vos alliées.',
+      mariage: [['Ocre doré', '#C29438'], ['Cannelle', '#9D5B3B'], ['Grenat', '#8E1B3C'], ['Vert sapin', '#1B4733']],
+      quotidien: [['Corail', '#ED6A4D'], ['Turquoise', '#2FB5A8'], ['Vert pré', '#5FA84E'], ['Jaune doré', '#EFB52B'], ['Camel', '#B97F3F']]
     },
-    automne: {
-      name: 'Automne',
-      desc: 'Sous-ton chaud, profondeur chaleureuse — les teintes riches et épicées sont faites pour vous.',
-      colors: [['Chocolat', '#3A2B1F'], ['Cannelle', '#9D5B3B'], ['Ocre doré', '#C29438'], ['Bordeaux', '#5C1F2A'], ['Cassis', '#351E28']]
+    'printemps-vif': {
+      name: 'Printemps vif',
+      desc: 'Éclat et chaleur — il vous faut des couleurs nettes et lumineuses, sans aucune lourdeur.',
+      mariage: [['Grenat', '#8E1B3C'], ['Ocre doré', '#C29438'], ['Bleu paon', '#1F4E5F'], ['Teal fumé', '#2D6362']],
+      quotidien: [['Corail vif', '#F04E33'], ['Turquoise vive', '#00B2B8'], ['Émeraude claire', '#19A06B'], ['Azur', '#2E86D6'], ['Jaune vif', '#F4C515']]
     },
-    hiver: {
-      name: 'Hiver',
-      desc: 'Sous-ton froid, contraste affirmé — les teintes profondes et franches vous mettent en valeur.',
-      colors: [['Prune', '#471950'], ['Grenat', '#8E1B3C'], ['Vert sapin', '#1B4733'], ['Bleu paon', '#1F4E5F'], ['Cassis', '#351E28']]
+    'ete-clair': {
+      name: 'Été clair',
+      desc: 'Fraîcheur et clarté — les teintes délicates, légèrement grisées, vous adoucissent.',
+      mariage: [['Gris flanelle', '#87898E'], ['Mauve fumé', '#8A6E96'], ['Vieux rose', '#A85A74'], ['Teal fumé', '#2D6362']],
+      quotidien: [['Lavande', '#B9A8D8'], ['Rose dragée', '#E8B7C8'], ['Bleu ciel doux', '#A8C5E2'], ['Menthe douce', '#A9D8C5'], ['Gris perle', '#C9CCD1']]
+    },
+    'ete-vrai': {
+      name: 'Été vrai',
+      desc: 'Sous-ton froid élégant — les teintes posées, bleutées et veloutées, vous subliment.',
+      mariage: [['Mauve fumé', '#8A6E96'], ['Bleu paon', '#1F4E5F'], ['Gris flanelle', '#87898E'], ['Vieux rose', '#A85A74']],
+      quotidien: [['Bleu ardoise', '#6E87A6'], ['Framboise douce', '#B5527C'], ['Lavande', '#9D8FC0'], ['Vert d’eau', '#8FBFB2'], ['Gris bleuté', '#9AA5B1']]
+    },
+    'ete-doux': {
+      name: 'Été doux',
+      desc: 'Harmonie fondue — les teintes poudrées et profondes à la fois, jamais contrastées, sont faites pour vous.',
+      mariage: [['Mauve fumé', '#8A6E96'], ['Vieux rose', '#A85A74'], ['Gris flanelle', '#87898E'], ['Cassis', '#351E28']],
+      quotidien: [['Taupe rosé', '#A78D87'], ['Bleu grisé', '#7E93A6'], ['Mauve cendré', '#9A86A0'], ['Vert de gris', '#93A69A'], ['Vieux rose clair', '#C08497']]
+    },
+    'automne-doux': {
+      name: 'Automne doux',
+      desc: 'Chaleur tamisée — les teintes terreuses adoucies épousent votre harmonie naturelle.',
+      mariage: [['Cannelle', '#9D5B3B'], ['Vieux rose', '#A85A74'], ['Chocolat', '#3A2B1F'], ['Ocre doré', '#C29438']],
+      quotidien: [['Camel', '#B98C5A'], ['Taupe', '#8F8273'], ['Olive douce', '#7A7A45'], ['Terracotta douce', '#C07856'], ['Kaki doux', '#8A8A5C']]
+    },
+    'automne-vrai': {
+      name: 'Automne vrai',
+      desc: 'Chaleur riche — les teintes épicées et cuivrées révèlent tout votre éclat.',
+      mariage: [['Cannelle', '#9D5B3B'], ['Ocre doré', '#C29438'], ['Vert sapin', '#1B4733'], ['Bordeaux', '#5C1F2A'], ['Chocolat', '#3A2B1F']],
+      quotidien: [['Rouille', '#B25324'], ['Olive', '#6F702F'], ['Moutarde', '#C99B2C'], ['Brun chaud', '#7A4E2D'], ['Vert forêt', '#4A6741']]
+    },
+    'automne-profond': {
+      name: 'Automne profond',
+      desc: 'Chaleur et intensité — les teintes sombres et chaudes vous donnent une vraie prestance.',
+      mariage: [['Chocolat', '#3A2B1F'], ['Bordeaux', '#5C1F2A'], ['Cassis', '#351E28'], ['Vert sapin', '#1B4733']],
+      quotidien: [['Café', '#58392B'], ['Cuivre', '#A05C2F'], ['Olive profonde', '#50502A'], ['Aubergine chaude', '#5D3046'], ['Kaki profond', '#5B5B33']]
+    },
+    'hiver-vif': {
+      name: 'Hiver vif',
+      desc: 'Contraste éclatant — les teintes franches et profondes répondent à votre intensité naturelle.',
+      mariage: [['Grenat', '#8E1B3C'], ['Prune', '#471950'], ['Bleu paon', '#1F4E5F'], ['Vert sapin', '#1B4733']],
+      quotidien: [['Fuchsia', '#C7177E'], ['Bleu roi', '#2741C4'], ['Émeraude', '#0E8C5A'], ['Rouge franc', '#C81F2F'], ['Violet', '#6A2BA8']]
+    },
+    'hiver-vrai': {
+      name: 'Hiver vrai',
+      desc: 'Froideur élégante — les teintes nettes et profondes soulignent votre contraste naturel.',
+      mariage: [['Grenat', '#8E1B3C'], ['Prune', '#471950'], ['Bleu paon', '#1F4E5F'], ['Cassis', '#351E28']],
+      quotidien: [['Noir', '#1A1A1E'], ['Blanc pur', '#FFFFFF'], ['Rouge cerise', '#A6132F'], ['Bleu nuit', '#20284E'], ['Émeraude profonde', '#0B6B4A']]
+    },
+    'hiver-profond': {
+      name: 'Hiver profond',
+      desc: 'Profondeur magnétique — les teintes les plus sombres de la palette prennent vie sur vous.',
+      mariage: [['Cassis', '#351E28'], ['Prune', '#471950'], ['Vert sapin', '#1B4733'], ['Bordeaux', '#5C1F2A']],
+      quotidien: [['Noir profond', '#141417'], ['Bordeaux noir', '#4A1420'], ['Sapin noir', '#11352A'], ['Violet profond', '#3D1B5E'], ['Anthracite', '#3C3F46']]
     }
   };
-  /* chaque réponse pèse sur deux axes : W chaud / C froid · L clair / D profond */
+  /* chaque réponse pèse sur trois axes :
+     W chaud / C froid · L clair / D profond · B contrasté / M fondu */
   var SCORES = {
     light: { L: 1 }, medium: {}, deep: { D: 1 },
     warm2: { W: 2 }, cool2: { C: 2 }, neutral: {},
     warm: { W: 1 }, cool: { C: 1 },
+    bright: { B: 2 }, muted: { M: 2 },
     deepcool: { D: 1, C: 1 }, warmlight: { W: 1, L: 1 }, coollight: { C: 1, L: 1 }
   };
 
@@ -901,20 +1030,42 @@
   var answers = {};
 
   function showSeason() {
-    var s = { W: 0, C: 0, L: 0, D: 0 };
+    var s = { W: 0, C: 0, L: 0, D: 0, B: 0, M: 0 };
     Object.keys(answers).forEach(function (q) {
       var add = SCORES[answers[q]] || {};
       Object.keys(add).forEach(function (k) { s[k] += add[k]; });
     });
+    /* 1) la saison : sous-ton × profondeur */
     var season = (s.W >= s.C)
       ? (s.L > s.D ? 'printemps' : 'automne')
       : (s.L >= s.D ? 'ete' : 'hiver');
-    var data = SEASONS[season];
+    /* 2) la sous-saison : la caractéristique DOMINANTE du profil
+          (celle dont l'écart est le plus net), comme chez les coloristes */
+    var delta = {
+      clair: s.L - s.D, profond: s.D - s.L,
+      vraiChaud: s.W - s.C, vraiFroid: s.C - s.W,
+      vif: s.B - s.M, doux: s.M - s.B
+    };
+    var CAND = {
+      printemps: [['clair', delta.clair], ['vrai', delta.vraiChaud], ['vif', delta.vif]],
+      ete:       [['clair', delta.clair], ['vrai', delta.vraiFroid], ['doux', delta.doux]],
+      automne:   [['profond', delta.profond], ['vrai', delta.vraiChaud], ['doux', delta.doux]],
+      hiver:     [['profond', delta.profond], ['vrai', delta.vraiFroid], ['vif', delta.vif]]
+    };
+    var sub = 'vrai', best = -99;
+    CAND[season].forEach(function (p) {
+      if (p[1] > best) { best = p[1]; sub = p[0]; }
+    });
+    var data = SUBS[season + '-' + sub];
+
     document.getElementById('cqSeason').textContent = 'Palette ' + data.name;
     document.getElementById('cqDesc').textContent = data.desc;
-    document.getElementById('cqSwatches').innerHTML = data.colors.map(function (c) {
+    document.getElementById('cqSwatches').innerHTML = data.mariage.map(function (c) {
       return '<div class="swatch" role="button" tabindex="0" aria-haspopup="dialog">' +
         '<i style="background:' + c[1] + '"></i><span>' + c[0] + '</span></div>';
+    }).join('');
+    document.getElementById('cqDaily').innerHTML = data.quotidien.map(function (c) {
+      return '<span class="cq-dchip"><i style="background:' + c[1] + '"></i>' + c[0] + '</span>';
     }).join('');
     var res = document.getElementById('cq-result');
     res.hidden = false;
@@ -934,7 +1085,7 @@
         });
         chip.classList.add('on');
         answers[q.getAttribute('data-q')] = chip.getAttribute('data-v');
-        if (Object.keys(answers).length === 4) showSeason();
+        if (Object.keys(answers).length === 6) showSeason();
         return;
       }
       /* les pastilles du résultat ouvrent les déclinaisons */
