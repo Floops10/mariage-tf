@@ -146,13 +146,25 @@ ul, ol { list-style: none; }
 .toile-img.faded { opacity: .14; }
 .toile-img.fixed { position: fixed; }
 
-/* Logo réel teinté (masque sur le tracé vectoriel du logo) */
+/* éléments animés au scroll : on les isole sur leur propre couche GPU
+   pour un défilement fluide (surtout sur mobile) */
+#fil-marker, [data-parallax] { will-change: transform; }
+#fil-path { will-change: stroke-dashoffset; }
+
+/* Logo réel teinté — vraie image PNG (et non un masque CSS).
+   Un masque est rasterisé à l'échelle DPI de l'écran : sur Windows en
+   scaling fractionnaire (125 %/150 %) il devient flou, alors qu'une
+   image bitmap est échantillonnée à la résolution réelle → nette partout.
+   Deux versions : navy (fonds clairs) et crème (fonds navy). */
 .logo-mask {
   display: block;
   flex-shrink: 0;
-  background: var(--navy);
-  -webkit-mask: url('logo noir sans fond.svg') center / contain no-repeat;
-          mask: url('logo noir sans fond.svg') center / contain no-repeat;
+  background: center / contain no-repeat url('logo-navy.png');
+}
+.logo-mask.on-dark,
+.menu-logo,
+.footer-logo {
+  background-image: url('logo-cream.png');
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -311,7 +323,6 @@ ul, ol { list-style: none; }
 #menu-overlay.open .menu-rule { opacity: 1; }
 #menu-overlay .menu-logo {
   width: 64px; height: 64px;
-  background: rgba(250,245,239,.85);
   opacity: 0;
   transform: scale(.85);
   transition: opacity .5s var(--ease-out) .12s, transform .5s var(--ease-out) .12s;
@@ -818,7 +829,7 @@ ul, ol { list-style: none; }
   width: 58px;
   height: 58px;
   margin: 0 auto 1.2rem;
-  background: rgba(250,245,239,.8);
+  opacity: .9;
 }
 .footer-script {
   font-family: var(--font-script);
@@ -886,4 +897,10 @@ ul, ol { list-style: none; }
   .nav-logo img { width: 46px; }
   #menu-overlay { clip-path: circle(0px at calc(100% - 34px) 30px); }
   #menu-overlay.open { clip-path: circle(160% at calc(100% - 34px) 30px); }
+
+  /* MOBILE — fluidité du scroll : une toile en position:fixed est
+     repeinte à chaque frame quand le contenu glisse par-dessus.
+     On la rend absolue : elle défile alors avec la page, sans coût.
+     (l'accueil ne scrolle pas, donc aucun effet de bord là-bas) */
+  .page-body .toile-img.fixed { position: absolute; }
 }

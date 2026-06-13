@@ -106,6 +106,8 @@
   var filPath = document.getElementById('fil-path');
   var filMarker = document.getElementById('fil-marker');
   var filLen = 0;
+  var filGeo = null;          /* géométrie mise en cache (recalculée au resize) */
+  var lastP = -1;             /* évite les écritures redondantes */
 
   if (filWrap && filPath) {
     try { filLen = filPath.getTotalLength(); } catch (e) { filLen = 0; }
@@ -115,26 +117,43 @@
     }
   }
 
-  function updateFil() {
-    if (!filLen) return;
+  /* On mesure une seule fois (et à chaque resize) les positions —
+     elles ne changent pas pendant le scroll. À chaque frame, on n'a
+     donc plus aucune lecture de layout : tout est calculé, pas mesuré.
+     Fini le thrash lecture/écriture qui saccadait sur mobile. */
+  function measureFil() {
+    if (!filLen || !filSvg) { filGeo = null; return; }
+    var y = window.scrollY || window.pageYOffset;
     var rect = filWrap.getBoundingClientRect();
+    var srect = filSvg.getBoundingClientRect();
+    var vb = filSvg.viewBox.baseVal;
+    filGeo = {
+      wrapTop: rect.top + y,
+      wrapH: rect.height,
+      dx: srect.left - rect.left,
+      dy: srect.top - rect.top,
+      sx: srect.width / vb.width,
+      sy: srect.height / vb.height
+    };
+  }
+
+  function updateFil(y) {
+    if (!filGeo) return;
     var vh = window.innerHeight;
-    /* la pointe du tracé (et son marqueur) reste au milieu de l'écran :
-       le fil est dessiné jusqu'au point situé à ~52% du viewport */
-    var p = (vh * 0.52 - rect.top) / rect.height;
+    /* la pointe du tracé (et son marqueur) reste au milieu de l'écran */
+    var rectTop = filGeo.wrapTop - y;
+    var p = (vh * 0.52 - rectTop) / filGeo.wrapH;
     p = Math.max(0, Math.min(1, p));
     if (reduceMotion) p = 1;
+    if (Math.abs(p - lastP) < 0.0005) return;   /* rien de neuf : on sort */
+    lastP = p;
     var drawn = filLen * p;
-    filPath.style.strokeDashoffset = String(filLen - drawn);
-    if (filMarker && filSvg) {
-      /* le SVG est étiré (preserveAspectRatio="none") : on convertit
-         les coordonnées du tracé en pixels pour le marqueur HTML */
+    filPath.style.strokeDashoffset = (filLen - drawn).toFixed(1);
+    if (filMarker) {
       var pt = filPath.getPointAtLength(drawn);
-      var vb = filSvg.viewBox.baseVal;
-      var srect = filSvg.getBoundingClientRect();
-      var px = (srect.left - rect.left) + pt.x * (srect.width / vb.width);
-      var py = (srect.top - rect.top) + pt.y * (srect.height / vb.height);
-      filMarker.style.transform = 'translate(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px)';
+      var px = filGeo.dx + pt.x * filGeo.sx;
+      var py = filGeo.dy + pt.y * filGeo.sy;
+      filMarker.style.transform = 'translate3d(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px,0)';
       filMarker.style.opacity = p > 0.005 && p < 0.998 ? '1' : '0';
     }
   }
@@ -155,9 +174,10 @@
     }
     pageBody.style.setProperty('--sheet-zoom', zoomCur.toFixed(4));
     /* l'élargissement déplace la mise en page : on resynchronise */
+    measureFil();
     checkReveals();
     checkDraws();
-    if (filWrap && filPath) updateFil();
+    if (filGeo) updateFil(window.scrollY || window.pageYOffset);
     if (zoomRunning) requestAnimationFrame(zoomTick);
   }
 
@@ -181,6 +201,9 @@
       el.style.transform = 'translate3d(0,' + (scrollY * f).toFixed(1) + 'px,0)';
     });
   }
+  /* la parallaxe est coûteuse au scroll mobile pour un gain quasi nul :
+     on la réserve aux écrans larges */
+  function parallaxOn() { return paraEls.length && !reduceMotion && window.innerWidth > 760; }
 
   /* ═════════════════════════════════════════════
      NAV — état scrolled + boucle scroll unique (rAF)
@@ -196,17 +219,25 @@
       if (nav) nav.classList.toggle('scrolled', y > 10);
       checkReveals();
       checkDraws();
-      if (filWrap && filPath) updateFil();
-      if (paraEls.length && !reduceMotion) updateParallax(y);
+      if (filGeo) updateFil(y);
+      if (parallaxOn()) updateParallax(y);
       kickSheetZoom(y);
       ticking = false;
     });
   }
+
+  /* le resize (et la rotation mobile) invalide les positions mises en cache */
+  function onResize() {
+    measureFil();
+    lastP = -1;
+    onScroll();
+  }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  window.addEventListener('resize', onResize);
+  measureFil();
   onScroll();
   /* second passage une fois les polices/layout stabilisés */
-  window.addEventListener('load', onScroll);
+  window.addEventListener('load', function () { measureFil(); lastP = -1; onScroll(); });
 
   /* ═════════════════════════════════════════════
      MENU BURGER (mobile)
