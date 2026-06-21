@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -171,6 +171,24 @@ body { background: var(--toile-tint); }
   letter-spacing: .02em;
 }
 
+/* ─── Rappel date limite RSVP ─── */
+.card-rsvp-alert {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  font-family: var(--font-sub);
+  font-size: clamp(.54rem, 1.2svh, .65rem);
+  letter-spacing: .1em;
+  color: #b53120;
+  border: 1px solid rgba(181, 49, 32, .32);
+  background: rgba(181, 49, 32, .06);
+  padding: .38em 1.1em;
+  margin-top: .75rem;
+}
+.card-rsvp-alert strong { font-weight: 400; }
+.card-rsvp-alert svg { width: 10px; height: 10px; flex-shrink: 0; }
+.d7 { animation-delay: 1.7s; }
+
 /* ═══ MOBILE — toujours une seule hauteur d'écran ═══ */
 @media (max-width: 720px) {
   #scene { padding: .7rem .7rem; }
@@ -222,6 +240,8 @@ body { background: var(--toile-tint); }
     <li><a href="sejour.html">Venir au Domaine</a></li>
     <li><a href="dresscode.html">Dress code</a></li>
     <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
   <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
@@ -238,6 +258,8 @@ body { background: var(--toile-tint); }
   <a href="sejour.html">Venir au Domaine</a>
   <a href="dresscode.html">Dress code</a>
   <a href="histoire.html">Photos &amp; poème</a>
+  <a href="cadeaux.html">Cadeaux</a>
+  <a href="contact.html">Contact</a>
   <a href="rsvp.html">Confirmer ma venue</a>
   <span class="menu-rule" aria-hidden="true"></span>
   <span class="menu-date">12 · 12 · 2026</span>
@@ -282,6 +304,11 @@ body { background: var(--toile-tint); }
 
       <p class="card-count enter d6">Encore <b id="cdDays">—</b> nuits avant le grand oui</p>
 
+      <p class="card-rsvp-alert enter d7">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 8 v4.5"/><circle cx="12" cy="16" r=".6" fill="currentColor" stroke="none"/></svg>
+        Réponse souhaitée avant le <strong>1ᵉʳ août&nbsp;2026</strong>
+      </p>
+
     </div>
   </section>
 </main>
@@ -294,8 +321,8 @@ body { background: var(--toile-tint); }
   document.getElementById('cdDays').textContent = d;
 }());
 </script>
-<script src="toile.js?v=7"></script>
-<script src="transitions.js?v=7"></script>
+<script src="toile.js?v=8"></script>
+<script src="transitions.js?v=8"></script>
 
 </body>
 </html>

@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -421,6 +421,8 @@
     <li><a href="sejour.html">Venir au Domaine</a></li>
     <li><a href="dresscode.html" aria-current="page">Dress code</a></li>
     <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
   <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
@@ -437,6 +439,8 @@
   <a href="sejour.html">Venir au Domaine</a>
   <a href="dresscode.html">Dress code</a>
   <a href="histoire.html">Photos &amp; poème</a>
+  <a href="cadeaux.html">Cadeaux</a>
+  <a href="contact.html">Contact</a>
   <a href="rsvp.html">Confirmer ma venue</a>
   <span class="menu-rule" aria-hidden="true"></span>
   <span class="menu-date">12 · 12 · 2026</span>
@@ -689,9 +693,9 @@
         </svg>
       </div>
       <p class="section-intro reveal">
-        Teint, sous-ton, bijoux, yeux, cheveux, contraste&nbsp;: ce sont les six critères
+        Teint, sous-ton, bijoux, yeux, cheveux, contraste et intensité&nbsp;: les sept critères
         qu'utilisent les coloristes professionnels — la méthode des douze saisons.
-        Répondez à ces six questions, et nous vous dirons précisément quelle est votre
+        Répondez à ces sept questions, et nous vous dirons précisément quelle est votre
         saison, et quelles couleurs de notre palette vous mettront le plus en valeur.
       </p>
 
@@ -747,6 +751,14 @@
             <button type="button" class="cq-chip" data-v="muted">Doux — tout se fond</button>
           </div>
         </div>
+        <div class="cq-q" data-q="intensite">
+          <span class="cq-label">7 · Ce qui vous illumine davantage</span>
+          <div class="cq-chips">
+            <button type="button" class="cq-chip" data-v="vivid">Teintes nettes et intenses — marine, forêt, rubis</button>
+            <button type="button" class="cq-chip" data-v="powdery">Teintes douces et voilées — lavande, nude, brume</button>
+            <button type="button" class="cq-chip" data-v="neutral">Les deux me conviennent selon l'occasion</button>
+          </div>
+        </div>
 
         <div id="cq-result" hidden>
           <span class="cq-eyebrow">Votre palette</span>
@@ -799,6 +811,8 @@
       <a href="sejour.html">Venir au Domaine</a>
       <a href="dresscode.html">Dress code</a>
       <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
       <a href="rsvp.html">RSVP</a>
     </div>
     <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
@@ -945,75 +959,75 @@
   var SUBS = {
     'printemps-clair': {
       name: 'Printemps clair',
-      desc: 'Chaleur délicate et clarté — les teintes dorées et douces, jamais lourdes, éclairent votre visage.',
-      mariage: [['Ocre doré', '#C29438'], ['Cannelle', '#9D5B3B'], ['Vieux rose', '#A85A74'], ['Teal fumé', '#2D6362']],
-      quotidien: [['Pêche', '#F5B98F'], ['Corail clair', '#F08A6B'], ['Turquoise claire', '#6FC8C0'], ['Vert amande', '#9BBF6A'], ['Camel doré', '#C8975C']]
+      desc: 'Chaleur délicate et clarté — dans notre palette, les tons chauds les plus lumineux éclairent votre teint sans le durcir.',
+      mariage: [['Ocre doré clair', '#D5AE5E'], ['Cannelle douce', '#BD7E5C'], ['Vieux rose clair', '#C5849A'], ['Vert sapin clair', '#3B7A5C'], ['Teal clair', '#4E8E8D']],
+      quotidien: [['Ocre lumineux', '#CFA64F'], ['Cannelle', '#B57252'], ['Vieux rose', '#BD7990'], ['Vert sapin vif', '#347052'], ['Bleu paon clair', '#41768B'], ['Grenat clair', '#B23A5C'], ['Teal clair', '#458381']]
     },
     'printemps-vrai': {
       name: 'Printemps vrai',
-      desc: 'Sous-ton chaud affirmé et fraîcheur de teint — les teintes dorées et toniques sont vos alliées.',
-      mariage: [['Ocre doré', '#C29438'], ['Cannelle', '#9D5B3B'], ['Grenat', '#8E1B3C'], ['Vert sapin', '#1B4733']],
-      quotidien: [['Corail', '#ED6A4D'], ['Turquoise', '#2FB5A8'], ['Vert pré', '#5FA84E'], ['Jaune doré', '#EFB52B'], ['Camel', '#B97F3F']]
+      desc: 'Sous-ton chaud affirmé — les tons dorés et épicés de notre palette sont vos alliés, en version tonique.',
+      mariage: [['Ocre doré', '#C99D43'], ['Cannelle', '#A5613F'], ['Grenat clair', '#B23A5C'], ['Vert sapin', '#2D6648'], ['Bordeaux clair', '#8A3A48']],
+      quotidien: [['Ocre profond', '#B58931'], ['Cannelle riche', '#9D5B3B'], ['Vieux rose', '#B56F86'], ['Vert sapin', '#265C3F'], ['Bordeaux', '#722C37'], ['Grenat', '#A02A4B'], ['Teal fumé', '#3C7876']]
     },
     'printemps-vif': {
       name: 'Printemps vif',
-      desc: 'Éclat et chaleur — il vous faut des couleurs nettes et lumineuses, sans aucune lourdeur.',
-      mariage: [['Grenat', '#8E1B3C'], ['Ocre doré', '#C29438'], ['Bleu paon', '#1F4E5F'], ['Teal fumé', '#2D6362']],
-      quotidien: [['Corail vif', '#F04E33'], ['Turquoise vive', '#00B2B8'], ['Émeraude claire', '#19A06B'], ['Azur', '#2E86D6'], ['Jaune vif', '#F4C515']]
+      desc: 'Éclat et chaleur — il vous faut les tons les plus nets et lumineux de la palette, sans lourdeur.',
+      mariage: [['Grenat vif', '#B23A5C'], ['Ocre doré vif', '#CFA64F'], ['Vert sapin vif', '#347052'], ['Bleu paon vif', '#41768B'], ['Bordeaux vif', '#8A3A48']],
+      quotidien: [['Cannelle vive', '#BD7E5C'], ['Teal vif', '#4E8E8D'], ['Vieux rose vif', '#C5849A'], ['Grenat', '#A02A4B'], ['Ocre doré', '#C99D43'], ['Vert sapin', '#2D6648'], ['Prune clair', '#6F2C7C']]
     },
     'ete-clair': {
       name: 'Été clair',
-      desc: 'Fraîcheur et clarté — les teintes délicates, légèrement grisées, vous adoucissent.',
-      mariage: [['Gris flanelle', '#87898E'], ['Mauve fumé', '#8A6E96'], ['Vieux rose', '#A85A74'], ['Teal fumé', '#2D6362']],
-      quotidien: [['Lavande', '#B9A8D8'], ['Rose dragée', '#E8B7C8'], ['Bleu ciel doux', '#A8C5E2'], ['Menthe douce', '#A9D8C5'], ['Gris perle', '#C9CCD1']]
+      desc: 'Fraîcheur et clarté — les tons froids les plus doux et grisés de la palette adoucissent votre teint.',
+      mariage: [['Gris flanelle clair', '#A6A8AD'], ['Mauve fumé clair', '#A78FB2'], ['Vieux rose clair', '#C5849A'], ['Bleu paon doux', '#41768B'], ['Teal doux', '#4E8E8D']],
+      quotidien: [['Mauve clair', '#9D83A8'], ['Gris perle', '#9C9EA3'], ['Vieux rose', '#BD7990'], ['Bleu paon clair', '#38697D'], ['Teal brumeux', '#458381'], ['Mauve fumé', '#93789F'], ['Prune clair', '#6F2C7C']]
     },
     'ete-vrai': {
       name: 'Été vrai',
-      desc: 'Sous-ton froid élégant — les teintes posées, bleutées et veloutées, vous subliment.',
-      mariage: [['Mauve fumé', '#8A6E96'], ['Bleu paon', '#1F4E5F'], ['Gris flanelle', '#87898E'], ['Vieux rose', '#A85A74']],
-      quotidien: [['Bleu ardoise', '#6E87A6'], ['Framboise douce', '#B5527C'], ['Lavande', '#9D8FC0'], ['Vert d’eau', '#8FBFB2'], ['Gris bleuté', '#9AA5B1']]
+      desc: 'Sous-ton froid élégant — les bleus, verts et gris veloutés de la palette vous subliment.',
+      mariage: [['Bleu paon', '#2F5C6F'], ['Teal fumé', '#3C7876'], ['Gris flanelle', '#87898E'], ['Vert sapin', '#2D6648'], ['Mauve fumé', '#8A6E96']],
+      quotidien: [['Bleu paon profond', '#1F4E5F'], ['Teal fumé', '#2D6362'], ['Gris flanelle', '#7C7E83'], ['Vert sapin', '#265C3F'], ['Mauve fumé', '#7F648B'], ['Vieux rose', '#A85A74'], ['Prune', '#54205B']]
     },
     'ete-doux': {
       name: 'Été doux',
-      desc: 'Harmonie fondue — les teintes poudrées et profondes à la fois, jamais contrastées, sont faites pour vous.',
-      mariage: [['Mauve fumé', '#8A6E96'], ['Vieux rose', '#A85A74'], ['Gris flanelle', '#87898E'], ['Cassis', '#351E28']],
-      quotidien: [['Taupe rosé', '#A78D87'], ['Bleu grisé', '#7E93A6'], ['Mauve cendré', '#9A86A0'], ['Vert de gris', '#93A69A'], ['Vieux rose clair', '#C08497']]
+      desc: 'Harmonie fondue — les tons froids poudrés et grisés de la palette, jamais tranchés, sont faits pour vous.',
+      mariage: [['Mauve fumé', '#8A6E96'], ['Gris flanelle', '#87898E'], ['Vieux rose', '#A85A74'], ['Teal fumé', '#346D6C'], ['Bleu paon', '#275564']],
+      quotidien: [['Mauve cendré', '#93789F'], ['Gris flanelle', '#7C7E83'], ['Vieux rose', '#9A506A'], ['Teal fumé', '#2D6362'], ['Bleu paon', '#1F4E5F'], ['Prune douce', '#5D2466'], ['Vert sapin', '#205136']]
     },
     'automne-doux': {
       name: 'Automne doux',
-      desc: 'Chaleur tamisée — les teintes terreuses adoucies épousent votre harmonie naturelle.',
-      mariage: [['Cannelle', '#9D5B3B'], ['Vieux rose', '#A85A74'], ['Chocolat', '#3A2B1F'], ['Ocre doré', '#C29438']],
-      quotidien: [['Camel', '#B98C5A'], ['Taupe', '#8F8273'], ['Olive douce', '#7A7A45'], ['Terracotta douce', '#C07856'], ['Kaki doux', '#8A8A5C']]
+      desc: 'Chaleur tamisée — les terreux adoucis de la palette épousent votre harmonie naturelle.',
+      mariage: [['Cannelle', '#9D5B3B'], ['Ocre doré', '#B58931'], ['Vieux rose', '#9A506A'], ['Vert sapin', '#265C3F'], ['Chocolat', '#5F4A38']],
+      quotidien: [['Cannelle douce', '#A5613F'], ['Ocre doré', '#A87E2B'], ['Chocolat', '#534030'], ['Vieux rose', '#8C4660'], ['Vert sapin', '#205136'], ['Bordeaux', '#722C37'], ['Teal fumé', '#346D6C']]
     },
     'automne-vrai': {
       name: 'Automne vrai',
-      desc: 'Chaleur riche — les teintes épicées et cuivrées révèlent tout votre éclat.',
-      mariage: [['Cannelle', '#9D5B3B'], ['Ocre doré', '#C29438'], ['Vert sapin', '#1B4733'], ['Bordeaux', '#5C1F2A'], ['Chocolat', '#3A2B1F']],
-      quotidien: [['Rouille', '#B25324'], ['Olive', '#6F702F'], ['Moutarde', '#C99B2C'], ['Brun chaud', '#7A4E2D'], ['Vert forêt', '#4A6741']]
+      desc: 'Chaleur riche — les épicés et cuivrés de la palette révèlent tout votre éclat.',
+      mariage: [['Ocre doré', '#C29438'], ['Cannelle', '#A5613F'], ['Grenat', '#971F43'], ['Vert sapin', '#2D6648'], ['Bordeaux', '#722C37']],
+      quotidien: [['Ocre doré', '#B58931'], ['Cannelle riche', '#9D5B3B'], ['Vert sapin', '#265C3F'], ['Bordeaux', '#5C1F2A'], ['Chocolat', '#534030'], ['Teal fumé', '#2D6362'], ['Grenat', '#8E1B3C']]
     },
     'automne-profond': {
       name: 'Automne profond',
-      desc: 'Chaleur et intensité — les teintes sombres et chaudes vous donnent une vraie prestance.',
-      mariage: [['Chocolat', '#3A2B1F'], ['Bordeaux', '#5C1F2A'], ['Cassis', '#351E28'], ['Vert sapin', '#1B4733']],
-      quotidien: [['Café', '#58392B'], ['Cuivre', '#A05C2F'], ['Olive profonde', '#50502A'], ['Aubergine chaude', '#5D3046'], ['Kaki profond', '#5B5B33']]
+      desc: 'Chaleur et intensité — sur les teints profonds, ce sont les tons chauds les plus vifs et lumineux de la palette qui vibrent (jamais les bruns sombres, qui se fondent dans la peau).',
+      mariage: [['Ocre doré clair', '#D5AE5E'], ['Cannelle vive', '#BD7E5C'], ['Grenat vif', '#B23A5C'], ['Vert sapin vif', '#347052'], ['Bordeaux clair', '#8A3A48']],
+      quotidien: [['Ocre lumineux', '#CFA64F'], ['Cannelle', '#AD6747'], ['Vert sapin', '#2D6648'], ['Grenat', '#A02A4B'], ['Teal vif', '#4E8E8D'], ['Bleu paon', '#2F5C6F'], ['Vieux rose vif', '#C5849A']]
     },
     'hiver-vif': {
       name: 'Hiver vif',
-      desc: 'Contraste éclatant — les teintes franches et profondes répondent à votre intensité naturelle.',
-      mariage: [['Grenat', '#8E1B3C'], ['Prune', '#471950'], ['Bleu paon', '#1F4E5F'], ['Vert sapin', '#1B4733']],
-      quotidien: [['Fuchsia', '#C7177E'], ['Bleu roi', '#2741C4'], ['Émeraude', '#0E8C5A'], ['Rouge franc', '#C81F2F'], ['Violet', '#6A2BA8']]
+      desc: 'Contraste éclatant — les tons froids les plus nets et saturés de la palette répondent à votre intensité.',
+      mariage: [['Grenat vif', '#B23A5C'], ['Bleu paon vif', '#41768B'], ['Prune vive', '#6F2C7C'], ['Vert sapin vif', '#347052'], ['Teal vif', '#4E8E8D']],
+      quotidien: [['Grenat', '#A02A4B'], ['Bleu paon', '#2F5C6F'], ['Prune', '#5D2466'], ['Vert sapin', '#2D6648'], ['Teal fumé', '#3C7876'], ['Mauve vif', '#A78FB2'], ['Gris flanelle', '#87898E']]
     },
     'hiver-vrai': {
       name: 'Hiver vrai',
-      desc: 'Froideur élégante — les teintes nettes et profondes soulignent votre contraste naturel.',
-      mariage: [['Grenat', '#8E1B3C'], ['Prune', '#471950'], ['Bleu paon', '#1F4E5F'], ['Cassis', '#351E28']],
-      quotidien: [['Noir', '#1A1A1E'], ['Blanc pur', '#FFFFFF'], ['Rouge cerise', '#A6132F'], ['Bleu nuit', '#20284E'], ['Émeraude profonde', '#0B6B4A']]
+      desc: 'Froideur élégante — les bleus, verts et joyaux profonds de la palette subliment les teints clairs comme les plus foncés.',
+      mariage: [['Bleu paon', '#1F4E5F'], ['Vert sapin', '#1B4733'], ['Teal fumé', '#2D6362'], ['Grenat', '#8E1B3C'], ['Prune', '#471950']],
+      quotidien: [['Bleu paon profond', '#1A4554'], ['Gris flanelle', '#717378'], ['Vert sapin profond', '#163D2C'], ['Mauve fumé', '#745A80'], ['Prune', '#54205B'], ['Grenat', '#801836'], ['Teal fumé', '#275857']]
     },
     'hiver-profond': {
       name: 'Hiver profond',
-      desc: 'Profondeur magnétique — les teintes les plus sombres de la palette prennent vie sur vous.',
-      mariage: [['Cassis', '#351E28'], ['Prune', '#471950'], ['Vert sapin', '#1B4733'], ['Bordeaux', '#5C1F2A']],
-      quotidien: [['Noir profond', '#141417'], ['Bordeaux noir', '#4A1420'], ['Sapin noir', '#11352A'], ['Violet profond', '#3D1B5E'], ['Anthracite', '#3C3F46']]
+      desc: 'Profondeur magnétique — sur les teints les plus intenses, ce sont les joyaux froids les plus saturés et lumineux de la palette qui magnifient (jamais les tons noircis, qui se fondent dans la peau).',
+      mariage: [['Bleu paon vif', '#41768B'], ['Grenat vif', '#B23A5C'], ['Vert sapin vif', '#347052'], ['Prune vive', '#6F2C7C'], ['Teal vif', '#4E8E8D']],
+      quotidien: [['Bleu paon', '#2F5C6F'], ['Grenat', '#A02A4B'], ['Mauve vif', '#9D83A8'], ['Vert sapin', '#2D6648'], ['Teal fumé', '#3C7876'], ['Prune', '#5D2466'], ['Vieux rose vif', '#C5849A']]
     }
   };
   /* chaque réponse pèse sur trois axes :
@@ -1023,7 +1037,8 @@
     warm2: { W: 2 }, cool2: { C: 2 }, neutral: {},
     warm: { W: 1 }, cool: { C: 1 },
     bright: { B: 2 }, muted: { M: 2 },
-    deepcool: { D: 1, C: 1 }, warmlight: { W: 1, L: 1 }, coollight: { C: 1, L: 1 }
+    deepcool: { D: 1, C: 1 }, warmlight: { W: 1, L: 1 }, coollight: { C: 2, L: 1 },
+    vivid: { B: 2 }, powdery: { M: 2 }
   };
 
   var quiz = document.querySelector('.colorquiz');
@@ -1035,10 +1050,19 @@
       var add = SCORES[answers[q]] || {};
       Object.keys(add).forEach(function (k) { s[k] += add[k]; });
     });
-    /* 1) la saison : sous-ton × profondeur */
-    var season = (s.W >= s.C)
-      ? (s.L > s.D ? 'printemps' : 'automne')
-      : (s.L >= s.D ? 'ete' : 'hiver');
+    /* 1) la saison :
+       tons chauds → printemps (clair) ou automne (profond)
+       tons froids → hiver (vif/net) ou été (doux/voilé)
+       Le 3e axe vivacité (B/M) différencie hiver vs été, ce qui est
+       la définition colorimétrique correcte des 4 saisons. */
+    var season;
+    if (s.W >= s.C) {
+      season = (s.L > s.D) ? 'printemps' : 'automne';
+    } else {
+      if      (s.B > s.M) season = 'hiver';
+      else if (s.M > s.B) season = 'ete';
+      else                 season = (s.L >= s.D) ? 'ete' : 'hiver';
+    }
     /* 2) la sous-saison : la caractéristique DOMINANTE du profil
           (celle dont l'écart est le plus net), comme chez les coloristes */
     var delta = {
@@ -1085,7 +1109,7 @@
         });
         chip.classList.add('on');
         answers[q.getAttribute('data-q')] = chip.getAttribute('data-v');
-        if (Object.keys(answers).length === 6) showSeason();
+        if (Object.keys(answers).length === 7) showSeason();
         return;
       }
       /* les pastilles du résultat ouvrent les déclinaisons */
@@ -1109,8 +1133,8 @@
 }());
 </script>
 
-<script src="toile.js?v=7"></script>
-<script src="transitions.js?v=7"></script>
+<script src="toile.js?v=8"></script>
+<script src="transitions.js?v=8"></script>
 
 </body>
 </html>

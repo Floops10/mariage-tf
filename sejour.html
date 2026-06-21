@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -206,6 +206,48 @@
 }
 .cta-band .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
 
+/* ─── Cérémonies ─── */
+.ceremony-notice {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  border: 1px dashed var(--border3);
+  padding: 1.4rem 1.8rem;
+  background: rgba(31,47,68,.02);
+}
+.cn-tag {
+  font-family: var(--font-sub);
+  font-size: .58rem;
+  letter-spacing: .18em;
+  color: var(--gold2);
+  border: 1px solid var(--gold-border2);
+  padding: .32em .9em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.cn-title {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: var(--navy);
+  margin-bottom: .25rem;
+  font-weight: 400;
+}
+.cn-sub {
+  font-size: .83rem;
+  color: var(--text-mid);
+  line-height: 1.65;
+}
+
+/* ─── Photo lieu ─── */
+.dom-right img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 @media (max-width: 760px) {
   .dom-box { grid-template-columns: 1fr; }
   .dom-left { border-right: none; border-bottom: 1px solid var(--border); }
@@ -244,6 +286,8 @@
     <li><a href="sejour.html" aria-current="page">Venir au Domaine</a></li>
     <li><a href="dresscode.html">Dress code</a></li>
     <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
   <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
@@ -260,6 +304,8 @@
   <a href="sejour.html">Venir au Domaine</a>
   <a href="dresscode.html">Dress code</a>
   <a href="histoire.html">Photos &amp; poème</a>
+  <a href="cadeaux.html">Cadeaux</a>
+  <a href="contact.html">Contact</a>
   <a href="rsvp.html">Confirmer ma venue</a>
   <span class="menu-rule" aria-hidden="true"></span>
   <span class="menu-date">12 · 12 · 2026</span>
@@ -269,7 +315,7 @@
 <header class="page-hero">
   <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
   <div class="page-hero-inner">
-    <span class="page-eyebrow reveal">Itinéraires & temps de trajet</span>
+    <span class="page-eyebrow reveal">Cérémonies, domaine &amp; itinéraires</span>
     <h1 class="page-title reveal reveal-delay-1">Venir au Domaine</h1>
     <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
       <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
@@ -306,20 +352,52 @@
             <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://maps.apple.com/?daddr=5+Hameau+de+Vertigneul,+59730+Romeries">Plans</a>
           </div>
         </div>
-        <div class="dom-right" aria-hidden="true">
-          <div class="toile-img blue"></div>
-          <div class="dom-badge reveal-zoom">
-            <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="1400" data-draw-stagger="120">
-              <path d="M30 92 V 56 M 90 92 V 56"/>
-              <path d="M24 58 L 60 30 L 96 58"/>
-              <path d="M60 30 V 18 M 54.5 23.5 H 65.5"/>
-              <circle cx="60" cy="52" r="6"/>
-              <path d="M52 92 v-18 a 8 8 0 0 1 16 0 v 18"/>
-              <path d="M22 92 H 98"/>
-            </svg>
-          </div>
+        <div class="dom-right">
+          <img src="https://www.image2url.com/r2/default/images/1782077586790-3a073f53-744b-4c51-9a9d-dc2df1b2862e.jpg"
+               alt="Domaine les Hauts de Vertigneul">
         </div>
       </div>
+    </section>
+
+    <!-- ═══ LES CÉRÉMONIES ═══ -->
+    <section class="section" aria-labelledby="ceremonies-title">
+      <span class="section-eyebrow reveal">Le jour J</span>
+      <h2 class="section-title reveal" id="ceremonies-title">Les cérémonies</h2>
+      <p class="section-intro reveal">
+        Avant de nous rejoindre au domaine, deux cérémonies marqueront cette belle journée.
+      </p>
+
+      <!-- Mariage civil -->
+      <div class="dom-box reveal" style="margin-bottom:1.8rem">
+        <div class="dom-left">
+          <span style="font-family:var(--font-sub);font-size:.6rem;letter-spacing:.18em;color:var(--gold2);display:block;margin-bottom:.5rem">MARIAGE CIVIL · 14H00</span>
+          <h3 class="dom-name">Mairie de Trith-Saint-Léger</h3>
+          <p class="dom-addr">
+            Place de la Résistance<br>
+            59125 Trith-Saint-Léger
+          </p>
+          <div class="dom-btns">
+            <a class="btn btn-outline btn-sm" target="_blank" rel="noopener"
+               href="https://www.google.com/maps/dir/?api=1&destination=Mairie+de+Trith-Saint-L%C3%A9ger%2C+Place+de+la+R%C3%A9sistance%2C+59125+Trith-Saint-L%C3%A9ger&travelmode=driving">Google Maps</a>
+            <a class="btn btn-outline btn-sm" target="_blank" rel="noopener"
+               href="https://waze.com/ul?q=Mairie%20Trith-Saint-L%C3%A9ger%2059125&navigate=yes">Waze</a>
+          </div>
+        </div>
+        <div class="dom-right">
+          <img src="https://www.image2url.com/r2/default/images/1782077616067-ea261fcb-0fee-4ec4-8b69-bca02202708c.jpeg"
+               alt="Mairie de Trith-Saint-Léger">
+        </div>
+      </div>
+
+      <!-- Cérémonie religieuse — à confirmer -->
+      <div class="ceremony-notice reveal">
+        <span class="cn-tag">À confirmer</span>
+        <div>
+          <p class="cn-title">Cérémonie religieuse</p>
+          <p class="cn-sub">Le lieu et les informations pratiques vous seront communiqués prochainement.</p>
+        </div>
+      </div>
+
     </section>
 
     <!-- ═══ CARTE ROUTIÈRE ═══ -->
@@ -617,14 +695,16 @@
       <a href="sejour.html">Venir au Domaine</a>
       <a href="dresscode.html">Dress code</a>
       <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
       <a href="rsvp.html">RSVP</a>
     </div>
     <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
   </div>
 </footer>
 
-<script src="toile.js?v=7"></script>
-<script src="transitions.js?v=7"></script>
+<script src="toile.js?v=8"></script>
+<script src="transitions.js?v=8"></script>
 
 </body>
 </html>

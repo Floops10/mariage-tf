@@ -14,6 +14,8 @@
     'sejour.html':    { eyebrow: 'La route du domaine',     title: 'Venir au Domaine' },
     'dresscode.html': { eyebrow: 'Pour vous faire beaux',   title: 'Le Dress Code' },
     'histoire.html':  { eyebrow: 'Avec tendresse',       title: 'Photos & poème' },
+    'cadeaux.html':   { eyebrow: 'Si le cœur vous en dit',   title: 'Cadeaux' },
+    'contact.html':   { eyebrow: 'On est là',                title: 'Nous contacter' },
     'rsvp.html':      { eyebrow: 'Avant le 1ᵉʳ août 2026',  title: 'Confirmer ma venue' },
     '':               { eyebrow: '12 décembre 2026',        title: 'Thomy & Florian' },
   };

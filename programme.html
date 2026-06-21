@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -165,6 +165,49 @@
 }
 .cta-band .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
 
+/* ─── Placeholder programme à venir ─── */
+.prog-soon {
+  position: relative;
+  text-align: center;
+  border: 1px dashed var(--border3);
+  background: rgba(31,47,68,.018);
+  padding: clamp(2.4rem, 6vw, 4rem) clamp(1.4rem, 6vw, 3rem);
+  max-width: 36rem;
+  margin: 0 auto;
+}
+.prog-soon::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--gold-border);
+  pointer-events: none;
+}
+.prog-soon-ico { display: block; color: var(--gold2); margin-bottom: 1.2rem; }
+.prog-soon-ico svg { width: 40px; height: 40px; }
+.prog-soon-label {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .58rem;
+  letter-spacing: .22em;
+  color: var(--gold2);
+  margin-bottom: .6rem;
+}
+.prog-soon-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: var(--navy);
+  font-weight: 400;
+  margin-bottom: .7rem;
+}
+.prog-soon-sub {
+  font-family: var(--font-body);
+  font-size: .88rem;
+  color: var(--text-mid);
+  line-height: 1.75;
+  position: relative;
+  z-index: 1;
+}
+
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 760px) {
   #fil-svg { left: 27px; transform: none; width: 54px; }
@@ -206,6 +249,8 @@
     <li><a href="sejour.html">Venir au Domaine</a></li>
     <li><a href="dresscode.html">Dress code</a></li>
     <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
   <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
@@ -222,6 +267,8 @@
   <a href="sejour.html">Venir au Domaine</a>
   <a href="dresscode.html">Dress code</a>
   <a href="histoire.html">Photos &amp; poème</a>
+  <a href="cadeaux.html">Cadeaux</a>
+  <a href="contact.html">Contact</a>
   <a href="rsvp.html">Confirmer ma venue</a>
   <span class="menu-rule" aria-hidden="true"></span>
   <span class="menu-date">12 · 12 · 2026</span>
@@ -246,14 +293,23 @@
 
   <main class="sheet">
 
-    <p class="tl-note reveal">
+    <div class="prog-soon reveal">
+      <span class="prog-soon-ico" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="15"/><path d="M20 12 V 20 L25 25"/></svg>
+      </span>
+      <span class="prog-soon-label">À venir</span>
+      <p class="prog-soon-title">Programme bientôt disponible</p>
+      <p class="prog-soon-sub">Le déroulé complet du jour J vous sera communiqué dans les prochaines semaines.</p>
+    </div>
+
+    <p class="tl-note reveal" hidden>
       Les horaires sont donnés à titre indicatif —
       un soupçon de retard fait partie du charme des mariages.
       Suivez le fil&hellip;
     </p>
 
     <!-- ═══ TIMELINE — fil conducteur ═══ -->
-    <section id="timeline" data-fil aria-label="Déroulé de la journée">
+    <section id="timeline" data-fil aria-label="Déroulé de la journée" hidden>
 
       <svg id="fil-svg" viewBox="0 0 120 2600" preserveAspectRatio="none" aria-hidden="true">
         <path id="fil-ghost" d="M 60 0 C 96 110 24 215 60 325 C 96 435 24 540 60 650 C 96 760 24 865 60 975 C 96 1085 24 1190 60 1300 C 96 1410 24 1515 60 1625 C 96 1735 24 1840 60 1950 C 96 2060 24 2165 60 2275 C 96 2385 24 2490 60 2600"/>
@@ -403,7 +459,7 @@
     </section>
 
     <!-- fin du fil -->
-    <div id="fil-end" class="reveal">
+    <div id="fil-end" class="reveal" hidden>
       <svg viewBox="-22 -22 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" data-draw data-draw-dur="1600" data-draw-stagger="160">
         <path d="M0 14 C -13 4 -15 -5 -8.5 -9 C -4 -11.6 0 -7.6 0 -4.6 C 0 -7.6 4 -11.6 8.5 -9 C 15 -5 13 4 0 14 Z"/>
       </svg>
@@ -435,14 +491,16 @@
       <a href="sejour.html">Venir au Domaine</a>
       <a href="dresscode.html">Dress code</a>
       <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
       <a href="rsvp.html">RSVP</a>
     </div>
     <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
   </div>
 </footer>
 
-<script src="toile.js?v=7"></script>
-<script src="transitions.js?v=7"></script>
+<script src="toile.js?v=8"></script>
+<script src="transitions.js?v=8"></script>
 
 </body>
 </html>

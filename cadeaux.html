@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cadeaux — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="Si l'envie de nous gâter vous prend, voici comment nous faire plaisir.">
+<link rel="icon" type="image/png" href="Logo.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=8">
+
+<style>
+/* ═══════════════════════════════════════════════
+   CADEAUX
+   ═══════════════════════════════════════════════ */
+
+/* ─── Encart enveloppes ─── */
+.envelope-box {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+  border: 1px solid var(--border2);
+  overflow: hidden;
+  background: var(--cream);
+}
+.envelope-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.6rem 2.4rem;
+  background: var(--toile-tint);
+  border-right: 1px solid var(--border);
+  color: var(--gold2);
+}
+.envelope-icon svg { width: 54px; height: 54px; }
+.envelope-text {
+  padding: 2rem 2.2rem 2rem;
+}
+.envelope-text h3 {
+  font-family: var(--font-title);
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  color: var(--navy);
+  font-weight: 400;
+  margin-bottom: .6rem;
+}
+.envelope-text p {
+  font-family: var(--font-body);
+  font-size: .92rem;
+  line-height: 1.8;
+  color: var(--text-mid);
+}
+.envelope-text p + p { margin-top: .7rem; }
+
+/* ─── Pastilles "À quoi ça servira" ─── */
+.env-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1.2rem;
+}
+.env-chip {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--navy);
+  border: 1px solid var(--border2);
+  padding: .35em .95em;
+  background: var(--cream);
+}
+
+/* ─── Encart "bientôt" ─── */
+.coming-soon-box {
+  position: relative;
+  border: 1px dashed var(--border3);
+  background: rgba(31,47,68,.018);
+  padding: clamp(2.4rem, 6vw, 4rem) clamp(1.4rem, 6vw, 3rem);
+  text-align: center;
+}
+.coming-soon-box::after {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--gold-border);
+  pointer-events: none;
+}
+.coming-soon-icon {
+  color: var(--gold2);
+  margin-bottom: 1.4rem;
+  display: block;
+}
+.coming-soon-icon svg { width: 40px; height: 40px; }
+.coming-soon-label {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .58rem;
+  letter-spacing: .22em;
+  color: var(--gold2);
+  margin-bottom: .6rem;
+}
+.coming-soon-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: var(--navy);
+  font-weight: 400;
+  margin-bottom: .9rem;
+}
+.coming-soon-sub {
+  font-family: var(--font-body);
+  font-size: .9rem;
+  color: var(--text-mid);
+  line-height: 1.75;
+  max-width: 26rem;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Citation ─── */
+.gift-quote {
+  text-align: center;
+  padding: 2.6rem clamp(1rem, 8vw, 5rem);
+  border: 1px solid var(--border2);
+  background: var(--toile-tint);
+  position: relative;
+}
+.gift-quote::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--gold-border);
+  pointer-events: none;
+}
+.gift-quote-text {
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.4vw, 1.55rem);
+  color: var(--navy);
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+.gift-quote-sig {
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--font-script);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--gold2);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 620px) {
+  .envelope-box { grid-template-columns: 1fr; }
+  .envelope-icon {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1.8rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TRANSITION OVERLAY ═══ -->
+<div id="t-overlay" aria-hidden="true" style="pointer-events:none">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <p id="t-eyebrow" class="t-eyebrow"></p>
+    <p id="t-title" class="t-title"></p>
+    <p id="t-quote" class="t-quote"></p>
+    <p id="t-quote-ref" class="t-quote-ref"></p>
+  </div>
+</div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="Logo.png" alt="T & F">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html">Venir au Domaine</a></li>
+    <li><a href="dresscode.html">Dress code</a></li>
+    <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html" aria-current="page">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <a href="index.html">Accueil</a>
+  <a href="programme.html">Le Programme</a>
+  <a href="sejour.html">Venir au Domaine</a>
+  <a href="dresscode.html">Dress code</a>
+  <a href="histoire.html">Photos &amp; poème</a>
+  <a href="cadeaux.html">Cadeaux</a>
+  <a href="contact.html">Contact</a>
+  <a href="rsvp.html">Confirmer ma venue</a>
+  <span class="menu-rule" aria-hidden="true"></span>
+  <span class="menu-date">12 · 12 · 2026</span>
+</div>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<header class="page-hero">
+  <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow reveal">Si le cœur vous en dit</span>
+    <h1 class="page-title reveal reveal-delay-1">Cadeaux</h1>
+    <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
+      <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+    </div>
+    <span class="page-sub reveal reveal-delay-3">Des idées pour nous gâter</span>
+  </div>
+</header>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+
+    <!-- ═══ INTRO ═══ -->
+    <section class="section">
+
+      <div class="gift-quote reveal">
+        <p class="gift-quote-text">
+          « Votre présence à nos côtés est déjà le plus beau des cadeaux. »
+        </p>
+        <span class="gift-quote-sig">Thomy &amp; Florian</span>
+      </div>
+
+      <p class="section-intro reveal" style="margin-top:2rem">
+        Si l'envie de nous offrir quelque chose vous prend,
+        voici comment nous faire plaisir — à votre guise,
+        en toute liberté. Chaque attention nous touche, quelle qu'elle soit.
+      </p>
+
+    </section>
+
+    <!-- ═══ ENVELOPPES ═══ -->
+    <section class="section" aria-labelledby="envelope-title">
+      <span class="section-eyebrow reveal">La façon la plus simple</span>
+      <h2 class="section-title reveal" id="envelope-title">L'urne à enveloppes</h2>
+
+      <div class="envelope-box reveal">
+        <div class="envelope-icon" aria-hidden="true">
+          <svg viewBox="0 0 54 54" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="13" width="44" height="30" rx="1.5"/>
+            <path d="M5 15 L27 32 L49 15"/>
+            <path d="M5 43 L19 28"/>
+            <path d="M49 43 L35 28"/>
+          </svg>
+        </div>
+        <div class="envelope-text">
+          <h3>Une enveloppe, un geste du cœur</h3>
+          <p>
+            Le soir du 12 décembre, une urne vous attend dans la salle.
+            Chaque enveloppe nous aide à construire notre vie à deux —
+            lune de miel, premiers pas dans notre chez-nous, petits souvenirs
+            qui durent longtemps.
+          </p>
+          <div class="env-chips">
+            <span class="env-chip">Lune de miel</span>
+            <span class="env-chip">Notre chez-nous</span>
+            <span class="env-chip">Premiers souvenirs</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ═══ LISTE À VENIR ═══ -->
+    <section class="section" aria-labelledby="list-title">
+      <span class="section-eyebrow reveal">En vrac</span>
+      <h2 class="section-title reveal" id="list-title">Notre liste de cadeaux</h2>
+      <p class="section-intro reveal">
+        On prépare une liste d'idées concrètes — objets, expériences, coups de cœur.
+        Elle arrive très bientôt.
+      </p>
+
+      <div class="coming-soon-box reveal">
+        <span class="coming-soon-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="20" cy="20" r="15"/>
+            <path d="M20 12 V 20 L25 25"/>
+            <path d="M8 8 L32 32" opacity=".0"/>
+          </svg>
+        </span>
+        <span class="coming-soon-label">Patience</span>
+        <p class="coming-soon-title">Liste bientôt disponible</p>
+        <p class="coming-soon-sub">
+          Revenez dans quelques jours — on prépare une liste
+          soignée d'idées à votre portée.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- bandeau CTA -->
+    <div class="cta-band reveal">
+      <p>Des questions sur le mariage ? On est là.</p>
+      <div class="btns">
+        <a href="contact.html" class="btn btn-outline">Nous contacter</a>
+        <a href="dresscode.html" class="btn btn-outline">Le dress code</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy &amp; Florian</span>
+    <p class="footer-date"><a href="reponses.html">12 · XII · MMXXVI</a></p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir au Domaine</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
+  </div>
+</footer>
+
+<script src="toile.js?v=8"></script>
+<script src="transitions.js?v=8"></script>
+
+</body>
+</html>
