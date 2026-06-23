@@ -99,28 +99,28 @@
 }
 
 /* ─── Confirmation ─── */
-#cf-confirm {
+#cf-confirm, #cf-fallback {
   display: none;
   text-align: center;
   padding: 2.4rem 1.4rem;
   position: relative;
   z-index: 1;
 }
-#cf-confirm.show { display: block; }
-#cf-confirm .cf-ok-icon {
+#cf-confirm.show, #cf-fallback.show { display: block; }
+#cf-confirm .cf-ok-icon, #cf-fallback .cf-ok-icon {
   color: var(--gold2);
   margin-bottom: 1rem;
   display: block;
 }
-#cf-confirm .cf-ok-icon svg { width: 42px; height: 42px; }
-#cf-confirm h3 {
+#cf-confirm .cf-ok-icon svg, #cf-fallback .cf-ok-icon svg { width: 42px; height: 42px; }
+#cf-confirm h3, #cf-fallback h3 {
   font-family: var(--font-title);
   font-size: clamp(1.2rem, 2.6vw, 1.5rem);
   color: var(--navy);
   font-weight: 400;
   margin-bottom: .55rem;
 }
-#cf-confirm p {
+#cf-confirm p, #cf-fallback p {
   font-family: var(--font-body);
   font-size: .88rem;
   color: var(--text-mid);
@@ -128,6 +128,19 @@
   max-width: 28rem;
   margin: 0 auto 1.4rem;
 }
+.cf-copy-link {
+  font-family: var(--font-body);
+  font-size: inherit;
+  color: var(--gold2);
+  background: none;
+  border: none;
+  border-bottom: 1px dashed var(--gold-border);
+  padding: 0 0 1px;
+  cursor: pointer;
+  transition: color .2s;
+}
+.cf-copy-link:hover { color: var(--navy); }
+.cf-copy-link.copied { color: #2e7d4f; border-bottom-color: transparent; }
 
 /* ─── Raisons de contact (chips) ─── */
 .contact-chips {
@@ -266,15 +279,15 @@
           </div>
 
           <div class="cf-actions">
-            <button type="submit" class="btn btn-primary">Envoyer le message</button>
+            <button type="submit" class="btn btn-primary" id="cfSubmit">Envoyer le message</button>
             <span class="cf-note">
-              Un clic ouvre votre messagerie avec le message prêt à l'envoi.
+              Votre message nous arrive directement — pas besoin d'application de messagerie.
             </span>
           </div>
 
         </form>
 
-        <!-- ─ Confirmation ─ -->
+        <!-- ─ Confirmation (succès) ─ -->
         <div id="cf-confirm" role="status" aria-live="polite">
           <span class="cf-ok-icon" aria-hidden="true">
             <svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -282,12 +295,33 @@
               <path d="M13 21 L18.5 27 L29 15"/>
             </svg>
           </span>
-          <h3>Votre messagerie s'est ouverte</h3>
+          <h3>Message bien envoyé&nbsp;!</h3>
           <p>
-            Il ne vous reste plus qu'à appuyer sur Envoyer dans votre messagerie.
-            On vous répond dès que possible !
+            Merci, on a bien reçu votre message et on vous répond dès que possible.
           </p>
           <button type="button" class="btn btn-outline btn-sm" id="cfReset">Envoyer un autre message</button>
+        </div>
+
+        <!-- ─ Repli si le service est indisponible ─ -->
+        <div id="cf-fallback" role="status" aria-live="polite" hidden>
+          <span class="cf-ok-icon" aria-hidden="true" style="color:var(--gold2)">
+            <svg viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="7" y="11" width="28" height="20" rx="2"/>
+              <path d="M7 13 L21 23 L35 13"/>
+            </svg>
+          </span>
+          <h3>Envoyons-le autrement</h3>
+          <p>
+            L'envoi automatique n'a pas pu se faire. Vous pouvez nous écrire en un clic&nbsp;:
+          </p>
+          <p style="margin:1rem 0">
+            <a href="#" id="cfMailto" class="btn btn-primary btn-sm">Ouvrir dans ma messagerie</a>
+          </p>
+          <p style="font-size:.85rem">
+            Ou copiez notre adresse&nbsp;:
+            <button type="button" id="cfCopy" class="cf-copy-link">wedday.thomyflorian@gmail.com</button>
+          </p>
+          <button type="button" class="btn btn-outline btn-sm" id="cfReset2" style="margin-top:.6rem">Réessayer</button>
         </div>
       </div>
 
@@ -332,10 +366,37 @@
 (function () {
   'use strict';
 
-  var form    = document.getElementById('contactForm');
-  var confirm = document.getElementById('cf-confirm');
-  var reset   = document.getElementById('cfReset');
-  var DEST    = 'wedday.thomyflorian@gmail.com';
+  var form     = document.getElementById('contactForm');
+  var confirm  = document.getElementById('cf-confirm');
+  var fallback = document.getElementById('cf-fallback');
+  var submit   = document.getElementById('cfSubmit');
+  var DEST     = 'wedday.thomyflorian@gmail.com';
+
+  /* Deux canaux complémentaires :
+     1) NOTIFY  → FormSubmit envoie un e-mail à DEST (formulaire activé une
+        fois pour toutes). C'est la notification que reçoit le couple.
+     2) STORE   → enregistrement dans la même base Firebase que les RSVP, en
+        filet de sécurité : aucun message n'est perdu même si l'e-mail échoue.
+     La confirmation affichée à l'invité se base sur le STORE (le plus fiable). */
+  var NOTIFY = 'https://formsubmit.co/ajax/' + DEST;
+  var STORE  = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/messages.json';
+
+  function showOnly(el) {
+    form.style.display = 'none';
+    confirm.classList.remove('show');
+    fallback.classList.remove('show');
+    el.classList.add('show');
+  }
+
+  function backToForm() {
+    confirm.classList.remove('show');
+    fallback.classList.remove('show');
+    form.style.display = '';
+    form.reset();
+    submit.disabled = false;
+    submit.textContent = 'Envoyer le message';
+    document.getElementById('cf-prenom').focus();
+  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -350,35 +411,80 @@
       return;
     }
 
-    var name = [prenom, nom].filter(Boolean).join(' ');
-
-    var body = 'Bonjour Thomy & Florian,' + '\n\n'
-      + 'Nom : ' + name + '\n'
+    var name    = [prenom, nom].filter(Boolean).join(' ');
+    var subject = 'Message de ' + name + ' via le site';
+    var body    = 'Nom : ' + name + '\n'
       + (email ? 'E-mail : ' + email + '\n' : '')
-      + '\n'
-      + message
+      + '\n' + message
       + '\n\n---\nEnvoyé depuis le site du mariage.';
 
-    var subject = 'Message de ' + name + ' via le site';
+    /* Préparer le repli mailto/copie au cas où le service échoue */
+    prepareFallback(subject, body);
 
-    window.location.href =
+    submit.disabled = true;
+    submit.textContent = 'Envoi…';
+
+    /* 1) Notification e-mail (best effort — ne bloque pas la confirmation) */
+    fetch(NOTIFY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: subject,
+        _template: 'table',
+        _captcha: 'false',
+        Nom: name,
+        'E-mail': email || '(non renseigné)',
+        Message: message
+      })
+    }).catch(function () {});
+
+    /* 2) Enregistrement fiable = source de vérité pour la confirmation */
+    fetch(STORE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prenom: prenom,
+        nom: nom || '',
+        email: email || '',
+        message: message,
+        date: new Date().toISOString()
+      })
+    })
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      showOnly(confirm);
+    })
+    .catch(function () {
+      showOnly(fallback);
+    });
+  });
+
+  function prepareFallback(subject, body) {
+    var link = document.getElementById('cfMailto');
+    link.setAttribute('href',
       'mailto:' + DEST
       + '?subject=' + encodeURIComponent(subject)
-      + '&body='    + encodeURIComponent(body);
+      + '&body='    + encodeURIComponent(body));
+  }
 
-    /* Afficher la confirmation */
-    setTimeout(function () {
-      form.style.display = 'none';
-      confirm.classList.add('show');
-    }, 400);
+  /* Copier l'adresse */
+  var copyBtn = document.getElementById('cfCopy');
+  copyBtn.addEventListener('click', function () {
+    var done = function () {
+      copyBtn.classList.add('copied');
+      copyBtn.textContent = 'Adresse copiée ✓';
+      setTimeout(function () {
+        copyBtn.classList.remove('copied');
+        copyBtn.textContent = DEST;
+      }, 2200);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(DEST).then(done, done);
+    } else { done(); }
   });
 
-  reset.addEventListener('click', function () {
-    confirm.classList.remove('show');
-    form.style.display = '';
-    form.reset();
-    document.getElementById('cf-prenom').focus();
-  });
+  document.getElementById('cfReset').addEventListener('click', backToForm);
+  document.getElementById('cfReset2').addEventListener('click', backToForm);
 }());
 </script>
 
