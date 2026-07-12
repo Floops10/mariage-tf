@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=12">
+<link rel="stylesheet" href="style.css?v=13">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -56,6 +56,8 @@
   padding: 6vh clamp(.5rem, 2.5vw, 3.4rem);
   cursor: grab;
   perspective: 1500px;
+  -webkit-perspective: 1500px;
+  transform: translateZ(0);   /* force son propre calque : évite les glitches de rendu Safari/iOS sur les enfants transformés en 3D pendant le scroll */
 }
 .gallery-track::-webkit-scrollbar { display: none; }
 .gallery-track.dragging { cursor: grabbing; }
@@ -77,6 +79,8 @@
   user-select: none;
   will-change: transform, opacity, filter;
   transition: box-shadow .45s var(--ease-out);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .polaroid.is-front {
   box-shadow: 0 32px 68px rgba(15,23,36,.34), 0 10px 22px rgba(15,23,36,.2);
@@ -570,8 +574,8 @@
   requestAnimationFrame(loop);
 }());
 </script>
-<script src="toile.js?v=12"></script>
-<script src="transitions.js?v=12"></script>
+<script src="toile.js?v=13"></script>
+<script src="transitions.js?v=13"></script>
 
 </body>
 </html>
