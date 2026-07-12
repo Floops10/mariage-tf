@@ -400,7 +400,7 @@ a[href^="rsvp.html?"] { display: none !important; }
 #t-overlay::before {
   content: '';
   position: absolute; inset: 0; z-index: 1;
-  background-image: url('shooting-1.jpg');
+  background-image: url('Photo-1.jpg');
   background-size: cover;
   background-position: 50% 30%;
   opacity: 0;

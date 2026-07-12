@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=12">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -49,13 +49,13 @@
 .gallery-track {
   display: flex;
   align-items: center;
-  gap: clamp(1.2rem, 3.4vw, 2.4rem);
+  gap: clamp(.55rem, 1.8vw, 1.6rem);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 6vh clamp(1.4rem, 5vw, 4.6rem);
+  padding: 6vh clamp(.5rem, 2.5vw, 3.4rem);
   cursor: grab;
-  perspective: 1400px;
+  perspective: 1500px;
 }
 .gallery-track::-webkit-scrollbar { display: none; }
 .gallery-track.dragging { cursor: grabbing; }
@@ -65,16 +65,21 @@
    la rotation 3D / profondeur / échelle est pilotée en JS image par
    image (voir update3D plus bas) : la carte au centre de la piste
    est nette et grande, celles qui s'en éloignent basculent et
-   reculent, comme un carrousel de photos en volume. */
+   reculent en douceur, comme un vrai carrousel en volume — la
+   profondeur (flou, luminosité, ombre) renforce l'effet. */
 .polaroid {
   position: relative;
   flex: 0 0 auto;
   background: #fff;
   padding: 12px 12px 15px;
-  box-shadow: 0 14px 32px rgba(23,36,55,.16), 0 3px 8px rgba(23,36,55,.1);
-  width: clamp(270px, 46vw, 400px);
+  box-shadow: 0 14px 30px rgba(15,23,36,.16), 0 3px 8px rgba(15,23,36,.1);
+  width: clamp(340px, 88vw, 560px);
   user-select: none;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
+  transition: box-shadow .45s var(--ease-out);
+}
+.polaroid.is-front {
+  box-shadow: 0 32px 68px rgba(15,23,36,.34), 0 10px 22px rgba(15,23,36,.2);
 }
 .polaroid .ph {
   position: relative;
@@ -322,20 +327,20 @@
     <section class="gallery-sec" aria-label="Quelques photos de nous">
       <div class="gallery reveal-fade">
         <div class="gallery-track" id="galTrack">
-          <figure class="polaroid" style="--tilt:-2.2deg" data-photo="shooting-1"><span class="ph"><img src="shooting-1.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:1.8deg" data-photo="shooting-2"><span class="ph"><img src="shooting-2.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:-1.4deg" data-photo="shooting-3"><span class="ph"><img src="shooting-3.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:2.4deg" data-photo="shooting-4"><span class="ph"><img src="shooting-4.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:-2deg" data-photo="shooting-5"><span class="ph"><img src="shooting-5.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:1.5deg" data-photo="shooting-6"><span class="ph"><img src="shooting-6.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:-1.7deg" data-photo="shooting-7"><span class="ph"><img src="shooting-7.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:2.1deg" data-photo="shooting-8"><span class="ph"><img src="shooting-8.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:-1.9deg" data-photo="shooting-9"><span class="ph"><img src="shooting-9.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:1.3deg" data-photo="shooting-10"><span class="ph"><img src="shooting-10.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:-2.4deg" data-photo="shooting-11"><span class="ph"><img src="shooting-11.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:1.7deg" data-photo="shooting-12"><span class="ph"><img src="shooting-12.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:-1.5deg" data-photo="shooting-13"><span class="ph"><img src="shooting-13.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
-          <figure class="polaroid" style="--tilt:2deg" data-photo="shooting-14"><span class="ph"><img src="shooting-14.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:-2.2deg" data-photo="Photo-1"><span class="ph"><img src="Photo-1.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:1.8deg" data-photo="Photo-10"><span class="ph"><img src="Photo-10.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:-1.4deg" data-photo="Photo-19"><span class="ph"><img src="Photo-19.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:2.4deg" data-photo="Photo-28"><span class="ph"><img src="Photo-28.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:-2deg" data-photo="Photo-29"><span class="ph"><img src="Photo-29.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:1.5deg" data-photo="Photo-32"><span class="ph"><img src="Photo-32.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:-1.7deg" data-photo="Photo-39"><span class="ph"><img src="Photo-39.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:2.1deg" data-photo="Photo-46"><span class="ph"><img src="Photo-46.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:-1.9deg" data-photo="Photo-49"><span class="ph"><img src="Photo-49.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:1.3deg" data-photo="Photo-69"><span class="ph"><img src="Photo-69.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:-2.4deg" data-photo="Photo-71"><span class="ph"><img src="Photo-71.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:1.7deg" data-photo="Photo-75"><span class="ph"><img src="Photo-75.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:-1.5deg" data-photo="Photo-83"><span class="ph"><img src="Photo-83.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
+          <figure class="polaroid" style="--tilt:2deg" data-photo="Photo-90"><span class="ph"><img src="Photo-90.jpg" alt="Thomy et Florian — photo du shooting" loading="lazy"></span></figure>
         </div>
       </div>
       <p class="gallery-hint reveal">Glissez pour parcourir</p>
@@ -456,35 +461,53 @@
 
   /* ─── carrousel en volume : la carte au centre de la piste est
        nette et grande ; celles qui s'en écartent basculent en 3D
-       (rotateY) et reculent (translateZ), au rythme du défilement —
-       glissé, molette, tactile ou dérive automatique. ─── */
+       (rotateY) et reculent (translateZ) en douceur, au rythme du
+       défilement — glissé, molette, tactile ou dérive automatique.
+       La distance est comptée en « nombre de cartes d'écart » (pas
+       en % de largeur d'écran) : la voisine immédiate reste donc
+       toujours nettement lisible, quelle que soit la taille de
+       l'écran — c'est ce qui rend le glissé instinctif. ─── */
   var centers = new Map();
   var hoverFig = null;
+  var frontFig = null;
+  var step = 0;
 
   function buildCenters() {
     centers.clear();
-    Array.prototype.forEach.call(track.children, function (fig) {
+    var kids = Array.prototype.slice.call(track.children);
+    kids.forEach(function (fig) {
       centers.set(fig, fig.offsetLeft + fig.offsetWidth / 2);
     });
+    if (kids.length > 1) step = centers.get(kids[1]) - centers.get(kids[0]);
   }
 
   function update3D() {
     var half = track.clientWidth / 2;
-    if (!half) return;
+    if (!half || !step) return;
     var mid = track.scrollLeft + half;
+    var bestFig = null, bestAd = Infinity;
     centers.forEach(function (center, fig) {
-      var delta = (center - mid) / half;
-      var d = Math.max(-2.4, Math.min(2.4, delta));
+      var raw = (center - mid) / step;   /* ≈ nombre de cartes d'écart */
+      var d = Math.max(-3.4, Math.min(3.4, raw));
       var ad = Math.abs(d);
-      var boost = fig === hoverFig ? 1.06 : 1;
-      var scale = Math.max(1 - ad * 0.26, 0.55) * boost;
-      var rotY = d * -30;
-      var tz = -Math.min(ad, 1.15) * 160;
-      var op = Math.max(1 - ad * 0.42, 0.26);
+      if (ad < bestAd) { bestAd = ad; bestFig = fig; }
+      var boost = fig === hoverFig ? 1.05 : 1;
+      var scale = Math.max(1 - ad * 0.155, 0.5) * boost;
+      var rotY = (d < 0 ? -1 : 1) * Math.min(ad * 19, 56);
+      var tz = -Math.min(ad, 2.6) * 62;
+      var op = Math.max(1 - ad * 0.22, 0.38);
+      var blur = Math.min(ad * 1.05, 2.2);
+      var bright = Math.max(1 - ad * 0.085, 0.74);
       fig.style.transform = 'rotateY(' + rotY.toFixed(2) + 'deg) translateZ(' + tz.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
       fig.style.opacity = op.toFixed(3);
-      fig.style.zIndex = String(300 - Math.round(ad * 80));
+      fig.style.filter = 'blur(' + blur.toFixed(2) + 'px) brightness(' + bright.toFixed(2) + ')';
+      fig.style.zIndex = String(300 - Math.round(ad * 50));
     });
+    if (bestFig && bestFig !== frontFig) {
+      if (frontFig) frontFig.classList.remove('is-front');
+      bestFig.classList.add('is-front');
+      frontFig = bestFig;
+    }
   }
 
   track.addEventListener('mouseover', function (e) {
@@ -547,8 +570,8 @@
   requestAnimationFrame(loop);
 }());
 </script>
-<script src="toile.js?v=10"></script>
-<script src="transitions.js?v=10"></script>
+<script src="toile.js?v=12"></script>
+<script src="transitions.js?v=12"></script>
 
 </body>
 </html>
