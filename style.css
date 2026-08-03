@@ -958,3 +958,55 @@ a[href^="rsvp.html?"] { display: none !important; }
      (l'accueil ne scrolle pas, donc aucun effet de bord là-bas) */
   .page-body .toile-img.fixed { position: absolute; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   FLUIDITÉ — finitions d'interaction
+   Objectif : que chaque geste réponde immédiatement et que rien
+   ne « saute ». On garde strictement la même direction artistique :
+   ce sont les mêmes couleurs, les mêmes courbes, juste mieux réglées.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* pas de flash gris au tap sur mobile — sensation d'application native */
+a, button, .swatch, .polaroid, .rider, .cq-chip, .cv-seat-btn {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Le navigateur prépare le calque juste avant l'entrée de l'élément,
+   puis le libère une fois l'animation finie (posé par toile.js).
+   Sans cela, la toute première frame de chaque révélation saccade. */
+.rv-warm { will-change: opacity, transform; }
+
+/* ─── Boutons : réponse tactile ─── */
+.btn {
+  transition:
+    background var(--dur-mid) var(--ease-out),
+    color var(--dur-mid) var(--ease-out),
+    border-color var(--dur-mid) var(--ease-out),
+    box-shadow var(--dur-mid) var(--ease-out),
+    transform var(--dur-mid) var(--ease-out);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); transition-duration: 90ms; }
+.btn-primary:hover { box-shadow: 0 12px 26px rgba(31,47,68,.24); }
+.btn-outline:hover { box-shadow: 0 10px 22px rgba(31,47,68,.1); }
+
+/* ─── Liens de navigation ─── */
+.nav-links a { transition: color var(--dur-mid) var(--ease-out); }
+.nav-cta { transition: background var(--dur-mid) var(--ease-out), color var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-out); }
+.nav-cta:hover { transform: translateY(-1px); }
+
+/* ─── Liens du pied de page ─── */
+.footer-links a { transition: color var(--dur-mid) var(--ease-out); }
+
+/* ─── Respect absolu de « mouvement réduit » ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn:hover, .nav-cta:hover { transform: none; }
+  .rv-warm { will-change: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

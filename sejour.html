@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=13">
+<link rel="stylesheet" href="style.css?v=14">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -211,9 +211,52 @@
   display: flex;
   align-items: center;
   gap: 1.4rem;
-  border: 1px dashed var(--border3);
+  border: 1px solid var(--border2);
+  border-left: 2px solid var(--gold);
   padding: 1.4rem 1.8rem;
-  background: rgba(31,47,68,.02);
+  background: rgba(201,168,108,.045);
+}
+
+/* ─── Les deux salles du domaine ─── */
+.halls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.6rem);
+}
+.hall {
+  position: relative;
+  border: 1px solid var(--border2);
+  background: var(--cream);
+  padding: 1.6rem 1.5rem 1.4rem;
+}
+.hall::after {
+  content: '';
+  position: absolute; inset: 7px;
+  border: 1px solid var(--gold-border);
+  pointer-events: none;
+}
+.hall > * { position: relative; z-index: 1; }
+.hall-tag {
+  display: inline-block;
+  font-family: var(--font-sub);
+  font-size: .56rem;
+  letter-spacing: .18em;
+  color: var(--gold2);
+  border: 1px solid var(--gold-border2);
+  padding: .3em .85em;
+  margin-bottom: .9rem;
+}
+.hall-name {
+  font-family: var(--font-title);
+  font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+  color: var(--navy);
+  font-weight: 400;
+  margin-bottom: .5rem;
+}
+.hall-txt {
+  font-size: .85rem;
+  color: var(--text-mid);
+  line-height: 1.7;
 }
 .cn-tag {
   font-family: var(--font-sub);
@@ -284,6 +327,7 @@
     <li><a href="index.html">Accueil</a></li>
     <li><a href="programme.html">Le Programme</a></li>
     <li><a href="sejour.html" aria-current="page">Venir au Domaine</a></li>
+    <li><a href="covoiturage.html">Covoiturer</a></li>
     <li><a href="dresscode.html">Dress code</a></li>
     <li><a href="histoire.html">Photos &amp; poème</a></li>
     <li><a href="cadeaux.html">Cadeaux</a></li>
@@ -302,6 +346,7 @@
   <a href="index.html">Accueil</a>
   <a href="programme.html">Le Programme</a>
   <a href="sejour.html">Venir au Domaine</a>
+  <a href="covoiturage.html">Covoiturer</a>
   <a href="dresscode.html">Dress code</a>
   <a href="histoire.html">Photos &amp; poème</a>
   <a href="cadeaux.html">Cadeaux</a>
@@ -364,7 +409,9 @@
       <span class="section-eyebrow reveal">Le jour J</span>
       <h2 class="section-title reveal" id="ceremonies-title">Les cérémonies</h2>
       <p class="section-intro reveal">
-        Avant de nous rejoindre au domaine, deux cérémonies marqueront cette belle journée.
+        Deux cérémonies marqueront cette belle journée&nbsp;: la première à la mairie
+        de Trith-Saint-Léger, la seconde directement au domaine — où nous passerons
+        ensuite le reste de la soirée.
       </p>
 
       <!-- Mariage civil -->
@@ -389,15 +436,48 @@
         </div>
       </div>
 
-      <!-- Cérémonie religieuse — à confirmer -->
+      <!-- Cérémonie religieuse — au domaine -->
       <div class="ceremony-notice reveal">
-        <span class="cn-tag">À confirmer</span>
+        <span class="cn-tag">Au domaine</span>
         <div>
           <p class="cn-title">Cérémonie religieuse</p>
-          <p class="cn-sub">Le lieu et les informations pratiques vous seront communiqués prochainement.</p>
+          <p class="cn-sub">
+            Elle se tiendra <b>au domaine même</b>, dans la salle de L'Étable&nbsp;:
+            une fois arrivés, plus aucune route à faire — tout se passe sur place
+            jusqu'au bout de la nuit.
+          </p>
         </div>
       </div>
 
+    </section>
+
+    <!-- ═══ LES DEUX SALLES ═══ -->
+    <section class="section" aria-labelledby="salles-title">
+      <span class="section-eyebrow reveal">Sur place</span>
+      <h2 class="section-title reveal" id="salles-title">Les deux salles du domaine</h2>
+      <p class="section-intro reveal">
+        Le domaine compte deux salles, à quelques pas l'une de l'autre&nbsp;:
+        on célèbre dans la première, on festoie dans la seconde.
+      </p>
+
+      <div class="halls">
+        <div class="hall reveal">
+          <span class="hall-tag">La cérémonie</span>
+          <h3 class="hall-name">L'Étable</h3>
+          <p class="hall-txt">
+            C'est ici que se déroulera la <b>cérémonie religieuse</b>, dans un cadre
+            intime et chaleureux.
+          </p>
+        </div>
+        <div class="hall reveal reveal-delay-1">
+          <span class="hall-tag">Le repas &amp; la soirée</span>
+          <h3 class="hall-name">La Grange</h3>
+          <p class="hall-txt">
+            La grande salle, où nous passerons à table avant de danser
+            jusqu'au bout de la nuit.
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- ═══ CARTE ROUTIÈRE ═══ -->
@@ -693,18 +773,19 @@
       <a href="index.html">Accueil</a>
       <a href="programme.html">Le Programme</a>
       <a href="sejour.html">Venir au Domaine</a>
+      <a href="covoiturage.html">Covoiturer</a>
       <a href="dresscode.html">Dress code</a>
       <a href="histoire.html">Photos &amp; poème</a>
       <a href="cadeaux.html">Cadeaux</a>
       <a href="contact.html">Contact</a>
       <a href="rsvp.html">RSVP</a>
     </div>
-    <p class="footer-note">Réponse souhaitée avant le 1ᵉʳ août 2026</p>
+    <p class="footer-note">Les réponses sont closes — merci à vous</p>
   </div>
 </footer>
 
-<script src="toile.js?v=13"></script>
-<script src="transitions.js?v=13"></script>
+<script src="toile.js?v=14"></script>
+<script src="transitions.js?v=14"></script>
 
 </body>
 </html>

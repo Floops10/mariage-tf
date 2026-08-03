@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Covoiturer — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="Proposez ou rejoignez un covoiturage pour venir au mariage de Thomy & Florian.">
+<link rel="icon" type="image/png" href="Logo.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=14">
+
+<style>
+/* ═══════════════════════════════════════════════
+   COVOITURER — annonces + voitures en volume
+   ═══════════════════════════════════════════════ */
+
+/* ─── Barre d'action ─── */
+.cv-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.cv-live {
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+  font-family: var(--font-sub);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  color: var(--text-light);
+}
+.cv-live i {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(59,122,98,.5);
+  animation: cvPulse 2.4s ease-out infinite;
+}
+.cv-live.is-off i { background: var(--text-lighter); animation: none; box-shadow: none; }
+@keyframes cvPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(59,122,98,.45); }
+  70%  { box-shadow: 0 0 0 7px rgba(59,122,98,0); }
+  100% { box-shadow: 0 0 0 0 rgba(59,122,98,0); }
+}
+
+/* ─── États ─── */
+.cv-state {
+  text-align: center;
+  border: 1px dashed var(--border3);
+  background: rgba(31,47,68,.018);
+  padding: clamp(2.4rem, 6vw, 3.8rem) clamp(1.4rem, 6vw, 3rem);
+  position: relative;
+}
+.cv-state::after {
+  content: ''; position: absolute; inset: 7px;
+  border: 1px solid var(--gold-border); pointer-events: none;
+}
+.cv-state-ico { display: block; color: var(--gold2); margin-bottom: 1rem; }
+.cv-state-ico svg { width: 42px; height: 42px; margin: 0 auto; }
+.cv-state-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  color: var(--navy); font-weight: 400; margin-bottom: .6rem;
+}
+.cv-state-sub {
+  font-family: var(--font-body); font-size: .88rem;
+  color: var(--text-mid); line-height: 1.75;
+  max-width: 30rem; margin: 0 auto; position: relative; z-index: 1;
+}
+
+/* ─── Grille d'annonces ─── */
+.ride-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: clamp(1.5rem, 3.4vw, 2.4rem);
+}
+
+/* ─── Carte flottante ─── */
+.ride-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  border: 1px solid rgba(31,47,68,.13);
+  background:
+    linear-gradient(163deg, rgba(255,255,255,.86) 0%, rgba(242,234,224,.62) 100%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+          backdrop-filter: blur(12px) saturate(130%);
+  box-shadow: 0 20px 46px rgba(23,36,55,.12), 0 4px 12px rgba(23,36,55,.06);
+  padding: 1.5rem 1.4rem 1.35rem;
+  transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
+}
+.ride-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 34px 70px rgba(23,36,55,.19), 0 8px 20px rgba(23,36,55,.1);
+}
+.ride-card.is-full { border-color: rgba(31,47,68,.22); }
+.ride-card.is-new { animation: rideIn .7s var(--ease-out) backwards; }
+@keyframes rideIn {
+  from { opacity: 0; transform: translateY(22px) scale(.97); }
+}
+
+/* ─── En-tête de carte ─── */
+.ride-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: .8rem;
+  margin-bottom: .3rem;
+}
+.ride-driver {
+  font-family: var(--font-title);
+  font-size: clamp(1.08rem, 2.4vw, 1.28rem);
+  color: var(--navy); font-weight: 400; line-height: 1.2;
+}
+.ride-from {
+  display: flex; align-items: center; gap: .4em;
+  font-family: var(--font-sub);
+  font-size: .74rem; letter-spacing: .1em;
+  color: var(--gold2); margin-top: .35rem;
+}
+.ride-from svg { width: 13px; height: 13px; flex: 0 0 auto; }
+
+.ride-badge {
+  flex: 0 0 auto;
+  font-family: var(--font-sub);
+  font-size: .56rem; letter-spacing: .14em;
+  padding: .42em .8em; border-radius: 100px;
+  border: 1px solid var(--green-border);
+  background: var(--green-bg); color: var(--green);
+  white-space: nowrap;
+}
+.ride-badge.is-full {
+  border-color: rgba(138,59,74,.34);
+  background: rgba(138,59,74,.06);
+  color: #8A3B4A;
+}
+
+/* ─── Méta (date · heure) ─── */
+.ride-meta {
+  display: flex; flex-wrap: wrap; gap: .45rem;
+  margin: .85rem 0 .2rem;
+}
+.ride-chip {
+  display: inline-flex; align-items: center; gap: .4em;
+  font-family: var(--font-body); font-size: .76rem;
+  color: var(--text-mid);
+  border: 1px solid var(--border2); border-radius: 100px;
+  padding: .34em .85em; background: rgba(250,245,239,.7);
+}
+.ride-chip svg { width: 12px; height: 12px; color: var(--gold2); flex: 0 0 auto; }
+
+/* ─── Scène 3D ─── */
+.car-scene {
+  perspective: 900px;
+  perspective-origin: 50% 44%;
+  display: flex; justify-content: center;
+  padding: 1.5rem 0 .9rem;
+}
+.car {
+  --tilt: 42deg;
+  position: relative;
+  width: min(206px, 76%);
+  transform: rotateX(var(--tilt)) rotateZ(-7deg);
+  transform-style: preserve-3d;
+  transition: transform .65s var(--ease-out);
+}
+.ride-card:hover .car { --tilt: 32deg; transform: rotateX(var(--tilt)) rotateZ(-3deg); }
+
+.car-shadow {
+  position: absolute; left: 4%; right: 4%; top: 14%; bottom: 4%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(23,36,55,.36), rgba(23,36,55,0) 70%);
+  filter: blur(10px);
+  transform: translateZ(-46px);
+}
+.car-wheel {
+  position: absolute; width: 12px; height: 32px; border-radius: 6px;
+  background: linear-gradient(90deg, #0b1119 0%, #26364c 48%, #0b1119 100%);
+  box-shadow: 0 5px 11px rgba(0,0,0,.42);
+  transform: translateZ(-15px);
+}
+.car-wheel.fl { left: -6px;  top: 52px; }
+.car-wheel.fr { right: -6px; top: 52px; }
+.car-wheel.rl { left: -6px;  bottom: 44px; }
+.car-wheel.rr { right: -6px; bottom: 44px; }
+
+.car-body {
+  position: relative;
+  border-radius: 46px 46px 38px 38px / 62px 62px 46px 46px;
+  background: linear-gradient(163deg, #3a5070 0%, #2b3e58 16%, var(--navy) 48%, #16233a 100%);
+  border: 1px solid rgba(201,168,108,.28);
+  padding: 12px 11px 12px;
+  transform-style: preserve-3d;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -12px 22px rgba(0,0,0,.3),
+    0 10px 24px rgba(9,15,25,.34);
+}
+/* capot & coffre — allongent la silhouette */
+.car-hood, .car-trunk {
+  border-radius: 26px 26px 10px 10px / 20px 20px 8px 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(0,0,0,.16));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+  transform: translateZ(1px);
+}
+.car-hood  { height: 20px; margin-bottom: 7px; }
+.car-trunk { height: 15px; margin-top: 7px; border-radius: 10px 10px 26px 26px / 8px 8px 20px 20px; }
+.car-light {
+  position: absolute; top: 7px; width: 15px; height: 5px; border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255,243,214,.96), rgba(201,168,108,.55));
+  box-shadow: 0 0 11px rgba(255,226,163,.6);
+  transform: translateZ(2px);
+}
+.car-light.l { left: 17px; }
+.car-light.r { right: 17px; }
+
+.car-glass {
+  height: 24px;
+  border-radius: 30px 30px 12px 12px / 24px 24px 10px 10px;
+  background: linear-gradient(180deg, rgba(191,212,230,.46), rgba(191,212,230,.12));
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: inset 0 2px 5px rgba(255,255,255,.18);
+  margin-bottom: 11px;
+  transform: translateZ(3px);
+}
+.car-glass.rear {
+  margin: 11px 0 0;
+  border-radius: 12px 12px 30px 30px / 10px 10px 24px 24px;
+  height: 19px;
+}
+
+.car-cabin { display: flex; flex-direction: column; gap: 10px; transform-style: preserve-3d; }
+.car-row {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 9px;
+  transform-style: preserve-3d;
+}
+
+/* ─── Siège ─── */
+.seat {
+  position: relative;
+  width: 40px; height: 40px;
+  border-radius: 11px 11px 8px 8px;
+  background: linear-gradient(172deg, #f6efe4 0%, var(--cream3) 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.8),
+    inset 0 -7px 11px rgba(31,47,68,.17),
+    0 4px 8px rgba(0,0,0,.28);
+  transform: translateZ(12px);
+  transform-style: preserve-3d;
+  display: flex; align-items: center; justify-content: center;
+}
+/* dossier */
+.seat::before {
+  content: ''; position: absolute; left: 5px; right: 5px; top: -5px; height: 11px;
+  border-radius: 8px 8px 3px 3px;
+  background: linear-gradient(180deg, var(--cream3), rgba(196,180,160,.85));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+  transform: translateZ(-4px);
+}
+.seat.is-free::after {
+  content: ''; width: 13px; height: 13px; border-radius: 50%;
+  border: 1.5px dashed rgba(31,47,68,.3);
+}
+.seat.is-driver { background: linear-gradient(172deg, #efe4d2 0%, #ddcdb5 100%); }
+
+/* ─── Passager ─── */
+.rider {
+  position: absolute; bottom: 9px;
+  display: flex; flex-direction: column; align-items: center;
+  transform: translateZ(17px);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  animation: riderIn .6s var(--ease-spring) backwards;
+}
+@keyframes riderIn {
+  from { opacity: 0; transform: translateZ(17px) translateY(14px) scale(.4); }
+}
+.rider-head {
+  width: 17px; height: 17px; border-radius: 50%;
+  background: var(--rider, var(--navy));
+  border: 1px solid rgba(255,255,255,.24);
+  box-shadow: inset 0 -3px 4px rgba(0,0,0,.28), 0 2px 5px rgba(0,0,0,.34);
+  margin-bottom: 1px;
+}
+.rider-body {
+  width: 27px; height: 15px;
+  border-radius: 13px 13px 5px 5px;
+  background: var(--rider, var(--navy));
+  box-shadow: inset 0 2px 4px rgba(255,255,255,.2), 0 3px 8px rgba(0,0,0,.32);
+}
+.rider-name {
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%) translateZ(34px) rotateX(calc(-1 * var(--tilt)));
+  background: rgba(18,28,44,.95);
+  border: 1px solid rgba(201,168,108,.34);
+  color: var(--cream);
+  font-family: var(--font-body); font-weight: 300;
+  font-size: .62rem; letter-spacing: .05em;
+  padding: .34em .68em; border-radius: 7px; white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity .24s ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,.3);
+}
+.rider:hover .rider-name,
+.rider:focus-visible .rider-name,
+.rider.show-name .rider-name { opacity: 1; }
+.rider:focus-visible { outline: none; }
+.rider:focus-visible .rider-head { box-shadow: 0 0 0 2px var(--gold), inset 0 -3px 4px rgba(0,0,0,.28); }
+
+/* ─── Note libre ─── */
+.ride-note {
+  font-family: var(--font-body); font-size: .82rem;
+  color: var(--text-mid); line-height: 1.7;
+  font-style: italic;
+  border-left: 2px solid var(--gold-border2);
+  padding-left: .8rem; margin: .2rem 0 .9rem;
+}
+
+/* ─── Liste des passagers (texte, secours accessible) ─── */
+.ride-pax {
+  font-family: var(--font-body); font-size: .78rem;
+  color: var(--text-light); line-height: 1.6; margin-bottom: .9rem;
+}
+.ride-pax b { color: var(--text-mid); font-weight: 500; }
+
+/* ─── Actions ─── */
+.ride-actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.ride-join {
+  flex: 1 1 auto;
+  font-family: var(--font-sub);
+  font-size: .68rem; letter-spacing: .16em;
+  color: var(--cream); background: var(--navy);
+  border: 1px solid var(--navy);
+  padding: .82em 1.2em; border-radius: 100px;
+  cursor: pointer;
+  transition: background .28s ease, border-color .28s ease, transform .28s var(--ease-out);
+}
+.ride-join:hover:not(:disabled) { background: var(--ocean); border-color: var(--ocean); transform: translateY(-1px); }
+.ride-join:disabled {
+  background: transparent; color: var(--text-light);
+  border-color: var(--border2); cursor: not-allowed;
+}
+.ride-mini {
+  font-family: var(--font-body); font-size: .74rem;
+  color: var(--text-light); background: none; border: none;
+  border-bottom: 1px dashed var(--border2);
+  padding: 0 0 1px; cursor: pointer; transition: color .22s ease, border-color .22s ease;
+}
+.ride-mini:hover { color: var(--navy); border-color: var(--gold); }
+.ride-mini.danger:hover { color: #8A3B4A; border-color: rgba(138,59,74,.5); }
+.ride-own {
+  display: inline-flex; align-items: center; gap: .35em;
+  font-family: var(--font-sub); font-size: .55rem; letter-spacing: .14em;
+  color: var(--gold2); margin-top: .7rem;
+}
+.ride-own svg { width: 12px; height: 12px; flex: 0 0 auto; }
+
+/* ═══ MODALES ═══ */
+.cv-modal {
+  position: fixed; inset: 0; z-index: 8600;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(1rem, 5vw, 2.4rem);
+  background: rgba(15,22,34,.72);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  opacity: 0; visibility: hidden;
+  transition: opacity .32s var(--ease-out), visibility 0s linear .32s;
+}
+.cv-modal.open { opacity: 1; visibility: visible; transition: opacity .32s var(--ease-out); }
+.cv-sheet {
+  position: relative;
+  width: 100%; max-width: 480px;
+  max-height: 90vh; overflow-y: auto;
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  padding: clamp(1.7rem, 5vw, 2.5rem) clamp(1.3rem, 5vw, 2.3rem);
+  box-shadow: 0 40px 90px rgba(0,0,0,.42);
+  transform: translateY(18px) scale(.97);
+  transition: transform .38s var(--ease-out);
+}
+.cv-modal.open .cv-sheet { transform: translateY(0) scale(1); }
+.cv-sheet::after {
+  content: ''; position: absolute; inset: 8px;
+  border: 1px solid var(--gold-border); border-radius: 12px; pointer-events: none;
+}
+.cv-sheet > * { position: relative; z-index: 1; }
+.cv-close {
+  position: absolute; top: .8rem; right: .9rem;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--border2); background: none; cursor: pointer; z-index: 2;
+  transition: border-color .25s ease, transform .25s var(--ease-out);
+}
+.cv-close:hover { border-color: var(--gold); transform: rotate(90deg); }
+.cv-close span {
+  position: absolute; left: 8px; top: 16px; width: 16px; height: 1.4px;
+  background: var(--navy);
+}
+.cv-close span:nth-child(1) { transform: rotate(45deg); }
+.cv-close span:nth-child(2) { transform: rotate(-45deg); }
+
+.cv-eyebrow {
+  display: block; font-family: var(--font-sub);
+  font-size: .6rem; letter-spacing: .2em; color: var(--gold2); margin-bottom: .5rem;
+}
+.cv-title {
+  font-family: var(--font-title); font-weight: 400;
+  font-size: clamp(1.3rem, 3.4vw, 1.7rem); color: var(--navy);
+  line-height: 1.2; margin-bottom: 1.4rem;
+}
+.cv-text {
+  font-family: var(--font-body); font-size: .88rem;
+  color: var(--text-mid); line-height: 1.75; margin-bottom: 1.4rem;
+}
+
+/* ─── Champs ─── */
+.cv-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.cv-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1.1rem; }
+.cv-label { font-family: var(--font-sub); font-size: .58rem; letter-spacing: .2em; color: var(--gold2); }
+.cv-input {
+  font-family: var(--font-body); font-size: .9rem; font-weight: 300;
+  color: var(--navy); background: transparent;
+  border: none; border-bottom: 1px solid var(--border2);
+  padding: .55rem 0; width: 100%; outline: none;
+  transition: border-color .25s ease; caret-color: var(--gold2);
+  border-radius: 0;
+}
+.cv-input::placeholder { color: var(--text-light); font-style: italic; }
+.cv-input:focus { border-bottom-color: var(--gold); }
+textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
+
+/* ─── Sélecteur de places ─── */
+.cv-seats { display: flex; gap: .5rem; flex-wrap: wrap; }
+.cv-seat-btn {
+  flex: 1 1 0; min-width: 46px;
+  font-family: var(--font-body); font-size: .9rem;
+  color: var(--text-mid);
+  border: 1px solid var(--border2); background: transparent;
+  padding: .66em 0; border-radius: 10px; cursor: pointer;
+  transition: all .25s var(--ease-out);
+}
+.cv-seat-btn:hover { border-color: var(--gold); color: var(--navy); }
+.cv-seat-btn.on {
+  background: var(--navy); border-color: var(--navy);
+  color: var(--cream); transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(31,47,68,.24);
+}
+
+.cv-actions { display: flex; gap: .7rem; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; }
+.cv-submit {
+  flex: 1 1 auto;
+  font-family: var(--font-sub); font-size: .7rem; letter-spacing: .16em;
+  color: var(--cream); background: var(--navy); border: 1px solid var(--navy);
+  padding: .95em 1.5em; border-radius: 100px; cursor: pointer;
+  transition: background .28s ease, transform .28s var(--ease-out);
+}
+.cv-submit:hover:not(:disabled) { background: var(--ocean); transform: translateY(-1px); }
+.cv-submit:disabled { opacity: .55; cursor: not-allowed; }
+.cv-submit.danger { background: #8A3B4A; border-color: #8A3B4A; }
+.cv-submit.danger:hover:not(:disabled) { background: #6f2f3c; }
+.cv-cancel {
+  font-family: var(--font-body); font-size: .82rem; color: var(--text-light);
+  background: none; border: none; border-bottom: 1px dashed var(--border2);
+  padding: 0 0 1px; cursor: pointer; transition: color .22s ease;
+}
+.cv-cancel:hover { color: var(--navy); }
+
+.cv-error {
+  display: none;
+  font-family: var(--font-body); font-size: .8rem;
+  color: #b53120; background: rgba(181,49,32,.06);
+  border: 1px solid rgba(181,49,32,.28);
+  padding: .6em .9em; border-radius: 8px; margin-top: 1rem;
+  line-height: 1.55;
+}
+.cv-error.show { display: block; }
+
+@media (max-width: 560px) {
+  .cv-row { grid-template-columns: 1fr; gap: 0; }
+  .ride-grid { grid-template-columns: 1fr; }
+  .car { width: min(215px, 88%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ride-card, .car, .rider, .ride-card.is-new { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TRANSITION OVERLAY ═══ -->
+<div id="t-overlay" aria-hidden="true" style="pointer-events:none">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <p id="t-eyebrow" class="t-eyebrow"></p>
+    <p id="t-title" class="t-title"></p>
+    <p id="t-quote" class="t-quote"></p>
+    <p id="t-quote-ref" class="t-quote-ref"></p>
+  </div>
+</div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="Logo.png" alt="T & F">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html">Venir au Domaine</a></li>
+    <li><a href="covoiturage.html" aria-current="page">Covoiturer</a></li>
+    <li><a href="dresscode.html">Dress code</a></li>
+    <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <a href="index.html">Accueil</a>
+  <a href="programme.html">Le Programme</a>
+  <a href="sejour.html">Venir au Domaine</a>
+  <a href="covoiturage.html">Covoiturer</a>
+  <a href="dresscode.html">Dress code</a>
+  <a href="histoire.html">Photos &amp; poème</a>
+  <a href="cadeaux.html">Cadeaux</a>
+  <a href="contact.html">Contact</a>
+  <a href="rsvp.html">Confirmer ma venue</a>
+  <span class="menu-rule" aria-hidden="true"></span>
+  <span class="menu-date">12 · 12 · 2026</span>
+</div>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<header class="page-hero">
+  <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow reveal">On fait la route ensemble</span>
+    <h1 class="page-title reveal reveal-delay-1">Covoiturer</h1>
+    <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
+      <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+    </div>
+    <span class="page-sub reveal reveal-delay-3">Proposez une place, ou montez à bord</span>
+  </div>
+</header>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+
+    <!-- ═══ INTRO ═══ -->
+    <section class="section" aria-labelledby="cv-title">
+      <span class="section-eyebrow reveal">Entre invités</span>
+      <h2 class="section-title reveal" id="cv-title">Venir ensemble, c'est mieux</h2>
+      <div class="section-flourish reveal" aria-hidden="true">
+        <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
+          <path d="M4 9 H48"/>
+          <path d="M84 9 H128"/>
+          <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
+          <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <p class="section-intro reveal">
+        Certains d'entre vous viennent de loin — d'une autre région, d'un autre
+        pays — et arriveront sans voiture. Pensons à eux&nbsp;: une place libre
+        dans votre véhicule, et c'est un invité de plus qui nous rejoint sereinement.
+      </p>
+      <p class="section-intro reveal">
+        Il ne s'agit pas de traverser la France&nbsp;: juste le trajet
+        <b>de la mairie de Trith-Saint-Léger au domaine</b>, ou, pour ceux qui ne
+        passent pas par la mairie, <b>depuis l'endroit d'où ils partent jusqu'au
+        domaine</b>. Ne soyez pas timides — proposez, même une seule place&nbsp;;
+        <b>tout se met à jour en direct</b>.
+      </p>
+
+      <div class="cv-bar reveal">
+        <button type="button" class="btn btn-primary" id="cvNew">Proposer un covoiturage</button>
+        <span class="cv-live" id="cvLive"><i aria-hidden="true"></i><span id="cvLiveTxt">Mise à jour en direct</span></span>
+      </div>
+
+      <div id="cvList" class="ride-grid" aria-live="polite"></div>
+
+      <!-- chargement -->
+      <div class="cv-state reveal" id="cvLoading">
+        <span class="cv-state-ico" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+            <circle cx="20" cy="20" r="15" opacity=".25"/>
+            <path d="M35 20 A15 15 0 0 0 20 5"/>
+          </svg>
+        </span>
+        <p class="cv-state-title">Chargement des trajets…</p>
+      </div>
+
+      <!-- vide -->
+      <div class="cv-state reveal" id="cvEmpty" hidden>
+        <span class="cv-state-ico" aria-hidden="true">
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 26 L9.5 17.5 C10 15.8 11.5 14.6 13.3 14.6 h17.4 c1.8 0 3.3 1.2 3.8 2.9 L37 26"/>
+            <path d="M5.5 26 h33 a1.5 1.5 0 0 1 1.5 1.5 V32 a1.5 1.5 0 0 1 -1.5 1.5 h-33 A1.5 1.5 0 0 1 4 32 v-4.5 A1.5 1.5 0 0 1 5.5 26 Z"/>
+            <circle cx="12" cy="33.5" r="2.6"/>
+            <circle cx="32" cy="33.5" r="2.6"/>
+            <path d="M22 6.5 v3 M27.5 8 l-1.6 2.6 M16.5 8 l1.6 2.6"/>
+          </svg>
+        </span>
+        <p class="cv-state-title">Aucun trajet pour l'instant</p>
+        <p class="cv-state-sub">
+          Soyez les premiers à ouvrir la route&nbsp;: proposez les places
+          libres de votre voiture, les autres invités pourront vous rejoindre.
+        </p>
+      </div>
+    </section>
+
+    <!-- bandeau CTA -->
+    <div class="cta-band reveal">
+      <p>Besoin d'un coup de main pour organiser votre venue&nbsp;?</p>
+      <div class="btns">
+        <a href="sejour.html" class="btn btn-outline">Venir au domaine</a>
+        <a href="contact.html" class="btn btn-outline">Nous contacter</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy &amp; Florian</span>
+    <p class="footer-date"><a href="reponses.html">12 · XII · MMXXVI</a></p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir au Domaine</a>
+      <a href="covoiturage.html">Covoiturer</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Les réponses sont closes — merci à vous</p>
+  </div>
+</footer>
+
+<!-- ═══ MODALE : PROPOSER / MODIFIER ═══ -->
+<div class="cv-modal" id="rideModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="rideModalTitle">
+  <div class="cv-sheet">
+    <button type="button" class="cv-close" data-close aria-label="Fermer"><span></span><span></span></button>
+    <span class="cv-eyebrow" id="rideModalEyebrow">Votre véhicule</span>
+    <h3 class="cv-title" id="rideModalTitle">Proposer un covoiturage</h3>
+
+    <form id="rideForm" novalidate>
+      <div class="cv-row">
+        <div class="cv-group">
+          <label class="cv-label" for="rfPrenom">Prénom</label>
+          <input class="cv-input" type="text" id="rfPrenom" autocomplete="given-name" placeholder="Camille" required>
+        </div>
+        <div class="cv-group">
+          <label class="cv-label" for="rfNom">Nom</label>
+          <input class="cv-input" type="text" id="rfNom" autocomplete="family-name" placeholder="Durand">
+        </div>
+      </div>
+
+      <div class="cv-group">
+        <label class="cv-label" for="rfVille">Ville ou lieu de départ</label>
+        <input class="cv-input" type="text" id="rfVille" placeholder="Lille, Valenciennes, Paris…" required>
+      </div>
+
+      <div class="cv-row">
+        <div class="cv-group">
+          <label class="cv-label" for="rfDate">Date du trajet</label>
+          <input class="cv-input" type="date" id="rfDate" value="2026-12-12" min="2026-12-09" max="2026-12-15" required>
+        </div>
+        <div class="cv-group">
+          <label class="cv-label" for="rfHeure">Heure de départ</label>
+          <input class="cv-input" type="time" id="rfHeure" value="11:00" required>
+        </div>
+      </div>
+
+      <div class="cv-group">
+        <span class="cv-label">Places disponibles</span>
+        <div class="cv-seats" id="rfPlaces" role="group" aria-label="Nombre de places disponibles">
+          <button type="button" class="cv-seat-btn" data-p="1">1</button>
+          <button type="button" class="cv-seat-btn" data-p="2">2</button>
+          <button type="button" class="cv-seat-btn on" data-p="3">3</button>
+          <button type="button" class="cv-seat-btn" data-p="4">4</button>
+          <button type="button" class="cv-seat-btn" data-p="5">5</button>
+        </div>
+      </div>
+
+      <div class="cv-group">
+        <label class="cv-label" for="rfNote">Information complémentaire <span style="opacity:.6">(facultatif)</span></label>
+        <textarea class="cv-input" id="rfNote" placeholder="Je peux faire un détour par la gare, retour prévu dimanche matin…"></textarea>
+      </div>
+
+      <div class="cv-error" id="rfError" role="alert"></div>
+
+      <div class="cv-actions">
+        <button type="submit" class="cv-submit" id="rfSubmit">Publier mon covoiturage</button>
+        <button type="button" class="cv-cancel" data-close>Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ MODALE GÉNÉRIQUE : REJOINDRE / CONFIRMER ═══ -->
+<div class="cv-modal" id="askModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="askTitle">
+  <div class="cv-sheet">
+    <button type="button" class="cv-close" data-close aria-label="Fermer"><span></span><span></span></button>
+    <span class="cv-eyebrow" id="askEyebrow"></span>
+    <h3 class="cv-title" id="askTitle"></h3>
+    <p class="cv-text" id="askText"></p>
+
+    <form id="askForm" novalidate>
+      <div class="cv-group" id="askInputGroup">
+        <label class="cv-label" for="askInput">Votre prénom</label>
+        <input class="cv-input" type="text" id="askInput" autocomplete="given-name" placeholder="Camille">
+      </div>
+      <div class="cv-error" id="askError" role="alert"></div>
+      <div class="cv-actions">
+        <button type="submit" class="cv-submit" id="askSubmit">Confirmer</button>
+        <button type="button" class="cv-cancel" data-close>Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   COVOITURAGE
+   • persistance + temps réel : Firebase Realtime Database
+     (flux SSE, avec repli sur interrogation régulière)
+   • concurrence : écriture conditionnelle par ETag, pour
+     qu'on ne puisse pas réserver deux fois la dernière place
+   ═══════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var FB      = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/covoiturage';
+  var LS_MINE = 'tf_covoit_mine';   /* annonces créées depuis ce navigateur */
+  var LS_ME   = 'tf_covoit_me';     /* prénom mémorisé */
+
+  /* couleurs des passagers — reprises de la palette des invités */
+  var RIDER_COLORS = ['#1B4733','#2D6362','#1F4E5F','#8E1B3C','#471950','#9D5B3B','#B84A28','#A85A74','#8A6E96','#87898E'];
+  var DRIVER_COLOR = '#C9A86C';
+
+  var listEl    = document.getElementById('cvList');
+  var loadingEl = document.getElementById('cvLoading');
+  var emptyEl   = document.getElementById('cvEmpty');
+  var liveEl    = document.getElementById('cvLive');
+  var liveTxt   = document.getElementById('cvLiveTxt');
+
+  var rides = {};
+  var firstPaint = true;
+  var seenKeys = {};
+
+  /* ─── petits utilitaires ─── */
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function norm(s) {
+    return String(s || '').trim().toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+  function clamp(n, a, b) { n = parseInt(n, 10); if (isNaN(n)) n = a; return Math.max(a, Math.min(b, n)); }
+  function lsGet(k, fb) { try { return JSON.parse(localStorage.getItem(k)) || fb; } catch (e) { return fb; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function riderColor(name) {
+    var h = 0, s = norm(name);
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973;
+    return RIDER_COLORS[h % RIDER_COLORS.length];
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var p = String(iso).split('-');
+    if (p.length !== 3) return iso;
+    var d = new Date(+p[0], +p[1] - 1, +p[2]);
+    if (isNaN(d)) return iso;
+    var out = d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+    return out.charAt(0).toUpperCase() + out.slice(1);
+  }
+  function fmtHeure(h) {
+    if (!h) return '';
+    var p = String(h).split(':');
+    return p.length >= 2 ? p[0] + 'h' + p[1] : h;
+  }
+  function mine() { return lsGet(LS_MINE, []); }
+  function isMine(key) { return mine().indexOf(key) !== -1; }
+
+  /* ─── icônes ─── */
+  var ICON_PIN  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.2 7-11.5a7 7 0 1 0-14 0c0 5.3 7 11.5 7 11.5Z"/><circle cx="12" cy="10" r="2.6"/></svg>';
+  var ICON_CAL  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4"/></svg>';
+  var ICON_CLK  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.7"/><path d="M12 6.8V12l3.4 2.2"/></svg>';
+  var ICON_STAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.6l2.5 5.3 5.6.8-4 4 .9 5.7-5-2.7-5 2.7.9-5.7-4-4 5.6-.8Z"/></svg>';
+
+  /* ─── rendu d'une voiture ─── */
+  function carHtml(ride) {
+    var places = clamp(ride.places, 1, 5);
+    var pax = ride.passagers || [];
+
+    function seatHtml(i) {
+      var p = pax[i];
+      if (!p) return '<div class="seat is-free" aria-hidden="true"></div>';
+      var c = riderColor(p.prenom);
+      return '<div class="seat">' +
+        '<span class="rider" tabindex="0" role="button" style="--rider:' + c + '" ' +
+              'aria-label="Passager : ' + esc(p.prenom) + '">' +
+          '<span class="rider-head"></span><span class="rider-body"></span>' +
+          '<span class="rider-name">' + esc(p.prenom) + '</span>' +
+        '</span></div>';
+    }
+
+    /* conducteur devant à gauche, 1er passager devant à droite, le reste derrière */
+    var front = '<div class="seat is-driver">' +
+        '<span class="rider" tabindex="0" role="button" style="--rider:' + DRIVER_COLOR + '" ' +
+              'aria-label="Conducteur : ' + esc(ride.prenom) + '">' +
+          '<span class="rider-head"></span><span class="rider-body"></span>' +
+          '<span class="rider-name">' + esc(ride.prenom) + ' · au volant</span>' +
+        '</span></div>';
+    if (places >= 1) front += seatHtml(0);
+
+    var back = '';
+    for (var i = 1; i < places; i++) back += seatHtml(i);
+
+    return '<div class="car-scene"><div class="car">' +
+      '<span class="car-shadow" aria-hidden="true"></span>' +
+      '<span class="car-wheel fl" aria-hidden="true"></span><span class="car-wheel fr" aria-hidden="true"></span>' +
+      '<span class="car-wheel rl" aria-hidden="true"></span><span class="car-wheel rr" aria-hidden="true"></span>' +
+      '<div class="car-body">' +
+        '<span class="car-light l" aria-hidden="true"></span><span class="car-light r" aria-hidden="true"></span>' +
+        '<div class="car-hood" aria-hidden="true"></div>' +
+        '<div class="car-glass front" aria-hidden="true"></div>' +
+        '<div class="car-cabin">' +
+          '<div class="car-row">' + front + '</div>' +
+          (back ? '<div class="car-row">' + back + '</div>' : '') +
+        '</div>' +
+        '<div class="car-glass rear" aria-hidden="true"></div>' +
+        '<div class="car-trunk" aria-hidden="true"></div>' +
+      '</div></div></div>';
+  }
+
+  /* ─── rendu d'une annonce ─── */
+  function cardHtml(key, ride) {
+    var places = clamp(ride.places, 1, 5);
+    var pax = ride.passagers || [];
+    var left = Math.max(0, places - pax.length);
+    var full = left === 0;
+    var own = isMine(key);
+    var meName = lsGet(LS_ME, '');
+    var iAmIn = pax.some(function (p) { return norm(p.prenom) === norm(meName) && meName; });
+
+    var badge = full
+      ? '<span class="ride-badge is-full">Complet</span>'
+      : '<span class="ride-badge">' + left + ' place' + (left > 1 ? 's' : '') + '</span>';
+
+    var paxTxt = pax.length
+      ? '<p class="ride-pax">À bord&nbsp;: <b>' + pax.map(function (p) { return esc(p.prenom); }).join('</b>, <b>') + '</b></p>'
+      : '<p class="ride-pax">Personne à bord pour l\'instant — la place est à vous.</p>';
+
+    var joinBtn = full
+      ? '<button type="button" class="ride-join" disabled>Véhicule complet</button>'
+      : '<button type="button" class="ride-join" data-join="' + key + '">Rejoindre ce covoiturage</button>';
+
+    var actions = '<div class="ride-actions">' + joinBtn;
+    if (iAmIn) actions += '<button type="button" class="ride-mini" data-leave="' + key + '">Je me désiste</button>';
+    if (own) {
+      actions += '<button type="button" class="ride-mini" data-edit="' + key + '">Modifier</button>' +
+                 '<button type="button" class="ride-mini danger" data-del="' + key + '">Supprimer</button>';
+    }
+    actions += '</div>';
+
+    return '' +
+      '<article class="ride-card' + (full ? ' is-full' : '') + (seenKeys[key] ? '' : ' is-new') + '" data-key="' + key + '">' +
+        '<div class="ride-top">' +
+          '<div>' +
+            '<h3 class="ride-driver">' + esc(ride.prenom) + (ride.nom ? ' ' + esc(ride.nom) : '') + '</h3>' +
+            '<p class="ride-from">' + ICON_PIN + esc(ride.ville) + '</p>' +
+          '</div>' + badge +
+        '</div>' +
+        '<div class="ride-meta">' +
+          '<span class="ride-chip">' + ICON_CAL + fmtDate(ride.date) + '</span>' +
+          '<span class="ride-chip">' + ICON_CLK + 'Départ ' + fmtHeure(ride.heure) + '</span>' +
+        '</div>' +
+        carHtml(ride) +
+        (ride.note ? '<p class="ride-note">' + esc(ride.note) + '</p>' : '') +
+        paxTxt +
+        actions +
+        (own ? '<span class="ride-own">' + ICON_STAR + 'Votre annonce</span>' : '') +
+      '</article>';
+  }
+
+  /* ─── rendu global ─── */
+  function render() {
+    var keys = Object.keys(rides).filter(function (k) { return rides[k] && rides[k].prenom; });
+    keys.sort(function (a, b) {
+      var A = rides[a], B = rides[b];
+      var d = String(A.date || '') + String(A.heure || '');
+      var e = String(B.date || '') + String(B.heure || '');
+      if (d !== e) return d < e ? -1 : 1;
+      return (A.createdAt || 0) - (B.createdAt || 0);
+    });
+
+    loadingEl.hidden = true;
+    emptyEl.hidden = keys.length > 0;
+    listEl.innerHTML = keys.map(function (k) { return cardHtml(k, rides[k]); }).join('');
+    keys.forEach(function (k) { seenKeys[k] = true; });
+    firstPaint = false;
+  }
+
+  /* ─── application des mises à jour temps réel ─── */
+  function applyPut(path, data) {
+    if (path === '/' || path === '') { rides = data || {}; return; }
+    var parts = path.split('/').filter(Boolean);
+    if (parts.length === 1) {
+      if (data === null) delete rides[parts[0]];
+      else rides[parts[0]] = data;
+      return;
+    }
+    var node = rides[parts[0]];
+    if (!node) { if (data === null) return; node = rides[parts[0]] = {}; }
+    for (var i = 1; i < parts.length - 1; i++) {
+      if (typeof node[parts[i]] !== 'object' || node[parts[i]] === null) node[parts[i]] = {};
+      node = node[parts[i]];
+    }
+    var last = parts[parts.length - 1];
+    if (data === null) delete node[last]; else node[last] = data;
+  }
+  function applyPatch(path, data) {
+    if (!data) return;
+    Object.keys(data).forEach(function (k) {
+      applyPut((path === '/' ? '' : path) + '/' + k, data[k]);
+    });
+  }
+
+  /* ─── connexion temps réel ─── */
+  var pollTimer = null;
+  function startPolling() {
+    if (pollTimer) return;
+    liveEl.classList.add('is-off');
+    liveTxt.textContent = 'Actualisé régulièrement';
+    var tick = function () {
+      fetch(FB + '.json', { cache: 'no-store' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { rides = d || {}; render(); })
+        .catch(function () {});
+    };
+    tick();
+    pollTimer = setInterval(tick, 10000);
+  }
+
+  function startRealtime() {
+    if (typeof EventSource === 'undefined') return startPolling();
+    var es;
+    try { es = new EventSource(FB + '.json'); } catch (e) { return startPolling(); }
+    var opened = false;
+
+    es.addEventListener('put', function (e) {
+      opened = true;
+      try { var m = JSON.parse(e.data); applyPut(m.path, m.data); render(); } catch (err) {}
+    });
+    es.addEventListener('patch', function (e) {
+      opened = true;
+      try { var m = JSON.parse(e.data); applyPatch(m.path, m.data); render(); } catch (err) {}
+    });
+    es.addEventListener('auth_revoked', function () { es.close(); startPolling(); });
+    es.onerror = function () {
+      /* le navigateur retente seul ; on ne bascule que si rien n'est jamais arrivé */
+      if (!opened && es.readyState === 2) { es.close(); startPolling(); }
+    };
+    /* filet : si aucune donnée en 6 s, on passe en interrogation */
+    setTimeout(function () { if (!opened) { try { es.close(); } catch (e) {} startPolling(); } }, 6000);
+  }
+
+  /* ─── écriture conditionnelle (anti double-réservation) ─── */
+  function updateRide(key, mutate, done) {
+    var tries = 0;
+    (function attempt() {
+      tries++;
+      if (tries > 4) return done('Trop de monde au même moment. Réessayez dans un instant.');
+      fetch(FB + '/' + key + '.json', { headers: { 'X-Firebase-ETag': 'true' }, cache: 'no-store' })
+        .then(function (r) {
+          var etag = r.headers.get('ETag');
+          return r.json().then(function (ride) { return { etag: etag, ride: ride }; });
+        })
+        .then(function (res) {
+          if (!res.ride) return done('Ce covoiturage n\'existe plus.');
+          var next = mutate(res.ride);
+          if (typeof next === 'string') return done(next);   /* refus métier */
+          if (!next) return done(null);
+          var headers = { 'Content-Type': 'application/json' };
+          if (res.etag) headers['if-match'] = res.etag;
+          return fetch(FB + '/' + key + '.json', {
+            method: 'PUT', headers: headers, body: JSON.stringify(next)
+          }).then(function (w) {
+            if (w.status === 412) return attempt();          /* doublé : on recommence */
+            if (!w.ok) throw new Error('HTTP ' + w.status);
+            rides[key] = next; render();
+            done(null);
+          });
+        })
+        .catch(function () { done('Connexion impossible. Vérifiez votre réseau.'); });
+    }());
+  }
+
+  /* ═══ MODALES ═══ */
+  var lastFocus = null;
+  function openModal(el) {
+    lastFocus = document.activeElement;
+    el.classList.add('open');
+    el.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    var f = el.querySelector('input:not([type=hidden]), button.cv-submit');
+    if (f) setTimeout(function () { f.focus(); }, 60);
+  }
+  function closeModal(el) {
+    el.classList.remove('open');
+    el.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-close]')) {
+      var m = e.target.closest('.cv-modal');
+      if (m) closeModal(m);
+    } else if (e.target.classList && e.target.classList.contains('cv-modal')) {
+      closeModal(e.target);
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var open = document.querySelector('.cv-modal.open');
+    if (open) closeModal(open);
+  });
+
+  /* ─── modale générique ─── */
+  var askModal  = document.getElementById('askModal');
+  var askForm   = document.getElementById('askForm');
+  var askInput  = document.getElementById('askInput');
+  var askGroup  = document.getElementById('askInputGroup');
+  var askError  = document.getElementById('askError');
+  var askSubmit = document.getElementById('askSubmit');
+  var askHandler = null;
+
+  function ask(opts) {
+    document.getElementById('askEyebrow').textContent = opts.eyebrow || '';
+    document.getElementById('askTitle').textContent   = opts.title || '';
+    document.getElementById('askText').textContent    = opts.text || '';
+    askGroup.hidden = !opts.input;
+    askInput.value  = opts.value || '';
+    askSubmit.textContent = opts.confirm || 'Confirmer';
+    askSubmit.className = 'cv-submit' + (opts.danger ? ' danger' : '');
+    askSubmit.disabled = false;
+    askError.classList.remove('show');
+    askHandler = opts.onConfirm;
+    openModal(askModal);
+  }
+  askForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!askHandler) return;
+    var val = askGroup.hidden ? '' : askInput.value.trim();
+    if (!askGroup.hidden && !val) {
+      askError.textContent = 'Merci d\'indiquer votre prénom.';
+      askError.classList.add('show');
+      askInput.focus();
+      return;
+    }
+    askSubmit.disabled = true;
+    askSubmit.textContent = 'Un instant…';
+    askHandler(val, function (err) {
+      askSubmit.disabled = false;
+      askSubmit.textContent = 'Confirmer';
+      if (err) {
+        askError.textContent = err;
+        askError.classList.add('show');
+      } else {
+        closeModal(askModal);
+      }
+    });
+  });
+
+  /* ─── modale annonce (créer / modifier) ─── */
+  var rideModal = document.getElementById('rideModal');
+  var rideForm  = document.getElementById('rideForm');
+  var rfError   = document.getElementById('rfError');
+  var rfSubmit  = document.getElementById('rfSubmit');
+  var editingKey = null;
+
+  document.getElementById('rfPlaces').addEventListener('click', function (e) {
+    var b = e.target.closest('.cv-seat-btn');
+    if (!b) return;
+    Array.prototype.forEach.call(this.querySelectorAll('.cv-seat-btn'), function (x) { x.classList.remove('on'); });
+    b.classList.add('on');
+  });
+  function getPlaces() {
+    var on = document.querySelector('#rfPlaces .cv-seat-btn.on');
+    return on ? clamp(on.getAttribute('data-p'), 1, 5) : 3;
+  }
+  function setPlaces(n) {
+    n = clamp(n, 1, 5);
+    Array.prototype.forEach.call(document.querySelectorAll('#rfPlaces .cv-seat-btn'), function (b) {
+      b.classList.toggle('on', +b.getAttribute('data-p') === n);
+    });
+  }
+
+  function openRideForm(key) {
+    editingKey = key || null;
+    rfError.classList.remove('show');
+    rfSubmit.disabled = false;
+    var r = key ? rides[key] : null;
+    document.getElementById('rideModalEyebrow').textContent = key ? 'Votre annonce' : 'Votre véhicule';
+    document.getElementById('rideModalTitle').textContent   = key ? 'Modifier mon covoiturage' : 'Proposer un covoiturage';
+    rfSubmit.textContent = key ? 'Enregistrer les modifications' : 'Publier mon covoiturage';
+    document.getElementById('rfPrenom').value = r ? (r.prenom || '') : lsGet(LS_ME, '');
+    document.getElementById('rfNom').value    = r ? (r.nom || '')    : '';
+    document.getElementById('rfVille').value  = r ? (r.ville || '')  : '';
+    document.getElementById('rfDate').value   = r ? (r.date || '2026-12-12') : '2026-12-12';
+    document.getElementById('rfHeure').value  = r ? (r.heure || '11:00')     : '11:00';
+    document.getElementById('rfNote').value   = r ? (r.note || '')   : '';
+    setPlaces(r ? r.places : 3);
+    openModal(rideModal);
+  }
+
+  document.getElementById('cvNew').addEventListener('click', function () { openRideForm(null); });
+
+  rideForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var prenom = document.getElementById('rfPrenom').value.trim();
+    var nom    = document.getElementById('rfNom').value.trim();
+    var ville  = document.getElementById('rfVille').value.trim();
+    var date   = document.getElementById('rfDate').value;
+    var heure  = document.getElementById('rfHeure').value;
+    var note   = document.getElementById('rfNote').value.trim();
+    var places = getPlaces();
+
+    function fail(msg, id) {
+      rfError.textContent = msg; rfError.classList.add('show');
+      var f = document.getElementById(id); if (f) f.focus();
+    }
+    if (!prenom) return fail('Merci d\'indiquer votre prénom.', 'rfPrenom');
+    if (!ville)  return fail('Merci d\'indiquer votre ville de départ.', 'rfVille');
+    if (!date)   return fail('Merci de choisir la date du trajet.', 'rfDate');
+    if (!heure)  return fail('Merci d\'indiquer une heure de départ.', 'rfHeure');
+
+    rfError.classList.remove('show');
+    rfSubmit.disabled = true;
+    rfSubmit.textContent = 'Envoi…';
+    lsSet(LS_ME, prenom);
+
+    if (editingKey) {
+      var key = editingKey;
+      updateRide(key, function (cur) {
+        var pax = cur.passagers || [];
+        if (places < pax.length) {
+          return 'Vous avez déjà ' + pax.length + ' passager' + (pax.length > 1 ? 's' : '') +
+                 ' à bord : impossible de descendre à ' + places + ' place' + (places > 1 ? 's' : '') + '.';
+        }
+        cur.prenom = prenom; cur.nom = nom; cur.ville = ville;
+        cur.date = date; cur.heure = heure; cur.note = note; cur.places = places;
+        return cur;
+      }, function (err) {
+        rfSubmit.disabled = false;
+        rfSubmit.textContent = 'Enregistrer les modifications';
+        if (err) { rfError.textContent = err; rfError.classList.add('show'); }
+        else closeModal(rideModal);
+      });
+      return;
+    }
+
+    var ride = {
+      prenom: prenom, nom: nom, ville: ville, date: date, heure: heure,
+      places: places, note: note, passagers: [], createdAt: Date.now()
+    };
+    fetch(FB + '.json', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ride)
+    })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (d) {
+        if (d && d.name) {
+          var m = mine(); m.push(d.name); lsSet(LS_MINE, m);
+          rides[d.name] = ride; render();
+        }
+        rfSubmit.disabled = false;
+        rfSubmit.textContent = 'Publier mon covoiturage';
+        closeModal(rideModal);
+      })
+      .catch(function () {
+        rfSubmit.disabled = false;
+        rfSubmit.textContent = 'Publier mon covoiturage';
+        rfError.textContent = 'Publication impossible. Vérifiez votre connexion et réessayez.';
+        rfError.classList.add('show');
+      });
+  });
+
+  /* ─── actions sur les annonces ─── */
+  listEl.addEventListener('click', function (e) {
+    var t = e.target;
+
+    var rider = t.closest('.rider');
+    if (rider) {
+      var wasOn = rider.classList.contains('show-name');
+      Array.prototype.forEach.call(listEl.querySelectorAll('.rider.show-name'), function (r) { r.classList.remove('show-name'); });
+      if (!wasOn) rider.classList.add('show-name');
+      return;
+    }
+
+    var join = t.closest('[data-join]');
+    if (join) {
+      var jk = join.getAttribute('data-join');
+      var r0 = rides[jk] || {};
+      ask({
+        eyebrow: 'Monter à bord',
+        title: 'Rejoindre ' + (r0.prenom || 'ce covoiturage'),
+        text: 'Départ de ' + (r0.ville || '—') + ', ' + fmtDate(r0.date).toLowerCase() + ' vers ' + fmtHeure(r0.heure) + '.',
+        input: true,
+        value: lsGet(LS_ME, ''),
+        confirm: 'Rejoindre',
+        onConfirm: function (prenom, done) {
+          lsSet(LS_ME, prenom);
+          updateRide(jk, function (cur) {
+            var pax = cur.passagers || [];
+            var places = clamp(cur.places, 1, 5);
+            if (pax.length >= places) return 'Trop tard, la dernière place vient d\'être prise.';
+            if (pax.some(function (p) { return norm(p.prenom) === norm(prenom); })) {
+              return 'Vous êtes déjà inscrit·e sur ce trajet.';
+            }
+            pax.push({ prenom: prenom, ts: Date.now() });
+            cur.passagers = pax;
+            return cur;
+          }, done);
+        }
+      });
+      return;
+    }
+
+    var leave = t.closest('[data-leave]');
+    if (leave) {
+      var lk = leave.getAttribute('data-leave');
+      var me = lsGet(LS_ME, '');
+      ask({
+        eyebrow: 'Changement de plan',
+        title: 'Quitter ce covoiturage',
+        text: 'Votre place sera de nouveau proposée aux autres invités.',
+        confirm: 'Je me désiste',
+        danger: true,
+        onConfirm: function (_v, done) {
+          updateRide(lk, function (cur) {
+            cur.passagers = (cur.passagers || []).filter(function (p) { return norm(p.prenom) !== norm(me); });
+            return cur;
+          }, done);
+        }
+      });
+      return;
+    }
+
+    var ed = t.closest('[data-edit]');
+    if (ed) { openRideForm(ed.getAttribute('data-edit')); return; }
+
+    var del = t.closest('[data-del]');
+    if (del) {
+      var dk = del.getAttribute('data-del');
+      var rd = rides[dk] || {};
+      var nb = (rd.passagers || []).length;
+      ask({
+        eyebrow: 'Votre annonce',
+        title: 'Supprimer ce covoiturage',
+        text: nb
+          ? nb + ' personne' + (nb > 1 ? 's sont' : ' est') + ' déjà à bord. Elles devront trouver une autre solution.'
+          : 'Cette annonce sera retirée de la liste.',
+        confirm: 'Supprimer',
+        danger: true,
+        onConfirm: function (_v, done) {
+          fetch(FB + '/' + dk + '.json', { method: 'DELETE' })
+            .then(function (r) {
+              if (!r.ok) throw new Error('HTTP ' + r.status);
+              delete rides[dk];
+              lsSet(LS_MINE, mine().filter(function (k) { return k !== dk; }));
+              render();
+              done(null);
+            })
+            .catch(function () { done('Suppression impossible. Réessayez.'); });
+        }
+      });
+    }
+  });
+
+  listEl.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var rider = e.target.closest('.rider');
+    if (!rider) return;
+    e.preventDefault();
+    rider.classList.toggle('show-name');
+  });
+
+  /* ─── go ─── */
+  startRealtime();
+}());
+</script>
+
+<script src="toile.js?v=14"></script>
+<script src="transitions.js?v=14"></script>
+
+</body>
+</html>

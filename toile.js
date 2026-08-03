@@ -31,13 +31,30 @@
     });
   });
 
+  /* Une fois l'apparition terminée, on rend la main au navigateur :
+     garder « will-change » indéfiniment immobilise un calque GPU par
+     élément — coûteux en mémoire, surtout sur mobile. */
+  function releaseLayer(e) {
+    if (e.propertyName !== 'opacity' && e.propertyName !== 'transform') return;
+    e.currentTarget.classList.remove('rv-warm');
+    e.currentTarget.removeEventListener('transitionend', releaseLayer);
+  }
+
   function checkReveals() {
     if (!pendingReveal.length) return;
     var vh = window.innerHeight;
     pendingReveal = pendingReveal.filter(function (el) {
       var r = el.getBoundingClientRect();
-      if (r.top < vh - 40 || r.bottom < 0) {
+      /* 1) zone de préchauffe : l'élément approche → on prépare son calque,
+            pour que la toute première frame de l'animation soit franche */
+      if (!reduceMotion && r.top < vh + 260 && r.bottom > -260) el.classList.add('rv-warm');
+      /* 2) déclenchement, un peu plus tôt qu'avant : l'apparition se
+            termine pendant que l'élément entre, au lieu de démarrer au ras du bord */
+      if (r.top < vh - 90 || r.bottom < 0) {
         el.classList.add('in-view');
+        if (el.classList.contains('rv-warm')) {
+          el.addEventListener('transitionend', releaseLayer);
+        }
         return false;
       }
       return true;

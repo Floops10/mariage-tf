@@ -12,11 +12,12 @@
     'index.html':     { eyebrow: '12 décembre 2026',        title: 'Thomy & Florian' },
     'programme.html': { eyebrow: 'Le jour J',               title: 'Le Programme' },
     'sejour.html':    { eyebrow: 'La route du domaine',     title: 'Venir au Domaine' },
+    'covoiturage.html': { eyebrow: 'On fait la route ensemble', title: 'Covoiturer' },
     'dresscode.html': { eyebrow: 'Pour vous faire beaux',   title: 'Le Dress Code' },
     'histoire.html':  { eyebrow: 'Avec tendresse',       title: 'Photos & poème' },
     'cadeaux.html':   { eyebrow: 'Si le cœur vous en dit',   title: 'Cadeaux' },
     'contact.html':   { eyebrow: 'On est là',                title: 'Nous contacter' },
-    'rsvp.html':      { eyebrow: 'Avant le 1ᵉʳ août 2026',  title: 'Confirmer ma venue' },
+    'rsvp.html':      { eyebrow: 'Les réponses sont closes', title: 'Confirmer ma venue' },
     '':               { eyebrow: '12 décembre 2026',        title: 'Thomy & Florian' },
   };
 
