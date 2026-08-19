@@ -142,6 +142,10 @@
     if (!filLen || !filSvg) { filGeo = null; return; }
     var y = window.scrollY || window.pageYOffset;
     var rect = filWrap.getBoundingClientRect();
+    /* Conteneur masqué (attribut hidden) ou pas encore mis en page : sa
+       hauteur vaut 0. On divisait alors par zéro plus bas, ce qui pouvait
+       produire un NaN et faire échouer getPointAtLength(). */
+    if (!rect.height) { filGeo = null; return; }
     var srect = filSvg.getBoundingClientRect();
     var vb = filSvg.viewBox.baseVal;
     filGeo = {
@@ -155,11 +159,12 @@
   }
 
   function updateFil(y) {
-    if (!filGeo) return;
+    if (!filGeo || !filGeo.wrapH) return;
     var vh = window.innerHeight;
     /* la pointe du tracé (et son marqueur) reste au milieu de l'écran */
     var rectTop = filGeo.wrapTop - y;
     var p = (vh * 0.52 - rectTop) / filGeo.wrapH;
+    if (!isFinite(p)) return;                   /* ceinture et bretelles */
     p = Math.max(0, Math.min(1, p));
     if (reduceMotion) p = 1;
     if (Math.abs(p - lastP) < 0.0005) return;   /* rien de neuf : on sort */

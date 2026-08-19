@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -166,47 +166,6 @@
 .cta-band .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
 
 /* ─── Placeholder programme à venir ─── */
-.prog-soon {
-  position: relative;
-  text-align: center;
-  border: 1px dashed var(--border3);
-  background: rgba(31,47,68,.018);
-  padding: clamp(2.4rem, 6vw, 4rem) clamp(1.4rem, 6vw, 3rem);
-  max-width: 36rem;
-  margin: 0 auto;
-}
-.prog-soon::after {
-  content: '';
-  position: absolute;
-  inset: 7px;
-  border: 1px solid var(--gold-border);
-  pointer-events: none;
-}
-.prog-soon-ico { display: block; color: var(--gold2); margin-bottom: 1.2rem; }
-.prog-soon-ico svg { width: 40px; height: 40px; }
-.prog-soon-label {
-  display: block;
-  font-family: var(--font-sub);
-  font-size: .58rem;
-  letter-spacing: .22em;
-  color: var(--gold2);
-  margin-bottom: .6rem;
-}
-.prog-soon-title {
-  font-family: var(--font-title);
-  font-size: clamp(1.3rem, 3vw, 1.8rem);
-  color: var(--navy);
-  font-weight: 400;
-  margin-bottom: .7rem;
-}
-.prog-soon-sub {
-  font-family: var(--font-body);
-  font-size: .88rem;
-  color: var(--text-mid);
-  line-height: 1.75;
-  position: relative;
-  z-index: 1;
-}
 
 /* ═══ RESPONSIVE ═══ */
 @media (max-width: 760px) {
@@ -220,6 +179,320 @@
     padding-left: 1.1rem; max-width: none;
   }
   #fil-end { padding-left: 54px; }
+}
+/* ═══════════════════════════════════════════════════════════════
+   LE PARCHEMIN — « Palais d'Hiver Feutré »
+   Une proclamation qui se déroule au scroll, pleine largeur, sur
+   fond de nuit d'hiver. Moteur maison (rAF), aucune bibliothèque.
+   Le rouleau du bas est un vrai cylindre : sa spirale interne se
+   décale à mesure, ce qui donne l'illusion qu'il tourne.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* pleine largeur : on sort de la feuille crème, sinon le décor ne pèse rien */
+.parch-sec {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-bottom: clamp(2.4rem, 6vh, 4rem);
+  background: linear-gradient(180deg, #16273c 0%, #0b1524 55%, #060c16 100%);
+}
+
+.parch-stage {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100svh - var(--nav-h));
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* ─── Atmosphère ─── */
+.parch-bg { position: absolute; inset: 0; pointer-events: none; }
+.parch-bg::before {
+  content: ''; position: absolute; inset: -6%;
+  background: url('toile-de-jouy.jpg') repeat;
+  background-size: 480px;
+  opacity: .06;
+  transform: translateY(calc(var(--bgshift, 0) * 1px));
+}
+.parch-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 44% 58% at 50% 46%,
+      rgba(150,190,235, calc(.10 + var(--p, 0) * .17)) 0%, transparent 70%),
+    radial-gradient(ellipse 118% 96% at 50% 50%, transparent 38%, rgba(3,7,14,.88) 100%);
+}
+
+/* ─── Neige ─── */
+.flake {
+  position: absolute; top: -6%;
+  width: var(--s); height: var(--s);
+  border-radius: 50%;
+  background: rgba(255,255,255,.78);
+  filter: blur(.3px);
+  opacity: 0;
+  animation: parchFall var(--d) linear var(--delay) infinite;
+}
+@keyframes parchFall {
+  0%   { transform: translate3d(0,0,0); opacity: 0; }
+  12%  { opacity: .85; }
+  88%  { opacity: .5; }
+  100% { transform: translate3d(var(--dx), 112vh, 0); opacity: 0; }
+}
+
+/* ─── La scène ─── */
+.parch-scene {
+  position: relative;
+  width: min(680px, 88vw);
+  perspective: 1500px;
+  perspective-origin: 50% 34%;
+  transform-style: preserve-3d;
+  z-index: 2;
+}
+.parch-rig {
+  --p: 0; --full: 0px; --fit: 1;
+  --cap-inset: 27px;          /* largeur d'un embout + un souffle */
+  position: relative;
+  transform-style: preserve-3d;
+  /* incliné au repos, se redresse et avance vers l'oeil en se déroulant */
+  transform:
+    rotateX(calc(21deg - var(--p) * 16deg))
+    translateZ(calc(var(--p) * 44px))
+    scale(calc((.93 + var(--p) * .07) * var(--fit)));
+  will-change: transform;
+}
+
+/* ─── Tringle du haut ─── */
+.rod { position: relative; display: flex; align-items: center; height: 30px; z-index: 6; }
+.rod-bar {
+  flex: 1; height: 17px; border-radius: 9px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 30%),
+    linear-gradient(180deg, #59452f 0%, #33261a 42%, #150f0a 100%);
+  box-shadow: inset 0 -4px 9px rgba(0,0,0,.62), 0 10px 26px rgba(0,0,0,.5);
+}
+.rod-cap {
+  flex: 0 0 auto; width: 21px; height: 30px; border-radius: 7px;
+  background: radial-gradient(circle at 34% 24%, #F6E5BC 0%, #D9BC7C 34%, var(--gold) 56%, #8a6a30 84%, #5a4420 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.65), inset 0 -3px 6px rgba(0,0,0,.4), 0 8px 20px rgba(0,0,0,.5);
+}
+
+/* ─── Le papier ─── */
+/* Le papier sort DU cylindre : il ne peut donc pas être plus large que lui,
+   ni passer sous les embouts. On l'encastre entre les deux capsules. */
+.parch {
+  position: relative;
+  width: calc(100% - 2 * var(--cap-inset));
+  margin-inline: auto;
+  height: calc(var(--p) * var(--full));
+  overflow: hidden;
+  z-index: 4;
+  box-shadow: 0 34px 80px rgba(0,0,0,.55);
+  will-change: height;
+}
+.parch-sheet {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(110,84,48,.26) 0px, rgba(110,84,48,0) 30px),
+    radial-gradient(ellipse 130% 66% at 50% 0%, rgba(255,255,255,.6), transparent 56%),
+    linear-gradient(178deg, #FCF7ED 0%, #F6ECDB 50%, #EFE2CD 100%);
+  padding: clamp(2.1rem, 5.4vw, 3.5rem) clamp(1.7rem, 5vw, 3.4rem) clamp(2rem, 4.6vw, 3rem);
+}
+/* grain de papier — bruit fractal, pas un aplat */
+.parch-sheet::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: .5; mix-blend-mode: multiply;
+}
+/* fibres horizontales + bords vieillis */
+.parch-sheet::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(180deg, rgba(150,118,74,.05) 0 2px, transparent 2px 6px),
+    /* bombé du papier : les bords fuient dans l'ombre, le centre capte la lumière —
+       c'est ce qui empêche la feuille de ressembler à une planche rigide */
+    linear-gradient(90deg,
+      rgba(104,78,44,.42) 0%, rgba(122,94,56,.16) 3.5%,
+      rgba(255,255,255,.14) 26%, rgba(255,255,255,.20) 50%, rgba(255,255,255,.14) 74%,
+      rgba(122,94,56,.16) 96.5%, rgba(104,78,44,.42) 100%),
+    radial-gradient(ellipse 140% 90% at 50% 100%, rgba(128,98,58,.16), transparent 58%);
+}
+.parch-sheet > * { position: relative; z-index: 1; }
+
+/* ─── Le rouleau du bas : un vrai cylindre qui tourne ─── */
+.roll {
+  position: relative; display: flex; align-items: center;
+  height: 46px; margin-top: -3px; z-index: 6;
+}
+.roll-body {
+  flex: 1; height: 46px; border-radius: 23px;
+  background-image:
+    repeating-linear-gradient(180deg,
+      rgba(255,255,255,.26) 0px, rgba(255,255,255,0) 4px,
+      rgba(112,84,48,.26) 8px, rgba(112,84,48,0) 13px),
+    linear-gradient(180deg,
+      #6f5738 0%, #ab8d5f 10%, #E9DCC2 30%, #FBF6EA 45%,
+      #E4D5B8 62%, #a98a58 84%, #5d4728 100%);
+  background-position: 0 calc(var(--spin, 0) * 1px), 0 0;
+  box-shadow:
+    inset 0 3px 7px rgba(255,255,255,.36),
+    inset 0 -6px 12px rgba(0,0,0,.42),
+    0 16px 34px rgba(0,0,0,.55);
+}
+.roll-cap {
+  flex: 0 0 auto; width: 22px; height: 46px; border-radius: 11px;
+  background: radial-gradient(circle at 36% 26%, #F6E5BC 0%, #D9BC7C 32%, var(--gold) 55%, #86642d 85%, #55411e 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), inset 0 -4px 8px rgba(0,0,0,.42), 0 10px 24px rgba(0,0,0,.5);
+}
+/* le pli sombre là où le papier plonge dans le rouleau */
+.roll-crease {
+  position: absolute;
+  left: var(--cap-inset); right: var(--cap-inset);
+  bottom: 100%; height: 30px;
+  background: linear-gradient(180deg, rgba(52,36,18,0) 0%, rgba(52,36,18,.20) 55%, rgba(40,27,12,.5) 100%);
+  pointer-events: none; z-index: 7;
+  opacity: calc(1 - var(--p, 0) * .35);
+}
+
+/* ─── Contenu ─── */
+.parch-eyebrow {
+  display: block; text-align: center;
+  font-family: var(--font-sub);
+  font-size: clamp(.58rem, 1.5vw, .7rem);
+  letter-spacing: .26em; color: #A5822F;
+  margin-bottom: .6rem;
+}
+.parch-title {
+  text-align: center;
+  font-family: var(--font-title); font-weight: 400;
+  font-size: clamp(1.7rem, 5vw, 2.7rem);
+  color: var(--navy); line-height: 1.06;
+}
+.parch-rule { margin: 1rem auto clamp(1.2rem, 3vh, 1.9rem); max-width: 170px; }
+
+.parch-list { display: flex; flex-direction: column; gap: clamp(.7rem, 2vh, 1.15rem); }
+.parch-item {
+  display: grid;
+  grid-template-columns: clamp(68px, 18%, 104px) 1fr;
+  gap: clamp(.8rem, 2.6vw, 1.5rem);
+  align-items: baseline;
+  opacity: 0;
+  transform: translateY(20px) rotateX(-12deg);
+  transform-origin: top center;
+  transition: opacity .65s var(--ease-out), transform .75s var(--ease-out);
+}
+.parch-item.on { opacity: 1; transform: translateY(0) rotateX(0); }
+.parch-when {
+  font-family: var(--font-sub);
+  font-size: clamp(.63rem, 1.7vw, .78rem);
+  letter-spacing: .13em; color: #A5822F;
+  text-align: right; padding-top: .2em;
+}
+.parch-what h3 {
+  font-family: var(--font-title); font-weight: 400;
+  font-size: clamp(1.05rem, 2.8vw, 1.32rem);
+  color: var(--navy); line-height: 1.2; margin-bottom: .18rem;
+}
+.parch-what p {
+  font-family: var(--font-body);
+  font-size: clamp(.79rem, 2vw, .88rem);
+  color: #5C7189; line-height: 1.62;
+}
+.parch-note {
+  text-align: center;
+  font-family: var(--font-body); font-style: italic;
+  font-size: clamp(.74rem, 1.9vw, .82rem);
+  color: #8A7B63; line-height: 1.68;
+  margin-top: clamp(1.1rem, 3vh, 1.8rem);
+  padding-top: clamp(.8rem, 2vh, 1.2rem);
+  border-top: 1px solid rgba(165,130,47,.28);
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .6s var(--ease-out), transform .6s var(--ease-out);
+}
+.parch-note.on { opacity: 1; transform: translateY(0); }
+
+/* ─── Cachet de cire : le monogramme, tamponné à la main ─── */
+.parch-seal {
+  position: relative;
+  display: block;              /* un <span> reste inline : sans ça, largeur ignorée */
+  width: clamp(62px, 13vw, 78px);
+  aspect-ratio: 1;
+  margin: clamp(1.1rem, 3vh, 1.7rem) auto 0;
+  opacity: 0;
+  transform: scale(.28) rotate(-34deg);
+  transition: opacity .35s var(--ease-out), transform .8s var(--ease-spring);
+}
+.parch-seal.on { opacity: 1; transform: scale(1) rotate(-6.5deg); }
+
+/* la cire ne s'étale jamais en cercle parfait */
+.seal-wax {
+  position: absolute; inset: 0;
+  border-radius: 47% 53% 44% 56% / 54% 46% 55% 45%;
+  background: radial-gradient(circle at 33% 27%, #b23c46 0%, #8e2531 36%, #641622 70%, #3f0b14 100%);
+  box-shadow:
+    0 14px 26px rgba(45,6,12,.55),
+    inset 0 3px 7px rgba(255,255,255,.26),
+    inset 0 -7px 13px rgba(0,0,0,.5);
+}
+/* la bavure : en appuyant, la cire a débordé d'un côté */
+.seal-wax::before {
+  content: ''; position: absolute; inset: -5px -1px -2px -6px;
+  border-radius: 53% 47% 49% 51% / 45% 56% 44% 55%;
+  background: radial-gradient(circle at 42% 38%, rgba(150,46,56,.62), rgba(80,15,25,.9));
+  z-index: -1; filter: blur(.5px);
+}
+/* grain de la cire refroidie */
+.seal-wax::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23s)' opacity='0.6'/%3E%3C/svg%3E");
+  opacity: .2; mix-blend-mode: overlay; pointer-events: none;
+}
+/* le monogramme, enfoncé dans la cire :
+   lumière en bas, ombre en haut → le motif se creuse au lieu de ressortir */
+.seal-mark {
+  position: absolute; inset: 20%;
+  -webkit-mask: url('logo-navy.png') center / contain no-repeat;
+          mask: url('logo-navy.png') center / contain no-repeat;
+  background: linear-gradient(158deg, #58111c 0%, #7d2231 46%, #440a13 100%);
+  filter:
+    drop-shadow(0 1.2px 0 rgba(255,178,178,.34))
+    drop-shadow(0 -1px .5px rgba(0,0,0,.55));
+  transform: rotate(3.5deg);   /* un tampon n'est jamais parfaitement aligné */
+}
+
+/* ─── Invitation à dérouler ─── */
+.parch-hint {
+  position: absolute; left: 50%; bottom: clamp(1rem, 4vh, 2.6rem);
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  font-family: var(--font-sub);
+  font-size: .62rem; letter-spacing: .24em; color: rgba(240,232,218,.62);
+  transition: opacity .5s ease; pointer-events: none; z-index: 9;
+}
+.parch-sec.is-started .parch-hint { opacity: 0; }
+.parch-hint i {
+  width: 1px; height: 30px;
+  background: linear-gradient(180deg, rgba(201,168,108,.85), transparent);
+  animation: parchHint 2.2s var(--ease-inout) infinite;
+}
+@keyframes parchHint {
+  0%,100% { transform: scaleY(.35); transform-origin: top; opacity: .35; }
+  50%     { transform: scaleY(1);   transform-origin: top; opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .parch-scene { width: 90vw; }
+  .parch-item { grid-template-columns: 1fr; gap: .15rem; }
+  .parch-when { text-align: left; }
+  .roll, .roll-body, .roll-cap { height: 38px; }
+  .roll-body, .roll-cap { border-radius: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parch-stage { position: static; height: auto; padding: 3rem 0; }
+  .parch-rig { transform: none !important; }
+  .parch { height: auto !important; }
+  .parch-item, .parch-note { opacity: 1 !important; transform: none !important; }
+  .parch-hint, .flake, .roll-crease { display: none; }
 }
 </style>
 </head>
@@ -295,178 +568,96 @@
 
   <main class="sheet">
 
-    <div class="prog-soon reveal">
-      <span class="prog-soon-ico" aria-hidden="true">
-        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="20" r="15"/><path d="M20 12 V 20 L25 25"/></svg>
-      </span>
-      <span class="prog-soon-label">À venir</span>
-      <p class="prog-soon-title">Programme bientôt disponible</p>
-      <p class="prog-soon-sub">Le déroulé complet du jour J vous sera communiqué dans les prochaines semaines.</p>
-    </div>
+    <!-- ═══ LE PARCHEMIN — le déroulé se déroule ═══ -->
+    <section class="parch-sec" id="parchemin" aria-labelledby="parch-title">
+      <div class="parch-stage">
 
-    <p class="tl-note reveal" hidden>
-      Les horaires sont donnés à titre indicatif —
-      un soupçon de retard fait partie du charme des mariages.
-      Suivez le fil&hellip;
-    </p>
+        <div class="parch-bg" aria-hidden="true">
+            <span class="flake" style="left:46.7%;--s:4.0px;--d:21.7s;--delay:-2.3s;--dx:-68px"></span>
+            <span class="flake" style="left:37.5%;--s:2.8px;--d:23.5s;--delay:-11.0s;--dx:14px"></span>
+            <span class="flake" style="left:54.4%;--s:4.0px;--d:14.9s;--delay:-7.0s;--dx:-47px"></span>
+            <span class="flake" style="left:86.3%;--s:2.2px;--d:23.6s;--delay:-1.2s;--dx:26px"></span>
+            <span class="flake" style="left:34.0%;--s:3.2px;--d:24.0s;--delay:-0.3s;--dx:-61px"></span>
+            <span class="flake" style="left:87.2%;--s:3.5px;--d:14.2s;--delay:-15.8s;--dx:63px"></span>
+            <span class="flake" style="left:13.4%;--s:3.3px;--d:14.8s;--delay:-5.0s;--dx:17px"></span>
+            <span class="flake" style="left:18.0%;--s:4.1px;--d:13.7s;--delay:-2.7s;--dx:44px"></span>
+            <span class="flake" style="left:39.8%;--s:3.3px;--d:20.7s;--delay:-7.6s;--dx:-16px"></span>
+            <span class="flake" style="left:5.8%;--s:4.2px;--d:25.6s;--delay:-15.6s;--dx:23px"></span>
+            <span class="flake" style="left:35.8%;--s:3.1px;--d:22.0s;--delay:-10.8s;--dx:-54px"></span>
+        </div>
 
-    <!-- ═══ TIMELINE — fil conducteur ═══ -->
-    <section id="timeline" data-fil aria-label="Déroulé de la journée" hidden>
+        <div class="parch-scene">
+          <div class="parch-rig">
 
-      <svg id="fil-svg" viewBox="0 0 120 2600" preserveAspectRatio="none" aria-hidden="true">
-        <path id="fil-ghost" d="M 60 0 C 96 110 24 215 60 325 C 96 435 24 540 60 650 C 96 760 24 865 60 975 C 96 1085 24 1190 60 1300 C 96 1410 24 1515 60 1625 C 96 1735 24 1840 60 1950 C 96 2060 24 2165 60 2275 C 96 2385 24 2490 60 2600"/>
-        <path id="fil-path"  d="M 60 0 C 96 110 24 215 60 325 C 96 435 24 540 60 650 C 96 760 24 865 60 975 C 96 1085 24 1190 60 1300 C 96 1410 24 1515 60 1625 C 96 1735 24 1840 60 1950 C 96 2060 24 2165 60 2275 C 96 2385 24 2490 60 2600"/>
-      </svg>
-      <div id="fil-marker" aria-hidden="true">
-        <svg viewBox="-14 -14 28 28" fill="none" stroke="currentColor" stroke-linecap="round">
-          <circle r="6" stroke-width="1.8"/>
-          <path d="M0 -11.6 L2.4 -8.6 L0 -6 L-2.4 -8.6 Z" fill="currentColor" stroke="none"/>
-        </svg>
+            <div class="rod" aria-hidden="true">
+              <span class="rod-cap"></span>
+              <span class="rod-bar"></span>
+              <span class="rod-cap"></span>
+            </div>
+
+            <div class="parch">
+              <div class="parch-sheet">
+                <span class="parch-eyebrow">Samedi 12 décembre 2026</span>
+                <h2 class="parch-title" id="parch-title">Le déroulé du jour</h2>
+                <div class="parch-rule gold-rule" aria-hidden="true">
+                  <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+                </div>
+
+                <ol class="parch-list">
+                  <li class="parch-item" data-reveal>
+                    <span class="parch-when">14h00</span>
+                    <div class="parch-what">
+                      <h3>Le oui civil</h3>
+                      <p>Mairie de Trith-Saint-Léger — place de la Résistance.</p>
+                    </div>
+                  </li>
+                  <li class="parch-item" data-reveal>
+                    <span class="parch-when">Puis</span>
+                    <div class="parch-what">
+                      <h3>La cérémonie religieuse</h3>
+                      <p>Au domaine, dans la salle de L'Étable. Plus une route à faire ensuite.</p>
+                    </div>
+                  </li>
+                  <li class="parch-item" data-reveal>
+                    <span class="parch-when">Le soir</span>
+                    <div class="parch-what">
+                      <h3>Le repas</h3>
+                      <p>Dans la grande salle de La Grange.</p>
+                    </div>
+                  </li>
+                  <li class="parch-item" data-reveal>
+                    <span class="parch-when">Et ensuite</span>
+                    <div class="parch-what">
+                      <h3>La fête, jusqu'au bout de la nuit</h3>
+                      <p>On ne compte pas les heures, ce soir-là.</p>
+                    </div>
+                  </li>
+                </ol>
+
+                <p class="parch-note" data-reveal>
+                  Les horaires détaillés — vin d'honneur, discours, ouverture du bal —
+                  seront ajoutés ici courant septembre.
+                </p>
+
+                <span class="parch-seal" data-reveal aria-hidden="true">
+                  <span class="seal-wax"><span class="seal-mark"></span></span>
+                </span>
+              </div>
+            </div>
+
+            <div class="roll" aria-hidden="true">
+              <span class="roll-crease"></span>
+              <span class="roll-cap"></span>
+              <span class="roll-body"></span>
+              <span class="roll-cap"></span>
+            </div>
+
+          </div>
+        </div>
+
+        <span class="parch-hint" aria-hidden="true"><i></i>DÉROULEZ</span>
       </div>
-
-      <!-- 1 · Accueil -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M3.5 11.5 L12 4.5 L20.5 11.5"/><path d="M6 9.5 V19.5 H18 V9.5"/><path d="M10.4 19.5 V14.8 a1.6 1.6 0 0 1 3.2 0 V19.5"/><path d="M15.5 7.6 V5.2 h2.2 V9.4"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">12h45</span>
-          <h2 class="ev-title">Accueil des invités</h2>
-          <p class="ev-txt">Salutations, retrouvailles et premières embrassades.</p>
-          <span class="ev-place">Devant la maison des mariés</span>
-        </div>
-      </article>
-
-      <!-- 2 · Sortie des mariés -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M3.5 8.5 h4.2 l1.7 -2.6 h5.2 l1.7 2.6 h4.2 V19 H3.5 Z"/><circle cx="12" cy="13.6" r="3.5"/><circle cx="12" cy="13.6" r="1.3"/><circle cx="18.3" cy="10.8" r=".55" fill="currentColor" stroke="none"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">13h15</span>
-          <h2 class="ev-title">Sortie des mariés</h2>
-          <p class="ev-txt">Photos, sourires et quelques larmes de joie déjà permises.</p>
-        </div>
-      </article>
-
-      <!-- 3 · Cortège mairie -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M3.2 16.4 v-2.6 q0 -1.8 1.8 -1.8 h.8 l2 -3.6 q.5 -.9 1.5 -.9 h5.4 q1 0 1.5 .9 l2 3.6 h.8 q1.8 0 1.8 1.8 v2.6 h-2.2"/><circle cx="7.3" cy="16.8" r="1.8"/><circle cx="16.7" cy="16.8" r="1.8"/><path d="M9.5 16.6 h5"/><path d="M12 7.5 V12 M5.8 12 h12.4"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">13h45</span>
-          <h2 class="ev-title">Départ en cortège</h2>
-          <p class="ev-txt">Tout le monde en voiture — direction la mairie, en convoi.</p>
-        </div>
-      </article>
-
-      <!-- 4 · Mariage civil -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M3.5 9.8 L12 4.2 L20.5 9.8"/><path d="M4.6 11 H19.4"/><path d="M6.2 11 V18.4 M10.1 11 V18.4 M13.9 11 V18.4 M17.8 11 V18.4"/><path d="M4.4 18.4 H19.6 M3 20.4 H21"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">14h00</span>
-          <h2 class="ev-title">Cérémonie civile</h2>
-          <p class="ev-txt">Le premier oui, officiel celui-là, échangé devant Monsieur le Maire.</p>
-          <span class="ev-place">À la mairie</span>
-        </div>
-      </article>
-
-      <!-- 5 · Vers l'église -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M7 21 V5"/><path d="M7 6.2 H16.4 L19.4 8.6 L16.4 11 H7"/><path d="M7 13 H13.6 L16 15 L13.6 17 H7"/><path d="M5.2 21 H8.8"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">15h00</span>
-          <h2 class="ev-title">Cortège vers l'église</h2>
-          <p class="ev-txt">On reprend la route, ensemble, pour le moment le plus émouvant.</p>
-        </div>
-      </article>
-
-      <!-- 6 · Cérémonie religieuse -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M12 3.2 V6.4 M10.4 4.8 H13.6"/><path d="M9 21 V11.6 L12 9.2 L15 11.6 V21"/><path d="M9 14.2 H5.2 V21 M15 14.2 H18.8 V21"/><path d="M10.7 21 V17.5 a1.3 1.5 0 0 1 2.6 0 V21"/><circle cx="12" cy="13.4" r="1.25"/><path d="M3.8 21 H20.2"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">15h30</span>
-          <h2 class="ev-title">Cérémonie religieuse</h2>
-          <p class="ev-txt">Le grand oui, devant Dieu et devant vous tous. Mouchoirs conseillés.</p>
-          <span class="ev-place">À l'église</span>
-        </div>
-      </article>
-
-      <!-- 7 · Route vers le domaine -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M12 19.6 C 6.4 15.4 3.8 11.9 5 9 C 5.9 6.9 8.4 6.2 10.1 7.4 C 11.1 8.1 11.7 9.1 12 10 C 12.3 9.1 12.9 8.1 13.9 7.4 C 15.6 6.2 18.1 6.9 19 9 C 20.2 11.9 17.6 15.4 12 19.6 Z"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">16h30</span>
-          <h2 class="ev-title">Sortie & route vers le domaine</h2>
-          <p class="ev-txt">Haie d'honneur, pétales et bulles — puis cap sur Vertigneul.</p>
-          <span class="ev-place">Domaine les Hauts de Vertigneul</span>
-        </div>
-      </article>
-
-      <!-- 8 · Vin d'honneur -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><g transform="rotate(8 7.9 17.8)"><path d="M6.3 3.4 H9.5 L8.8 9.2 Q8.65 10.5 7.9 10.9 V17.8 M5.8 17.8 H10"/></g><g transform="rotate(-8 16.1 17.8)"><path d="M14.5 3.4 H17.7 L17 9.2 Q16.85 10.5 16.1 10.9 V17.8 M14 17.8 H18.2"/></g><circle cx="12" cy="3.4" r=".5" fill="currentColor" stroke="none"/><circle cx="12.9" cy="2.2" r=".4" fill="currentColor" stroke="none"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">17h00</span>
-          <h2 class="ev-title">Vin d'honneur</h2>
-          <p class="ev-txt">Cocktail, photos de couple, discours — et bulles à volonté pour se réchauffer le cœur.</p>
-        </div>
-      </article>
-
-      <!-- 9 · Installation -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><ellipse cx="12" cy="10.8" rx="7.6" ry="2.6"/><path d="M4.4 10.8 V12.6 M19.6 10.8 V12.6"/><path d="M6.5 13.1 L5.5 19 M17.5 13.1 L18.5 19 M12 13.4 V19"/><path d="M12 8.2 V5.8"/><path d="M12 3.6 q.9 1.1 0 2.2 q-.9 -1.1 0 -2.2 Z"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">19h30</span>
-          <h2 class="ev-title">Installation en salle</h2>
-          <p class="ev-txt">Chacun trouve sa place — le plan de table a été négocié avec soin.</p>
-        </div>
-      </article>
-
-      <!-- 10 · Entrée des mariés -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M5.5 20.5 V11.5 a6.5 6.5 0 0 1 13 0 V20.5"/><path d="M12 5.1 V20.5"/><circle cx="10.3" cy="13.5" r=".5" fill="currentColor" stroke="none"/><circle cx="13.7" cy="13.5" r=".5" fill="currentColor" stroke="none"/><path d="M3.6 20.5 H20.4"/><path d="M3.2 7.4 l.4 1 1 .4 -1 .4 -.4 1 -.4 -1 -1 -.4 1 -.4 Z" stroke-width="1"/><path d="M20.8 7.4 l.4 1 1 .4 -1 .4 -.4 1 -.4 -1 -1 -.4 1 -.4 Z" stroke-width="1"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">20h00</span>
-          <h2 class="ev-title">Entrée des mariés</h2>
-          <p class="ev-txt">Faites du bruit — les voilà.</p>
-        </div>
-      </article>
-
-      <!-- 11 · Dîner -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M4.8 15.2 a7.2 6.6 0 0 1 14.4 0"/><circle cx="12" cy="7.6" r=".9"/><path d="M3.2 15.2 H20.8"/><path d="M6 18.2 H18"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">20h15</span>
-          <h2 class="ev-title">Dîner</h2>
-          <p class="ev-txt">Entrée, plat, fromage — ponctués d'animations et de surprises.</p>
-        </div>
-      </article>
-
-      <!-- 12 · Ouverture du bal -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M10.6 17 V6.6 L19.2 4.4 V14.8"/><ellipse cx="8.4" cy="17" rx="2.2" ry="1.7" transform="rotate(-12 8.4 17)"/><ellipse cx="17" cy="14.8" rx="2.2" ry="1.7" transform="rotate(-12 17 14.8)"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">23h00</span>
-          <h2 class="ev-title">Ouverture du bal</h2>
-          <p class="ev-txt">Les mariés ouvrent la danse — à vous de la faire durer jusqu'au bout de la nuit.</p>
-        </div>
-      </article>
-
-      <!-- 13 · Le gâteau -->
-      <article class="ev">
-        <div class="ev-node reveal-pop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-draw data-draw-dur="950" data-draw-stagger="110"><path d="M4.5 20.2 H19.5"/><path d="M5.6 20.2 V16.4 H18.4 V20.2"/><path d="M7.2 16.4 V12.9 H16.8 V16.4"/><path d="M8.8 12.9 V9.9 H15.2 V12.9"/><path d="M12 8.7 c -1.5 -1.1 -2.2 -2.2 -1.4 -3.1 .5 -.6 1.2 -.4 1.4 .1 .2 -.5 .9 -.7 1.4 -.1 .8 .9 .1 2 -1.4 3.1 Z"/><circle cx="9.4" cy="14.7" r=".4" fill="currentColor" stroke="none"/><circle cx="14.6" cy="14.7" r=".4" fill="currentColor" stroke="none"/><circle cx="12" cy="18.3" r=".4" fill="currentColor" stroke="none"/><circle cx="8" cy="18.3" r=".4" fill="currentColor" stroke="none"/><circle cx="16" cy="18.3" r=".4" fill="currentColor" stroke="none"/></svg></div>
-        <div class="ev-content reveal">
-          <span class="ev-time">00h30</span>
-          <h2 class="ev-title">Le gâteau</h2>
-          <p class="ev-txt">Le clou de la nuit — et après lui, la fête continue.</p>
-        </div>
-      </article>
-
     </section>
-
-    <!-- fin du fil -->
-    <div id="fil-end" class="reveal" hidden>
-      <svg viewBox="-22 -22 44 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" data-draw data-draw-dur="1600" data-draw-stagger="160">
-        <path d="M0 14 C -13 4 -15 -5 -8.5 -9 C -4 -11.6 0 -7.6 0 -4.6 C 0 -7.6 4 -11.6 8.5 -9 C 15 -5 13 4 0 14 Z"/>
-      </svg>
-      <p>&hellip; et que la fête commence</p>
-    </div>
 
     <!-- bandeau CTA -->
     <div class="cta-band reveal">
@@ -502,8 +693,120 @@
   </div>
 </footer>
 
-<script src="toile.js?v=14"></script>
-<script src="transitions.js?v=14"></script>
+<script>
+/* ═══════════════════════════════════════════════
+   LE PARCHEMIN — déroulé piloté par le scroll
+   Même philosophie que toile.js : une seule boucle
+   rAF, géométrie mesurée une fois (et au resize),
+   aucune lecture de layout pendant le défilement.
+   ═══════════════════════════════════════════════ */
+(function () {
+  var sec = document.getElementById('parchemin');
+  if (!sec) return;
+  var stage = sec.querySelector('.parch-stage');
+  var rig   = sec.querySelector('.parch-rig');
+  var parch = sec.querySelector('.parch');
+  var sheet = sec.querySelector('.parch-sheet');
+  var items = Array.prototype.slice.call(sec.querySelectorAll('[data-reveal]'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduce) { sec.classList.add('is-open', 'is-started'); return; }
+
+  var full = 0, tops = [], secTop = 0, runway = 0, lastP = -1, ticking = false;
+
+  function measure() {
+    var h = sheet.offsetHeight, vh = window.innerHeight, sh = stage.offsetHeight;
+    /* Onglet en arrière-plan, page pas encore composée, rotation en cours :
+       la hauteur peut valoir 0 un instant. Mesurer là-dedans figerait la
+       section à une taille absurde — on garde la dernière mesure valide. */
+    if (!h || !vh || !sh) return;
+    full = h;
+    rig.style.setProperty('--full', full + 'px');
+
+    /* Le parchemin déployé doit tenir dans la scène, tringle et rouleau
+       compris : sinon on réduit l'ensemble plutôt que de le laisser déborder. */
+    var need = full + 110;
+    rig.style.setProperty('--fit', Math.min(1, (sh - 40) / need).toFixed(3));
+
+    /* la course de scroll suit la longueur du parchemin : un texte plus
+       long se déroule plus longtemps, jamais plus vite */
+    runway = Math.round(full * 1.35 + vh * 0.35);
+    sec.style.height = (sh + runway) + 'px';
+    secTop = sec.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+
+    /* offsetTop remonterait au premier parent positionné (la liste), pas à
+       la feuille : les étapes s'allumaient alors avant que le papier ne les
+       découvre. On mesure donc l'écart réel à la feuille. */
+    var sheetTop = sheet.getBoundingClientRect().top;
+    tops = items.map(function (el) {
+      return Math.round(el.getBoundingClientRect().top - sheetTop);
+    });
+  }
+
+  /* Courbe douce aux deux bouts, quasi linéaire au milieu (smoothstep) :
+     le papier se déroule à vitesse constante — c'est ce qui donne la
+     sensation physique — sans à-coup au départ ni à l'arrivée. */
+  function ease(t) { return t * t * (3 - 2 * t); }
+
+  function draw() {
+    var y = window.scrollY || window.pageYOffset;
+    var p = runway > 0 ? (y - secTop) / runway : 1;
+    p = p < 0 ? 0 : p > 1 ? 1 : p;
+    if (Math.abs(p - lastP) < 0.0006) return;
+    lastP = p;
+
+    var e = ease(p);
+    rig.style.setProperty('--p', e.toFixed(4));
+    sec.style.setProperty('--p', e.toFixed(4));      /* le halo suit l'ouverture */
+
+    /* le rouleau tourne : sa spirale se décale de la longueur déroulée */
+    rig.style.setProperty('--spin', (-e * full * 0.62).toFixed(1));
+    /* la toile de fond glisse un peu moins vite que le reste */
+    sec.style.setProperty('--bgshift', (e * 46).toFixed(1));
+
+    var revealed = e * full;
+    for (var i = 0; i < items.length; i++) {
+      var on = revealed > tops[i] + 26;
+      if (on !== items[i].__on) { items[i].classList.toggle('on', on); items[i].__on = on; }
+    }
+    sec.classList.toggle('is-started', p > 0.012);
+    sec.classList.toggle('is-open', p > 0.985);
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { draw(); ticking = false; });
+  }
+
+  var rt;
+  function onResize() {
+    clearTimeout(rt);
+    rt = setTimeout(function () { measure(); lastP = -1; draw(); }, 140);
+  }
+
+  measure(); draw();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize);
+
+  /* Le resize seul ne suffit pas : en passant en colonne unique, le papier
+     change de hauteur APRÈS la bascule, et l'échelle de sécurité restait
+     calculée sur l'ancienne mise en page. On observe donc la feuille
+     elle-même — polices, reflow, contenu ajouté plus tard : tout est couvert. */
+  if (window.ResizeObserver) {
+    new ResizeObserver(function () {
+      measure(); lastP = -1; draw();
+    }).observe(sheet);
+  }
+  /* les polices décalent la mise en page : on remesure une fois chargées */
+  window.addEventListener('load', function () { measure(); lastP = -1; draw(); });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { measure(); lastP = -1; draw(); });
+  }
+}());
+</script>
+<script src="toile.js?v=15"></script>
+<script src="transitions.js?v=15"></script>
 
 </body>
 </html>
