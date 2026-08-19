@@ -118,25 +118,24 @@ html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;color-adjust
     print-color-adjust:exact!important;
     color-adjust:exact!important;
   }
-  html,body{width:210mm;margin:0;padding:0;background:#fff;}
+  /* Le crème couvre aussi la page elle-même : si l'imprimante ou le
+     dialogue applique une réduction, la marge résiduelle reste crème
+     au lieu de sortir en blanc franc. */
+  html,body{background:var(--cream)!important;margin:0;padding:0;}
   .page{
     box-shadow:none;
-    margin:0!important;
-    width:210mm!important;
-    height:297mm!important;
-    min-height:297mm!important;
-    padding:11mm 12.5mm 7mm!important;
-    overflow:hidden;                 /* rien ne peut déborder sur une page fantôme */
-    break-after:page; page-break-after:always;
-    break-inside:avoid; page-break-inside:avoid;
-    background:var(--cream)!important;   /* le crème du mariage, pas du blanc */
+    margin:0;
+    width:210mm;
+    height:297mm;
+    overflow:hidden;                    /* rien ne déborde sur une page fantôme */
+    page-break-after:always;
+    background:var(--cream)!important;
   }
   /* sans ça, la dernière page en génère une vide derrière elle */
-  .page:last-child{break-after:auto;page-break-after:auto;}
-  /* la toile de Jouy et le filet doré doivent survivre au PDF */
-  .page::before{opacity:.05!important;}
-  .page::after{border-color:var(--gold-b)!important;}
-  .dot{box-shadow:inset 0 0 0 1px rgba(31,47,68,.14)!important;}
+  .page:last-child{page-break-after:auto;}
+  /* Chromium aplatit les ombres floutées en un carré gris opaque à l'export
+     PDF : on ne garde que le liseré net, qui lui sort parfaitement. */
+  .dot,.who-dot{box-shadow:inset 0 0 0 1px rgba(31,47,68,.30)!important;}
   .noprint{display:none!important;}
 }
 .noprint{max-width:210mm;margin:0 auto 16px;text-align:center;font-size:12px;letter-spacing:.06em;
@@ -199,9 +198,10 @@ html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact;color-adjust
 </head>
 <body>
 
-<p class="noprint">Pour l'envoyer&nbsp;: <b>Fichier → Imprimer → Enregistrer au format PDF</b>.
-Si les couleurs de fond manquaient, cochez <b>« Graphiques d'arrière-plan »</b> dans les options d'impression.
-Ce bandeau n'apparaît pas sur le PDF.</p>
+<p class="noprint">Pour l'envoyer&nbsp;: <b>Fichier → Imprimer → Enregistrer au format PDF</b>,
+depuis <b>Chrome, Arc ou Firefox</b>. Évitez Safari&nbsp;: il ignore le format A4 du document,
+réduit tout et laisse de grandes bandes blanches. Laissez l'échelle sur <b>100&nbsp;%</b>
+et cochez <b>« Graphiques d'arrière-plan »</b>. Ce bandeau n'apparaît pas sur le PDF.</p>
 
 <!-- ═══════════ PAGE 1 ═══════════ -->
 <div class="page">
