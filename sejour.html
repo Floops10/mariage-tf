@@ -175,6 +175,28 @@
   margin-top: 1.3rem;
 }
 
+/* ─── Où dormir : deux groupes, près du domaine puis Valenciennes ─── */
+.dodo-group + .dodo-group { margin-top: 2.8rem; }
+.dodo-head {
+  display: flex; align-items: baseline; gap: .9rem;
+  margin-bottom: 1.25rem;
+}
+.dodo-head h3 {
+  font-family: var(--font-title); font-weight: 400;
+  font-size: clamp(1.12rem, 2.6vw, 1.42rem);
+  color: var(--navy); line-height: 1.2;
+}
+.dodo-head .dodo-far {
+  font-family: var(--font-sub); font-size: .66rem;
+  letter-spacing: .14em; color: var(--gold2); white-space: nowrap;
+}
+/* le filet prend la place qui reste : il s'ajuste seul à la longueur du titre */
+.dodo-head::after { content: ''; flex: 1 1 auto; height: 1px; background: var(--gold-border2); }
+@media (max-width: 560px) {
+  .dodo-head { flex-wrap: wrap; gap: .35rem .8rem; }
+  .dodo-head::after { flex-basis: 100%; }
+}
+
 /* ─── Réserver en ligne (liens pré-filtrés) ─── */
 .lodge-search {
   text-align: center;
@@ -637,10 +659,10 @@
     </section>
 
 
-    <!-- ═══ OÙ DORMIR — à 15 min max, tous budgets ═══ -->
+    <!-- ═══ OÙ DORMIR — près du domaine ou à Valenciennes ═══ -->
     <section class="section" aria-labelledby="dodo-title">
       <span class="section-eyebrow reveal">Pour ceux qui dorment sur place</span>
-      <h2 class="section-title reveal" id="dodo-title">Où dormir tout près</h2>
+      <h2 class="section-title reveal" id="dodo-title">Où dormir</h2>
       <div class="section-flourish reveal" aria-hidden="true">
         <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
           <path d="M4 9 H48"/><path d="M84 9 H128"/>
@@ -650,65 +672,102 @@
         </svg>
       </div>
       <p class="section-intro reveal">
-        Une poignée d'adresses à quinze minutes maximum du domaine, pour tous les budgets —
-        de la chambre d'hôtes de charme au gîte à partager entre amis. Les petites structures
-        sont vite complètes&nbsp;: pensez à réserver tôt.
+        Deux options selon l'envie&nbsp;: se poser à deux pas du domaine, dans une chambre
+        d'hôtes de campagne — ou dormir en ville à Valenciennes, où le choix d'hôtels est
+        bien plus large. Les petites structures sont vite complètes&nbsp;: pensez à réserver tôt.
       </p>
-      <div class="card-grid">
-        <div class="card reveal">
-          <span class="card-tag">Romeries · ≈ 2 min</span>
-          <h3 class="card-title">La Chaiserie</h3>
-          <p class="card-sub">Chambre d'hôtes · Gîtes de France</p>
-          <p class="card-txt">Dans le village même du domaine, au calme d'un grand parc. L'adresse la plus proche de la piste de danse.</p>
-          <a class="card-link" target="_blank" rel="noopener" href="https://www.gites-de-france-nord.fr/location-vacances-Chambre-d-hotes-Romeries-La-Chaiserie-59G592120.html">Voir &amp; contacter</a>
+
+      <div class="dodo-group reveal">
+        <div class="dodo-head">
+          <h3>À deux pas du domaine</h3>
+          <span class="dodo-far">2 à 15 minutes</span>
         </div>
-        <div class="card reveal reveal-delay-1">
-          <span class="card-tag">Romeries · ≈ 2 min</span>
-          <h3 class="card-title">Gîte de Romeries</h3>
-          <p class="card-sub">Gîte 2 chambres · familles &amp; petits groupes</p>
-          <p class="card-txt">Maison équipée rue de Solesmes — pratique à plusieurs et d'un très bon rapport qualité-prix.</p>
-          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=g%C3%AEte%2012%20rue%20de%20Solesmes%20Romeries%2059730">Voir sur la carte</a>
+        <div class="card-grid">
+          <div class="card reveal">
+            <span class="card-tag">Romeries · ≈ 2 min</span>
+            <h3 class="card-title">La Chaiserie — chambre d'hôtes</h3>
+            <p class="card-sub">Gîtes de France · réf. 59G592120</p>
+            <p class="card-txt">Dans le village même du domaine, trois chambres au calme d'un parc de deux hectares. L'adresse la plus proche de la piste de danse.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://www.gites-de-france-nord.fr/location-vacances-Chambre-d-hotes-Romeries-La-Chaiserie-59G592120.html">Voir &amp; contacter</a>
+          </div>
+          <div class="card reveal reveal-delay-1">
+            <span class="card-tag">Romeries · ≈ 2 min</span>
+            <h3 class="card-title">La Chaiserie — le gîte</h3>
+            <p class="card-sub">Gîtes de France · réf. 59G592119</p>
+            <p class="card-txt">La maison indépendante attenante aux chambres, sur la même propriété. Pratique à plusieurs, ou pour rester le dimanche.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://www.gites-de-france-nord.fr/location-vacances-Gite-Romeries-La-Chaiserie-59G592119.html">Voir le gîte</a>
+          </div>
+          <div class="card reveal reveal-delay-2">
+            <span class="card-tag">Le Quesnoy · ≈ 15 min</span>
+            <h3 class="card-title">Les Vergers Tellier</h3>
+            <p class="card-sub">Chambres d'hôtes · route de Valenciennes</p>
+            <p class="card-txt">Étape paisible aux portes de la cité fortifiée et de son lac, parfaite pour un couple.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Les%20Vergers%20Tellier%2C%20route%20de%20Valenciennes%2C%2059530%20Le%20Quesnoy">Voir l'adresse</a>
+          </div>
         </div>
-        <div class="card reveal reveal-delay-2">
-          <span class="card-tag">Escarmain · ≈ 8 min</span>
-          <h3 class="card-title">Les Perce-Neige</h3>
-          <p class="card-sub">Chambres d'hôtes de charme</p>
-          <p class="card-txt">Belle maison restaurée entre Solesmes et Le Quesnoy, au calme du bocage.</p>
-          <a class="card-link" target="_blank" rel="noopener" href="http://lespercesneiges.e-monsite.com/">Voir l'adresse</a>
-        </div>
-        <div class="card reveal">
-          <span class="card-tag">Le Quesnoy · ≈ 15 min</span>
-          <h3 class="card-title">Le Gîte des Remparts</h3>
-          <p class="card-sub">Gîte jusqu'à 10 personnes</p>
-          <p class="card-txt">Au cœur de la cité fortifiée — idéal pour loger une tribu ou une bande d'amis, dès ≈ 450 €/semaine.</p>
-          <a class="card-link" target="_blank" rel="noopener" href="https://www.gites.fr/gites_gite-des-remparts-10-km-de-valenciennes_le-quesnoy_38223.htm">Voir le gîte</a>
-        </div>
-        <div class="card reveal reveal-delay-1">
-          <span class="card-tag">Le Quesnoy · ≈ 15 min</span>
-          <h3 class="card-title">Les Vergers Tellier</h3>
-          <p class="card-sub">Chambres d'hôtes</p>
-          <p class="card-txt">Étape paisible aux portes de la ville fortifiée et de son lac, parfaite pour un couple.</p>
-          <a class="card-link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Les%20Vergers%20Tellier%20Le%20Quesnoy">Voir l'adresse</a>
-        </div>
-        <div class="card reveal reveal-delay-2">
-          <span class="card-tag">Le Quesnoy · ≈ 15 min</span>
-          <h3 class="card-title">Hôtels &amp; meublés du Quesnoy</h3>
-          <p class="card-sub">La petite ville la plus proche</p>
-          <p class="card-txt">Quelques hôtels, duplex et appartements en centre-ville — le choix le plus large à un quart d'heure.</p>
-          <a class="card-link" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.fr.html?ss=Le+Quesnoy&checkin=2026-12-12&checkout=2026-12-13&group_adults=2">Voir les dispos</a>
+        <div class="lodge-search reveal">
+          <p>Le reste des adresses du secteur, aux dates du mariage&nbsp;:</p>
+          <div class="btns">
+            <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.fr.html?ss=Le+Quesnoy&checkin=2026-12-12&checkout=2026-12-13&group_adults=2">Booking · Le Quesnoy</a>
+            <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.airbnb.fr/s/Romeries--France/homes?checkin=2026-12-12&checkout=2026-12-13&adults=2">Airbnb autour de Romeries</a>
+            <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.gites-de-france-nord.fr/">Gîtes de France Nord</a>
+          </div>
         </div>
       </div>
 
-      <div class="lodge-search reveal">
-        <p>Réserver en ligne autour du domaine — dates du mariage déjà pré-réglées&nbsp;:</p>
-        <div class="btns">
-          <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.airbnb.fr/s/Romeries--France/homes?checkin=2026-12-12&checkout=2026-12-13&adults=2">Airbnb à proximité</a>
-          <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.fr.html?ss=Romeries&checkin=2026-12-12&checkout=2026-12-13&group_adults=2">Booking.com</a>
-          <a class="btn btn-outline btn-sm" target="_blank" rel="noopener" href="https://www.gites-de-france-nord.fr/">Gîtes de France</a>
+      <div class="dodo-group reveal">
+        <div class="dodo-head">
+          <h3>À Valenciennes</h3>
+          <span class="dodo-far">≈ 30 min du domaine</span>
+        </div>
+        <div class="card-grid">
+          <div class="card reveal">
+            <span class="card-tag">Centre · gare</span>
+            <h3 class="card-title">ibis Valenciennes Centre</h3>
+            <p class="card-sub">3 étoiles · 89 chambres</p>
+            <p class="card-txt">À deux cents mètres de la gare, le plus simple si vous venez en train. Bar ouvert la nuit — pratique quand on rentre tard.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://all.accor.com/hotel/6549/index.fr.shtml">Voir les dispos</a>
+          </div>
+          <div class="card reveal reveal-delay-1">
+            <span class="card-tag">Centre-ville</span>
+            <h3 class="card-title">Hôtel Baudouin</h3>
+            <p class="card-sub">3 étoiles · indépendant</p>
+            <p class="card-txt">Une adresse de centre-ville avec parking privé — un vrai confort un soir de décembre.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://hotel-baudouin.com/fr/">Voir l'hôtel</a>
+          </div>
+          <div class="card reveal reveal-delay-2">
+            <span class="card-tag">Face à la gare</span>
+            <h3 class="card-title">Grand Hôtel de Valenciennes</h3>
+            <p class="card-sub">Hôtel &amp; appartements</p>
+            <p class="card-txt">Chambres et appartements en plein centre, pour ceux qui veulent rester un peu plus longtemps.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://www.grand-hotel-de-valenciennes.fr/">Voir l'hôtel</a>
+          </div>
+          <div class="card reveal">
+            <span class="card-tag">Centre-ville</span>
+            <h3 class="card-title">Brit Hotel Valenciennes</h3>
+            <p class="card-sub">31 chambres · le plus abordable</p>
+            <p class="card-txt">Petite adresse simple et centrale, souvent la moins chère des cinq.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://hotel-valenciennes.brithotel.com/">Voir l'hôtel</a>
+          </div>
+          <div class="card reveal reveal-delay-1">
+            <span class="card-tag">Valenciennes</span>
+            <h3 class="card-title">Novotel Valenciennes</h3>
+            <p class="card-sub">4 étoiles · familles</p>
+            <p class="card-txt">Le plus confortable, avec des chambres qui logent facilement toute une famille.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://all.accor.com/hotel/0456/index.fr.shtml">Voir les dispos</a>
+          </div>
+          <div class="card reveal reveal-delay-2">
+            <span class="card-tag">Comparer</span>
+            <h3 class="card-title">Tout Valenciennes d'un coup d'œil</h3>
+            <p class="card-sub">Dates du mariage pré-réglées</p>
+            <p class="card-txt">Une vingtaine d'établissements en ville — de quoi trouver son bonheur à tous les budgets.</p>
+            <a class="card-link" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.fr.html?ss=Valenciennes&checkin=2026-12-12&checkout=2026-12-13&group_adults=2">Voir les dispos</a>
+          </div>
         </div>
       </div>
+
       <p class="note-line reveal">
-        Temps de route indicatifs depuis le domaine. Envie d'un hôtel-spa&nbsp;? Valenciennes (≈ 30 min) en compte de très beaux, pour qui préfère la ville.
+        Temps de route indicatifs depuis le domaine. Un covoiturage est en ligne sur le site&nbsp;: pensez-y si vous dormez à Valenciennes.
       </p>
     </section>
 

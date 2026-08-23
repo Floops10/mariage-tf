@@ -250,12 +250,15 @@
   z-index: 2;
 }
 .parch-rig {
-  --p: 0; --full: 0px; --fit: 1;
+  --p: 0; --full: 0px; --fit: 1; --pan: 0;
   --cap-inset: 27px;          /* largeur d'un embout + un souffle */
   position: relative;
   transform-style: preserve-3d;
-  /* incliné au repos, se redresse et avance vers l'oeil en se déroulant */
+  /* incliné au repos, se redresse et avance vers l'oeil en se déroulant.
+     --pan remonte l'ensemble quand la feuille dépasse la scène : la caméra
+     suit le bord qui se déroule au lieu de tout rapetisser pour faire tenir. */
   transform:
+    translateY(calc(var(--pan, 0) * -1px))
     rotateX(calc(21deg - var(--p) * 16deg))
     translateZ(calc(var(--p) * 44px))
     scale(calc((.93 + var(--p) * .07) * var(--fit)));
@@ -481,11 +484,36 @@
 }
 
 @media (max-width: 640px) {
-  .parch-scene { width: 90vw; }
-  .parch-item { grid-template-columns: 1fr; gap: .15rem; }
-  .parch-when { text-align: left; }
-  .roll, .roll-body, .roll-cap { height: 38px; }
-  .roll-body, .roll-cap { border-radius: 19px; }
+  /* Sur téléphone, le parchemin doit se lire sans loupe. Deux leviers :
+     élargir le papier (embouts plus fins, marges resserrées) et monter le
+     corps de texte. Mais la feuille doit tenir entière dans la scène, sinon
+     --fit la rétrécit et on perd tout le bénéfice — d'où la chasse au
+     moindre pixel de hauteur partout ailleurs. */
+  .parch-scene { width: 96vw; }
+  .parch-rig   { --cap-inset: 16px; }
+
+  .rod, .rod-cap { height: 24px; }
+  .rod-bar { height: 13px; border-radius: 7px; }
+  .rod-cap { width: 14px; border-radius: 5px; }
+  .roll, .roll-body, .roll-cap { height: 30px; }
+  .roll-body, .roll-cap { border-radius: 15px; }
+  .roll-cap { width: 14px; }
+  .roll-crease { height: 20px; }
+
+  .parch-sheet { padding: 1.35rem 1.15rem 1.25rem; }
+
+  .parch-eyebrow { font-size: .62rem; letter-spacing: .2em; margin-bottom: .35rem; }
+  .parch-title   { font-size: 1.62rem; }
+  .parch-rule    { margin: .55rem auto .8rem; max-width: 130px; }
+
+  .parch-list { gap: .72rem; }
+  .parch-item { grid-template-columns: 1fr; gap: .1rem; }
+  .parch-when { text-align: left; font-size: .68rem; letter-spacing: .1em; padding-top: 0; }
+  .parch-what h3 { font-size: 1.16rem; }
+  .parch-what p  { font-size: .95rem; line-height: 1.5; }
+
+  .parch-note { font-size: .84rem; line-height: 1.55; margin-top: .8rem; padding-top: .6rem; }
+  .parch-seal { width: 54px; margin-top: .85rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .parch-stage { position: static; height: auto; padding: 3rem 0; }
@@ -707,12 +735,15 @@
   var rig   = sec.querySelector('.parch-rig');
   var parch = sec.querySelector('.parch');
   var sheet = sec.querySelector('.parch-sheet');
+  var rod   = sec.querySelector('.rod');
+  var roll  = sec.querySelector('.roll');
   var items = Array.prototype.slice.call(sec.querySelectorAll('[data-reveal]'));
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (reduce) { sec.classList.add('is-open', 'is-started'); return; }
 
   var full = 0, tops = [], secTop = 0, runway = 0, lastP = -1, ticking = false;
+  var fit = 1, stageH = 0, rodH = 30, rollH = 46;
 
   function measure() {
     var h = sheet.offsetHeight, vh = window.innerHeight, sh = stage.offsetHeight;
@@ -724,9 +755,23 @@
     rig.style.setProperty('--full', full + 'px');
 
     /* Le parchemin déployé doit tenir dans la scène, tringle et rouleau
-       compris : sinon on réduit l'ensemble plutôt que de le laisser déborder. */
-    var need = full + 110;
-    rig.style.setProperty('--fit', Math.min(1, (sh - 40) / need).toFixed(3));
+       compris : sinon on réduit l'ensemble plutôt que de le laisser déborder.
+       On mesure les deux pièces au lieu de provisionner une constante : sur
+       téléphone elles sont bien plus fines, et chaque pixel rendu ici est un
+       pixel que le texte n'a pas à céder à la mise à l'échelle. */
+    rodH  = rod  ? rod.offsetHeight  : 30;
+    rollH = roll ? roll.offsetHeight : 46;
+    stageH = sh;
+    var need = full + rodH + rollH + 18;
+
+    /* Sur téléphone, la scène ne fait que ~600 px une fois les barres du
+       navigateur déduites : tout faire tenir revenait à réduire le texte à
+       12 px. On refuse donc de rapetisser (plancher à 1) et c'est --pan qui
+       fait le travail. Sur grand écran, la hauteur suffit presque toujours :
+       on garde la réduction douce validée jusqu'ici. */
+    var floor = window.innerWidth <= 640 ? 1 : 0.86;
+    fit = Math.max(floor, Math.min(1, (sh - 28) / need));
+    rig.style.setProperty('--fit', fit.toFixed(3));
 
     /* la course de scroll suit la longueur du parchemin : un texte plus
        long se déroule plus longtemps, jamais plus vite */
@@ -764,6 +809,15 @@
     /* la toile de fond glisse un peu moins vite que le reste */
     sec.style.setProperty('--bgshift', (e * 46).toFixed(1));
 
+    /* Le montage est centré dans la scène et grandit vers le bas. Dès que
+       son bas passerait sous le bord, on remonte l'ensemble d'autant : le
+       haut déjà lu sort par le haut, le bord qui se déroule reste en vue.
+       (1500 = la perspective ; le translateZ rapproche donc grossit un peu.) */
+    var H = rodH + e * full + rollH;
+    var vis = H * fit * (1500 / (1500 - e * 44));
+    var pan = (stageH + vis) / 2 - (stageH - 18);
+    rig.style.setProperty('--pan', pan > 0 ? pan.toFixed(1) : 0);
+
     var revealed = e * full;
     for (var i = 0; i < items.length; i++) {
       var on = revealed > tops[i] + 26;
@@ -788,6 +842,15 @@
   measure(); draw();
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize);
+
+  /* Onglet en arrière-plan : les requestAnimationFrame ne s'exécutent pas.
+     Un scroll survenu pendant ce temps laisserait « ticking » bloqué à true
+     et le parchemin figé pour de bon au retour. On resynchronise. */
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) return;
+    ticking = false; lastP = -1;
+    measure(); draw();
+  });
 
   /* Le resize seul ne suffit pas : en passant en colonne unique, le papier
      change de hauteur APRÈS la bascule, et l'échelle de sécurité restait
