@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Les invitations — Espace des mariés</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="Logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=16">
+<!-- meme moteur que le RSVP : rendu fidele de la carte, puis export A4 -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════
+   ESPACE DES MARIÉS — invitations nominatives
+   Page privée : aucun lien du menu n'y mène, seule
+   l'esperluette du pied de page l'ouvre.
+   ═══════════════════════════════════════════════ */
+
+.adm-hero {
+  position: relative;
+  background: var(--toile-tint);
+  overflow: hidden;
+  padding: 2.4rem var(--page-pad) 2.2rem;
+  text-align: center;
+}
+.adm-hero .logo-mask { width: 54px; height: 54px; margin: 0 auto .8rem; }
+.adm-hero h1 {
+  position: relative;
+  font-family: var(--font-title); font-weight: 400;
+  font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--navy);
+}
+.adm-hero p {
+  position: relative;
+  font-family: var(--font-sub); font-size: .66rem;
+  letter-spacing: .2em; color: var(--ocean2); margin-top: .4rem;
+}
+.adm-hero > * { position: relative; z-index: 1; }
+
+.adm-wrap { max-width: 1180px; margin: 0 auto; padding: 2.2rem clamp(.9rem, 3vw, 2.4rem) 4rem; }
+
+/* ─── Porte d'entrée (code) ─── */
+#gate {
+  max-width: 380px; margin: 3rem auto;
+  background: var(--cream); border: 1px solid var(--border2);
+  padding: 2.2rem 2rem; text-align: center;
+}
+#gate .field-label { text-align: left; }
+#gate .btn { width: 100%; margin-top: 1rem; }
+#gateErr { display: none; font-size: .78rem; color: #8A3B4A; margin-top: .9rem; }
+
+/* ─── L'atelier ─── */
+#studio { display: none; }
+.inv-cols { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(1.4rem, 4vw, 2.8rem); align-items: start; }
+@media (max-width: 900px) { .inv-cols { grid-template-columns: 1fr; } }
+
+.inv-panel { background: var(--cream); border: 1px solid var(--border2); padding: clamp(1.3rem,3vw,1.9rem); }
+.inv-panel h2 {
+  font-family: var(--font-title); font-weight: 400;
+  font-size: 1.25rem; color: var(--navy); margin-bottom: .3rem;
+}
+.inv-panel .hint {
+  font-family: var(--font-body); font-size: .82rem; line-height: 1.6;
+  color: var(--text-mid); margin-bottom: 1.3rem;
+}
+
+/* une ligne = une personne conviée */
+.who-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: .6rem; margin-bottom: .6rem; align-items: center; }
+.who-row input {
+  width: 100%; font-family: var(--font-body); font-size: .92rem;
+  padding: .62rem .75rem; background: #fff;
+  border: 1px solid var(--border2); color: var(--navy);
+}
+.who-row input:focus { outline: none; border-color: var(--gold); }
+.who-del {
+  width: 30px; height: 30px; flex-shrink: 0;
+  border: 1px solid var(--border2); background: #fff;
+  color: var(--text-light); font-size: 1rem; line-height: 1; cursor: pointer;
+}
+.who-del:hover { color: #8A3B4A; border-color: rgba(138,59,74,.4); }
+.who-row:only-child .who-del { visibility: hidden; }
+
+.inv-add {
+  font-family: var(--font-sub); font-size: .68rem; letter-spacing: .14em;
+  background: none; border: none; color: var(--gold2); cursor: pointer;
+  padding: .4rem 0; margin-bottom: 1.2rem;
+}
+.inv-add:hover { color: var(--navy); }
+
+.inv-field { margin-bottom: 1.1rem; }
+.inv-field label {
+  display: block; font-family: var(--font-sub); font-size: .64rem;
+  letter-spacing: .16em; color: var(--ocean2); margin-bottom: .45rem;
+}
+.inv-field input {
+  width: 100%; font-family: var(--font-body); font-size: .92rem;
+  padding: .62rem .75rem; background: #fff;
+  border: 1px solid var(--border2); color: var(--navy);
+}
+.inv-field input:focus { outline: none; border-color: var(--gold); }
+
+.inv-toggle { display: flex; align-items: flex-start; gap: .6rem; margin-bottom: 1.1rem; }
+.inv-toggle input { margin-top: .2rem; flex-shrink: 0; }
+.inv-toggle span { font-family: var(--font-body); font-size: .84rem; line-height: 1.5; color: var(--text-mid); }
+
+#invGo { width: 100%; }
+#invErr { display: none; font-size: .8rem; color: #8A3B4A; margin-top: .9rem; text-align: center; }
+
+/* ─── L'aperçu : la vraie carte, simplement réduite ─── */
+.inv-stage {
+  position: relative; width: 100%; overflow: hidden;
+  border: 1px solid var(--border2);
+  box-shadow: 0 18px 44px rgba(23,36,55,.18);
+}
+.inv-stage-inner { transform-origin: top left; }
+.inv-legend {
+  font-family: var(--font-sub); font-size: .6rem; letter-spacing: .14em;
+  color: var(--text-light); text-align: center; margin-top: .9rem; line-height: 1.9;
+}
+
+/* ─── Carte d'invitation (rendue hors écran, exportée en PDF A4) ─── */
+#inv-card {
+  position: fixed;
+  left: -9999px; top: 0;
+  width: 1116px; height: 1578px;
+  background: url('toile-de-jouy.jpg');
+  background-size: 740px;
+  padding: 62px;
+  z-index: -1;
+}
+#inv-card .inv-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  background: #FAF5EF;
+  border: 2px solid rgba(31,47,68,.4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 90px;
+}
+#inv-card .inv-inner::before {
+  content: '';
+  position: absolute; inset: 16px;
+  border: 1.5px solid rgba(31,47,68,.3);
+  pointer-events: none;
+}
+#inv-card .inv-inner::after {
+  content: '';
+  position: absolute; inset: 24px;
+  border: 1.5px solid rgba(201,168,108,.55);
+  pointer-events: none;
+}
+#inv-card .inv-corner {
+  position: absolute;
+  width: 88px; height: 88px;
+  color: #B8913A;
+  opacity: .85;
+}
+#inv-card .inv-corner svg { width: 100%; height: 100%; display: block; }
+#inv-card .inv-corner.tl { top: 42px; left: 42px; }
+#inv-card .inv-corner.tr { top: 42px; right: 42px; transform: scaleX(-1); }
+#inv-card .inv-corner.bl { bottom: 42px; left: 42px; transform: scaleY(-1); }
+#inv-card .inv-corner.br { bottom: 42px; right: 42px; transform: scale(-1,-1); }
+#inv-card .inv-logo { width: 150px; height: auto; margin-bottom: 26px; }
+#inv-card .inv-date {
+  font-family: var(--font-sub);
+  font-size: 27px;
+  letter-spacing: .32em;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+#inv-card .inv-script {
+  font-family: var(--font-script);
+  font-size: 112px;
+  line-height: 1.15;
+  color: var(--navy);
+  margin-bottom: 22px;
+}
+#inv-card .inv-script .amp { color: #B8913A; }
+#inv-card .inv-sep {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 380px;
+  margin-bottom: 40px;
+}
+#inv-card .inv-sep span { flex: 1; height: 1.5px; background: rgba(31,47,68,.25); }
+#inv-card .inv-sep b {
+  width: 12px; height: 12px;
+  background: #C9A86C;
+  transform: rotate(45deg);
+}
+#inv-card .inv-line {
+  font-family: var(--font-sub);
+  font-size: 23px;
+  letter-spacing: .22em;
+  line-height: 1.9;
+  color: var(--ocean2);
+  margin-bottom: 26px;
+}
+#inv-card .inv-names {
+  font-family: var(--font-title);
+  font-size: 52px;
+  line-height: 1.3;
+  color: var(--navy);
+  margin-bottom: 26px;
+  max-width: 820px;
+}
+#inv-card .inv-line2 {
+  font-family: var(--font-sub);
+  font-size: 23px;
+  letter-spacing: .22em;
+  color: var(--ocean2);
+  margin-bottom: 56px;
+}
+#inv-card .inv-block {
+  border-top: 1.5px solid rgba(201,168,108,.5);
+  border-bottom: 1.5px solid rgba(201,168,108,.5);
+  padding: 30px 60px;
+  margin-bottom: 56px;
+}
+#inv-card .inv-sub {
+  font-family: var(--font-sub);
+  font-size: 26px;
+  letter-spacing: .18em;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+#inv-card .inv-sub2 {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 21px;
+  letter-spacing: .04em;
+  line-height: 1.8;
+  color: var(--ocean);
+}
+#inv-card .inv-foot {
+  font-family: var(--font-sub);
+  font-size: 17px;
+  letter-spacing: .22em;
+  color: #B8913A;
+}
+
+/* En aperçu la carte doit se voir : on annule le hors-champ du RSVP. */
+.inv-stage #inv-card { position: relative; left: 0; top: 0; z-index: 0; }
+</style>
+</head>
+
+<body>
+
+<header class="adm-hero">
+  <div class="toile-img blue" aria-hidden="true"></div>
+  <span class="logo-mask" aria-hidden="true"></span>
+  <h1>Les invitations</h1>
+  <p>Espace des mariés — génération nominative</p>
+</header>
+
+<div class="adm-wrap">
+
+  <!-- ═══ CODE D'ACCÈS ═══ -->
+  <section id="gate" aria-label="Accès réservé">
+    <div class="field">
+      <label class="field-label" for="gateCode">Code des mariés</label>
+      <input type="password" id="gateCode" inputmode="numeric" autocomplete="off" placeholder="······">
+    </div>
+    <button type="button" id="gateBtn" class="btn btn-primary">Entrer</button>
+    <p id="gateErr">Ce n'est pas le bon code.</p>
+  </section>
+
+  <!-- ═══ ATELIER ═══ -->
+  <section id="studio" aria-label="Génération d'une invitation">
+    <div class="inv-cols">
+
+      <div class="inv-panel">
+        <h2>Qui est convié</h2>
+        <p class="hint">Une ligne par personne. Les noms s'écrivent sur la carte comme dans le RSVP&nbsp;: séparés par des virgules, le dernier introduit par «&nbsp;&amp;&nbsp;».</p>
+
+        <div id="whoList"></div>
+        <button type="button" class="inv-add" id="whoAdd">+ Ajouter une personne</button>
+
+        <div class="inv-toggle">
+          <input type="checkbox" id="freeOn">
+          <span><b>Écrire la ligne moi-même</b> — pour «&nbsp;Famille Bouchart&nbsp;» ou «&nbsp;Monsieur &amp; Madame Dupont&nbsp;».</span>
+        </div>
+        <div class="inv-field" id="freeWrap" style="display:none">
+          <label for="freeTxt">Ligne des invités</label>
+          <input type="text" id="freeTxt" placeholder="Famille Bouchart">
+        </div>
+
+        <div class="inv-field">
+          <label for="footTxt">Mention en bas de carte</label>
+          <input type="text" id="footTxt" value="Invitation officielle — venue confirmée">
+        </div>
+
+        <button type="button" id="invGo" class="btn btn-primary">Télécharger le PDF</button>
+        <p id="invErr"></p>
+      </div>
+
+      <div>
+        <div class="inv-stage">
+          <div class="inv-stage-inner">
+<div id="inv-card" aria-hidden="true">
+              <div class="inv-inner">
+                <span class="inv-corner tl"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+                <span class="inv-corner tr"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+                <span class="inv-corner bl"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+                <span class="inv-corner br"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+            
+                <img class="inv-logo" src="Logo.png" alt="">
+                <p class="inv-date">12 · 12 · 2026</p>
+                <p class="inv-script">Thomy <span class="amp">&amp;</span> Florian</p>
+                <div class="inv-sep"><span></span><b></b><span></span></div>
+                <p class="inv-line">Ont la joie de convier</p>
+                <p class="inv-names" id="invNames">—</p>
+                <p class="inv-line2">À la célébration de leur mariage</p>
+                <div class="inv-block">
+                  <p class="inv-sub">Samedi 12 décembre 2026 · 14&nbsp;h</p>
+                  <p class="inv-sub2">Domaine les Hauts de Vertigneul<br>5 hameau de Vertigneul — 59730 Romeries</p>
+                </div>
+                <p class="inv-foot">Invitation officielle — venue confirmée</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="inv-legend">Aperçu fidèle — le PDF sort en A4, 1116 × 1578 px</p>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ═══ Porte d'entrée ═══
+     Le code n'est pas écrit en clair : on compare son empreinte SHA-256.
+     Sur un site statique cela n'a rien d'un vrai verrou — c'est ce qu'il
+     faut pour qu'un invité curieux passe son chemin, pas pour résister à
+     quelqu'un qui lit le code source. */
+  var CODE_SHA = 'a53bf99785ab1af98bbaa705513abeea07b8eb2bdf029202ebf8ee48e0dc685c';
+  var GATE_KEY = 'tf_inv_gate';
+
+  var gate   = document.getElementById('gate');
+  var studio = document.getElementById('studio');
+
+  function open_() {
+    gate.style.display = 'none';
+    studio.style.display = 'block';
+    fitStage();
+    render();
+  }
+
+  function sha256(txt) {
+    if (!(window.crypto && window.crypto.subtle)) return Promise.reject();
+    return window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt))
+      .then(function (buf) {
+        return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+          return ('0' + b.toString(16)).slice(-2);
+        }).join('');
+      });
+  }
+
+  function tryCode() {
+    var err = document.getElementById('gateErr');
+    sha256(document.getElementById('gateCode').value.trim())
+      .then(function (h) {
+        if (h !== CODE_SHA) { err.textContent = "Ce n'est pas le bon code."; err.style.display = 'block'; return; }
+        try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+        open_();
+      })
+      .catch(function () {
+        err.textContent = "Impossible de vérifier le code sur cette connexion (http).";
+        err.style.display = 'block';
+      });
+  }
+  document.getElementById('gateBtn').addEventListener('click', tryCode);
+  document.getElementById('gateCode').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); tryCode(); }
+  });
+  try { if (sessionStorage.getItem(GATE_KEY)) open_(); } catch (e) {}
+
+  /* ═══ Les lignes « qui est convié » ═══ */
+  var list = document.getElementById('whoList');
+
+  function addRow(prenom, nom) {
+    var row = document.createElement('div');
+    row.className = 'who-row';
+    row.innerHTML =
+      '<input type="text" class="w-first" placeholder="Prénom" autocomplete="off">' +
+      '<input type="text" class="w-last"  placeholder="Nom" autocomplete="off">' +
+      '<button type="button" class="who-del" aria-label="Retirer cette personne">×</button>';
+    row.querySelector('.w-first').value = prenom || '';
+    row.querySelector('.w-last').value  = nom || '';
+    list.appendChild(row);
+    return row;
+  }
+  addRow();
+
+  list.addEventListener('input', render);
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest('.who-del');
+    if (!b) return;
+    if (list.children.length > 1) b.parentNode.remove();
+    else { b.parentNode.querySelectorAll('input').forEach(function (i) { i.value = ''; }); }
+    render();
+  });
+  document.getElementById('whoAdd').addEventListener('click', function () {
+    addRow().querySelector('.w-first').focus();
+    render();
+  });
+
+  var freeOn = document.getElementById('freeOn');
+  freeOn.addEventListener('change', function () {
+    document.getElementById('freeWrap').style.display = freeOn.checked ? 'block' : 'none';
+    render();
+  });
+  document.getElementById('freeTxt').addEventListener('input', render);
+  document.getElementById('footTxt').addEventListener('input', render);
+
+  /* ═══ La ligne des noms — exactement la règle du RSVP ═══ */
+  function joinNames(arr) {
+    if (arr.length <= 1) return arr[0] || '';
+    return arr.slice(0, -1).join(', ') + ' & ' + arr[arr.length - 1];
+  }
+
+  function names() {
+    if (freeOn.checked) return document.getElementById('freeTxt').value.trim();
+    var out = [];
+    Array.prototype.forEach.call(list.querySelectorAll('.who-row'), function (r) {
+      var n = (r.querySelector('.w-first').value.trim() + ' ' +
+               r.querySelector('.w-last').value.trim()).trim();
+      if (n) out.push(n);
+    });
+    return joinNames(out);
+  }
+
+  function render() {
+    document.getElementById('invNames').textContent = names() || '—';
+    document.querySelector('#inv-card .inv-foot').textContent = document.getElementById('footTxt').value;
+  }
+
+  /* ═══ L'aperçu : la carte réelle, réduite à la largeur disponible ═══ */
+  var stage = document.querySelector('.inv-stage');
+  var inner = document.querySelector('.inv-stage-inner');
+
+  function fitStage() {
+    var w = stage.clientWidth;
+    if (!w) return;
+    var s = w / 1116;
+    inner.style.transform = 'scale(' + s + ')';
+    stage.style.height = Math.round(1578 * s) + 'px';
+  }
+  window.addEventListener('resize', fitStage);
+  if (window.ResizeObserver) new ResizeObserver(fitStage).observe(document.body);
+
+  /* ═══ Export PDF — même chaîne que le RSVP ═══ */
+  function slugify(s) {
+    return s.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '') || 'invitation';
+  }
+
+  document.getElementById('invGo').addEventListener('click', function () {
+    var btn = this, err = document.getElementById('invErr');
+    err.style.display = 'none';
+
+    var who = names();
+    if (!who) {
+      err.textContent = 'Indiquez au moins une personne.';
+      err.style.display = 'block';
+      return;
+    }
+    if (!window.html2canvas || !window.jspdf) {
+      err.textContent = "Le moteur d'export n'est pas chargé (connexion ?) — rechargez la page.";
+      err.style.display = 'block';
+      return;
+    }
+
+    render();
+    btn.disabled = true;
+    var old = btn.textContent;
+    btn.textContent = 'Préparation…';
+
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    fontsReady
+      .then(function () {
+        return html2canvas(document.getElementById('inv-card'), {
+          scale: 2,
+          logging: false,
+          backgroundColor: '#FAF5EF',
+          onclone: function (doc) {
+            /* la carte est réduite à l'écran : on la rend à sa taille réelle
+               dans le clone, sinon le PDF sortirait pixellisé */
+            var si = doc.querySelector('.inv-stage-inner');
+            if (si) si.style.transform = 'none';
+            var st = doc.querySelector('.inv-stage');
+            if (st) { st.style.height = 'auto'; st.style.overflow = 'visible'; }
+            var c = doc.getElementById('inv-card');
+            c.style.position = 'static';
+          }
+        });
+      })
+      .then(function (canvas) {
+        var pdf = new window.jspdf.jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, 210, 297);
+        pdf.save('Invitation-Thomy-Florian-' + slugify(who) + '.pdf');
+      })
+      .catch(function () {
+        err.textContent = 'La génération a échoué — réessayez dans un instant.';
+        err.style.display = 'block';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = old;
+      });
+  });
+}());
+</script>
+
+</body>
+</html>

@@ -285,3 +285,14 @@
   }
 
 }());
+
+/* ═══════════════════════════════════════════════
+   Le petit secret : l'esperluette qui relie les deux prénoms, en pied de
+   page, ouvre l'atelier d'invitations. Pas un <a> — un lien afficherait
+   l'adresse dans la barre d'état au survol, et se retrouverait indexé.
+   ═══════════════════════════════════════════════ */
+(function () {
+  var amp = document.querySelector('[data-tf-secret]');
+  if (!amp) return;
+  amp.addEventListener('click', function () { window.location.href = 'invitations.html'; });
+}());

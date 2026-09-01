@@ -885,6 +885,16 @@ a[href^="rsvp.html?"] { display: none !important; }
   margin: 0 auto 1.2rem;
   opacity: .9;
 }
+/* L'esperluette du pied de page ouvre l'atelier d'invitations (page privée).
+   Elle doit rester strictement indiscernable du reste du mot : ni couleur,
+   ni soulignement, ni curseur qui la trahisse. */
+.footer-amp {
+  font: inherit;
+  color: inherit;
+  cursor: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .footer-script {
   font-family: var(--font-script);
   font-size: clamp(1.9rem, 4.6vw, 2.9rem);
