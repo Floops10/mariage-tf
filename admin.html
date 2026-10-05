@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Espace admin — Thomy & Florian</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="Logo.png">
+
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=21">
+
+<style>
+/* ═══════════════════════════════════════════════
+   ESPACE ADMIN — l'entrée unique des mariés
+   Un code, puis trois outils : les invitations, les réponses,
+   l'adresse de la page de paiement.
+   ═══════════════════════════════════════════════ */
+body { background: var(--cream2); }
+
+.adm-hero {
+  position: relative;
+  background: var(--toile-tint);
+  overflow: hidden;
+  padding: 2.4rem var(--page-pad) 2.2rem;
+  text-align: center;
+}
+.adm-hero .logo-mask { width: 54px; height: 54px; margin: 0 auto .8rem; }
+.adm-hero h1 {
+  position: relative;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  color: var(--navy);
+}
+.adm-hero p {
+  position: relative;
+  font-family: var(--font-sub);
+  font-size: .72rem;
+  letter-spacing: .2em;
+  color: var(--ocean2);
+  margin-top: .4rem;
+}
+.adm-hero > * { position: relative; z-index: 1; }
+
+.adm-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2.4rem clamp(1rem, 3vw, 2.4rem) 4rem;
+}
+
+/* ─── Porte d'entrée (code) ─── */
+#gate {
+  max-width: 380px;
+  margin: 2rem auto;
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  padding: 2.2rem 2rem;
+  text-align: center;
+}
+#gate .field-label { text-align: left; }
+#gate .btn { width: 100%; margin-top: 1rem; }
+#gateErr { display: none; font-size: .9rem; color: #8A3B4A; margin-top: .9rem; }
+
+/* ─── Les trois outils ─── */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+.hub-card {
+  display: flex; flex-direction: column;
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  border-top: 2px solid var(--gold-border2);
+  padding: 1.7rem 1.6rem 1.5rem;
+}
+.hub-ico {
+  display: flex; align-items: center; justify-content: center;
+  width: 3rem; height: 3rem;
+  border: 1px solid var(--gold-border2);
+  color: var(--gold2);
+  margin-bottom: 1.1rem;
+}
+.hub-ico svg { width: 1.5rem; height: 1.5rem; display: block; }
+.hub-card h2 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1.25;
+  color: var(--navy);
+  margin-bottom: .55rem;
+}
+.hub-card p { font-size: .98rem; line-height: 1.6; color: var(--ocean2); }
+.hub-card .hub-go {
+  margin-top: auto; padding-top: 1.3rem;
+  display: flex; gap: .6rem; flex-wrap: wrap;
+}
+.hub-card .btn { flex: 1 1 auto; }
+.hub-url {
+  padding: .7rem .85rem;
+  font-size: .9rem;
+  line-height: 1.5;
+  color: var(--navy);
+  background: var(--cream2);
+  border: 1px solid var(--border);
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+/* la page de paiement : une carte pleine largeur, le texte à gauche, l'adresse et les boutons à droite */
+.hub-card.wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 1rem clamp(1.6rem, 4vw, 3rem);
+  align-items: center;
+}
+.hub-card.wide .hub-side { display: grid; gap: .9rem; }
+.hub-card.wide .hub-go { margin-top: 0; padding-top: 0; }
+
+.hub-foot {
+  margin-top: 2rem;
+  display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center;
+}
+.hub-foot a, .hub-foot button {
+  display: inline-flex; align-items: center; min-height: 44px; padding: .5rem 1.1rem;
+  font-family: var(--font-sub); font-size: .76rem; letter-spacing: .16em;
+  color: var(--navy); border: 1px solid var(--border3); background: transparent;
+  transition: border-color var(--dur-mid) ease;
+}
+.hub-foot a:hover, .hub-foot button:hover { border-color: var(--navy); }
+
+@media (max-width: 860px) { .hub-grid { grid-template-columns: 1fr; } .hub-card.wide { grid-template-columns: 1fr; } }
+</style>
+</head>
+
+<body>
+
+<header class="adm-hero">
+  <div class="toile-img blue" aria-hidden="true"></div>
+  <span class="logo-mask" aria-hidden="true"></span>
+  <h1>Espace admin</h1>
+  <p>Réservé aux mariés</p>
+</header>
+
+<div class="adm-wrap">
+
+  <!-- ═══ CODE D'ACCÈS ═══ -->
+  <section id="gate" aria-label="Accès réservé">
+    <div class="field">
+      <label class="field-label" for="gateCode">Code des mariés</label>
+      <input type="password" id="gateCode" inputmode="numeric" autocomplete="off" placeholder="······">
+    </div>
+    <button type="button" id="gateBtn" class="btn btn-primary">Entrer</button>
+    <p id="gateErr">Ce n'est pas le bon code.</p>
+  </section>
+
+  <!-- ═══ LES OUTILS ═══ -->
+  <section id="hub" hidden aria-label="Outils des mariés">
+    <div class="hub-grid">
+
+      <article class="hub-card">
+        <span class="hub-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.5" y="6" width="17" height="12" rx="1.4"/><path d="M3.8 7 12 13 20.2 7"/>
+          </svg>
+        </span>
+        <h2>Les invitations</h2>
+        <p>Créer une carte nominative et l'exporter en PDF.</p>
+        <div class="hub-go"><a class="btn btn-primary" href="invitations.html">Ouvrir <span class="arr" aria-hidden="true">→</span></a></div>
+      </article>
+
+      <article class="hub-card">
+        <span class="hub-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 4.5h14v15H5z"/><path d="M8.5 9h7M8.5 12.5h7M8.5 16h4"/>
+          </svg>
+        </span>
+        <h2>Les réponses</h2>
+        <p>Les réponses du formulaire de ce site (le RSVP s'est fait ailleurs).</p>
+        <div class="hub-go"><a class="btn btn-primary" href="reponses.html">Ouvrir <span class="arr" aria-hidden="true">→</span></a></div>
+      </article>
+
+      <article class="hub-card wide">
+        <div>
+          <span class="hub-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="6.5" height="6.5" rx=".6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx=".6"/>
+              <rect x="4" y="13.5" width="6.5" height="6.5" rx=".6"/><path d="M13.5 13.5h2.6v2.6h-2.6zM18 13.5h2M13.5 18.2h2.6M18 18v2"/>
+            </svg>
+          </span>
+          <h2>La page de paiement</h2>
+          <p>Aucun lien du site n'y mène : seule son adresse l'ouvre. C'est elle que reprennent les QR codes de la salle.</p>
+        </div>
+        <div class="hub-side">
+          <div class="hub-url" id="payUrl"></div>
+          <div class="hub-go">
+            <a class="btn btn-primary" href="paiement.html" target="_blank" rel="noopener">Ouvrir <span class="arr" aria-hidden="true">→</span></a>
+            <button type="button" class="btn btn-outline" id="payCopy">Copier l'adresse</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="hub-foot">
+      <a href="index.html">← Retour au site</a>
+      <button type="button" id="lockBtn">Verrouiller</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ═══ Porte d'entrée ═══
+     Le code n'est pas écrit en clair : on compare son empreinte SHA-256.
+     Sur un site statique cela n'a rien d'un vrai verrou — c'est ce qu'il
+     faut pour qu'un invité curieux passe son chemin, pas pour résister à
+     quelqu'un qui lit le code source. La session seule s'en souvient :
+     à chaque nouvelle visite, le code est redemandé. */
+  var CODE_SHA = 'a53bf99785ab1af98bbaa705513abeea07b8eb2bdf029202ebf8ee48e0dc685c';
+  var KEYS = ['tf_inv_gate', 'tf_admin_ok'];       /* les clés lues par invitations.html et reponses.html */
+
+  var gate = document.getElementById('gate');
+  var hub  = document.getElementById('hub');
+  var err  = document.getElementById('gateErr');
+  var code = document.getElementById('gateCode');
+
+  function sha256(txt) {
+    if (!(window.crypto && window.crypto.subtle)) return Promise.reject();
+    return window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt)).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+    });
+  }
+  function show(ok) {
+    gate.hidden = ok; hub.hidden = !ok;
+    if (!ok) { code.value = ''; err.style.display = 'none'; }
+  }
+  function tryCode() {
+    sha256(code.value.trim()).then(function (h) {
+      if (h !== CODE_SHA) { err.textContent = "Ce n'est pas le bon code."; err.style.display = 'block'; return; }
+      try { KEYS.forEach(function (k) { sessionStorage.setItem(k, '1'); }); } catch (e) {}
+      show(true);
+    }).catch(function () {
+      err.textContent = "Impossible de vérifier le code sur cette connexion (http).";
+      err.style.display = 'block';
+    });
+  }
+  document.getElementById('gateBtn').addEventListener('click', tryCode);
+  code.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); tryCode(); } });
+
+  document.getElementById('lockBtn').addEventListener('click', function () {
+    try { KEYS.forEach(function (k) { sessionStorage.removeItem(k); }); } catch (e) {}
+    show(false);
+  });
+
+  /* ═══ L'adresse de la page de paiement ═══ */
+  /* l'adresse que reprennent les QR codes : toujours celle du site en ligne, même quand on regarde la page en local */
+  var LIVE = 'https://floops10.github.io/mariage-tf/';
+  var isLocal = /^(localhost|127\.0\.0\.1|\[::1\]|)$/.test(window.location.hostname);
+  var payUrl = isLocal ? LIVE + 'paiement.html' : new URL('paiement.html', window.location.href).href;
+  document.getElementById('payUrl').textContent = payUrl;
+  var copyBtn = document.getElementById('payCopy');
+  copyBtn.addEventListener('click', function () {
+    function done() { copyBtn.textContent = 'Adresse copiée ✓'; setTimeout(function () { copyBtn.textContent = "Copier l'adresse"; }, 2200); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(payUrl).then(done, fallback);
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = payUrl; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  });
+
+  try { if (sessionStorage.getItem('tf_inv_gate') === '1') show(true); } catch (e) {}
+}());
+</script>
+
+</body>
+</html>

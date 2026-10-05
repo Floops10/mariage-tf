@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Participer à l'urne — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="Participer à l'urne depuis son téléphone : Wero, PayPal ou virement.">
+<link rel="icon" type="image/png" href="Logo.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
+
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=21">
+
+<style>
+/* ═══════════════════════════════════════════════
+   PAIEMENT — participer à l'urne depuis son téléphone
+   Page non listée : aucun lien du site n'y mène.
+   ═══════════════════════════════════════════════ */
+.pay-intro {
+  max-width: 38rem;
+  margin: 0 auto 2.4rem;
+  text-align: center;
+  font-size: 1.12rem;
+  line-height: 1.75;
+  color: var(--ocean2);
+}
+.pay-intro b { color: var(--navy); font-weight: 500; }
+
+.pay-cards { display: grid; gap: 1.5rem; max-width: 46rem; margin: 0 auto; }
+.pay-card {
+  position: relative;
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  padding: 1.8rem clamp(1.3rem, 3.2vw, 2.1rem) 1.7rem;
+}
+/* le moyen recommandé : encadré d'un double filet, comme le cartouche des en-têtes */
+.pay-card.main { border-color: var(--gold-border2); box-shadow: 0 0 0 5px var(--cream), 0 0 0 6px var(--gold-border2); }
+.pay-row { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.7rem; align-items: center; }
+.pay-row.no-qr { grid-template-columns: minmax(0, 1fr); }
+.pay-qr { width: 10.5rem; padding: .6rem; background: #fff; border: 1px solid var(--border2); }
+.pay-qr svg { display: block; width: 100%; height: auto; }
+.pay-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  border: 1px solid var(--gold-border2);
+  padding: .26rem .65rem;
+  margin-bottom: .75rem;
+}
+.pay-name {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.55rem, 3.2vw, 1.95rem);
+  line-height: 1.15;
+  color: var(--navy);
+  margin-bottom: .5rem;
+}
+.pay-help { font-size: 1.02rem; line-height: 1.65; color: var(--ocean2); }
+.pay-card .btn { width: 100%; margin-top: 1.15rem; }
+
+/* le RIB : caché tant qu'on n'a pas cliqué sur « Je préfère faire un virement » */
+.rib { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: grid; gap: .8rem; }
+.rib-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .9rem;
+  align-items: center;
+  padding: .9rem 1.05rem;
+  background: var(--cream2);
+  border: 1px solid var(--border);
+}
+.rib-lbl {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .74rem;
+  letter-spacing: .18em;
+  color: var(--gold-text);
+  margin-bottom: .25rem;
+}
+.rib-val { display: block; font-size: 1.08rem; line-height: 1.5; color: var(--navy); letter-spacing: .03em; }
+.rib-val.iban { font-size: 1.15rem; letter-spacing: .07em; }
+.rib-copy {
+  min-height: 46px; padding: 0 1.1rem;
+  font-family: var(--font-body); font-weight: 500; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--navy); background: var(--cream); border: 1px solid var(--border3);
+  transition: border-color var(--dur-mid) ease, background var(--dur-mid) ease;
+}
+.rib-copy:hover { border-color: var(--navy); }
+.rib-copy.done { background: var(--navy); border-color: var(--navy); color: var(--cream); }
+.rib-note { font-size: .98rem; line-height: 1.6; color: var(--ocean2); }
+.rib-abroad { border: 1px solid var(--border); padding: .2rem 1.05rem; }
+.rib-abroad-btn {
+  width: 100%; min-height: 46px; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  font-family: var(--font-sub); font-size: .78rem; letter-spacing: .16em; color: var(--navy); text-align: left;
+}
+.rib-abroad-btn i { font-style: normal; font-family: var(--font-title); font-size: 1.3rem; line-height: 1; color: var(--gold-text); }
+.rib-abroad-body { padding: .3rem 0 .5rem; }
+.rib-abroad .rib-val { margin: 0 0 .7rem; font-size: 1rem; }
+.rib-abroad .rib-lbl { margin-top: .3rem; }
+
+.pay-noscript { text-align: center; color: var(--ocean2); }
+.page-sub { text-wrap: balance; }
+
+@media (max-width: 640px) {
+  .pay-row { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  /* sur téléphone on ne scanne pas son propre écran : le bouton suffit */
+  .pay-qr { display: none; }
+}
+@media (max-width: 520px) {
+  .rib-row { grid-template-columns: minmax(0, 1fr); }
+  .rib-copy { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TRANSITION OVERLAY ═══ -->
+<div id="t-overlay" aria-hidden="true" style="pointer-events:none">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <p id="t-eyebrow" class="t-eyebrow"></p>
+    <p id="t-title" class="t-title"></p>
+    <p id="t-quote" class="t-quote"></p>
+    <p id="t-quote-ref" class="t-quote-ref"></p>
+  </div>
+</div>
+<script>/* arrivée par les portes : le titre est là dès la première image */(function(){try{if(!sessionStorage.getItem('tfr_t'))return;var m=JSON.parse(sessionStorage.getItem('tfr_t_m')),q=JSON.parse(sessionStorage.getItem('tfr_t_q'));if(!m)return;var g=function(i){return document.getElementById(i)};g('t-eyebrow').textContent=m.eyebrow;g('t-title').textContent=m.title;if(q){g('t-quote').textContent=q.fr;g('t-quote-ref').textContent=q.ref||''}}catch(e){}})();</script>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="Logo.png" alt="T & F">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html">Venir au Domaine</a></li>
+    <li><a href="covoiturage.html">Covoiturer</a></li>
+    <li><a href="dresscode.html">Dress code</a></li>
+    <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="nav-burger-lbl">Menu</i><span class="nav-burger-ico" aria-hidden="true"><span></span><span></span><span></span></span></button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><i>Fermer</i><span class="x" aria-hidden="true"></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <nav class="menu-list" aria-label="Menu">
+    <a href="index.html"><b>Accueil</b><small>L'invitation et l'essentiel</small></a>
+    <a href="programme.html"><b>Le Programme</b><small>Les horaires de la journée</small></a>
+    <a href="sejour.html"><b>Venir au Domaine</b><small>Adresses, itinéraires, où dormir</small></a>
+    <a href="covoiturage.html"><b>Covoiturer</b><small>Proposer ou trouver une place</small></a>
+    <a href="dresscode.html"><b>Dress code</b><small>Les couleurs à porter</small></a>
+    <a href="histoire.html"><b>Photos &amp; poème</b><small>Nos plus belles images</small></a>
+    <a href="cadeaux.html"><b>Cadeaux</b><small>Une urne, tout simplement</small></a>
+    <a href="contact.html"><b>Contact</b><small>Une question ? Écrivez-nous</small></a>
+    <a href="rsvp.html"><b>Confirmer ma venue</b><small>Réponses closes</small></a>
+  </nav>
+  <div class="menu-foot">
+    <span class="menu-date">12 · 12 · 2026</span>
+  </div>
+</div>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<header class="page-hero">
+  <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow reveal">Merci de tout cœur</span>
+    <h1 class="page-title reveal reveal-delay-1">Participer à l'urne</h1>
+    <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
+      <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+    </div>
+    <span class="page-sub reveal reveal-delay-3">Choisissez ce qui vous est le plus simple</span>
+  </div>
+</header>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+
+    <section class="section">
+      <p class="pay-intro">
+        Merci d'avoir pensé à nous&nbsp;! <b>Le montant est libre</b>, et ce qui compte, c'est le geste.
+        Choisissez simplement ce qui vous est le plus pratique.
+      </p>
+
+      <div class="pay-cards" id="payCards" data-deck></div>
+      <noscript><p class="pay-noscript">Pour afficher les moyens de paiement, activez JavaScript dans votre navigateur.</p></noscript>
+    </section>
+
+    <!-- bandeau CTA -->
+    <div class="cta-band reveal">
+      <p>Un souci&nbsp;? L'urne vous attend aussi sur place, et on est là.</p>
+      <div class="btns">
+        <a href="contact.html" class="btn btn-outline">Nous contacter</a>
+        <a href="index.html" class="btn btn-outline">Retour au site</a>
+      </div>
+    </div>
+
+  </main>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy <span class="footer-amp">&amp;</span> Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir au Domaine</a>
+      <a href="covoiturage.html">Covoiturer</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Les réponses sont closes — merci à vous</p>
+  </div>
+</footer>
+
+<script src="toile.js?v=21"></script>
+<script src="transitions.js?v=21"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+
+<!-- Tout se règle dans paiements.js. Le QR code est dessiné ici même, par vendor/qrcode.js :
+     aucun service extérieur ne voit les liens de paiement. -->
+<script src="paiements.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>
+(function () {
+  'use strict';
+  var root = document.getElementById('payCards');
+  if (!root) return;
+
+  var ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return ESC[c]; }); }
+  /* seuls les liens https s'affichent ; « paypal.me/nom » sans le https:// est complété */
+  function safeUrl(u) {
+    u = String(u || '').trim();
+    if (/^[a-z0-9-]+(\.[a-z0-9-]+)+\/\S*$/i.test(u)) u = 'https://' + u;
+    return /^https:\/\/\S+$/i.test(u) ? u : '';
+  }
+  function ascii(u) { return u.replace(/[^\x21-\x7E]/g, function (c) { return encodeURIComponent(c); }); }
+
+  /* le QR code : un seul tracé, aplat marine sur fond blanc, marge de 4 modules */
+  function qrSvg(url, label) {
+    try {
+      var q = window.qrcode(0, 'M');
+      q.addData(ascii(url));
+      q.make();
+      var n = q.getModuleCount(), quiet = 4, size = n + quiet * 2, d = '';
+      for (var r = 0; r < n; r++) {
+        var c = 0;
+        while (c < n) {
+          if (!q.isDark(r, c)) { c++; continue; }
+          var from = c;
+          while (c < n && q.isDark(r, c)) c++;
+          d += 'M' + (from + quiet) + ' ' + (r + quiet) + 'h' + (c - from) + 'v1h-' + (c - from) + 'z';
+        }
+      }
+      return '<svg viewBox="0 0 ' + size + ' ' + size + '" shape-rendering="crispEdges" role="img" aria-label="' + esc(label) +
+        '"><rect width="' + size + '" height="' + size + '" fill="#fff"/><path d="' + d + '" fill="#1F2F44"/></svg>';
+    } catch (e) { return ''; }
+  }
+
+  var methods = (window.TF_PAIEMENTS || []).map(function (m) {
+    m = m || {};
+    return { nom: String(m.nom || 'Paiement en ligne'), url: safeUrl(m.url), badge: m.badge ? String(m.badge) : '',
+             aide: m.aide ? String(m.aide) : '', bouton: m.bouton ? String(m.bouton) : '' };
+  }).filter(function (m) { return m.url; });
+
+  function card(m) {
+    var qr = qrSvg(m.url, 'Code à scanner pour payer avec ' + m.nom);
+    return '<article class="pay-card' + (m.badge ? ' main' : '') + '"><div class="pay-row' + (qr ? '' : ' no-qr') + '">' +
+      (qr ? '<div class="pay-qr">' + qr + '</div>' : '') +
+      '<div class="pay-info">' +
+      (m.badge ? '<span class="pay-badge">' + esc(m.badge) + '</span>' : '') +
+      '<h2 class="pay-name">' + esc(m.nom) + '</h2>' +
+      (m.aide ? '<p class="pay-help">' + esc(m.aide) + '</p>' : '') +
+      '<a class="btn btn-primary" href="' + esc(m.url) + '" target="_blank" rel="noopener noreferrer">' +
+      esc(m.bouton || ('Payer avec ' + m.nom)) + ' <span class="arr" aria-hidden="true">→</span></a>' +
+      '</div></div></article>';
+  }
+
+  var html = methods.map(card).join('');
+
+  /* ─── le virement : le RIB n'est écrit dans la page qu'au clic ─── */
+  var vir = window.TF_VIREMENT;
+  var iban = vir && vir.iban ? (Array.isArray(vir.iban) ? vir.iban.join('') : String(vir.iban)).replace(/\s+/g, '') : '';
+  if (iban) {
+    html += '<article class="pay-card" id="virement"><div class="pay-row no-qr"><div class="pay-info">' +
+      '<h2 class="pay-name">Virement bancaire</h2>' +
+      '<p class="pay-help">Depuis votre application ou votre espace bancaire, avec les coordonnées de notre compte.</p>' +
+      '<button type="button" class="btn btn-outline" id="ribBtn" aria-expanded="false" aria-controls="rib">' + esc(vir.bouton || 'Je préfère faire un virement') + '</button>' +
+      '</div></div><div class="rib" id="rib" hidden></div></article>';
+  }
+  if (!html) return;
+  root.innerHTML = html;
+
+  if (iban) {
+    var btn = document.getElementById('ribBtn');
+    var rib = document.getElementById('rib');
+    var label = btn.textContent;
+    var built = false;
+
+    function row(lbl, val, copy, cls) {
+      return '<div class="rib-row"><div><span class="rib-lbl">' + lbl + '</span><span class="rib-val' + (cls ? ' ' + cls : '') + '">' + esc(val) + '</span></div>' +
+        (copy ? '<button type="button" class="rib-copy" data-copy="' + esc(copy) + '">Copier</button>' : '') + '</div>';
+    }
+    function build() {
+      var shown = iban.replace(/(.{4})/g, '$1 ').trim();
+      var h = row('Titulaire du compte', vir.titulaire || '', '') +
+              row('IBAN', shown, iban, 'iban') +
+              (vir.bic ? row('BIC', vir.bic, vir.bic) : '') +
+              '<p class="rib-note">Dans le motif du virement, indiquez votre nom : on pourra vous remercier comme il se doit.</p>';
+      if (vir.banque || vir.bicCorrespondant) {
+        h += '<div class="rib-abroad"><button type="button" class="rib-abroad-btn" id="abroadBtn" aria-expanded="false" aria-controls="abroad"><span>Vous virez depuis l’étranger ?</span><i aria-hidden="true">+</i></button><div class="rib-abroad-body" id="abroad" hidden>' +
+          (vir.banque ? '<span class="rib-lbl">Banque</span><span class="rib-val">' + esc(vir.banque) + '</span>' : '') +
+          (vir.adresse ? '<span class="rib-lbl">Adresse de la banque</span><span class="rib-val">' + esc(vir.adresse) + '</span>' : '') +
+          (vir.bicCorrespondant ? '<span class="rib-lbl">BIC de la banque correspondante</span><span class="rib-val">' + esc(vir.bicCorrespondant) + '</span>' : '') +
+          '</div></div>';
+      }
+      rib.innerHTML = h;
+      built = true;
+    }
+    btn.addEventListener('click', function () {
+      if (!built) build();
+      var open = rib.hidden;
+      rib.hidden = !open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'Masquer les coordonnées' : label;
+      if (open) { try { rib.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {} }
+    });
+    /* « depuis l'étranger » : un second panneau, caché tant qu'on ne le demande pas */
+    rib.addEventListener('click', function (e) {
+      var ab = e.target.closest('#abroadBtn');
+      if (!ab) return;
+      var body = document.getElementById('abroad');
+      var open = body.hidden;
+      body.hidden = !open;
+      ab.setAttribute('aria-expanded', open ? 'true' : 'false');
+      ab.querySelector('i').textContent = open ? '\u2013' : '+';
+    });
+    /* copier l'IBAN ou le BIC */
+    rib.addEventListener('click', function (e) {
+      var b = e.target.closest('.rib-copy');
+      if (!b) return;
+      var text = b.getAttribute('data-copy');
+      function done() { b.textContent = 'Copié ✓'; b.classList.add('done'); setTimeout(function () { b.textContent = 'Copier'; b.classList.remove('done'); }, 2200); }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (x) {}
+        document.body.removeChild(ta);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    });
+  }
+}());
+</script>
+
+<script src="motion.js?v=21"></script>
+
+</body>
+</html>

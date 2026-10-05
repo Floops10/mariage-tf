@@ -7,10 +7,9 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="Logo.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=16">
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=21">
 <!-- meme moteur que le RSVP : rendu fidele de la carte, puis export A4 -->
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -18,8 +17,8 @@
 <style>
 /* ═══════════════════════════════════════════════
    ESPACE DES MARIÉS — invitations nominatives
-   Page privée : aucun lien du menu n'y mène, seule
-   l'esperluette du pied de page l'ouvre.
+   Page privée : aucun lien du menu n'y mène, on y arrive
+   par le bouton « Admin » du pied de page (code demandé).
    ═══════════════════════════════════════════════ */
 
 .adm-hero {
@@ -57,7 +56,9 @@
 /* ─── L'atelier ─── */
 #studio { display: none; }
 .inv-cols { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(1.4rem, 4vw, 2.8rem); align-items: start; }
-@media (max-width: 900px) { .inv-cols { grid-template-columns: 1fr; } }
+/* une colonne ne doit jamais s'élargir au gabarit de la carte (1116 px) : minmax(0, 1fr), pas 1fr */
+.inv-cols > * { min-width: 0; }
+@media (max-width: 900px) { .inv-cols { grid-template-columns: minmax(0, 1fr); } }
 
 .inv-panel { background: var(--cream); border: 1px solid var(--border2); padding: clamp(1.3rem,3vw,1.9rem); }
 .inv-panel h2 {
@@ -256,6 +257,7 @@
 <body>
 
 <header class="adm-hero">
+  <a class="adm-back" href="admin.html">← Espace admin</a>
   <div class="toile-img blue" aria-hidden="true"></div>
   <span class="logo-mask" aria-hidden="true"></span>
   <h1>Les invitations</h1>

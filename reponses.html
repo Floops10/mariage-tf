@@ -7,10 +7,9 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="Logo.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=16">
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=21">
 <!-- SheetJS pour l'export Excel (.xlsx) ; repli CSV si indisponible -->
 <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
@@ -289,6 +288,7 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
 <body>
 
 <header class="adm-hero">
+  <a class="adm-back" href="admin.html">← Espace admin</a>
   <div class="toile-img blue" aria-hidden="true"></div>
   <span class="logo-mask" aria-hidden="true"></span>
   <h1>Les réponses</h1>
@@ -372,7 +372,8 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
 
   var FB_URL  = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp.json';
   var FB_ROOT = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp/';
-  var CODE = '10090203';              /* code des mariés */
+  /* même code que tout l'espace admin : on ne compare que son empreinte SHA-256 */
+  var CODE_SHA = 'a53bf99785ab1af98bbaa705513abeea07b8eb2bdf029202ebf8ee48e0dc685c';
   var GATE_KEY = 'tf_admin_ok';
   var REFRESH_MS = 60000;             /* mise à jour automatique : chaque minute */
 
@@ -387,17 +388,28 @@ td.when { white-space: nowrap; font-size: .68rem; color: var(--text-light); }
   var entries = [];                   /* dernières données chargées */
 
   /* ─── Porte d'entrée ─── */
+  function sha256(txt) {
+    if (!(window.crypto && window.crypto.subtle)) return Promise.reject();
+    return window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt)).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+    });
+  }
   function tryCode() {
-    if (document.getElementById('gateCode').value.trim() === CODE) {
-      try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {}
-      openDash();
-    } else {
-      document.getElementById('gateErr').style.display = 'block';
-    }
+    var gErr = document.getElementById('gateErr');
+    sha256(document.getElementById('gateCode').value.trim()).then(function (h) {
+      if (h === CODE_SHA) {
+        try { sessionStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+        openDash();
+      } else {
+        gErr.textContent = "Ce n'est pas le bon code."; gErr.style.display = 'block';
+      }
+    }).catch(function () {
+      gErr.textContent = 'Impossible de vérifier le code sur cette connexion (http).'; gErr.style.display = 'block';
+    });
   }
   document.getElementById('gateBtn').addEventListener('click', tryCode);
   document.getElementById('gateCode').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') tryCode();
+    if (e.key === 'Enter') { e.preventDefault(); tryCode(); }
   });
 
   function openDash() {

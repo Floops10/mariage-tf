@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
 <title>Covoiturer — Thomy & Florian · 12 décembre 2026</title>
 <meta name="description" content="Proposez ou rejoignez un covoiturage pour venir au mariage de Thomy & Florian.">
 <link rel="icon" type="image/png" href="Logo.png">
-<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=16">
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=21">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -32,7 +32,7 @@
   align-items: center;
   gap: .5em;
   font-family: var(--font-sub);
-  font-size: .62rem;
+  font-size: 0.77rem;
   letter-spacing: .18em;
   color: var(--text-light);
 }
@@ -69,7 +69,7 @@
   color: var(--navy); font-weight: 400; margin-bottom: .6rem;
 }
 .cv-state-sub {
-  font-family: var(--font-body); font-size: .88rem;
+  font-family: var(--font-body); font-size: 1rem;
   color: var(--text-mid); line-height: 1.75;
   max-width: 30rem; margin: 0 auto; position: relative; z-index: 1;
 }
@@ -88,11 +88,8 @@
   flex-direction: column;
   border-radius: 20px;
   border: 1px solid rgba(31,47,68,.13);
-  background:
-    linear-gradient(163deg, rgba(255,255,255,.86) 0%, rgba(242,234,224,.62) 100%);
-  -webkit-backdrop-filter: blur(12px) saturate(130%);
-          backdrop-filter: blur(12px) saturate(130%);
-  box-shadow: 0 20px 46px rgba(23,36,55,.12), 0 4px 12px rgba(23,36,55,.06);
+  background: #FDFAF5;
+  box-shadow: var(--lift);
   padding: 1.5rem 1.4rem 1.35rem;
   transition: transform .45s var(--ease-out), box-shadow .45s var(--ease-out);
 }
@@ -120,15 +117,15 @@
 .ride-from {
   display: flex; align-items: center; gap: .4em;
   font-family: var(--font-sub);
-  font-size: .74rem; letter-spacing: .1em;
-  color: var(--gold2); margin-top: .35rem;
+  font-size: 0.84rem; letter-spacing: .1em;
+  color: var(--gold-text); margin-top: .35rem;
 }
 .ride-from svg { width: 13px; height: 13px; flex: 0 0 auto; }
 
 .ride-badge {
   flex: 0 0 auto;
   font-family: var(--font-sub);
-  font-size: .56rem; letter-spacing: .14em;
+  font-size: 0.68rem; letter-spacing: .14em;
   padding: .42em .8em; border-radius: 100px;
   border: 1px solid var(--green-border);
   background: var(--green-bg); color: var(--green);
@@ -147,7 +144,7 @@
 }
 .ride-chip {
   display: inline-flex; align-items: center; gap: .4em;
-  font-family: var(--font-body); font-size: .76rem;
+  font-family: var(--font-body); font-size: 0.88rem;
   color: var(--text-mid);
   border: 1px solid var(--border2); border-radius: 100px;
   padding: .34em .85em; background: rgba(250,245,239,.7);
@@ -173,14 +170,14 @@
 
 .car-shadow {
   position: absolute; left: 4%; right: 4%; top: 14%; bottom: 4%;
-  background: radial-gradient(ellipse at 50% 50%, rgba(23,36,55,.36), rgba(23,36,55,0) 70%);
-  filter: blur(10px);
+  border-radius: 50%;
+  background: rgba(23,36,55,.14);
   transform: translateZ(-46px);
 }
 .car-wheel {
   position: absolute; width: 12px; height: 32px; border-radius: 6px;
-  background: linear-gradient(90deg, #0b1119 0%, #26364c 48%, #0b1119 100%);
-  box-shadow: 0 5px 11px rgba(0,0,0,.42);
+  background: #141C28;
+  box-shadow: inset 2px 0 0 #26364C, 0 3px 0 rgba(0,0,0,.25);
   transform: translateZ(-15px);
 }
 .car-wheel.fl { left: -6px;  top: 52px; }
@@ -191,28 +188,27 @@
 .car-body {
   position: relative;
   border-radius: 46px 46px 38px 38px / 62px 62px 46px 46px;
-  background: linear-gradient(163deg, #3a5070 0%, #2b3e58 16%, var(--navy) 48%, #16233a 100%);
-  border: 1px solid rgba(201,168,108,.28);
+  background: var(--navy);
+  border: 1px solid rgba(201,168,108,.4);
   padding: 12px 11px 12px;
   transform-style: preserve-3d;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.16),
-    inset 0 -12px 22px rgba(0,0,0,.3),
-    0 10px 24px rgba(9,15,25,.34);
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -8px 0 rgba(0,0,0,.18),
+    0 4px 0 rgba(9,15,25,.22);
 }
 /* capot & coffre — allongent la silhouette */
 .car-hood, .car-trunk {
   border-radius: 26px 26px 10px 10px / 20px 20px 8px 8px;
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(0,0,0,.16));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+  background: rgba(255,255,255,.07);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14);
   transform: translateZ(1px);
 }
 .car-hood  { height: 20px; margin-bottom: 7px; }
 .car-trunk { height: 15px; margin-top: 7px; border-radius: 10px 10px 26px 26px / 8px 8px 20px 20px; }
 .car-light {
   position: absolute; top: 7px; width: 15px; height: 5px; border-radius: 4px;
-  background: linear-gradient(180deg, rgba(255,243,214,.96), rgba(201,168,108,.55));
-  box-shadow: 0 0 11px rgba(255,226,163,.6);
+  background: #F3DFAE;
   transform: translateZ(2px);
 }
 .car-light.l { left: 17px; }
@@ -221,9 +217,9 @@
 .car-glass {
   height: 24px;
   border-radius: 30px 30px 12px 12px / 24px 24px 10px 10px;
-  background: linear-gradient(180deg, rgba(191,212,230,.46), rgba(191,212,230,.12));
-  border: 1px solid rgba(255,255,255,.15);
-  box-shadow: inset 0 2px 5px rgba(255,255,255,.18);
+  background: rgba(191,212,230,.3);
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.14);
   margin-bottom: 11px;
   transform: translateZ(3px);
 }
@@ -244,11 +240,11 @@
   position: relative;
   width: 40px; height: 40px;
   border-radius: 11px 11px 8px 8px;
-  background: linear-gradient(172deg, #f6efe4 0%, var(--cream3) 100%);
+  background: #F3EBDE;
   box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.8),
-    inset 0 -7px 11px rgba(31,47,68,.17),
-    0 4px 8px rgba(0,0,0,.28);
+    inset 0 2px 0 rgba(255,255,255,.85),
+    inset 0 -5px 0 rgba(31,47,68,.10),
+    0 3px 0 rgba(0,0,0,.22);
   transform: translateZ(12px);
   transform-style: preserve-3d;
   display: flex; align-items: center; justify-content: center;
@@ -257,15 +253,15 @@
 .seat::before {
   content: ''; position: absolute; left: 5px; right: 5px; top: -5px; height: 11px;
   border-radius: 8px 8px 3px 3px;
-  background: linear-gradient(180deg, var(--cream3), rgba(196,180,160,.85));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+  background: #E3D7C6;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
   transform: translateZ(-4px);
 }
 .seat.is-free::after {
   content: ''; width: 13px; height: 13px; border-radius: 50%;
   border: 1.5px dashed rgba(31,47,68,.3);
 }
-.seat.is-driver { background: linear-gradient(172deg, #efe4d2 0%, #ddcdb5 100%); }
+.seat.is-driver { background: #E6D8C2; }
 
 /* ─── Passager ─── */
 .rider {
@@ -299,7 +295,7 @@
   border: 1px solid rgba(201,168,108,.34);
   color: var(--cream);
   font-family: var(--font-body); font-weight: 300;
-  font-size: .62rem; letter-spacing: .05em;
+  font-size: 0.7rem; letter-spacing: .05em;
   padding: .34em .68em; border-radius: 7px; white-space: nowrap;
   opacity: 0; pointer-events: none;
   transition: opacity .24s ease;
@@ -313,7 +309,7 @@
 
 /* ─── Note libre ─── */
 .ride-note {
-  font-family: var(--font-body); font-size: .82rem;
+  font-family: var(--font-body); font-size: 0.96rem;
   color: var(--text-mid); line-height: 1.7;
   font-style: italic;
   border-left: 2px solid var(--gold-border2);
@@ -322,7 +318,7 @@
 
 /* ─── Liste des passagers (texte, secours accessible) ─── */
 .ride-pax {
-  font-family: var(--font-body); font-size: .78rem;
+  font-family: var(--font-body); font-size: 0.88rem;
   color: var(--text-light); line-height: 1.6; margin-bottom: .9rem;
 }
 .ride-pax b { color: var(--text-mid); font-weight: 500; }
@@ -332,7 +328,7 @@
 .ride-join {
   flex: 1 1 auto;
   font-family: var(--font-sub);
-  font-size: .68rem; letter-spacing: .16em;
+  font-size: 0.8rem; letter-spacing: .16em;
   color: var(--cream); background: var(--navy);
   border: 1px solid var(--navy);
   padding: .82em 1.2em; border-radius: 100px;
@@ -345,7 +341,7 @@
   border-color: var(--border2); cursor: not-allowed;
 }
 .ride-mini {
-  font-family: var(--font-body); font-size: .74rem;
+  font-family: var(--font-body); font-size: 0.84rem;
   color: var(--text-light); background: none; border: none;
   border-bottom: 1px dashed var(--border2);
   padding: 0 0 1px; cursor: pointer; transition: color .22s ease, border-color .22s ease;
@@ -354,8 +350,8 @@
 .ride-mini.danger:hover { color: #8A3B4A; border-color: rgba(138,59,74,.5); }
 .ride-own {
   display: inline-flex; align-items: center; gap: .35em;
-  font-family: var(--font-sub); font-size: .55rem; letter-spacing: .14em;
-  color: var(--gold2); margin-top: .7rem;
+  font-family: var(--font-sub); font-size: 0.68rem; letter-spacing: .14em;
+  color: var(--gold-text); margin-top: .7rem;
 }
 .ride-own svg { width: 12px; height: 12px; flex: 0 0 auto; }
 
@@ -404,7 +400,7 @@
 
 .cv-eyebrow {
   display: block; font-family: var(--font-sub);
-  font-size: .6rem; letter-spacing: .2em; color: var(--gold2); margin-bottom: .5rem;
+  font-size: 0.77rem; letter-spacing: .2em; color: var(--gold-text); margin-bottom: .5rem;
 }
 .cv-title {
   font-family: var(--font-title); font-weight: 400;
@@ -412,14 +408,14 @@
   line-height: 1.2; margin-bottom: 1.4rem;
 }
 .cv-text {
-  font-family: var(--font-body); font-size: .88rem;
+  font-family: var(--font-body); font-size: 1rem;
   color: var(--text-mid); line-height: 1.75; margin-bottom: 1.4rem;
 }
 
 /* ─── Champs ─── */
 .cv-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .cv-group { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1.1rem; }
-.cv-label { font-family: var(--font-sub); font-size: .58rem; letter-spacing: .2em; color: var(--gold2); }
+.cv-label { font-family: var(--font-sub); font-size: 0.74rem; letter-spacing: .2em; color: var(--gold-text); }
 .cv-input {
   font-family: var(--font-body); font-size: .9rem; font-weight: 300;
   color: var(--navy); background: transparent;
@@ -452,7 +448,7 @@ textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
 .cv-actions { display: flex; gap: .7rem; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; }
 .cv-submit {
   flex: 1 1 auto;
-  font-family: var(--font-sub); font-size: .7rem; letter-spacing: .16em;
+  font-family: var(--font-sub); font-size: 0.84rem; letter-spacing: .16em;
   color: var(--cream); background: var(--navy); border: 1px solid var(--navy);
   padding: .95em 1.5em; border-radius: 100px; cursor: pointer;
   transition: background .28s ease, transform .28s var(--ease-out);
@@ -462,7 +458,7 @@ textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
 .cv-submit.danger { background: #8A3B4A; border-color: #8A3B4A; }
 .cv-submit.danger:hover:not(:disabled) { background: #6f2f3c; }
 .cv-cancel {
-  font-family: var(--font-body); font-size: .82rem; color: var(--text-light);
+  font-family: var(--font-body); font-size: 0.96rem; color: var(--text-light);
   background: none; border: none; border-bottom: 1px dashed var(--border2);
   padding: 0 0 1px; cursor: pointer; transition: color .22s ease;
 }
@@ -470,7 +466,7 @@ textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
 
 .cv-error {
   display: none;
-  font-family: var(--font-body); font-size: .8rem;
+  font-family: var(--font-body); font-size: 0.96rem;
   color: #b53120; background: rgba(181,49,32,.06);
   border: 1px solid rgba(181,49,32,.28);
   padding: .6em .9em; border-radius: 8px; margin-top: 1rem;
@@ -501,6 +497,7 @@ textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
     <p id="t-quote-ref" class="t-quote-ref"></p>
   </div>
 </div>
+<script>/* arrivée par les portes : le titre est là dès la première image */(function(){try{if(!sessionStorage.getItem('tfr_t'))return;var m=JSON.parse(sessionStorage.getItem('tfr_t_m')),q=JSON.parse(sessionStorage.getItem('tfr_t_q'));if(!m)return;var g=function(i){return document.getElementById(i)};g('t-eyebrow').textContent=m.eyebrow;g('t-title').textContent=m.title;if(q){g('t-quote').textContent=q.fr;g('t-quote-ref').textContent=q.ref||''}}catch(e){}})();</script>
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav class="nav" id="mainNav" aria-label="Navigation principale">
@@ -518,26 +515,27 @@ textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
-  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="nav-burger-lbl">Menu</i><span class="nav-burger-ico" aria-hidden="true"><span></span><span></span><span></span></span></button>
 </nav>
 
 <!-- ═══ MENU MOBILE ═══ -->
 <div id="menu-overlay" aria-hidden="true">
-  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <button class="menu-close" aria-label="Fermer le menu"><i>Fermer</i><span class="x" aria-hidden="true"></span></button>
   <span class="logo-mask menu-logo" aria-hidden="true"></span>
-  <a href="index.html">Accueil</a>
-  <a href="programme.html">Le Programme</a>
-  <a href="sejour.html">Venir au Domaine</a>
-  <a href="covoiturage.html">Covoiturer</a>
-  <a href="dresscode.html">Dress code</a>
-  <a href="histoire.html">Photos &amp; poème</a>
-  <a href="cadeaux.html">Cadeaux</a>
-  <a href="contact.html">Contact</a>
-  <a href="rsvp.html">Confirmer ma venue</a>
-  <span class="menu-rule" aria-hidden="true"></span>
-  <span class="menu-date">12 · 12 · 2026</span>
+  <nav class="menu-list" aria-label="Menu">
+    <a href="index.html"><b>Accueil</b><small>L'invitation et l'essentiel</small></a>
+    <a href="programme.html"><b>Le Programme</b><small>Les horaires de la journée</small></a>
+    <a href="sejour.html"><b>Venir au Domaine</b><small>Adresses, itinéraires, où dormir</small></a>
+    <a href="covoiturage.html" aria-current="page"><b>Covoiturer</b><small>Proposer ou trouver une place</small></a>
+    <a href="dresscode.html"><b>Dress code</b><small>Les couleurs à porter</small></a>
+    <a href="histoire.html"><b>Photos &amp; poème</b><small>Nos plus belles images</small></a>
+    <a href="cadeaux.html"><b>Cadeaux</b><small>Une urne, tout simplement</small></a>
+    <a href="contact.html"><b>Contact</b><small>Une question ? Écrivez-nous</small></a>
+    <a href="rsvp.html"><b>Confirmer ma venue</b><small>Réponses closes</small></a>
+  </nav>
+  <div class="menu-foot">
+    <span class="menu-date">12 · 12 · 2026</span>
+  </div>
 </div>
 
 <!-- ═══ EN-TÊTE ═══ -->
@@ -638,8 +636,8 @@ textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
 <footer class="footer">
   <div class="footer-inner">
     <span class="logo-mask footer-logo" aria-hidden="true"></span>
-    <span class="footer-script">Thomy <span class="footer-amp" data-tf-secret>&amp;</span> Florian</span>
-    <p class="footer-date"><a href="reponses.html">12 · XII · MMXXVI</a></p>
+    <span class="footer-script">Thomy <span class="footer-amp">&amp;</span> Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
     <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
@@ -653,6 +651,7 @@ textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
       <a href="rsvp.html">RSVP</a>
     </div>
     <p class="footer-note">Les réponses sont closes — merci à vous</p>
+    <p class="footer-admin"><a href="admin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="1.4"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg><span>Admin</span></a></p>
   </div>
 </footer>
 
@@ -1314,8 +1313,13 @@ textarea.cv-input { resize: none; min-height: 72px; line-height: 1.65; }
 }());
 </script>
 
-<script src="toile.js?v=16"></script>
-<script src="transitions.js?v=16"></script>
+<script src="toile.js?v=21"></script>
+<script src="transitions.js?v=21"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="motion.js?v=21"></script>
 
 </body>
 </html>

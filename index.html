@@ -5,217 +5,620 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Thomy & Florian — 12 décembre 2026</title>
 <meta name="description" content="Thomy & Florian vous invitent à partager un bout de bonheur — le 12 décembre 2026 au Domaine les Hauts de Vertigneul.">
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="Logo.png">
 <!-- Anti-flash pendant la transition de page -->
-<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=16">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<link rel="preload" href="fonts/TANAngleton-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/ParfumerieScript-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=21">
 
 <style>
-/* ═══════════════════════════════════════════════
-   ACCUEIL — une seule hauteur d'écran, PC comme mobile
-   ═══════════════════════════════════════════════ */
-html, body { height: 100svh; overflow: hidden; }
+/* ═══════════════════════════════════════════════════════════════
+   ACCUEIL — version 4
+   1 · La papeterie   : l'enveloppe s'ouvre, le faire-part et l'encart
+                        pratique en sortent, puis se posent côte à côte
+   2 · Nos souvenirs  : le couloir de nuit où les photos viennent à vous
+   3 · L'essentiel    : la journée en clair, et tout le site en un clic
+   Aucun dégradé : aplats, filets nets, ombres sobres.
+   ═══════════════════════════════════════════════════════════════ */
 
-body { background: var(--toile-tint); }
+body { background: var(--cream2); }
 
-/* Fond : toile de Jouy teintée bleu poudré + vignettage doux */
-#toile-bg { z-index: 0; }
-#hero-vignette {
-  position: fixed; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(ellipse 95% 95% at 50% 45%, transparent 55%, rgba(23,36,55,.22) 100%);
-}
-
-/* ─── Scène ─── */
-#scene {
+/* ─────────────────────────────────────────────
+   1 · LA PAPETERIE
+   ───────────────────────────────────────────── */
+.home-hero {
   position: relative;
-  z-index: 10;
-  height: calc(100svh - var(--nav-h));
+  min-height: calc(100svh - var(--nav-h));
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(.7rem, 2svh, 2.2rem) clamp(.8rem, 3vw, 3rem);
+  padding: clamp(2rem, 5svh, 3.6rem) var(--page-pad) clamp(5.4rem, 11svh, 6.6rem);
+  background: var(--toile-tint);
+  border-bottom: 1px solid var(--gold-border2);
+  overflow: hidden;
 }
+.home-hero > .toile-img { z-index: 0; }
 
-/* ─── Carte d'invitation ─── */
-#card {
+/* les deux cartes, posées comme sur une table */
+.suite {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+.paper {
   position: relative;
-  width: min(880px, 100%);
-  max-height: 100%;
-  background: var(--cream);
-  box-shadow: 0 30px 80px rgba(23,36,55,.3), 0 4px 18px rgba(23,36,55,.18);
-  padding: clamp(1.3rem, 3.4svh, 3.2rem) clamp(1.1rem, 5vw, 4.4rem);
-  text-align: center;
-  opacity: 0;
-  transform: translateY(14px) scale(.985);
-  animation: cardIn 1.3s var(--ease-out) .25s forwards;
-}
-@keyframes cardIn { to { opacity: 1; transform: translateY(0) scale(1); } }
-
-/* double filet intérieur */
-#card::before {
-  content: '';
-  position: absolute; inset: 10px;
-  border: 1px solid var(--border3);
-  pointer-events: none;
-}
-#card::after {
-  content: '';
-  position: absolute; inset: 14px;
-  border: 1px solid var(--gold-border2);
-  pointer-events: none;
-}
-
-.card-inner { position: relative; z-index: 1; }
-
-/* fioritures d'angles */
-.corner {
-  position: absolute;
-  width: clamp(26px, 4.6svh, 46px);
-  height: clamp(26px, 4.6svh, 46px);
-  color: var(--gold2);
-  opacity: .8;
   z-index: 2;
-}
-.corner svg { width: 100%; height: 100%; display: block; }
-.corner-tl { top: 20px; left: 20px; }
-.corner-tr { top: 20px; right: 20px; transform: scaleX(-1); }
-.corner-bl { bottom: 20px; left: 20px; transform: scaleY(-1); }
-.corner-br { bottom: 20px; right: 20px; transform: scale(-1,-1); }
-
-/* ─── Le vrai logo, teinté navy ─── */
-.card-logo {
-  width: clamp(58px, 11svh, 104px);
-  height: clamp(58px, 11svh, 104px);
-  margin: 0 auto clamp(.4rem, 1.4svh, 1rem);
+  background: #FBF7F0;
+  box-shadow: var(--lift-strong);
 }
 
-/* ─── Entrées en cascade ─── */
-.enter { opacity: 0; transform: translateY(12px); animation: enterUp .9s var(--ease-out) forwards; }
-@keyframes enterUp { to { opacity: 1; transform: translateY(0); } }
-.d1 { animation-delay: .65s; }
-.d2 { animation-delay: .8s; }
-.d3 { animation-delay: .95s; }
-.d4 { animation-delay: 1.1s; }
-.d5 { animation-delay: 1.3s; }
-.d6 { animation-delay: 1.5s; }
-
-/* ─── Texte de la carte (sous-titres : Versailles) ─── */
-.card-date {
+/* ─── Le faire-part ─── */
+.inv {
+  width: 30rem;
+  padding: 3.3rem 2.7rem 3rem;
+  text-align: center;
+}
+.inv::before, .inv::after {                 /* double filet intérieur */
+  content: ''; position: absolute; pointer-events: none;
+}
+.inv::before { inset: 11px; border: 1px solid var(--border3); }
+.inv::after  { inset: 16px; border: 1px solid var(--gold-border2); }
+.inv .corner {
+  position: absolute; z-index: 1;
+  width: 38px; height: 38px;
+  color: var(--gold2);
+}
+.inv .corner svg { display: block; width: 100%; height: 100%; }
+.inv .corner-tl { top: 23px; left: 23px; }
+.inv .corner-tr { top: 23px; right: 23px; transform: scaleX(-1); }
+.inv .corner-bl { bottom: 23px; left: 23px; transform: scaleY(-1); }
+.inv .corner-br { bottom: 23px; right: 23px; transform: scale(-1,-1); }
+.inv-in { position: relative; z-index: 2; }
+.inv-logo { width: 66px; height: 66px; margin: 0 auto .95rem; }
+.inv-date {
   font-family: var(--font-sub);
-  font-size: clamp(.78rem, 2svh, 1.05rem);
-  letter-spacing: .3em;
+  font-size: .84rem;
+  letter-spacing: .24em;
   color: var(--navy);
-  margin-bottom: .25rem;
 }
-.card-venue {
-  font-family: var(--font-sub);
-  font-size: clamp(.6rem, 1.5svh, .76rem);
-  letter-spacing: .22em;
-  color: var(--ocean);
-  margin-bottom: clamp(.5rem, 1.8svh, 1.3rem);
-}
-.card-names {
+.inv-names {
+  margin: .7rem 0 .55rem;
   font-family: var(--font-script);
-  font-size: clamp(2.1rem, 7.6svh, 4.4rem);
-  line-height: 1.12;
+  font-weight: 400;
   color: var(--navy);
-  display: block;
-  margin-bottom: clamp(.4rem, 1.6svh, 1rem);
+  line-height: .98;
 }
-.card-names .amp { color: var(--gold2); margin: 0 .22em; }
-
-.card-sep {
-  margin: 0 auto clamp(.6rem, 1.8svh, 1.2rem);
-  max-width: 380px;
-}
-
-.card-invite {
+.inv-names span { display: block; font-size: 4.6rem; }
+.inv-names .amp { font-size: 2.7rem; line-height: 1.02; color: var(--gold2); }
+.inv-sep { max-width: 210px; margin: .2rem auto 1.15rem; }
+.inv-text {
   font-family: var(--font-sub);
-  font-size: clamp(.62rem, 1.6svh, .82rem);
-  letter-spacing: .16em;
+  font-size: .84rem;
+  letter-spacing: .13em;
   line-height: 2.05;
   color: var(--ocean2);
-  max-width: 36rem;
-  margin: 0 auto clamp(.9rem, 2.6svh, 1.7rem);
 }
-.card-invite .oui { color: var(--gold2); }
-
-.card-ctas {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: .7rem;
-  flex-wrap: wrap;
-  margin-bottom: clamp(.7rem, 2.2svh, 1.4rem);
-}
-.card-ctas .btn {
-  padding: clamp(.66rem, 1.7svh, 1rem) clamp(1.3rem, 2.6vw, 2.4rem);
-  font-size: clamp(.6rem, 1.5svh, .7rem);
-}
-
-.card-count {
+.inv-text .oui { color: var(--gold-text); }
+.inv-place {
+  margin-top: 1.25rem;
+  padding-top: 1.05rem;
+  border-top: 1px solid var(--gold-border);
   font-family: var(--font-sub);
-  font-size: clamp(.6rem, 1.5svh, .78rem);
-  letter-spacing: .16em;
-  color: var(--text-light);
+  font-size: .74rem;
+  letter-spacing: .2em;
+  line-height: 1.8;
+  color: var(--navy);
 }
-.card-count b {
+
+/* ─── L'encart pratique ─── */
+.det {
+  width: 24rem;
+  margin: 4.2rem 0 0 -1.6rem;
+  padding: 2.3rem 2.1rem 2rem;
+}
+.det::after { content: ''; position: absolute; inset: 9px; border: 1px solid var(--gold-border2); pointer-events: none; }
+.det-in { position: relative; z-index: 1; }
+.det-eyebrow {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .76rem;
+  letter-spacing: .2em;
+  color: var(--gold-text);
+  margin-bottom: .35rem;
+}
+.det-title {
   font-family: var(--font-title);
   font-weight: 400;
-  color: var(--gold2);
-  font-size: 1.3em;
-  letter-spacing: .02em;
+  font-size: 1.85rem;
+  line-height: 1.1;
+  color: var(--navy);
+  margin-bottom: 1.05rem;
 }
-
-/* ─── Réponses closes — note informative, plus une alerte ─── */
-.card-rsvp-alert {
-  display: inline-flex;
-  align-items: center;
-  gap: .45em;
+.det-list { border-top: 1px solid var(--border2); margin-bottom: 1.3rem; }
+.det-list li {
+  display: grid;
+  grid-template-columns: 4.3rem 1fr;
+  column-gap: .9rem;
+  align-items: baseline;
+  padding: .72rem 0;
+  border-bottom: 1px solid var(--border2);
+}
+.det-list b {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1.15;
+  color: var(--navy);
+}
+.det-list span { display: block; font-weight: 500; font-size: .98rem; line-height: 1.35; color: var(--navy); }
+.det-list small { display: block; font-size: .92rem; line-height: 1.4; color: var(--text-light); }
+.det-ctas { display: flex; flex-direction: column; gap: .55rem; }
+.det-ctas .btn { width: 100%; }
+.det-count {
+  margin-top: 1.2rem;
+  text-align: center;
   font-family: var(--font-sub);
-  font-size: clamp(.54rem, 1.2svh, .65rem);
-  letter-spacing: .1em;
+  font-size: .76rem;
+  letter-spacing: .07em;
   color: var(--ocean2);
-  border: 1px solid var(--gold-border2);
-  background: rgba(201, 168, 108, .07);
-  padding: .38em 1.1em;
-  margin-top: .75rem;
 }
-.card-rsvp-alert strong { font-weight: 400; }
-.card-rsvp-alert svg { width: 10px; height: 10px; flex-shrink: 0; color: var(--gold2); }
-.d7 { animation-delay: 1.7s; }
+.det-count b {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.5em;
+  letter-spacing: 0;
+  color: var(--gold-text);
+  margin: 0 .1em;
+}
+.det-closed {
+  margin-top: .55rem;
+  text-align: center;
+  font-size: .86rem;
+  color: var(--text-light);
+}
 
-/* ═══ MOBILE — toujours une seule hauteur d'écran ═══ */
-@media (max-width: 720px) {
-  #scene { padding: .7rem .7rem; }
-  #card { padding: clamp(1.2rem, 3svh, 2rem) 1rem; }
-  #card::before { inset: 7px; }
-  #card::after { inset: 10px; }
-  .corner-tl, .corner-tr { top: 14px; }
-  .corner-bl, .corner-br { bottom: 14px; }
-  .corner-tl, .corner-bl { left: 14px; }
-  .corner-tr, .corner-br { right: 14px; }
-  .card-invite { letter-spacing: .12em; max-width: 30rem; }
-  .card-ctas { flex-direction: column; gap: .5rem; }
-  .card-ctas .btn { width: 100%; max-width: 300px; }
+/* ─── L'enveloppe (introduction) ───
+   Toutes ses pièces sont sœurs des cartes : c'est ce qui permet au
+   faire-part de glisser ENTRE le dos et la poche avant. */
+/* surtout pas de z-index ici : l'enveloppe ne doit pas former son propre
+   calque, sinon le faire-part ne pourrait plus glisser entre ses pièces */
+.env { position: absolute; inset: 0; pointer-events: none; }
+.env[hidden] { display: none !important; }
+.env-part {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: var(--ew, 330px);
+  height: var(--eh, 450px);
+  margin-left: calc(var(--ew, 330px) / -2);
+  margin-top: calc(var(--eh, 450px) / -2);
 }
-/* écrans vraiment trop bas (paysage téléphone) : on autorise le scroll */
-@media (max-height: 520px) {
-  html, body { height: auto; overflow: auto; }
-  #scene { height: auto; min-height: calc(100svh - var(--nav-h)); }
+.env-back {
+  z-index: 1;
+  background: #1F2F44;
+  box-shadow: var(--lift-strong);
+  overflow: hidden;
+}
+.env-liner {               /* doublure : la toile de Jouy, dans un bleu plus profond
+                             que le fond de la page — sinon le rabat ouvert s'y fondrait */
+  position: absolute; inset: 9px 9px 0;
+  background: #8EA4C0 url('toile-de-jouy.jpg') 0 0 / 300px;
+  background-blend-mode: multiply;
+}
+.env-front { z-index: 4; }
+.env-front svg, .env-flap svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.env-pocket { fill: #213249; }
+.env-seam { fill: none; stroke: rgba(250,245,239,.16); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.env-flap {
+  z-index: 5;
+  height: calc(var(--eh, 450px) * .44);
+  perspective: 1400px;
+}
+.env-flap-in { position: relative; width: 100%; height: 100%; transform-origin: 50% 0; transform-style: preserve-3d; }
+.env-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.env-face.front .tri { fill: #1B2A3E; }
+.env-face.front .edge { fill: none; stroke: var(--gold); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.env-face.back { transform: rotateX(180deg); }
+.env-face.back .env-liner { inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+.env-face.back svg { position: absolute; inset: 0; }
+.env-face.back .edge { fill: none; stroke: var(--gold); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+/* le cachet de cire : le monogramme des mariés, pressé à la main */
+.env-seal {
+  position: absolute;
+  left: 50%; top: 100%;
+  width: 66px; height: 66px;
+  margin: -46px 0 0 -33px;
+  border-radius: 47% 53% 44% 56% / 54% 46% 55% 45%;
+  background: #7A1E2B;
+  box-shadow: inset 0 0 0 4px #8C2836, inset 0 0 0 5px #64161F, 0 2px 0 rgba(0,0,0,.28);
+  transform: rotate(-8deg);
+}
+.env-seal i {
+  position: absolute; inset: 21%;
+  background: #551019;
+  -webkit-mask: url('logo-navy.png') center / contain no-repeat;
+          mask: url('logo-navy.png') center / contain no-repeat;
+}
+
+/* invitation à descendre — étiquette crème, lisible sur la toile */
+.scroll-cue {
+  position: absolute; z-index: 5;
+  left: 50%; bottom: clamp(1.1rem, 3svh, 1.9rem);
+  transform: translateX(-50%);
+  display: inline-flex; align-items: center; gap: .65rem;
+  min-height: 44px;
+  padding: .55rem 1.2rem;
+  font-family: var(--font-sub);
+  font-size: .78rem;
+  letter-spacing: .2em;
+  white-space: nowrap;
+  color: var(--navy);
+  background: var(--cream);
+  border: 1px solid var(--gold-border2);
+  transition: border-color var(--dur-mid) ease;
+}
+.scroll-cue:hover { border-color: var(--gold2); }
+.scroll-cue svg { width: 15px; height: 15px; color: var(--gold2); animation: cueBob 1.8s var(--ease-inout) infinite; }
+@keyframes cueBob { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
+
+/* grands écrans : la papeterie prend sa vraie place */
+@media (min-width: 1600px) and (min-height: 960px) {
+  .inv { width: 34rem; padding: 3.8rem 3.1rem 3.4rem; }
+  .inv-logo { width: 76px; height: 76px; }
+  .inv-date { font-size: .92rem; }
+  .inv-names span { font-size: 5.2rem; }
+  .inv-names .amp { font-size: 3rem; }
+  .inv-text { font-size: .92rem; }
+  .inv-place { font-size: .8rem; }
+  .det { width: 27rem; margin-top: 5rem; padding: 2.7rem 2.5rem 2.3rem; }
+  .det-title { font-size: 2.1rem; }
+  .det-list b { font-size: 1.6rem; }
+}
+/* moyens écrans : les deux cartes un peu plus petites */
+@media (max-width: 1100px) {
+  .inv { width: 27.5rem; padding: 3rem 2.4rem 2.7rem; }
+  .inv-names span { font-size: 4.2rem; }
+  .det { width: 22.25rem; }
+}
+/* écrans peu hauts (portables 13 pouces) : la composition se resserre pour
+   que tout, étiquette « Nos souvenirs » comprise, tienne dans le premier écran */
+@media (min-width: 901px) and (max-height: 860px) {
+  .home-hero { padding-top: 1.3rem; padding-bottom: 4.4rem; }
+  .inv { padding: 2.5rem 2.4rem 2.3rem; }
+  .inv-logo { width: 54px; height: 54px; margin-bottom: .6rem; }
+  .inv-names { margin: .45rem 0 .4rem; }
+  .inv-names span { font-size: 3.7rem; }
+  .inv-names .amp { font-size: 2.2rem; }
+  .inv-sep { margin-bottom: .9rem; }
+  .inv-text { line-height: 1.85; }
+  .inv-place { margin-top: .95rem; padding-top: .8rem; }
+  .det { margin-top: 2.6rem; padding: 1.8rem 1.9rem 1.6rem; }
+  .det-title { margin-bottom: .75rem; }
+  .det-list { margin-bottom: 1rem; }
+  .det-list li { padding: .5rem 0; }
+  .det-count { margin-top: .9rem; }
+}
+/* tablette portrait et téléphone : les cartes s'empilent */
+@media (max-width: 900px) {
+  .home-hero { justify-content: flex-start; padding: 1.5rem var(--page-pad) 5.2rem; }
+  .suite { flex-direction: column; align-items: center; }
+  .inv { width: min(100%, 460px); padding: 2.6rem 1.5rem 2.4rem; }
+  .inv::before { inset: 8px; }
+  .inv::after  { inset: 12px; }
+  .inv .corner { width: 30px; height: 30px; }
+  .inv .corner-tl { top: 17px; left: 17px; }
+  .inv .corner-tr { top: 17px; right: 17px; }
+  .inv .corner-bl { bottom: 17px; left: 17px; }
+  .inv .corner-br { bottom: 17px; right: 17px; }
+  .inv-logo { width: 56px; height: 56px; margin-bottom: .75rem; }
+  .inv-date { font-size: .8rem; letter-spacing: .18em; }
+  .inv-names span { font-size: clamp(3.1rem, 14.5vw, 3.9rem); }
+  .inv-names .amp { font-size: clamp(2rem, 9vw, 2.4rem); }
+  .inv-text { font-size: .8rem; letter-spacing: .08em; line-height: 1.95; }
+  .inv-place { font-size: .7rem; letter-spacing: .14em; }
+  /* deux feuilles posées l'une sous l'autre, chacune entière : pas de
+     chevauchement (il coupait le cadre du faire-part) et une ombre légère */
+  .paper { box-shadow: var(--lift); }
+  .det { width: min(100%, 460px); margin: 1.25rem 0 0; padding: 2rem 1.5rem 1.8rem; }
+}
+
+/* ─────────────────────────────────────────────
+   2 · NOS SOUVENIRS — le couloir de nuit
+   ───────────────────────────────────────────── */
+.souv { position: relative; background: #0E1B2E; color: var(--cream); }
+.souv-stage {
+  position: relative;
+  height: calc(100svh - var(--nav-h));
+  overflow: hidden;
+  perspective: 1000px;
+  perspective-origin: 50% 45%;
+  background: #0E1B2E;
+}
+.souv-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: url('toile-de-jouy.jpg') repeat; background-size: 520px;
+  opacity: .05;
+  mix-blend-mode: screen;
+}
+.souv-dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.souv-world {
+  position: absolute; left: 50%; top: 47%;
+  z-index: 1;
+  width: 0; height: 0;
+  transform-style: preserve-3d;
+}
+.souv-ph {
+  position: absolute; left: 0; top: 0;
+  width: var(--w, 300px);
+  margin: 0;
+  padding: clamp(6px, .8vw, 11px);
+  background: #FBF7F0;
+  box-shadow: 0 2px 4px rgba(0,0,0,.3), 0 24px 60px rgba(0,0,0,.45);
+  opacity: 0;
+  visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+.souv-ph::after {          /* filet doré intérieur, comme un passe-partout */
+  content: ''; position: absolute;
+  inset: clamp(3px, .4vw, 5px);
+  border: 1px solid rgba(201,168,108,.65);
+  pointer-events: none;
+}
+.souv-ph img { display: block; width: 100%; height: auto; }
+
+.souv-intro, .souv-outro {
+  position: absolute; left: 50%;
+  width: min(92vw, 880px);
+  text-align: center;
+  pointer-events: none;
+  z-index: 20;
+  transform: translateX(-50%);
+}
+.souv-intro { top: 50%; margin-top: -4.6rem; }
+.souv-outro { top: 50%; margin-top: -5rem; opacity: 0; visibility: hidden; }
+.souv-outro.on { pointer-events: auto; }
+.souv-eyebrow {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .84rem;
+  letter-spacing: .26em;
+  color: var(--gold-light);
+  margin-bottom: .9rem;
+}
+.souv-title {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 7vw, 5.4rem);
+  line-height: 1;
+  color: #FBF7F0;
+}
+.souv-sub {
+  margin-top: 1.1rem;
+  font-size: clamp(1rem, 1.9vw, 1.15rem);
+  color: rgba(250,245,239,.86);
+}
+.souv-outro p {
+  font-family: var(--font-title);
+  font-size: clamp(1.55rem, 3.1vw, 2.35rem);
+  line-height: 1.24;
+  text-wrap: balance;
+  color: #FBF7F0;
+  margin-bottom: 1.5rem;
+}
+.souv-outro .souv-rule { width: 64px; height: 1px; background: var(--gold); margin: 0 auto 1.3rem; }
+.btn-light { color: var(--navy); background: #FBF7F0; border: 1px solid #FBF7F0; }
+.btn-light:hover { background: #fff; border-color: #fff; }
+
+.souv-skip {
+  position: absolute; left: 50%; bottom: max(1.1rem, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 25;
+  display: inline-flex; align-items: center; gap: .55rem;
+  min-height: 44px;
+  padding: .55rem 1.15rem;
+  font-weight: 450;
+  font-size: .86rem;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  color: #FBF7F0;
+  background: #0E1B2E;
+  border: 1px solid rgba(250,245,239,.4);
+  transition: border-color .3s ease, opacity .35s ease;
+}
+.souv-skip:hover { border-color: var(--gold); }
+.souv-skip svg { width: 15px; height: 15px; }
+.souv.is-done .souv-skip { opacity: 0; pointer-events: none; }
+
+.souv-progress {
+  position: absolute; right: clamp(.8rem, 2vw, 1.6rem); top: 50%;
+  width: 2px; height: 26vh; margin-top: -13vh;
+  background: rgba(250,245,239,.18);
+  z-index: 25;
+}
+.souv-progress i {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  background: var(--gold);
+  transform-origin: top; transform: scaleY(0);
+}
+
+/* sans animation : une simple mosaïque */
+.souv.is-static .souv-stage { height: auto; perspective: none; padding: 4.6rem 1.2rem 4rem; }
+.souv.is-static .souv-world {
+  position: relative; left: auto; top: auto; width: auto; height: auto;
+  columns: 3 260px; column-gap: 1rem; max-width: 1100px; margin: 2rem auto 0;
+}
+.souv.is-static .souv-ph { position: relative; width: 100%; opacity: 1; visibility: visible; margin-bottom: 1rem; break-inside: avoid; transform: none !important; }
+.souv.is-static .souv-intro, .souv.is-static .souv-outro {
+  position: relative; left: auto; top: auto; margin: 0 auto; transform: none; opacity: 1; visibility: visible;
+}
+.souv.is-static .souv-outro { margin-top: 2.4rem; }
+.souv.is-static .souv-skip, .souv.is-static .souv-progress, .souv.is-static .souv-dust { display: none; }
+
+/* ─────────────────────────────────────────────
+   3 · L'ESSENTIEL
+   ───────────────────────────────────────────── */
+.ess {
+  position: relative;
+  background: var(--cream2);
+  border-top: 1px solid var(--gold-border2);
+  padding: clamp(2.8rem, 8vh, 5.6rem) var(--page-pad) clamp(3.4rem, 9vh, 6rem);
+  overflow: hidden;
+}
+.ess > .toile-img { opacity: .1; }
+.ess-sheet {
+  position: relative; z-index: 1;
+  max-width: 1080px; margin: 0 auto;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  padding: clamp(2.4rem, 5vw, 4.4rem) clamp(1.2rem, 5vw, 4.4rem);
+}
+.ess-head { text-align: center; margin-bottom: clamp(2rem, 5vh, 3rem); }
+.ess-head .section-flourish { margin-left: auto; margin-right: auto; }
+.ess-head .section-intro { margin: 0 auto; }
+
+/* la journée, de haut en bas */
+.ess-day { position: relative; max-width: 780px; margin: 0 auto; }
+.ess-day::before {
+  content: '';
+  position: absolute;
+  left: calc(9rem + 1.3rem); top: 1.6rem; bottom: 1.6rem;
+  width: 1px;
+  background: var(--gold-border2);
+}
+.ess-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  column-gap: 2.6rem;
+  padding: 1.2rem 0;
+}
+.ess-step + .ess-step { border-top: 1px solid var(--border); }
+.ess-step::before {
+  content: '';
+  position: absolute;
+  left: calc(9rem + 1.3rem - 5px); top: 1.85rem;
+  width: 11px; height: 11px;
+  background: var(--cream);
+  border: 1.5px solid var(--gold2);
+  transform: rotate(45deg);
+}
+.ess-when { text-align: right; padding-top: .1rem; }
+.ess-when b {
+  display: block;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.7rem;
+  line-height: 1.1;
+  color: var(--navy);
+}
+.ess-when span {
+  display: block;
+  margin-top: .3rem;
+  font-family: var(--font-sub);
+  font-size: .74rem;
+  letter-spacing: .16em;
+  color: var(--gold-text);
+}
+.ess-what h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.42rem;
+  line-height: 1.2;
+  color: var(--navy);
+  margin-bottom: .3rem;
+}
+.ess-what p { font-size: 1.04rem; line-height: 1.6; color: var(--ocean2); }
+.ess-go {
+  display: inline-flex; align-items: center; gap: .5rem;
+  min-height: 44px;
+  margin-top: .7rem;
+  padding: .5rem 1rem;
+  font-weight: 500;
+  font-size: .82rem;
+  letter-spacing: .06em;
+  color: var(--navy);
+  border: 1px solid var(--border3);
+  transition: border-color var(--dur-mid) ease, background var(--dur-mid) ease;
+}
+.ess-go:hover { border-color: var(--navy); background: rgba(31,47,68,.035); }
+.ess-go svg { width: 17px; height: 17px; color: var(--gold2); }
+
+.ess-tip {
+  display: flex; align-items: flex-start; gap: 1rem;
+  max-width: 780px;
+  margin: clamp(1.8rem, 4vh, 2.6rem) auto 0;
+  padding: 1.15rem 1.3rem;
+  background: var(--cream2);
+  border: 1px solid var(--gold-border2);
+}
+.ess-tip svg { width: 32px; height: 32px; flex-shrink: 0; color: var(--gold2); }
+.ess-tip p { font-size: 1.04rem; line-height: 1.6; color: var(--ocean2); }
+.ess-tip b { color: var(--navy); }
+
+.ess-more { margin-top: clamp(3rem, 7vh, 4.6rem); }
+.ess-more h3 {
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.45rem, 2.8vw, 1.9rem);
+  color: var(--navy);
+  margin-bottom: 1.6rem;
+}
+.ess-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.ess-tile {
+  position: relative;
+  display: flex; flex-direction: column; gap: .4rem;
+  min-height: 10rem;
+  padding: 1.35rem 1.25rem 1.2rem;
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  transition: border-color var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid) var(--ease-out);
+}
+.ess-tile:hover { border-color: var(--gold2); transform: translateY(-4px); box-shadow: var(--lift); }
+.ess-tile.wide { grid-column: span 2; background: var(--navy); border-color: var(--navy); }
+.ess-tile .ico {
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--gold-border2);
+  color: var(--gold2);
+  margin-bottom: .4rem;
+}
+.ess-tile .ico svg { width: 22px; height: 22px; }
+.ess-tile b { font-family: var(--font-title); font-weight: 400; font-size: 1.28rem; line-height: 1.2; color: var(--navy); }
+.ess-tile small { font-size: .96rem; line-height: 1.45; color: var(--text-light); }
+.ess-tile .arr { margin-top: auto; align-self: flex-end; font-size: 1.2rem; color: var(--gold2); transition: transform var(--dur-mid) var(--ease-out); }
+.ess-tile:hover .arr { transform: translateX(5px); }
+.ess-tile.wide b { color: #FBF7F0; font-size: 1.55rem; }
+.ess-tile.wide small { color: rgba(250,245,239,.82); }
+.ess-tile.wide .ico { border-color: rgba(227,199,143,.55); color: var(--gold-light); }
+.ess-tile.wide .arr { color: var(--gold-light); }
+
+@media (max-width: 960px) { .ess-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* texte agrandi : les titres de tuiles ont besoin de plus de largeur */
+@media (min-width: 641px) and (max-width: 1280px) { html.txt-big .ess-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .ess-day::before { left: 5px; top: 1.5rem; bottom: 1.5rem; }
+  .ess-step { grid-template-columns: 1fr; padding: 1.1rem 0 1.1rem 1.9rem; }
+  .ess-step::before { left: 0; top: 1.55rem; }
+  .ess-when { text-align: left; display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .7rem; margin-bottom: .35rem; }
+  .ess-when b { font-size: 1.45rem; }
+  .ess-when span { margin-top: 0; }
+  .ess-what h3 { font-size: 1.3rem; }
+  .ess-tiles { grid-template-columns: 1fr; }
+  .ess-tile.wide { grid-column: auto; }
+  .ess-tile { min-height: 0; }
 }
 </style>
 </head>
 
-<body>
-
-<!-- ═══ FOND TOILE DE JOUY ═══ -->
-<div id="toile-bg" class="toile-img blue fixed" aria-hidden="true"></div>
-<div id="hero-vignette" aria-hidden="true"></div>
+<body class="home">
 
 <!-- ═══ OVERLAY DE TRANSITION ═══ -->
 <div id="t-overlay" aria-hidden="true">
@@ -228,6 +631,7 @@ body { background: var(--toile-tint); }
     <span class="t-quote-ref" id="t-quote-ref"></span>
   </div>
 </div>
+<script>/* arrivée par les portes : le titre est là dès la première image */(function(){try{if(!sessionStorage.getItem('tfr_t'))return;var m=JSON.parse(sessionStorage.getItem('tfr_t_m')),q=JSON.parse(sessionStorage.getItem('tfr_t_q'));if(!m)return;var g=function(i){return document.getElementById(i)};g('t-eyebrow').textContent=m.eyebrow;g('t-title').textContent=m.title;if(q){g('t-quote').textContent=q.fr;g('t-quote-ref').textContent=q.ref||''}}catch(e){}})();</script>
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav class="nav" id="mainNav" aria-label="Navigation principale">
@@ -245,86 +649,295 @@ body { background: var(--toile-tint); }
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
-  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="nav-burger-lbl">Menu</i><span class="nav-burger-ico" aria-hidden="true"><span></span><span></span><span></span></span></button>
 </nav>
 
 <!-- ═══ MENU MOBILE ═══ -->
 <div id="menu-overlay" aria-hidden="true">
-  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <button class="menu-close" aria-label="Fermer le menu"><i>Fermer</i><span class="x" aria-hidden="true"></span></button>
   <span class="logo-mask menu-logo" aria-hidden="true"></span>
-  <a href="index.html">Accueil</a>
-  <a href="programme.html">Le Programme</a>
-  <a href="sejour.html">Venir au Domaine</a>
-  <a href="covoiturage.html">Covoiturer</a>
-  <a href="dresscode.html">Dress code</a>
-  <a href="histoire.html">Photos &amp; poème</a>
-  <a href="cadeaux.html">Cadeaux</a>
-  <a href="contact.html">Contact</a>
-  <a href="rsvp.html">Confirmer ma venue</a>
-  <span class="menu-rule" aria-hidden="true"></span>
-  <span class="menu-date">12 · 12 · 2026</span>
+  <nav class="menu-list" aria-label="Menu">
+    <a href="index.html" aria-current="page"><b>Accueil</b><small>L'invitation et l'essentiel</small></a>
+    <a href="programme.html"><b>Le Programme</b><small>Les horaires de la journée</small></a>
+    <a href="sejour.html"><b>Venir au Domaine</b><small>Adresses, itinéraires, où dormir</small></a>
+    <a href="covoiturage.html"><b>Covoiturer</b><small>Proposer ou trouver une place</small></a>
+    <a href="dresscode.html"><b>Dress code</b><small>Les couleurs à porter</small></a>
+    <a href="histoire.html"><b>Photos &amp; poème</b><small>Nos plus belles images</small></a>
+    <a href="cadeaux.html"><b>Cadeaux</b><small>Une urne, tout simplement</small></a>
+    <a href="contact.html"><b>Contact</b><small>Une question ? Écrivez-nous</small></a>
+    <a href="rsvp.html"><b>Confirmer ma venue</b><small>Réponses closes</small></a>
+  </nav>
+  <div class="menu-foot">
+    <span class="menu-date">12 · 12 · 2026</span>
+  </div>
 </div>
 
-<!-- ═══ SCÈNE — carte d'invitation ═══ -->
-<main id="scene">
-  <section id="card" aria-label="Invitation">
+<main>
 
-    <!-- fioritures d'angles -->
-    <span class="corner corner-tl" aria-hidden="true"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
-    <span class="corner corner-tr" aria-hidden="true"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
-    <span class="corner corner-bl" aria-hidden="true"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
-    <span class="corner corner-br" aria-hidden="true"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+  <!-- ═══════════════════════ 1 · LA PAPETERIE ═══════════════════════ -->
+  <section class="home-hero" id="invitation" aria-label="Le faire-part">
+    <div class="toile-img blue" aria-hidden="true"></div>
 
-    <div class="card-inner">
+    <!-- l'enveloppe : introduction, retirée une fois les cartes sorties -->
+    <div class="env" aria-hidden="true" hidden>
+      <div class="env-part env-back"><i class="env-liner"></i></div>
+      <div class="env-part env-front">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="env-pocket" d="M0 42 L50 63 L100 42 L100 100 L0 100 Z"/><path class="env-seam" d="M0 100 L50 63 L100 100"/></svg>
+      </div>
+      <div class="env-part env-flap">
+        <div class="env-flap-in">
+          <div class="env-face front">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="tri" d="M0 0 L100 0 L50 100 Z"/><path class="edge" d="M0 0 L50 100 L100 0"/></svg>
+            <span class="env-seal"><i></i></span>
+          </div>
+          <div class="env-face back"><i class="env-liner"></i><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="edge" d="M0 0 L50 100 L100 0"/></svg></div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Le vrai logo (médaillon TF), teinté navy -->
-      <span class="logo-mask card-logo enter d1" role="img" aria-label="Monogramme T & F"></span>
+    <div class="suite">
 
-      <p class="card-date enter d1">12 · 12 · 2026</p>
-      <p class="card-venue enter d2">Au Domaine les Hauts de Vertigneul</p>
+      <!-- le faire-part -->
+      <article class="paper inv" aria-label="Faire-part">
+        <span class="corner corner-tl" aria-hidden="true"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+        <span class="corner corner-tr" aria-hidden="true"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+        <span class="corner corner-bl" aria-hidden="true"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+        <span class="corner corner-br" aria-hidden="true"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
 
-      <span class="card-names enter d3">Thomy <span class="amp">&amp;</span> Florian</span>
+        <div class="inv-in">
+          <span class="logo-mask inv-logo" role="img" aria-label="Monogramme T &amp; F"></span>
+          <p class="inv-date">Samedi 12 décembre 2026</p>
+          <h1 class="inv-names"><span>Thomy</span><span class="amp">&amp;</span><span>Florian</span></h1>
+          <div class="diamond-sep inv-sep" aria-hidden="true"><span class="line"></span><span class="diamond"></span><span class="line"></span></div>
+          <p class="inv-text">Vous invitent à partager un bout de bonheur en l'honneur du jour où ils se disent <span class="oui">oui</span></p>
+          <p class="inv-place">Domaine les Hauts de Vertigneul<br>Romeries</p>
+        </div>
+      </article>
 
-      <div class="diamond-sep card-sep enter d4" aria-hidden="true">
-        <span class="line"></span>
-        <span class="diamond"></span>
-        <span class="line"></span>
+      <!-- l'encart pratique -->
+      <aside class="paper det" aria-labelledby="det-title">
+        <div class="det-in">
+          <span class="det-eyebrow">Le 12 décembre</span>
+          <h2 class="det-title" id="det-title">Le déroulé</h2>
+          <ul class="det-list">
+            <li><b>14 h</b><div><span>Mariage civil</span><small>Mairie de Trith-Saint-Léger</small></div></li>
+            <li><b>16 h</b><div><span>Cérémonie religieuse</span><small>Au domaine, salle de L'Étable</small></div></li>
+            <li><b>19 h</b><div><span>Repas &amp; soirée</span><small>Au domaine, La Grange</small></div></li>
+          </ul>
+          <div class="det-ctas">
+            <a href="programme.html" class="btn btn-primary">Le programme complet <span class="arr" aria-hidden="true">→</span></a>
+            <a href="sejour.html" class="btn btn-outline">Venir au domaine</a>
+          </div>
+          <p class="det-count">Encore <b id="cdDays">—</b> nuits avant le grand oui</p>
+          <p class="det-closed">Les réponses sont closes — merci à vous.</p>
+        </div>
+      </aside>
+
+    </div>
+
+    <a href="#souvenirs" class="scroll-cue">Nos souvenirs<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="M5.5 12.5 12 19l6.5-6.5"/></svg></a>
+  </section>
+
+  <!-- ═══════════════════════ 2 · NOS SOUVENIRS ═══════════════════════ -->
+  <section class="souv" id="souvenirs" aria-labelledby="souv-title">
+    <div class="souv-stage">
+      <div class="souv-bg" aria-hidden="true"></div>
+      <canvas class="souv-dust" aria-hidden="true"></canvas>
+
+      <div class="souv-intro">
+        <span class="souv-eyebrow">Avant le grand oui</span>
+        <h2 class="souv-title" id="souv-title" data-no-motion>Nos souvenirs</h2>
+        <p class="souv-sub">Faites défiler&nbsp;: ils viennent à vous.</p>
       </div>
 
-      <p class="card-invite enter d4">
-        Vous invitent à partager un bout de bonheur<br>
-        en l'honneur du jour où ils se disent <span class="oui">oui</span>
-      </p>
-
-      <div class="card-ctas enter d5">
-        <a href="rsvp.html" class="btn btn-primary">Confirmer ma venue</a>
-        <a href="programme.html" class="btn btn-outline">Le programme</a>
-        <a href="sejour.html" class="btn btn-outline">Venir au domaine</a>
+      <div class="souv-world">
+        <figure class="souv-ph"><img src="souvenirs/Photo-1.jpg"  width="860" height="688" alt="Leurs mains entrelacées" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-10.jpg" width="860" height="582" alt="Thomy et Florian, face à face, parmi les fleurs" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-28.jpg" width="550" height="860" alt="Un tour de danse dans l'allée" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-19.jpg" width="860" height="540" alt="De dos, côte à côte, près d'un massif de fleurs" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-49.jpg" width="860" height="573" alt="Allongés dans l'herbe, au milieu des roses" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-39.jpg" width="576" height="860" alt="Main dans la main, ils courent dans le jardin" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-71.jpg" width="860" height="573" alt="Une danse dans le jardin du château" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-46.jpg" width="573" height="860" alt="Assis sur une couverture, dans l'herbe" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-83.jpg" width="542" height="860" alt="Florian, sourire aux lèvres" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-90.jpg" width="588" height="860" alt="Thomy, parmi les roses" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-75.jpg" width="586" height="860" alt="Allongés, tête contre tête" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-32.jpg" width="565" height="860" alt="Une étreinte sous les arbres" decoding="async"></figure>
+        <figure class="souv-ph"><img src="souvenirs/Photo-69.jpg" width="860" height="573" alt="Leurs mains, et la bague de fiançailles" decoding="async"></figure>
+        <figure class="souv-ph" data-final><img src="souvenirs/Photo-29.jpg" width="573" height="860" alt="Enlacés dans la lumière du soir" decoding="async"></figure>
       </div>
 
-      <p class="card-count enter d6">Encore <b id="cdDays">—</b> nuits avant le grand oui</p>
+      <div class="souv-outro">
+        <div class="souv-rule" aria-hidden="true"></div>
+        <p>Il nous reste à écrire le plus beau,<br>avec vous.</p>
+        <a href="histoire.html" class="btn btn-light">Toutes nos photos</a>
+      </div>
 
-      <p class="card-rsvp-alert enter d7">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M8 12.4 l2.6 2.6 L16 9.6"/></svg>
-        Les réponses sont closes — <strong>merci à vous</strong>
-      </p>
+      <a href="#essentiel" class="souv-skip">
+        Passer les photos
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5.5 12.5 12 19l6.5-6.5"/></svg>
+      </a>
+      <div class="souv-progress" aria-hidden="true"><i></i></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ 3 · L'ESSENTIEL ═══════════════════════ -->
+  <section class="ess" id="essentiel" aria-labelledby="ess-title">
+    <div class="toile-img faded" aria-hidden="true"></div>
+    <div class="ess-sheet">
+
+      <header class="ess-head">
+        <span class="section-eyebrow reveal">En un coup d'œil</span>
+        <h2 class="section-title reveal" id="ess-title">L'essentiel de la journée</h2>
+        <div class="section-flourish reveal" aria-hidden="true">
+          <svg viewBox="0 0 132 18" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" data-draw data-draw-dur="1100" data-draw-stagger="130">
+            <path d="M4 9 H48"/><path d="M84 9 H128"/>
+            <path d="M66 3.8 L71.2 9 L66 14.2 L60.8 9 Z"/>
+            <circle cx="54" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+            <circle cx="78" cy="9" r="1.2" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <p class="section-intro reveal">Samedi 12 décembre 2026 — les horaires, les adresses, et un bouton pour s'y rendre.</p>
+      </header>
+
+      <ol class="ess-day">
+        <li class="ess-step reveal">
+          <div class="ess-when"><b>13h20</b><span>Rendez-vous</span></div>
+          <div class="ess-what">
+            <h3>On se retrouve à la maison</h3>
+            <p>Chez Florian — 156 rue de la Clouterie, 59125 Trith-Saint-Léger</p>
+            <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=156+rue+de+la+Clouterie%2C+59125+Trith-Saint-L%C3%A9ger&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
+          </div>
+        </li>
+        <li class="ess-step reveal">
+          <div class="ess-when"><b>14h00</b><span>Mairie</span></div>
+          <div class="ess-what">
+            <h3>Le mariage civil</h3>
+            <p>Mairie de Trith-Saint-Léger — place de la Résistance, 59125 Trith-Saint-Léger</p>
+            <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=Mairie+de+Trith-Saint-L%C3%A9ger%2C+Place+de+la+R%C3%A9sistance%2C+59125+Trith-Saint-L%C3%A9ger&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
+          </div>
+        </li>
+        <li class="ess-step reveal">
+          <div class="ess-when"><b>16h00</b><span>Au domaine</span></div>
+          <div class="ess-what">
+            <h3>La cérémonie religieuse</h3>
+            <p>Dans la salle de L'Étable — Domaine les Hauts de Vertigneul, 5 hameau de Vertigneul, 59730 Romeries</p>
+            <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=Domaine+les+Hauts+de+Vertigneul%2C+5+Hameau+de+Vertigneul%2C+59730+Romeries&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
+          </div>
+        </li>
+        <li class="ess-step reveal">
+          <div class="ess-when"><b>Ensuite</b><span>Au domaine</span></div>
+          <div class="ess-what">
+            <h3>Vin d'honneur &amp; apéritif</h3>
+            <p>On trinque ensemble, juste après la cérémonie.</p>
+          </div>
+        </li>
+        <li class="ess-step reveal">
+          <div class="ess-when"><b>19h00</b><span>Vers</span></div>
+          <div class="ess-what">
+            <h3>On rejoint La Grange</h3>
+            <p>La grande salle du domaine, pour la suite des festivités — jusqu'au bout de la nuit.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="ess-tip reveal">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.5 7 6.8 3.5 12l3.3 2.4 2-2.2V27.5h14.4V12.2l2 2.2 3.3-2.4L25 6.8l-4-2.3"/><path d="M11 4.5c1 2.2 2.8 3.4 5 3.4s4-1.2 5-3.4"/><path d="M16 7.9V27.5"/></svg>
+        <p><b>Prévoyez une petite polaire.</b> On sera peu à l'extérieur, mais c'est décembre&nbsp;: de quoi se couvrir entre deux salles fera du bien.</p>
+      </div>
+
+      <div class="ess-more">
+        <h3 class="reveal">Tout le site, en un clic</h3>
+        <div class="ess-tiles" data-deck>
+          <a class="ess-tile wide" href="programme.html">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3.2 2"/></svg></span>
+            <b>Le programme</b>
+            <small>Toute la journée, déroulée sur un parchemin.</small>
+            <span class="arr" aria-hidden="true">→</span>
+          </a>
+          <a class="ess-tile" href="sejour.html">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg></span>
+            <b>Venir au domaine</b>
+            <small>Itinéraires, parking et où dormir.</small>
+            <span class="arr" aria-hidden="true">→</span>
+          </a>
+          <a class="ess-tile" href="dresscode.html">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5.5a1.8 1.8 0 1 1 1.8 1.8L12 8.6"/><path d="M12 8.6 3.3 15.2a1 1 0 0 0 .6 1.8h16.2a1 1 0 0 0 .6-1.8L12 8.6"/></svg></span>
+            <b>Dress code</b>
+            <small>Les couleurs à porter, et celles à éviter.</small>
+            <span class="arr" aria-hidden="true">→</span>
+          </a>
+          <a class="ess-tile" href="covoiturage.html">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15.5V12l2-4.5h12l2 4.5v3.5"/><path d="M3 15.5h18v2.5H3z"/><circle cx="7.5" cy="18.5" r="1.5"/><circle cx="16.5" cy="18.5" r="1.5"/><path d="M6.4 12h11.2"/></svg></span>
+            <b>Covoiturer</b>
+            <small>Proposer ou trouver une place.</small>
+            <span class="arr" aria-hidden="true">→</span>
+          </a>
+          <a class="ess-tile" href="histoire.html">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4.5 3.5 3 3-2.5L20 17"/></svg></span>
+            <b>Photos &amp; poème</b>
+            <small>Nos plus belles images.</small>
+            <span class="arr" aria-hidden="true">→</span>
+          </a>
+          <a class="ess-tile" href="cadeaux.html">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="9" width="16" height="11"/><path d="M3 9h18v-3H3z"/><path d="M12 6v14"/><path d="M12 6c-1.5-3-5-3-5-1s3.5 1 5 1c1.5 0 5 1 5-1s-3.5-2-5 1"/></svg></span>
+            <b>Cadeaux</b>
+            <small>Une urne, tout simplement.</small>
+            <span class="arr" aria-hidden="true">→</span>
+          </a>
+          <a class="ess-tile" href="contact.html">
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="6" width="17" height="12"/><path d="m4 7 8 6 8-6"/></svg></span>
+            <b>Une question&nbsp;?</b>
+            <small>Écrivez-nous, on répond vite.</small>
+            <span class="arr" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
 
     </div>
   </section>
+
 </main>
 
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy <span class="footer-amp">&amp;</span> Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir au Domaine</a>
+      <a href="covoiturage.html">Covoiturer</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Les réponses sont closes — merci à vous</p>
+    <p class="footer-admin"><a href="admin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="1.4"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg><span>Admin</span></a></p>
+  </div>
+</footer>
+
 <script>
-/* Compte à rebours en jours */
+/* Compte à rebours en nuits */
 (function () {
   var WEDDING = new Date('2026-12-12T14:00:00+01:00').getTime();
   var d = Math.max(0, Math.ceil((WEDDING - Date.now()) / 86400000));
   document.getElementById('cdDays').textContent = d;
 }());
 </script>
-<script src="toile.js?v=16"></script>
-<script src="transitions.js?v=16"></script>
+<script src="toile.js?v=21"></script>
+<script src="transitions.js?v=21"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="motion.js?v=21"></script>
+<script src="accueil.js?v=21"></script>
 
 </body>
 </html>

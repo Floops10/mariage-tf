@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
 <title>Le Programme — Thomy & Florian · 12 décembre 2026</title>
 <meta name="description" content="Le déroulé du jour J — samedi 12 décembre 2026, de la cérémonie civile au gâteau, au Domaine les Hauts de Vertigneul.">
 <link rel="icon" type="image/png" href="Logo.png">
-<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=16">
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=21">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -95,7 +95,7 @@
   font-family: var(--font-title);
   font-weight: 400;
   font-size: 1.5rem;
-  color: var(--gold2);
+  color: var(--gold-text);
   letter-spacing: .02em;
   display: block;
   line-height: 1;
@@ -158,7 +158,7 @@
 }
 .cta-band p {
   font-family: var(--font-sub);
-  font-size: .78rem;
+  font-size: 0.88rem;
   letter-spacing: .14em;
   color: var(--text-mid);
   margin-bottom: 1.4rem;
@@ -195,7 +195,9 @@
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   margin-bottom: clamp(2.4rem, 6vh, 4rem);
-  background: linear-gradient(180deg, #16273c 0%, #0b1524 55%, #060c16 100%);
+  background: #0E1B2E;
+  border-top: 1px solid var(--gold-border2);
+  border-bottom: 1px solid var(--gold-border2);
 }
 
 .parch-stage {
@@ -215,29 +217,22 @@
   opacity: .06;
   transform: translateY(calc(var(--bgshift, 0) * 1px));
 }
-.parch-bg::after {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 44% 58% at 50% 46%,
-      rgba(150,190,235, calc(.10 + var(--p, 0) * .17)) 0%, transparent 70%),
-    radial-gradient(ellipse 118% 96% at 50% 50%, transparent 38%, rgba(3,7,14,.88) 100%);
-}
+.parch-bg::after { content: none; }
 
 /* ─── Neige ─── */
 .flake {
-  position: absolute; top: -6%;
+  position: absolute; top: 104%;
   width: var(--s); height: var(--s);
   border-radius: 50%;
-  background: rgba(255,255,255,.78);
-  filter: blur(.3px);
+  background: #E8CF98;
   opacity: 0;
   animation: parchFall var(--d) linear var(--delay) infinite;
 }
 @keyframes parchFall {
   0%   { transform: translate3d(0,0,0); opacity: 0; }
-  12%  { opacity: .85; }
-  88%  { opacity: .5; }
-  100% { transform: translate3d(var(--dx), 112vh, 0); opacity: 0; }
+  14%  { opacity: .6; }
+  86%  { opacity: .35; }
+  100% { transform: translate3d(var(--dx), -112vh, 0); opacity: 0; }
 }
 
 /* ─── La scène ─── */
@@ -269,15 +264,18 @@
 .rod { position: relative; display: flex; align-items: center; height: 30px; z-index: 6; }
 .rod-bar {
   flex: 1; height: 17px; border-radius: 9px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 30%),
-    linear-gradient(180deg, #59452f 0%, #33261a 42%, #150f0a 100%);
-  box-shadow: inset 0 -4px 9px rgba(0,0,0,.62), 0 10px 26px rgba(0,0,0,.5);
+  background: #3B2D20;
+  box-shadow: inset 0 4px 0 #5C4733, inset 0 -3px 0 #21180F, 0 3px 0 rgba(0,0,0,.35);
 }
 .rod-cap {
+  position: relative;
   flex: 0 0 auto; width: 21px; height: 30px; border-radius: 7px;
-  background: radial-gradient(circle at 34% 24%, #F6E5BC 0%, #D9BC7C 34%, var(--gold) 56%, #8a6a30 84%, #5a4420 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.65), inset 0 -3px 6px rgba(0,0,0,.4), 0 8px 20px rgba(0,0,0,.5);
+  background: #C9A86C;
+  box-shadow: inset 0 0 0 2px #A4844A, inset 0 -6px 0 #A4844A, 0 3px 0 rgba(0,0,0,.35);
+}
+.rod-cap::after {           /* l'éclat du laiton, net */
+  content: ''; position: absolute; left: 5px; top: 5px;
+  width: 5px; height: 9px; border-radius: 3px; background: #F2E1B6;
 }
 
 /* ─── Le papier ─── */
@@ -290,15 +288,13 @@
   height: calc(var(--p) * var(--full));
   overflow: hidden;
   z-index: 4;
-  box-shadow: 0 34px 80px rgba(0,0,0,.55);
+  box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 28px 60px rgba(0,0,0,.4);
   will-change: height;
 }
 .parch-sheet {
   position: relative;
-  background:
-    linear-gradient(180deg, rgba(110,84,48,.26) 0px, rgba(110,84,48,0) 30px),
-    radial-gradient(ellipse 130% 66% at 50% 0%, rgba(255,255,255,.6), transparent 56%),
-    linear-gradient(178deg, #FCF7ED 0%, #F6ECDB 50%, #EFE2CD 100%);
+  background: #F6ECDB;
+  border-top: 6px solid #E3D2B4;      /* l'ombre du rouleau, en aplat */
   padding: clamp(2.1rem, 5.4vw, 3.5rem) clamp(1.7rem, 5vw, 3.4rem) clamp(2rem, 4.6vw, 3rem);
 }
 /* grain de papier — bruit fractal, pas un aplat */
@@ -308,17 +304,9 @@
   opacity: .5; mix-blend-mode: multiply;
 }
 /* fibres horizontales + bords vieillis */
-.parch-sheet::after {
+.parch-sheet::after {     /* bords légèrement plus sombres : le papier s'enroule */
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background:
-    repeating-linear-gradient(180deg, rgba(150,118,74,.05) 0 2px, transparent 2px 6px),
-    /* bombé du papier : les bords fuient dans l'ombre, le centre capte la lumière —
-       c'est ce qui empêche la feuille de ressembler à une planche rigide */
-    linear-gradient(90deg,
-      rgba(104,78,44,.42) 0%, rgba(122,94,56,.16) 3.5%,
-      rgba(255,255,255,.14) 26%, rgba(255,255,255,.20) 50%, rgba(255,255,255,.14) 74%,
-      rgba(122,94,56,.16) 96.5%, rgba(104,78,44,.42) 100%),
-    radial-gradient(ellipse 140% 90% at 50% 100%, rgba(128,98,58,.16), transparent 58%);
+  box-shadow: inset 7px 0 0 rgba(122,94,56,.08), inset -7px 0 0 rgba(122,94,56,.08), inset 0 0 0 1px rgba(122,94,56,.22);
 }
 .parch-sheet > * { position: relative; z-index: 1; }
 
@@ -329,32 +317,29 @@
 }
 .roll-body {
   flex: 1; height: 46px; border-radius: 23px;
-  background-image:
-    repeating-linear-gradient(180deg,
-      rgba(255,255,255,.26) 0px, rgba(255,255,255,0) 4px,
-      rgba(112,84,48,.26) 8px, rgba(112,84,48,0) 13px),
-    linear-gradient(180deg,
-      #6f5738 0%, #ab8d5f 10%, #E9DCC2 30%, #FBF6EA 45%,
-      #E4D5B8 62%, #a98a58 84%, #5d4728 100%);
-  background-position: 0 calc(var(--spin, 0) * 1px), 0 0;
-  box-shadow:
-    inset 0 3px 7px rgba(255,255,255,.36),
-    inset 0 -6px 12px rgba(0,0,0,.42),
-    0 16px 34px rgba(0,0,0,.55);
+  background-color: #EBDDC3;
+  /* hachures de gravure : un motif de traits nets, sans dégradé */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='7'%3E%3Crect width='8' height='1' fill='%237A5E38' fill-opacity='.32'/%3E%3C/svg%3E");
+  background-position: 0 calc(var(--spin, 0) * 1px);
+  box-shadow: inset 0 5px 0 #F7EFDF, inset 0 -9px 0 #C9B48E, inset 0 -10px 0 #B39A6E, 0 4px 0 rgba(0,0,0,.3);
 }
 .roll-cap {
+  position: relative;
   flex: 0 0 auto; width: 22px; height: 46px; border-radius: 11px;
-  background: radial-gradient(circle at 36% 26%, #F6E5BC 0%, #D9BC7C 32%, var(--gold) 55%, #86642d 85%, #55411e 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), inset 0 -4px 8px rgba(0,0,0,.42), 0 10px 24px rgba(0,0,0,.5);
+  background: #C9A86C;
+  box-shadow: inset 0 0 0 2px #A4844A, inset 0 -9px 0 #A4844A, 0 4px 0 rgba(0,0,0,.3);
+}
+.roll-cap::after {
+  content: ''; position: absolute; left: 6px; top: 7px;
+  width: 5px; height: 13px; border-radius: 3px; background: #F2E1B6;
 }
 /* le pli sombre là où le papier plonge dans le rouleau */
 .roll-crease {
   position: absolute;
   left: var(--cap-inset); right: var(--cap-inset);
-  bottom: 100%; height: 30px;
-  background: linear-gradient(180deg, rgba(52,36,18,0) 0%, rgba(52,36,18,.20) 55%, rgba(40,27,12,.5) 100%);
+  bottom: 100%; height: 5px;
+  background: rgba(52,36,18,.28);
   pointer-events: none; z-index: 7;
-  opacity: calc(1 - var(--p, 0) * .35);
 }
 
 /* ─── Contenu ─── */
@@ -362,7 +347,7 @@
   display: block; text-align: center;
   font-family: var(--font-sub);
   font-size: clamp(.58rem, 1.5vw, .7rem);
-  letter-spacing: .26em; color: #A5822F;
+  letter-spacing: .26em; color: #7A5C1A;
   margin-bottom: .6rem;
 }
 .parch-title {
@@ -386,10 +371,13 @@
 }
 .parch-item.on { opacity: 1; transform: translateY(0) rotateX(0); }
 .parch-when {
-  font-family: var(--font-sub);
-  font-size: clamp(.63rem, 1.7vw, .78rem);
-  letter-spacing: .13em; color: #A5822F;
-  text-align: right; padding-top: .2em;
+  font-family: var(--font-title);
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  letter-spacing: .01em;
+  color: #6B4F17;
+  text-align: right;
+  padding-top: .1em;
+  white-space: nowrap;
 }
 .parch-what h3 {
   font-family: var(--font-title); font-weight: 400;
@@ -398,8 +386,9 @@
 }
 .parch-what p {
   font-family: var(--font-body);
-  font-size: clamp(.79rem, 2vw, .88rem);
-  color: #5C7189; line-height: 1.62;
+  font-size: clamp(.92rem, 2vw, 1rem);
+  color: #465C74;
+  line-height: 1.58;
 }
 .parch-note {
   text-align: center;
@@ -431,18 +420,15 @@
 .seal-wax {
   position: absolute; inset: 0;
   border-radius: 47% 53% 44% 56% / 54% 46% 55% 45%;
-  background: radial-gradient(circle at 33% 27%, #b23c46 0%, #8e2531 36%, #641622 70%, #3f0b14 100%);
-  box-shadow:
-    0 14px 26px rgba(45,6,12,.55),
-    inset 0 3px 7px rgba(255,255,255,.26),
-    inset 0 -7px 13px rgba(0,0,0,.5);
+  background: #7A1E2B;
+  box-shadow: inset 0 0 0 4px #8C2836, inset 0 0 0 5px #64161F, 0 3px 0 rgba(45,6,12,.45);
 }
 /* la bavure : en appuyant, la cire a débordé d'un côté */
-.seal-wax::before {
+.seal-wax::before {        /* la bavure : la cire a débordé d'un côté */
   content: ''; position: absolute; inset: -5px -1px -2px -6px;
   border-radius: 53% 47% 49% 51% / 45% 56% 44% 55%;
-  background: radial-gradient(circle at 42% 38%, rgba(150,46,56,.62), rgba(80,15,25,.9));
-  z-index: -1; filter: blur(.5px);
+  background: #6A1824;
+  z-index: -1;
 }
 /* grain de la cire refroidie */
 .seal-wax::after {
@@ -453,13 +439,11 @@
 /* le monogramme, enfoncé dans la cire :
    lumière en bas, ombre en haut → le motif se creuse au lieu de ressortir */
 .seal-mark {
-  position: absolute; inset: 20%;
+  position: absolute; inset: 21%;
   -webkit-mask: url('logo-navy.png') center / contain no-repeat;
           mask: url('logo-navy.png') center / contain no-repeat;
-  background: linear-gradient(158deg, #58111c 0%, #7d2231 46%, #440a13 100%);
-  filter:
-    drop-shadow(0 1.2px 0 rgba(255,178,178,.34))
-    drop-shadow(0 -1px .5px rgba(0,0,0,.55));
+  background: #551019;
+  filter: drop-shadow(0 1px 0 rgba(255,178,178,.3));
   transform: rotate(3.5deg);   /* un tampon n'est jamais parfaitement aligné */
 }
 
@@ -469,13 +453,13 @@
   transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: .5rem;
   font-family: var(--font-sub);
-  font-size: .62rem; letter-spacing: .24em; color: rgba(240,232,218,.62);
+  font-size: 0.77rem; letter-spacing: .24em; color: rgba(240,232,218,.62);
   transition: opacity .5s ease; pointer-events: none; z-index: 9;
 }
 .parch-sec.is-started .parch-hint { opacity: 0; }
 .parch-hint i {
   width: 1px; height: 30px;
-  background: linear-gradient(180deg, rgba(201,168,108,.85), transparent);
+  background: var(--gold);
   animation: parchHint 2.2s var(--ease-inout) infinite;
 }
 @keyframes parchHint {
@@ -498,21 +482,21 @@
   .roll, .roll-body, .roll-cap { height: 30px; }
   .roll-body, .roll-cap { border-radius: 15px; }
   .roll-cap { width: 14px; }
-  .roll-crease { height: 20px; }
+  .roll-crease { height: 4px; }
 
   .parch-sheet { padding: 1.35rem 1.15rem 1.25rem; }
 
-  .parch-eyebrow { font-size: .62rem; letter-spacing: .2em; margin-bottom: .35rem; }
+  .parch-eyebrow { font-size: 0.77rem; letter-spacing: .2em; margin-bottom: .35rem; }
   .parch-title   { font-size: 1.62rem; }
   .parch-rule    { margin: .55rem auto .8rem; max-width: 130px; }
 
   .parch-list { gap: .72rem; }
   .parch-item { grid-template-columns: 1fr; gap: .1rem; }
-  .parch-when { text-align: left; font-size: .68rem; letter-spacing: .1em; padding-top: 0; }
+  .parch-when { text-align: left; font-size: 1.1rem; padding-top: 0; }
   .parch-what h3 { font-size: 1.16rem; }
-  .parch-what p  { font-size: .95rem; line-height: 1.5; }
+  .parch-what p  { font-size: .98rem; line-height: 1.5; }
 
-  .parch-note { font-size: .84rem; line-height: 1.55; margin-top: .8rem; padding-top: .6rem; }
+  .parch-note { font-size: 0.96rem; line-height: 1.55; margin-top: .8rem; padding-top: .6rem; }
   .parch-seal { width: 54px; margin-top: .85rem; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -538,6 +522,7 @@
     <span class="t-quote-ref" id="t-quote-ref"></span>
   </div>
 </div>
+<script>/* arrivée par les portes : le titre est là dès la première image */(function(){try{if(!sessionStorage.getItem('tfr_t'))return;var m=JSON.parse(sessionStorage.getItem('tfr_t_m')),q=JSON.parse(sessionStorage.getItem('tfr_t_q'));if(!m)return;var g=function(i){return document.getElementById(i)};g('t-eyebrow').textContent=m.eyebrow;g('t-title').textContent=m.title;if(q){g('t-quote').textContent=q.fr;g('t-quote-ref').textContent=q.ref||''}}catch(e){}})();</script>
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav class="nav" id="mainNav" aria-label="Navigation principale">
@@ -555,26 +540,27 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
-  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="nav-burger-lbl">Menu</i><span class="nav-burger-ico" aria-hidden="true"><span></span><span></span><span></span></span></button>
 </nav>
 
 <!-- ═══ MENU MOBILE ═══ -->
 <div id="menu-overlay" aria-hidden="true">
-  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <button class="menu-close" aria-label="Fermer le menu"><i>Fermer</i><span class="x" aria-hidden="true"></span></button>
   <span class="logo-mask menu-logo" aria-hidden="true"></span>
-  <a href="index.html">Accueil</a>
-  <a href="programme.html">Le Programme</a>
-  <a href="sejour.html">Venir au Domaine</a>
-  <a href="covoiturage.html">Covoiturer</a>
-  <a href="dresscode.html">Dress code</a>
-  <a href="histoire.html">Photos &amp; poème</a>
-  <a href="cadeaux.html">Cadeaux</a>
-  <a href="contact.html">Contact</a>
-  <a href="rsvp.html">Confirmer ma venue</a>
-  <span class="menu-rule" aria-hidden="true"></span>
-  <span class="menu-date">12 · 12 · 2026</span>
+  <nav class="menu-list" aria-label="Menu">
+    <a href="index.html"><b>Accueil</b><small>L'invitation et l'essentiel</small></a>
+    <a href="programme.html" aria-current="page"><b>Le Programme</b><small>Les horaires de la journée</small></a>
+    <a href="sejour.html"><b>Venir au Domaine</b><small>Adresses, itinéraires, où dormir</small></a>
+    <a href="covoiturage.html"><b>Covoiturer</b><small>Proposer ou trouver une place</small></a>
+    <a href="dresscode.html"><b>Dress code</b><small>Les couleurs à porter</small></a>
+    <a href="histoire.html"><b>Photos &amp; poème</b><small>Nos plus belles images</small></a>
+    <a href="cadeaux.html"><b>Cadeaux</b><small>Une urne, tout simplement</small></a>
+    <a href="contact.html"><b>Contact</b><small>Une question ? Écrivez-nous</small></a>
+    <a href="rsvp.html"><b>Confirmer ma venue</b><small>Réponses closes</small></a>
+  </nav>
+  <div class="menu-foot">
+    <span class="menu-date">12 · 12 · 2026</span>
+  </div>
 </div>
 
 <!-- ═══ EN-TÊTE ═══ -->
@@ -633,6 +619,13 @@
 
                 <ol class="parch-list">
                   <li class="parch-item" data-reveal>
+                    <span class="parch-when">13h20</span>
+                    <div class="parch-what">
+                      <h3>Le rendez-vous</h3>
+                      <p>À la maison, chez Florian — 156 rue de la Clouterie, Trith-Saint-Léger.</p>
+                    </div>
+                  </li>
+                  <li class="parch-item" data-reveal>
                     <span class="parch-when">14h00</span>
                     <div class="parch-what">
                       <h3>Le oui civil</h3>
@@ -640,31 +633,31 @@
                     </div>
                   </li>
                   <li class="parch-item" data-reveal>
-                    <span class="parch-when">Puis</span>
+                    <span class="parch-when">16h00</span>
                     <div class="parch-what">
                       <h3>La cérémonie religieuse</h3>
-                      <p>Au domaine, dans la salle de L'Étable. Plus une route à faire ensuite.</p>
+                      <p>Au domaine, dans la salle de L'Étable.</p>
                     </div>
                   </li>
                   <li class="parch-item" data-reveal>
-                    <span class="parch-when">Le soir</span>
+                    <span class="parch-when">Ensuite</span>
                     <div class="parch-what">
-                      <h3>Le repas</h3>
-                      <p>Dans la grande salle de La Grange.</p>
+                      <h3>Vin d'honneur &amp; apéritif</h3>
+                      <p>On trinque ensemble, au domaine.</p>
                     </div>
                   </li>
                   <li class="parch-item" data-reveal>
-                    <span class="parch-when">Et ensuite</span>
+                    <span class="parch-when">Vers 19h</span>
                     <div class="parch-what">
-                      <h3>La fête, jusqu'au bout de la nuit</h3>
-                      <p>On ne compte pas les heures, ce soir-là.</p>
+                      <h3>La Grange</h3>
+                      <p>On rejoint la grande salle pour la suite des festivités — jusqu'au bout de la nuit.</p>
                     </div>
                   </li>
                 </ol>
 
                 <p class="parch-note" data-reveal>
-                  Les horaires détaillés — vin d'honneur, discours, ouverture du bal —
-                  seront ajoutés ici courant septembre.
+                  Prévoyez une petite polaire&nbsp;: on sera peu à l'extérieur,
+                  mais c'est décembre.
                 </p>
 
                 <span class="parch-seal" data-reveal aria-hidden="true">
@@ -703,8 +696,8 @@
 <footer class="footer">
   <div class="footer-inner">
     <span class="logo-mask footer-logo" aria-hidden="true"></span>
-    <span class="footer-script">Thomy <span class="footer-amp" data-tf-secret>&amp;</span> Florian</span>
-    <p class="footer-date"><a href="reponses.html">12 · XII · MMXXVI</a></p>
+    <span class="footer-script">Thomy <span class="footer-amp">&amp;</span> Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
     <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
@@ -718,6 +711,7 @@
       <a href="rsvp.html">RSVP</a>
     </div>
     <p class="footer-note">Les réponses sont closes — merci à vous</p>
+    <p class="footer-admin"><a href="admin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="1.4"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg><span>Admin</span></a></p>
   </div>
 </footer>
 
@@ -820,7 +814,9 @@
 
     var revealed = e * full;
     for (var i = 0; i < items.length; i++) {
-      var on = revealed > tops[i] + 26;
+      /* tout est révélé au plus tard à 94 % du déroulé : le cachet, tout en bas,
+         ne doit jamais attendre le dernier pixel de défilement pour apparaître */
+      var on = revealed > Math.min(tops[i] + 26, full * 0.94);
       if (on !== items[i].__on) { items[i].classList.toggle('on', on); items[i].__on = on; }
     }
     sec.classList.toggle('is-started', p > 0.012);
@@ -868,8 +864,13 @@
   }
 }());
 </script>
-<script src="toile.js?v=16"></script>
-<script src="transitions.js?v=16"></script>
+<script src="toile.js?v=21"></script>
+<script src="transitions.js?v=21"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="motion.js?v=21"></script>
 
 </body>
 </html>

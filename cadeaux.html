@@ -3,122 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
 <title>Cadeaux — Thomy & Florian · 12 décembre 2026</title>
-<meta name="description" content="Si l'envie de nous gâter vous prend, voici comment nous faire plaisir.">
+<meta name="description" content="Pas de liste de cadeaux : une urne le jour J, ou une participation en ligne depuis votre téléphone.">
 <link rel="icon" type="image/png" href="Logo.png">
-<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:51%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-center{opacity:1}';document.head.appendChild(s);})();</script>
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=16">
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<link rel="stylesheet" href="style.css?v=21">
 
 <style>
 /* ═══════════════════════════════════════════════
-   CADEAUX
+   CADEAUX — une urne, rien d'autre
    ═══════════════════════════════════════════════ */
-
-/* ─── Encart enveloppes ─── */
-.envelope-box {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0;
-  border: 1px solid var(--border2);
-  overflow: hidden;
-  background: var(--cream);
-}
-.envelope-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2.6rem 2.4rem;
-  background: var(--toile-tint);
-  border-right: 1px solid var(--border);
-  color: var(--gold2);
-}
-.envelope-icon svg { width: 54px; height: 54px; }
-.envelope-text {
-  padding: 2rem 2.2rem 2rem;
-}
-.envelope-text h3 {
-  font-family: var(--font-title);
-  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
-  color: var(--navy);
-  font-weight: 400;
-  margin-bottom: .6rem;
-}
-.envelope-text p {
-  font-family: var(--font-body);
-  font-size: .92rem;
-  line-height: 1.8;
-  color: var(--text-mid);
-}
-.envelope-text p + p { margin-top: .7rem; }
-
-/* ─── Pastilles "À quoi ça servira" ─── */
-.env-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  margin-top: 1.2rem;
-}
-.env-chip {
-  font-family: var(--font-body);
-  font-size: .78rem;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  color: var(--navy);
-  border: 1px solid var(--border2);
-  padding: .35em .95em;
-  background: var(--cream);
-}
-
-/* ─── Encart "bientôt" ─── */
-.coming-soon-box {
-  position: relative;
-  border: 1px dashed var(--border3);
-  background: rgba(31,47,68,.018);
-  padding: clamp(2.4rem, 6vw, 4rem) clamp(1.4rem, 6vw, 3rem);
-  text-align: center;
-}
-.coming-soon-box::after {
-  content: '';
-  position: absolute;
-  inset: 7px;
-  border: 1px solid var(--gold-border);
-  pointer-events: none;
-}
-.coming-soon-icon {
-  color: var(--gold2);
-  margin-bottom: 1.4rem;
-  display: block;
-}
-.coming-soon-icon svg { width: 40px; height: 40px; }
-.coming-soon-label {
-  display: block;
-  font-family: var(--font-sub);
-  font-size: .58rem;
-  letter-spacing: .22em;
-  color: var(--gold2);
-  margin-bottom: .6rem;
-}
-.coming-soon-title {
-  font-family: var(--font-title);
-  font-size: clamp(1.3rem, 3vw, 1.8rem);
-  color: var(--navy);
-  font-weight: 400;
-  margin-bottom: .9rem;
-}
-.coming-soon-sub {
-  font-family: var(--font-body);
-  font-size: .9rem;
-  color: var(--text-mid);
-  line-height: 1.75;
-  max-width: 26rem;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
 
 /* ─── Citation ─── */
 .gift-quote {
@@ -149,18 +47,204 @@
   margin-top: 1rem;
   font-family: var(--font-script);
   font-size: clamp(1rem, 2vw, 1.3rem);
-  color: var(--gold2);
+  color: var(--gold-text);
   position: relative;
   z-index: 1;
 }
 
-@media (max-width: 620px) {
-  .envelope-box { grid-template-columns: 1fr; }
-  .envelope-icon {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 1.8rem;
+/* ─── L'urne : l'illustration et le message ─── */
+.urn-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+  gap: clamp(2rem, 5.5vw, 4.2rem);
+  align-items: center;
+}
+.urn-art { width: 100%; max-width: 16rem; margin: 0 auto; }
+.urn-lead { font-size: 1.12rem; line-height: 1.75; color: var(--ocean2); max-width: 36rem; }
+.urn-lead b { color: var(--navy); font-weight: 500; }
+.urn-lead + .urn-lead { margin-top: 1rem; }
+
+/* l'illustration : même arche que le dress code, mêmes aplats */
+.fig { width: 100%; height: auto; display: block; overflow: visible; }
+.fig .arch-fill { fill: #CCD8E6; }
+.fig .arch-line { fill: none; stroke: #B8913A; stroke-width: 1.3; }
+.fig .arch-key { fill: #C9A86C; }
+.fig .arch-line.thin { stroke-width: .8; stroke: #FBF7F0; }
+.fig .fig-floor { fill: #B4C3D6; }
+.fig .fig-shadow { fill: rgba(31,47,68,.16); }
+.urn-fig .u-plinth { fill: #1F2F44; }
+.urn-fig .u-gold { fill: none; stroke: #C9A86C; stroke-width: 1.1; }
+.urn-fig .u-gold.thin { stroke-width: .7; }
+.urn-fig .u-body { fill: #FBF7F0; stroke: #D3C4A4; stroke-width: .8; }
+.urn-fig .u-panel { fill: none; stroke: #C9A86C; stroke-width: 1; }
+.urn-fig .u-panel-in { fill: none; stroke: #E3D5BD; stroke-width: .7; }
+.urn-fig .u-top { fill: #2D4263; }
+.urn-fig .u-slot { fill: #0E1B2E; }
+.urn-fig .u-slot-lip { fill: none; stroke: #4A6288; stroke-width: .8; }
+.urn-fig .u-lid { fill: #1F2F44; }
+.urn-fig .e-paper { fill: #FFFFFF; stroke: #C9B48A; stroke-width: 1; }
+.urn-fig .e-flap { fill: none; stroke: #C9B48A; stroke-width: 1; stroke-linejoin: round; }
+.urn-fig .e-seal { fill: #B8913A; }
+.urn-fig .stem { fill: none; stroke: #6F8064; stroke-width: 1.4; stroke-linecap: round; }
+.urn-fig .leaf { fill: #7E8E73; }
+.urn-fig .spark { fill: #C9A86C; }
+
+/* ─── Ce que fera l'urne ─── */
+.uses {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-top: 2.8rem;
+}
+.use {
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  padding: 1.8rem 1.7rem 1.75rem;
+}
+.use-ico, .way-ico {
+  display: flex; align-items: center; justify-content: center;
+  width: 3.2rem; height: 3.2rem;
+  border: 1px solid var(--gold-border2);
+  color: var(--gold2);
+  margin-bottom: 1.15rem;
+}
+.use-ico svg, .way-ico svg { width: 1.65rem; height: 1.65rem; display: block; }
+.use-label {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .78rem;
+  letter-spacing: .2em;
+  color: var(--gold-text);
+  margin-bottom: .45rem;
+}
+.use h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 2.6vw, 1.65rem);
+  line-height: 1.28;
+  color: var(--navy);
+  margin-bottom: .65rem;
+}
+.use p { font-size: 1.02rem; line-height: 1.7; color: var(--ocean2); }
+.uses-note {
+  margin-top: 2rem;
+  text-align: center;
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  line-height: 1.5;
+  color: var(--navy);
+  text-wrap: balance;
+}
+
+/* ─── Comment participer : deux cartes pleine largeur, chacune sur deux colonnes ─── */
+.ways { display: grid; gap: 1.1rem; margin-top: 2rem; }
+.way {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: clamp(1.8rem, 4.4vw, 3.4rem);
+  align-items: center;
+  padding: 2.2rem clamp(1.5rem, 3.4vw, 2.5rem) 2.1rem;
+}
+.way-tag {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .78rem;
+  letter-spacing: .2em;
+  color: var(--gold-text);
+  margin-bottom: .55rem;
+}
+.way h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.45rem, 2.6vw, 1.75rem);
+  line-height: 1.28;
+  color: var(--navy);
+  margin-bottom: .8rem;
+}
+.way p { font-size: 1.02rem; line-height: 1.7; color: var(--ocean2); }
+
+/* le jour J : la carte marine, comme « Le programme » sur l'accueil */
+.way-day { background: var(--navy); border: 1px solid var(--navy); }
+.way-day::after {
+  content: '';
+  position: absolute; inset: 7px;
+  border: 1px solid rgba(201,168,108,.45);
+  pointer-events: none;
+}
+.way-day .way-ico { color: var(--gold-light); border-color: rgba(227,199,143,.55); }
+.way-day .way-tag { color: var(--gold-light); }
+.way-day h3 { color: #FBF7F0; }
+.way-day p { color: rgba(251,247,240,.9); }
+.way-day .way-note {
+  margin: 0;
+  padding-left: clamp(1.4rem, 3.4vw, 2.6rem);
+  border-left: 1px solid rgba(201,168,108,.45);
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.2vw, 1.4rem);
+  line-height: 1.5;
+  color: var(--gold-light);
+  text-wrap: balance;
+}
+
+/* en ligne : la carte claire, avec le code à scanner */
+.way-online { background: var(--cream); border: 1px solid var(--border2); align-items: stretch; }
+/* les trois gestes pour scanner : un petit encart à droite, centré en hauteur */
+.scan-block {
+  align-self: center;
+  background: var(--cream2);
+  border: 1px solid var(--border);
+  padding: 1.6rem 1.5rem 1.7rem;
+}
+.scan-title {
+  font-family: var(--font-sub);
+  font-weight: 400;
+  font-size: .8rem;
+  letter-spacing: .2em;
+  color: var(--gold-text);
+  margin-bottom: 1.1rem;
+}
+.scan-steps { counter-reset: s; display: grid; gap: 1rem; }
+.scan-steps li {
+  counter-increment: s;
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
+  gap: .9rem;
+  align-items: start;
+  font-size: .98rem;
+  line-height: 1.55;
+  color: var(--ocean2);
+}
+.scan-steps li::before {
+  content: counter(s);
+  display: flex; align-items: center; justify-content: center;
+  width: 2.1rem; height: 2.1rem;
+  border: 1px solid var(--gold-border2);
+  background: var(--cream);
+  color: var(--gold-text);
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.scan-steps b { color: var(--navy); font-weight: 500; }
+
+@media (max-width: 900px) {
+  .way { grid-template-columns: 1fr; gap: 1.6rem; }
+  .way-day .way-note {
+    padding-left: 0; border-left: 0;
+    padding-top: 1.3rem; border-top: 1px solid rgba(201,168,108,.45);
   }
+  .scan-block { align-self: stretch; }
+}
+@media (max-width: 760px) {
+  .urn-intro { grid-template-columns: 1fr; gap: 1.8rem; }
+  .urn-art { max-width: 13.5rem; }
+  .uses { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .way { padding: 1.8rem 1.4rem 1.7rem; }
 }
 </style>
 </head>
@@ -177,6 +261,7 @@
     <p id="t-quote-ref" class="t-quote-ref"></p>
   </div>
 </div>
+<script>/* arrivée par les portes : le titre est là dès la première image */(function(){try{if(!sessionStorage.getItem('tfr_t'))return;var m=JSON.parse(sessionStorage.getItem('tfr_t_m')),q=JSON.parse(sessionStorage.getItem('tfr_t_q'));if(!m)return;var g=function(i){return document.getElementById(i)};g('t-eyebrow').textContent=m.eyebrow;g('t-title').textContent=m.title;if(q){g('t-quote').textContent=q.fr;g('t-quote-ref').textContent=q.ref||''}}catch(e){}})();</script>
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav class="nav" id="mainNav" aria-label="Navigation principale">
@@ -194,26 +279,27 @@
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
-  <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="nav-burger-lbl">Menu</i><span class="nav-burger-ico" aria-hidden="true"><span></span><span></span><span></span></span></button>
 </nav>
 
 <!-- ═══ MENU MOBILE ═══ -->
 <div id="menu-overlay" aria-hidden="true">
-  <button class="menu-close" aria-label="Fermer le menu"><span></span><span></span></button>
+  <button class="menu-close" aria-label="Fermer le menu"><i>Fermer</i><span class="x" aria-hidden="true"></span></button>
   <span class="logo-mask menu-logo" aria-hidden="true"></span>
-  <a href="index.html">Accueil</a>
-  <a href="programme.html">Le Programme</a>
-  <a href="sejour.html">Venir au Domaine</a>
-  <a href="covoiturage.html">Covoiturer</a>
-  <a href="dresscode.html">Dress code</a>
-  <a href="histoire.html">Photos &amp; poème</a>
-  <a href="cadeaux.html">Cadeaux</a>
-  <a href="contact.html">Contact</a>
-  <a href="rsvp.html">Confirmer ma venue</a>
-  <span class="menu-rule" aria-hidden="true"></span>
-  <span class="menu-date">12 · 12 · 2026</span>
+  <nav class="menu-list" aria-label="Menu">
+    <a href="index.html"><b>Accueil</b><small>L'invitation et l'essentiel</small></a>
+    <a href="programme.html"><b>Le Programme</b><small>Les horaires de la journée</small></a>
+    <a href="sejour.html"><b>Venir au Domaine</b><small>Adresses, itinéraires, où dormir</small></a>
+    <a href="covoiturage.html"><b>Covoiturer</b><small>Proposer ou trouver une place</small></a>
+    <a href="dresscode.html"><b>Dress code</b><small>Les couleurs à porter</small></a>
+    <a href="histoire.html"><b>Photos &amp; poème</b><small>Nos plus belles images</small></a>
+    <a href="cadeaux.html" aria-current="page"><b>Cadeaux</b><small>Une urne, tout simplement</small></a>
+    <a href="contact.html"><b>Contact</b><small>Une question ? Écrivez-nous</small></a>
+    <a href="rsvp.html"><b>Confirmer ma venue</b><small>Réponses closes</small></a>
+  </nav>
+  <div class="menu-foot">
+    <span class="menu-date">12 · 12 · 2026</span>
+  </div>
 </div>
 
 <!-- ═══ EN-TÊTE ═══ -->
@@ -225,7 +311,7 @@
     <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
       <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
     </div>
-    <span class="page-sub reveal reveal-delay-3">Des idées pour nous gâter</span>
+    <span class="page-sub reveal reveal-delay-3">Une urne, tout simplement</span>
   </div>
 </header>
 
@@ -235,101 +321,197 @@
 
   <main class="sheet">
 
-    <!-- ═══ INTRO ═══ -->
+    <!-- ═══ LA CITATION ═══ -->
     <section class="section">
-
       <div class="gift-quote reveal">
         <p class="gift-quote-text">
           « Votre présence à nos côtés est déjà le plus beau des cadeaux. »
         </p>
         <span class="gift-quote-sig">Thomy &amp; Florian</span>
       </div>
-
-      <p class="section-intro reveal" style="margin-top:2rem">
-        Si l'envie de nous offrir quelque chose vous prend,
-        voici comment nous faire plaisir — à votre guise,
-        en toute liberté. Chaque attention nous touche, quelle qu'elle soit.
-      </p>
-
     </section>
 
-    <!-- ═══ ENVELOPPES ═══ -->
-    <section class="section" aria-labelledby="envelope-title">
-      <span class="section-eyebrow reveal">La façon la plus simple</span>
-      <h2 class="section-title reveal" id="envelope-title">L'urne à enveloppes</h2>
+    <!-- ═══ L'URNE ═══ -->
+    <section class="section" aria-labelledby="urne-title">
+      <div class="urn-intro">
+        <div class="urn-art" aria-hidden="true">
+<svg class="fig urn-fig" viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g class="fig-arch">
+    <path class="arch-fill" d="M28 324 V122 A102 102 0 0 1 232 122 V324 Z"/>
+    <path class="arch-line" d="M28 324 V122 A102 102 0 0 1 232 122 V324"/>
+    <path class="arch-line thin" d="M35 324 V124 A95 95 0 0 1 225 124 V324"/>
+    <path class="arch-key" d="M124.5 21 L130 15.5 L135.5 21 L130 26.5 Z"/>
+  </g>
+  <path class="fig-floor" d="M28 324 H232 V330 H28 Z"/>
+  <ellipse class="fig-shadow" cx="130" cy="324" rx="92" ry="4"/>
 
-      <div class="envelope-box reveal">
-        <div class="envelope-icon" aria-hidden="true">
-          <svg viewBox="0 0 54 54" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="5" y="13" width="44" height="30" rx="1.5"/>
-            <path d="M5 15 L27 32 L49 15"/>
-            <path d="M5 43 L19 28"/>
-            <path d="M49 43 L35 28"/>
-          </svg>
+  <g class="fig-person sprig">
+    <g>
+      <path class="stem" d="M50 322 C 43 301 41 277 48 254"/>
+      <ellipse class="leaf" cx="43.5" cy="305" rx="6.4" ry="2.8" transform="rotate(-38 43.5 305)"/>
+      <ellipse class="leaf" cx="49.5" cy="293" rx="6.4" ry="2.8" transform="rotate(38 49.5 293)"/>
+      <ellipse class="leaf" cx="42" cy="283" rx="6.4" ry="2.8" transform="rotate(-42 42 283)"/>
+      <ellipse class="leaf" cx="49.5" cy="272" rx="6.4" ry="2.8" transform="rotate(40 49.5 272)"/>
+      <ellipse class="leaf" cx="45.5" cy="261" rx="6" ry="2.6" transform="rotate(-46 45.5 261)"/>
+      <ellipse class="leaf" cx="49" cy="252" rx="5.6" ry="2.4" transform="rotate(62 49 252)"/>
+    </g>
+    <g>
+      <path class="stem" d="M210 322 C 217 301 219 277 212 254"/>
+      <ellipse class="leaf" cx="216.5" cy="305" rx="6.4" ry="2.8" transform="rotate(38 216.5 305)"/>
+      <ellipse class="leaf" cx="210.5" cy="293" rx="6.4" ry="2.8" transform="rotate(-38 210.5 293)"/>
+      <ellipse class="leaf" cx="218" cy="283" rx="6.4" ry="2.8" transform="rotate(42 218 283)"/>
+      <ellipse class="leaf" cx="210.5" cy="272" rx="6.4" ry="2.8" transform="rotate(-40 210.5 272)"/>
+      <ellipse class="leaf" cx="214.5" cy="261" rx="6" ry="2.6" transform="rotate(46 214.5 261)"/>
+      <ellipse class="leaf" cx="211" cy="252" rx="5.6" ry="2.4" transform="rotate(-62 211 252)"/>
+    </g>
+  </g>
+
+  <!-- derrière l'enveloppe : le dessus de l'urne et sa fente -->
+  <g class="fig-person urn-back">
+    <path class="u-top" d="M64 186 H196 L208 202 H52 Z"/>
+    <path class="u-slot" d="M82 192.5 H178 L180 196.5 H80 Z"/>
+  </g>
+
+  <!-- l'enveloppe qui glisse dans la fente -->
+  <g class="env-drop">
+    <g class="env-body" transform="rotate(-5 130 185)">
+      <rect class="e-paper" x="99" y="164" width="62" height="42"/>
+      <path class="e-flap" d="M99 164 L130 187 L161 164"/>
+      <circle class="e-seal" cx="130" cy="187" r="4"/>
+    </g>
+  </g>
+
+  <!-- devant l'enveloppe : le socle, le corps, le couvercle (elle disparaît derrière) -->
+  <g class="fig-person urn-front">
+    <rect class="u-plinth" x="48" y="312" width="164" height="12"/>
+    <path class="u-gold" d="M48 312.5 H212"/>
+    <rect class="u-body" x="58" y="222" width="144" height="90"/>
+    <path class="u-gold" d="M58 230.5 H202"/>
+    <path class="u-gold thin" d="M58 234.5 H202"/>
+    <rect class="u-panel" x="76" y="244" width="108" height="56"/>
+    <rect class="u-panel-in" x="80" y="248" width="100" height="48"/>
+    <image href="Logo.png" x="103" y="245" width="54" height="54" preserveAspectRatio="xMidYMid meet"/>
+    <path class="u-top" d="M56.1 196.5 H203.9 L208 202 H52 Z"/>
+    <path class="u-slot-lip" d="M80.4 196.5 H179.6"/>
+    <rect class="u-lid" x="52" y="202" width="156" height="20"/>
+    <path class="u-gold" d="M52 221.5 H208"/>
+  </g>
+
+  <g class="sparkles">
+    <path class="spark" d="M66 150 L68 156 L74 158 L68 160 L66 166 L64 160 L58 158 L64 156 Z"/>
+    <path class="spark" d="M200 128 L201.6 133 L206.5 134.6 L201.6 136.2 L200 141 L198.4 136.2 L193.5 134.6 L198.4 133 Z"/>
+    <path class="spark" d="M182 80 L183.2 83.8 L187 85 L183.2 86.2 L182 90 L180.8 86.2 L177 85 L180.8 83.8 Z"/>
+  </g>
+</svg>
+
         </div>
-        <div class="envelope-text">
-          <h3>Une enveloppe, un geste du cœur</h3>
-          <p>
-            Le soir du 12 décembre, une urne vous attend dans la salle.
-            Chaque enveloppe nous aide à construire notre vie à deux —
-            lune de miel, premiers pas dans notre chez-nous, petits souvenirs
-            qui durent longtemps.
+        <div class="urn-copy">
+          <span class="section-eyebrow reveal">Notre souhait</span>
+          <h2 class="section-title reveal" id="urne-title">L'urne, plutôt que des cadeaux</h2>
+          <p class="urn-lead reveal">
+            Nous n'avons pas de liste de cadeaux, et nous préférons que vous n'achetiez rien pour nous.
+            Si l'envie de nous gâter vous prend, le plus simple est de glisser
+            <b>votre participation dans l'urne</b>, le jour J.
           </p>
-          <div class="env-chips">
-            <span class="env-chip">Lune de miel</span>
-            <span class="env-chip">Notre chez-nous</span>
-            <span class="env-chip">Premiers souvenirs</span>
-          </div>
+          <p class="urn-lead reveal">Elle nous permettra de réaliser deux belles choses&nbsp;:</p>
         </div>
       </div>
 
+      <div class="uses" data-deck>
+        <article class="use">
+          <span class="use-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3.5" y="7.5" width="17" height="12" rx="1.6"/>
+              <path d="M9 7.5V5.6A1.1 1.1 0 0 1 10.1 4.5H13.9A1.1 1.1 0 0 1 15 5.6V7.5"/>
+              <path d="M8.5 7.5V19.5M15.5 7.5V19.5"/>
+            </svg>
+          </span>
+          <span class="use-label">Pour partir</span>
+          <h3>Notre lune de miel</h3>
+          <p>Un beau voyage rien que tous les deux, pour prolonger la fête.</p>
+        </article>
+        <article class="use">
+          <span class="use-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.5 11 12 3.8 20.5 11"/>
+              <path d="M5.8 9.4V20h12.4V9.4"/>
+              <path d="M12 17.4c-2.2-1.5-3-2.6-3-3.6 0-1 .8-1.6 1.6-1.6.6 0 1.1.3 1.4.8.3-.5.8-.8 1.4-.8.8 0 1.6.6 1.6 1.6 0 1-.8 2.1-3 3.6Z"/>
+            </svg>
+          </span>
+          <span class="use-label">Pour s'installer</span>
+          <h3>Notre foyer</h3>
+          <p>De quoi démarrer notre vie ensemble avec de belles choses, que nous irons choisir nous-mêmes et que nous garderons longtemps&nbsp;: une cocotte en fonte, de belles poêles, une table bien dressée…</p>
+        </article>
+      </div>
+      <p class="uses-note reveal">Chaque fois que nous nous en servirons, nous penserons à vous.</p>
     </section>
 
-    <!-- ═══ LISTE À VENIR ═══ -->
-    <section class="section" aria-labelledby="list-title">
-      <span class="section-eyebrow reveal">En vrac</span>
-      <h2 class="section-title reveal" id="list-title">Notre liste de cadeaux</h2>
-      <p class="section-intro reveal">
-        On prépare une liste d'idées concrètes — objets, expériences, coups de cœur.
-        Elle arrive très bientôt.
-      </p>
+    <!-- ═══ COMMENT PARTICIPER ═══ -->
+    <section class="section" aria-labelledby="how-title">
+      <span class="section-eyebrow reveal">Très simple</span>
+      <h2 class="section-title reveal" id="how-title">Comment participer</h2>
 
-      <div class="coming-soon-box reveal">
-        <span class="coming-soon-icon" aria-hidden="true">
-          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="20" cy="20" r="15"/>
-            <path d="M20 12 V 20 L25 25"/>
-            <path d="M8 8 L32 32" opacity=".0"/>
-          </svg>
-        </span>
-        <span class="coming-soon-label">Patience</span>
-        <p class="coming-soon-title">Liste bientôt disponible</p>
-        <p class="coming-soon-sub">
-          Revenez dans quelques jours — on prépare une liste
-          soignée d'idées à votre portée.
-        </p>
+      <div class="ways" data-deck>
+        <article class="way way-day">
+          <div class="way-main">
+            <span class="way-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3.5" y="6" width="17" height="12" rx="1.4"/>
+                <path d="M3.8 7 12 13 20.2 7"/>
+              </svg>
+            </span>
+            <span class="way-tag">Le jour J</span>
+            <h3>Dans l'urne, au domaine</h3>
+            <p>Elle sera à votre disposition sur place. Glissez-y votre participation, avec un petit mot si le cœur vous en dit.</p>
+          </div>
+          <p class="way-note">Le montant est libre&nbsp;: ce qui compte, c'est le geste.</p>
+        </article>
+
+        <article class="way way-online" id="enligne">
+          <div class="way-main">
+            <span class="way-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="6.5" height="6.5" rx=".6"/>
+                <rect x="13.5" y="4" width="6.5" height="6.5" rx=".6"/>
+                <rect x="4" y="13.5" width="6.5" height="6.5" rx=".6"/>
+                <path d="M13.5 13.5h2.6v2.6h-2.6zM18 13.5h2M13.5 18.2h2.6M18 18v2"/>
+              </svg>
+            </span>
+            <span class="way-tag">Pas de liquide sur vous&nbsp;?</span>
+            <h3>Aucun souci, des QR codes sont dans la salle</h3>
+            <p>Scannez-en un avec votre téléphone, puis choisissez le montant que vous souhaitez. Vous pourrez payer avec Wero, PayPal ou par virement.</p>
+          </div>
+          <aside class="scan-block">
+            <h4 class="scan-title">Comment scanner un code</h4>
+            <ol class="scan-steps">
+              <li><span><b>Ouvrez</b> l'appareil photo de votre téléphone.</span></li>
+              <li><span><b>Visez</b> le carré noir et blanc, sans appuyer.</span></li>
+              <li><span><b>Touchez</b> le lien qui s'affiche, puis choisissez le montant.</span></li>
+            </ol>
+          </aside>
+        </article>
       </div>
-
     </section>
 
     <!-- bandeau CTA -->
     <div class="cta-band reveal">
-      <p>Des questions sur le mariage ? On est là.</p>
+      <p>Une question sur le mariage&nbsp;? On est là.</p>
       <div class="btns">
         <a href="contact.html" class="btn btn-outline">Nous contacter</a>
-        <a href="dresscode.html" class="btn btn-outline">Le dress code</a>
+        <a href="programme.html" class="btn btn-outline">Le programme</a>
       </div>
     </div>
 
   </main>
+
 </div>
 
 <!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="footer-inner">
     <span class="logo-mask footer-logo" aria-hidden="true"></span>
-    <span class="footer-script">Thomy <span class="footer-amp" data-tf-secret>&amp;</span> Florian</span>
-    <p class="footer-date"><a href="reponses.html">12 · XII · MMXXVI</a></p>
+    <span class="footer-script">Thomy <span class="footer-amp">&amp;</span> Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
     <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
@@ -343,11 +525,93 @@
       <a href="rsvp.html">RSVP</a>
     </div>
     <p class="footer-note">Les réponses sont closes — merci à vous</p>
+    <p class="footer-admin"><a href="admin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="1.4"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg><span>Admin</span></a></p>
   </div>
 </footer>
 
-<script src="toile.js?v=16"></script>
-<script src="transitions.js?v=16"></script>
+<script src="toile.js?v=21"></script>
+<script src="transitions.js?v=21"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+
+<script src="motion.js?v=21"></script>
+
+<!-- L'illustration de l'urne : l'arche se trace, l'urne se pose, puis une enveloppe glisse dans la fente -->
+<script>
+(function () {
+  'use strict';
+  var gsap = window.gsap, ST = window.ScrollTrigger;
+  var svg = document.querySelector('.urn-fig');
+  if (!svg || !gsap || !ST || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  gsap.registerPlugin(ST);
+
+  var lines  = svg.querySelectorAll('.arch-line');
+  var fill   = svg.querySelector('.arch-fill');
+  var key    = svg.querySelector('.arch-key');
+  var floor  = svg.querySelectorAll('.fig-floor, .fig-shadow');
+  var urn    = svg.querySelectorAll('.urn-back, .urn-front');
+  var sprigs = svg.querySelectorAll('.sprig > g');
+  var sparks = svg.querySelectorAll('.spark');
+  var drop   = svg.querySelector('.env-drop');
+
+  Array.prototype.forEach.call(lines, function (l) {
+    var len = l.getTotalLength();
+    l.style.strokeDasharray = len + ' ' + len;
+    l.style.strokeDashoffset = len;
+  });
+  gsap.set([fill, key].concat(Array.prototype.slice.call(floor)), { opacity: 0 });
+  gsap.set(urn, { opacity: 0, y: 18 });
+  gsap.set(sprigs, { opacity: 0, y: 10 });
+  gsap.set(sparks, { opacity: 0, scale: 0, transformOrigin: '50% 50%' });
+  gsap.set(drop, { opacity: 0, svgOrigin: '130 185' });
+
+  function guard(tw, ms) { setTimeout(function () { if (tw && tw.progress() < 1) tw.progress(1); }, ms); return tw; }
+
+  var inView = false, loop = null, twinkle = null, played = false;
+
+  function startLoop() {
+    if (loop) return;
+    /* tient la pose, glisse dans la fente, repart du haut, revient se poser */
+    loop = gsap.timeline({ repeat: -1, paused: !inView });
+    loop.to(drop, { y: 0, duration: 0.7 }, 0)
+        .to(drop, { y: 40, duration: 0.7, ease: 'power2.in' }, 0.7)
+        .set(drop, { opacity: 0, y: -86, rotation: -14 }, 1.5)
+        .to(drop, { opacity: 1, duration: 0.45, ease: 'power1.out' }, 1.6)
+        .to(drop, { y: -22, rotation: -6, duration: 1, ease: 'power2.out' }, 1.6)
+        .to(drop, { y: 0, rotation: 0, duration: 0.8, ease: 'sine.inOut' }, 2.6);
+    twinkle = gsap.to(sparks, { opacity: 0.4, scale: 0.78, duration: 1.7, ease: 'sine.inOut', yoyo: true, repeat: -1, stagger: 0.5, paused: !inView });
+  }
+
+  function start() {
+    if (played) return;
+    played = true;
+    var tl = gsap.timeline({ onComplete: startLoop });
+    tl.to(lines, { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut', stagger: 0.12 }, 0)
+      .to(fill, { opacity: 1, duration: 0.8, ease: 'power1.out' }, 0.25)
+      .to(floor, { opacity: 1, duration: 0.6 }, 0.5)
+      .to(key, { opacity: 1, duration: 0.4 }, 1.1)
+      .to(urn, { opacity: 1, y: 0, duration: 1.1, ease: 'expo.out' }, 0.55)
+      .to(sprigs, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', stagger: 0.12 }, 0.95)
+      .to(drop, { opacity: 1, duration: 0.5 }, 1.25)
+      .to(sparks, { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)', stagger: 0.15 }, 1.35);
+    guard(tl, 4200);
+  }
+
+  ST.create({ trigger: svg, start: 'top 88%', once: true, onEnter: start });
+  setTimeout(function () { if (svg.getBoundingClientRect().top < window.innerHeight) start(); }, 2400);
+  /* l'animation ne tourne que tant que l'illustration est à l'écran */
+  ST.create({
+    trigger: svg, start: 'top bottom', end: 'bottom top',
+    onToggle: function (self) {
+      inView = self.isActive;
+      if (loop) { inView ? loop.play() : loop.pause(); }
+      if (twinkle) { inView ? twinkle.play() : twinkle.pause(); }
+    }
+  });
+}());
+</script>
 
 </body>
 </html>

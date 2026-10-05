@@ -15,7 +15,7 @@
     'covoiturage.html': { eyebrow: 'On fait la route ensemble', title: 'Covoiturer' },
     'dresscode.html': { eyebrow: 'Pour vous faire beaux',   title: 'Le Dress Code' },
     'histoire.html':  { eyebrow: 'Avec tendresse',       title: 'Photos & poème' },
-    'cadeaux.html':   { eyebrow: 'Si le cœur vous en dit',   title: 'Cadeaux' },
+    'cadeaux.html':   { eyebrow: 'Une urne, tout simplement',   title: 'Cadeaux' },
     'contact.html':   { eyebrow: 'On est là',                title: 'Nous contacter' },
     'rsvp.html':      { eyebrow: 'Les réponses sont closes', title: 'Confirmer ma venue' },
     '':               { eyebrow: '12 décembre 2026',        title: 'Thomy & Florian' },
@@ -77,6 +77,9 @@
     function openDoors(delay) {
       setTimeout(function () {
         ov.dataset.state = 'opening';
+        /* motion.js attend ce signal pour jouer l'entrée de la page :
+           sinon elle se jouerait derrière les portes encore fermées */
+        window.dispatchEvent(new CustomEvent('tf:doors-open'));
         function onEnd(e) {
           if (e.propertyName !== 'transform') return;
           doorR.removeEventListener('transitionend', onEnd);
@@ -91,7 +94,8 @@
     function closeDoors(onClosed) {
       ov.style.pointerEvents = 'all';
       ov.dataset.state = 'closing';
-      setTimeout(onClosed, 1020);
+      /* 0,74 s de battants, puis le titre se pose (0,64 → 0,88 s) */
+      setTimeout(onClosed, 900);
     }
 
     /* Arrivée via transition */
@@ -100,15 +104,29 @@
       sessionStorage.removeItem(KEY);
       const storedQ = sessionStorage.getItem(KEY + '_q');
       sessionStorage.removeItem(KEY + '_q');
+      sessionStorage.removeItem(KEY + '_m');
       setMeta(from, storedQ ? JSON.parse(storedQ) : null);
       ov.dataset.state = 'closed';
       document.documentElement.removeAttribute('data-trans-in');
       const tc = document.getElementById('__tc');
       if (tc) tc.parentNode.removeChild(tc);
-      openDoors(820);
+      openDoors(620);
     } else {
       ov.style.pointerEvents = 'none';
     }
+
+    /* Retour arrière : Safari (le geste de balayage sur iPhone) et Chrome
+       restaurent la page exactement comme on l'a quittée, c'est-à-dire
+       portes fermées. On les rouvre aussitôt, comme à une arrivée. */
+    window.addEventListener('pageshow', function (e) {
+      if (!e.persisted || !ov.dataset.state) return;
+      sessionStorage.removeItem(KEY);
+      sessionStorage.removeItem(KEY + '_q');
+      sessionStorage.removeItem(KEY + '_m');
+      setMeta(filename(location.pathname));
+      ov.dataset.state = 'closed';
+      openDoors(60);
+    });
 
     /* Interception des liens internes */
     document.addEventListener('click', function (e) {
@@ -119,8 +137,8 @@
       if (!href) return;
       if (/^(#|https?:|mailto:|tel:|javascript)/i.test(href)) return;
       if (a.hasAttribute('target')) return;
-      /* l'espace des mariés n'a pas de portes : navigation directe */
-      if (/reponses\.html/i.test(href)) return;
+      /* l'espace des mariés et la page de paiement n'ont pas de portes : navigation directe */
+      if (/(reponses|admin|invitations|paiement)\.html/i.test(href)) return;
 
       e.preventDefault();
       e.stopPropagation();
@@ -130,6 +148,7 @@
       setMeta(fname, q);
       sessionStorage.setItem(KEY, fname);
       sessionStorage.setItem(KEY + '_q', JSON.stringify(q));
+      sessionStorage.setItem(KEY + '_m', JSON.stringify(PAGES[fname] || PAGES['index.html']));
 
       closeDoors(function () {
         window.location.href = href;
