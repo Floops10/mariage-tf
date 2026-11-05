@@ -1039,3 +1039,24 @@ html.lenis, html.lenis body { height: auto; }
     scroll-behavior: auto !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   LE JOUR J — bouton de retour (posé par toile.js quand on vient du menu)
+   ═══════════════════════════════════════════════════════════════ */
+.jj-back {
+  position: fixed; z-index: 800;
+  left: 50%; bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: inline-flex; align-items: center; gap: .55rem;
+  min-height: 52px; padding: 0 1.4rem;
+  font-family: var(--font-body); font-weight: 500; font-size: 1rem; letter-spacing: .02em; white-space: nowrap;
+  color: var(--cream); background: var(--navy);
+  border: 1px solid var(--gold-border2);
+  box-shadow: 0 0 0 4px rgba(250,245,239,.9), var(--lift-strong);
+  text-decoration: none;
+}
+.jj-back span { font-family: var(--font-title); font-size: 1.5rem; line-height: 1; color: #E3C78F; }
+.jj-back:hover { background: var(--navy-hover); }
+.jj-back:focus-visible { outline: 3px solid var(--gold2); outline-offset: 4px; }
+.has-jj-back body { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
+#menu-overlay.open ~ .jj-back { display: none; }

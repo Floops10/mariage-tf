@@ -284,4 +284,24 @@
     });
   }
 
+
+  /* ═════════════════════════════════════════════
+     LE JOUR J : un chemin de retour toujours visible
+     Qui arrive par le QR code de la salle passe par jour-j.html.
+     Ensuite, sur chaque page du site, un bouton fixe « Menu du jour J »
+     ramène au menu : on ne se perd jamais, même sans connaître le bouton
+     « retour » du téléphone. Le souvenir dure 18 h (la soirée entière).
+     ═════════════════════════════════════════════ */
+  (function () {
+    var KEY = 'tf_jourj', TTL = 18 * 3600 * 1000, onHub = /jour-j\.html$/.test(location.pathname);
+    var now = Date.now(), seen = 0;
+    try { seen = +localStorage.getItem(KEY) || 0; if (onHub) localStorage.setItem(KEY, String(now)); } catch (e) {}
+    if (onHub || !seen || now - seen > TTL) return;
+    var a = document.createElement('a');
+    a.href = 'jour-j.html';
+    a.className = 'jj-back';
+    a.innerHTML = '<span aria-hidden="true">‹</span> Menu du jour J';
+    document.body.appendChild(a);
+    document.documentElement.classList.add('has-jj-back');
+  }());
 }());

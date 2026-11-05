@@ -9,7 +9,7 @@
 
 <!-- Préférence « texte plus grand » appliquée avant tout affichage -->
 <script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=22">
+<link rel="stylesheet" href="style.css?v=23">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -190,13 +190,13 @@ body { background: var(--cream2); }
               <rect x="4" y="13.5" width="6.5" height="6.5" rx=".6"/><path d="M13.5 13.5h2.6v2.6h-2.6zM18 13.5h2M13.5 18.2h2.6M18 18v2"/>
             </svg>
           </span>
-          <h2>La page de paiement</h2>
-          <p>Aucun lien du site n'y mène : seule son adresse l'ouvre. C'est elle que reprennent les QR codes de la salle.</p>
+          <h2>Le jour J : le QR code de la salle</h2>
+          <p>Le seul lien à afficher partout. Il ouvre un menu à trois boutons : envoyer ses photos, participer à l'urne, voir le programme. Aucun lien du site n'y mène.</p>
         </div>
         <div class="hub-side">
           <div class="hub-url" id="payUrl"></div>
           <div class="hub-go">
-            <a class="btn btn-primary" href="paiement.html" target="_blank" rel="noopener">Ouvrir <span class="arr" aria-hidden="true">→</span></a>
+            <a class="btn btn-primary" href="jour-j.html" target="_blank" rel="noopener">Ouvrir <span class="arr" aria-hidden="true">→</span></a>
             <button type="button" class="btn btn-outline" id="payCopy">Copier l'adresse</button>
           </div>
         </div>
@@ -258,11 +258,11 @@ body { background: var(--cream2); }
     show(false);
   });
 
-  /* ═══ L'adresse de la page de paiement ═══ */
+  /* ═══ L'adresse du menu du jour J (le QR code de la salle) ═══ */
   /* l'adresse que reprennent les QR codes : toujours celle du site en ligne, même quand on regarde la page en local */
   var LIVE = 'https://floops10.github.io/mariage-tf/';
   var isLocal = /^(localhost|127\.0\.0\.1|\[::1\]|)$/.test(window.location.hostname);
-  var payUrl = isLocal ? LIVE + 'paiement.html' : new URL('paiement.html', window.location.href).href;
+  var payUrl = isLocal ? LIVE + 'jour-j.html' : new URL('jour-j.html', window.location.href).href;
   document.getElementById('payUrl').textContent = payUrl;
   var copyBtn = document.getElementById('payCopy');
   copyBtn.addEventListener('click', function () {
