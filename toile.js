@@ -288,7 +288,7 @@
   /* ═════════════════════════════════════════════
      LE JOUR J : un chemin de retour toujours visible
      Qui arrive par le QR code de la salle passe par jour-j.html.
-     Ensuite, sur chaque page du site, un bouton fixe « Menu du jour J »
+     Ensuite, sur chaque page du site, un bouton fixe « Retour à l'accueil »
      ramène au menu : on ne se perd jamais, même sans connaître le bouton
      « retour » du téléphone. Le souvenir dure 18 h (la soirée entière).
      ═════════════════════════════════════════════ */
@@ -300,7 +300,7 @@
     var a = document.createElement('a');
     a.href = 'jour-j.html';
     a.className = 'jj-back';
-    a.innerHTML = '<span aria-hidden="true">‹</span> Menu du jour J';
+    a.innerHTML = '<span aria-hidden="true">‹</span> Retour à l'accueil';
     document.body.appendChild(a);
     document.documentElement.classList.add('has-jj-back');
   }());

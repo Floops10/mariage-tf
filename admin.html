@@ -9,7 +9,7 @@
 
 <!-- Préférence « texte plus grand » appliquée avant tout affichage -->
 <script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=23">
+<link rel="stylesheet" href="style.css?v=24">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -258,7 +258,7 @@ body { background: var(--cream2); }
     show(false);
   });
 
-  /* ═══ L'adresse du menu du jour J (le QR code de la salle) ═══ */
+  /* ═══ L'adresse du page du jour J (le QR code de la salle) ═══ */
   /* l'adresse que reprennent les QR codes : toujours celle du site en ligne, même quand on regarde la page en local */
   var LIVE = 'https://floops10.github.io/mariage-tf/';
   var isLocal = /^(localhost|127\.0\.0\.1|\[::1\]|)$/.test(window.location.hostname);
