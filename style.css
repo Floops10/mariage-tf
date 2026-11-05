@@ -14,7 +14,7 @@
  *   · Tout est dimensionné en rem : le réglage « texte agrandi »
  *     agrandit la racine, et la page entière suit, proportionnée.
  *
- * Toile de Jouy : motif fourni (toile-de-jouy.jpg, tuile 1620²)
+ * Toile de Jouy : motif fourni (toile-tf.jpg, tuile 1620²)
  *   .toile-img        → couche de motif répété
  *   .toile-img.blue   → teintée bleu poudré (multiply)
  *   .toile-img.faded  → filigrane discret sur fond crème
@@ -194,7 +194,7 @@ a, button, .swatch, .polaroid, .rider, .cq-chip, .cv-seat-btn { -webkit-tap-high
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: url('toile-de-jouy.jpg');
+  background-image: url('toile-tf.jpg');
   background-size: var(--toile-tile) var(--toile-tile);
   background-repeat: repeat;
 }
