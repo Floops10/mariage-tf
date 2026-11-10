@@ -300,7 +300,7 @@
     var a = document.createElement('a');
     a.href = 'jour-j.html';
     a.className = 'jj-back';
-    a.innerHTML = '<span aria-hidden="true">‹</span> Retour à l'accueil';
+    a.innerHTML = '<span aria-hidden="true">‹</span> Retour à l’accueil';
     document.body.appendChild(a);
     document.documentElement.classList.add('has-jj-back');
   }());
