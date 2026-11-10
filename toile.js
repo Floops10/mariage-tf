@@ -267,11 +267,22 @@
   var burger = document.getElementById('navBurger');
   var menu = document.getElementById('menu-overlay');
   if (burger && menu) {
+    var closeBtn = menu.querySelector('.menu-close');
     var setMenu = function (open) {
+      var was = menu.classList.contains('open');
       menu.classList.toggle('open', open);
       burger.classList.toggle('open', open);
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      /* le menu ouvert doit exister pour les lecteurs d'écran (il était
+         déclaré masqué en permanence) */
+      menu.setAttribute('aria-hidden', open ? 'false' : 'true');
       document.body.style.overflow = open ? 'hidden' : '';
+      if (open === was) return;
+      /* au clavier : on entre dans le menu à l'ouverture, on revient au bouton à la fermeture */
+      try {
+        if (open) { if (closeBtn) setTimeout(function () { closeBtn.focus({ preventScroll: true }); }, 90); }
+        else if (menu.contains(document.activeElement)) burger.focus({ preventScroll: true });
+      } catch (e) {}
     };
     burger.addEventListener('click', function () {
       setMenu(!menu.classList.contains('open'));
@@ -280,7 +291,17 @@
       if (e.target.closest('a') || e.target.closest('.menu-close')) setMenu(false);
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') setMenu(false);
+      if (e.key === 'Escape') { setMenu(false); return; }
+      /* Tab reste dans le menu tant qu'il est ouvert */
+      if (e.key !== 'Tab' || !menu.classList.contains('open')) return;
+      var items = Array.prototype.filter.call(menu.querySelectorAll('a[href], button'), function (el) {
+        return el.getBoundingClientRect().height > 0;
+      });
+      if (!items.length) return;
+      var first = items[0], last = items[items.length - 1], cur = document.activeElement;
+      if (!menu.contains(cur)) { e.preventDefault(); first.focus(); }
+      else if (e.shiftKey && cur === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && cur === last) { e.preventDefault(); first.focus(); }
     });
   }
 
@@ -304,4 +325,8 @@
     document.body.appendChild(a);
     document.documentElement.classList.add('has-jj-back');
   }());
+
+  /* Tout a démarré : le filet de secours posé dans l'en-tête de chaque
+     page (qui affiche tout si ce fichier ne s'exécute pas) reste au repos. */
+  window.__tfToile = 1;
 }());

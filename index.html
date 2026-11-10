@@ -6,14 +6,15 @@
 <title>Thomy & Florian — 12 décembre 2026</title>
 <meta name="description" content="Thomy & Florian vous invitent à partager un bout de bonheur — le 12 décembre 2026 au Domaine les Hauts de Vertigneul.">
 <meta name="robots" content="noindex, nofollow">
-<link rel="icon" type="image/png" href="Logo.png">
+<link rel="icon" type="image/png" href="logo-nav.png">
 <!-- Anti-flash pendant la transition de page -->
 <script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
 <!-- Préférence « texte plus grand » appliquée avant tout affichage -->
 <script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
 <link rel="preload" href="fonts/TANAngleton-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/ParfumerieScript-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=25">
+<!-- secours:debut --><script>/* Filet de secours : si toile.js ne demarre pas, rien ne reste masque et le menu s ouvre quand meme. */(function(){var d=document.documentElement,fait=0;function sauve(){if(fait||window.__tfToile===1)return;fait=1;d.classList.add('tf-secours');var b=document.getElementById('navBurger'),m=document.getElementById('menu-overlay');if(!b||!m)return;b.addEventListener('click',function(){if(window.__tfToile===1)return;m.classList.add('open');m.setAttribute('aria-hidden','false')});m.addEventListener('click',function(e){if(window.__tfToile===1)return;var t=e.target;if(t&&t.closest&&(t.closest('a')||t.closest('.menu-close'))){m.classList.remove('open');m.setAttribute('aria-hidden','true')}})}window.addEventListener('error',function(e){var s=((e&&e.filename)||'')+((e&&e.target&&e.target.src)||'');if(/toile\.js/.test(s)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sauve);else sauve()}},true);window.addEventListener('load',function(){setTimeout(sauve,900)});setTimeout(sauve,7000)})();</script><noscript><style>.reveal,.reveal-fade,.reveal-left,.reveal-right,.reveal-zoom,.reveal-pop{opacity:1!important;transform:none!important}</style></noscript><!-- secours:fin -->
+<link rel="stylesheet" href="style.css?v=26">
 
 <style>
 /* ═══════════════════════════════════════════════════════════════
@@ -320,7 +321,7 @@ body { background: var(--cream2); }
   .inv-names span { font-size: clamp(3.1rem, 14.5vw, 3.9rem); }
   .inv-names .amp { font-size: clamp(2rem, 9vw, 2.4rem); }
   .inv-text { font-size: .8rem; letter-spacing: .08em; line-height: 1.95; }
-  .inv-place { font-size: .7rem; letter-spacing: .14em; }
+  .inv-place { font-size: .75rem; letter-spacing: .12em; }
   /* deux feuilles posées l'une sous l'autre, chacune entière : pas de
      chevauchement (il coupait le cadre du faire-part) et une ombre légère */
   .paper { box-shadow: var(--lift); }
@@ -372,6 +373,7 @@ body { background: var(--cream2); }
   pointer-events: none;
 }
 .souv-ph img { display: block; width: 100%; height: auto; }
+.souv-ph picture { display: block; }
 
 .souv-intro, .souv-outro {
   position: absolute; left: 50%;
@@ -607,13 +609,17 @@ body { background: var(--cream2); }
   .ess-day::before { left: 5px; top: 1.5rem; bottom: 1.5rem; }
   .ess-step { grid-template-columns: 1fr; padding: 1.1rem 0 1.1rem 1.9rem; }
   .ess-step::before { left: 0; top: 1.55rem; }
-  .ess-when { text-align: left; display: flex; align-items: baseline; flex-wrap: wrap; gap: .1rem .7rem; margin-bottom: .35rem; }
+  .ess-when { text-align: left; display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem .7rem; margin-bottom: .35rem; }
   .ess-when b { font-size: 1.45rem; }
   .ess-when span { margin-top: 0; }
   .ess-what h3 { font-size: 1.3rem; }
   .ess-tiles { grid-template-columns: 1fr; }
   .ess-tile.wide { grid-column: auto; }
   .ess-tile { min-height: 0; }
+}
+/* téléphone : la toile allégée (voir style.css) */
+@media (max-width: 900px) {
+  .env-liner, .souv-bg { background-image: image-set(url('toile-tf-m.webp') type('image/webp'), url('toile-tf.jpg') type('image/jpeg')); }
 }
 </style>
 </head>
@@ -636,7 +642,7 @@ body { background: var(--cream2); }
 <!-- ═══ NAVIGATION ═══ -->
 <nav class="nav" id="mainNav" aria-label="Navigation principale">
   <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
-    <img src="Logo.png" alt="T & F">
+    <img src="logo-nav.png" alt="T & F" width="54" height="54">
   </a>
   <ul class="nav-links" role="list">
     <li><a href="index.html" aria-current="page">Accueil</a></li>
@@ -751,20 +757,20 @@ body { background: var(--cream2); }
       </div>
 
       <div class="souv-world">
-        <figure class="souv-ph"><img src="souvenirs/Photo-1.jpg"  width="860" height="688" alt="Leurs mains entrelacées" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-10.jpg" width="860" height="582" alt="Thomy et Florian, face à face, parmi les fleurs" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-28.jpg" width="550" height="860" alt="Un tour de danse dans l'allée" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-19.jpg" width="860" height="540" alt="De dos, côte à côte, près d'un massif de fleurs" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-49.jpg" width="860" height="573" alt="Allongés dans l'herbe, au milieu des roses" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-39.jpg" width="576" height="860" alt="Main dans la main, ils courent dans le jardin" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-71.jpg" width="860" height="573" alt="Une danse dans le jardin du château" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-46.jpg" width="573" height="860" alt="Assis sur une couverture, dans l'herbe" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-83.jpg" width="542" height="860" alt="Florian, sourire aux lèvres" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-90.jpg" width="588" height="860" alt="Thomy, parmi les roses" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-75.jpg" width="586" height="860" alt="Allongés, tête contre tête" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-32.jpg" width="565" height="860" alt="Une étreinte sous les arbres" decoding="async"></figure>
-        <figure class="souv-ph"><img src="souvenirs/Photo-69.jpg" width="860" height="573" alt="Leurs mains, et la bague de fiançailles" decoding="async"></figure>
-        <figure class="souv-ph" data-final><img src="souvenirs/Photo-29.jpg" width="573" height="860" alt="Enlacés dans la lumière du soir" decoding="async"></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-1.webp" type="image/webp"><img src="souvenirs/Photo-1.jpg"  width="860" height="688" alt="Leurs mains entrelacées" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-10.webp" type="image/webp"><img src="souvenirs/Photo-10.jpg" width="860" height="582" alt="Thomy et Florian, face à face, parmi les fleurs" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-28.webp" type="image/webp"><img src="souvenirs/Photo-28.jpg" width="550" height="860" alt="Un tour de danse dans l'allée" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-19.webp" type="image/webp"><img src="souvenirs/Photo-19.jpg" width="860" height="540" alt="De dos, côte à côte, près d'un massif de fleurs" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-49.webp" type="image/webp"><img src="souvenirs/Photo-49.jpg" width="860" height="573" alt="Allongés dans l'herbe, au milieu des roses" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-39.webp" type="image/webp"><img src="souvenirs/Photo-39.jpg" width="576" height="860" alt="Main dans la main, ils courent dans le jardin" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-71.webp" type="image/webp"><img src="souvenirs/Photo-71.jpg" width="860" height="573" alt="Une danse dans le jardin du château" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-46.webp" type="image/webp"><img src="souvenirs/Photo-46.jpg" width="573" height="860" alt="Assis sur une couverture, dans l'herbe" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-83.webp" type="image/webp"><img src="souvenirs/Photo-83.jpg" width="542" height="860" alt="Florian, sourire aux lèvres" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-90.webp" type="image/webp"><img src="souvenirs/Photo-90.jpg" width="588" height="860" alt="Thomy, parmi les roses" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-75.webp" type="image/webp"><img src="souvenirs/Photo-75.jpg" width="586" height="860" alt="Allongés, tête contre tête" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-32.webp" type="image/webp"><img src="souvenirs/Photo-32.jpg" width="565" height="860" alt="Une étreinte sous les arbres" decoding="async"></picture></figure>
+        <figure class="souv-ph"><picture><source srcset="souvenirs/Photo-69.webp" type="image/webp"><img src="souvenirs/Photo-69.jpg" width="860" height="573" alt="Leurs mains, et la bague de fiançailles" decoding="async"></picture></figure>
+        <figure class="souv-ph" data-final><picture><source srcset="souvenirs/Photo-29.webp" type="image/webp"><img src="souvenirs/Photo-29.jpg" width="573" height="860" alt="Enlacés dans la lumière du soir" decoding="async"></picture></figure>
       </div>
 
       <div class="souv-outro">
@@ -930,14 +936,14 @@ body { background: var(--cream2); }
   document.getElementById('cdDays').textContent = d;
 }());
 </script>
-<script src="toile.js?v=25"></script>
-<script src="transitions.js?v=25"></script>
+<script src="toile.js?v=26"></script>
+<script src="transitions.js?v=26"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script src="motion.js?v=25"></script>
-<script src="accueil.js?v=25"></script>
+<script src="motion.js?v=26"></script>
+<script src="accueil.js?v=26"></script>
 
 </body>
 </html>

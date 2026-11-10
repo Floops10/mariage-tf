@@ -6,12 +6,13 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Le Dress Code — Thomy & Florian · 12 décembre 2026</title>
 <meta name="description" content="Les couleurs du mariage de Thomy & Florian — celles des mariés, celles du cortège et la palette recommandée aux invités.">
-<link rel="icon" type="image/png" href="Logo.png">
+<link rel="icon" type="image/png" href="logo-nav.png">
 <script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
 
 <!-- Préférence « texte plus grand » appliquée avant tout affichage -->
 <script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
-<link rel="stylesheet" href="style.css?v=25">
+<!-- secours:debut --><script>/* Filet de secours : si toile.js ne demarre pas, rien ne reste masque et le menu s ouvre quand meme. */(function(){var d=document.documentElement,fait=0;function sauve(){if(fait||window.__tfToile===1)return;fait=1;d.classList.add('tf-secours');var b=document.getElementById('navBurger'),m=document.getElementById('menu-overlay');if(!b||!m)return;b.addEventListener('click',function(){if(window.__tfToile===1)return;m.classList.add('open');m.setAttribute('aria-hidden','false')});m.addEventListener('click',function(e){if(window.__tfToile===1)return;var t=e.target;if(t&&t.closest&&(t.closest('a')||t.closest('.menu-close'))){m.classList.remove('open');m.setAttribute('aria-hidden','true')}})}window.addEventListener('error',function(e){var s=((e&&e.filename)||'')+((e&&e.target&&e.target.src)||'');if(/toile\.js/.test(s)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sauve);else sauve()}},true);window.addEventListener('load',function(){setTimeout(sauve,900)});setTimeout(sauve,7000)})();</script><noscript><style>.reveal,.reveal-fade,.reveal-left,.reveal-right,.reveal-zoom,.reveal-pop{opacity:1!important;transform:none!important}</style></noscript><!-- secours:fin -->
+<link rel="stylesheet" href="style.css?v=26">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -250,6 +251,7 @@
   background: var(--cream);
   border: 1px solid var(--border2);
   padding: .55rem 1.05rem;
+  min-height: 44px;
   cursor: pointer;
   transition: border-color .25s ease, color .25s ease, background .25s ease;
 }
@@ -501,7 +503,7 @@
 <!-- ═══ NAVIGATION ═══ -->
 <nav class="nav" id="mainNav" aria-label="Navigation principale">
   <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
-    <img src="Logo.png" alt="T & F">
+    <img src="logo-nav.png" alt="T & F" width="54" height="54">
   </a>
   <ul class="nav-links" role="list">
     <li><a href="index.html">Accueil</a></li>
@@ -1320,14 +1322,14 @@
 }());
 </script>
 
-<script src="toile.js?v=25"></script>
-<script src="transitions.js?v=25"></script>
+<script src="toile.js?v=26"></script>
+<script src="transitions.js?v=26"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script src="motion.js?v=25"></script>
-<script src="silhouettes.js?v=25"></script>
+<script src="motion.js?v=26"></script>
+<script src="silhouettes.js?v=26"></script>
 
 </body>
 </html>

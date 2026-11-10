@@ -331,12 +331,12 @@ a[href="rsvp.html"], a[href^="rsvp.html?"] { display: none !important; }
   color: var(--cream);
   overflow-y: auto;
   overscroll-behavior: contain;
-  clip-path: circle(0px at calc(100% - 3.2rem) calc(var(--nav-h) / 2));
+  clip-path: circle(0px at calc(100% - var(--page-pad) - 3.1rem) calc(var(--nav-h) / 2));
   visibility: hidden;
   transition: clip-path .62s var(--ease-inout), visibility 0s linear .62s;
 }
 #menu-overlay.open {
-  clip-path: circle(150% at calc(100% - 3.2rem) calc(var(--nav-h) / 2));
+  clip-path: circle(150% at calc(100% - var(--page-pad) - 3.1rem) calc(var(--nav-h) / 2));
   visibility: visible;
   transition: clip-path .62s var(--ease-inout);
 }
@@ -511,6 +511,8 @@ a[href="rsvp.html"], a[href^="rsvp.html?"] { display: none !important; }
   width: 198.02%;                  /* = la largeur de l'écran (100 / 50,5) */
   height: 100%;
   background: url('Photo-1.jpg') 50% 30% / cover no-repeat;
+  /* même photo, cinq fois plus légère ; les navigateurs anciens gardent le JPG */
+  background-image: image-set(url('Photo-1.webp') type('image/webp'), url('Photo-1.jpg') type('image/jpeg'));
   box-shadow: inset 0 0 0 100vmax rgba(12,19,31,.6);
   opacity: 0;
   transition: opacity .42s var(--ease-out);
@@ -992,7 +994,7 @@ html.lenis, html.lenis body { height: auto; }
   html.txt-big .nav-burger { display: inline-flex; margin-left: .5rem; }
 }
 @media (max-width: 600px) {
-  .nav .txt-ctl button { width: 38px; height: 38px; }
+  .nav .txt-ctl button { width: 40px; height: 40px; }
   .nav .txt-ctl .a-s { font-size: 12px; }
   .nav .txt-ctl .a-l { font-size: 20px; }
   .nav-burger { height: 42px; gap: .55rem; padding: 0 .75rem 0 .85rem; }
@@ -1006,6 +1008,9 @@ html.lenis, html.lenis body { height: auto; }
   :root { --nav-h: 64px; --page-pad: 1.15rem; --toile-tile: 420px; }
   .nav-logo { height: 48px; }
   .nav-logo img { width: 46px; }
+  /* sur téléphone la tuile fait 420 px : une toile de 1260 px (420 × 3) est à la
+     taille exacte de l'écran, pour près de moitié moins de poids */
+  .toile-img { background-image: image-set(url('toile-tf-m.webp') type('image/webp'), url('toile-tf.jpg') type('image/jpeg')); }
   /* une toile fixe serait repeinte à chaque image pendant le défilement */
   .page-body .toile-img.fixed { position: absolute; }
   .page-hero-inner { box-shadow: 0 0 0 5px var(--cream), 0 0 0 6px var(--gold-border2), var(--lift); }
@@ -1018,6 +1023,8 @@ html.lenis, html.lenis body { height: auto; }
   .page-sub { font-size: .8rem; letter-spacing: .09em; margin-top: .7rem; }
 }
 @media (max-width: 380px) {
+  /* très petit écran : la barre se resserre, le bouton Menu garde sa marge à droite */
+  .nav { gap: .7rem; }
   .nav-burger { padding: 0 .75rem 0 .85rem; }
   #menu-overlay .menu-close { padding: 0 .75rem 0 .85rem; }
 }
@@ -1060,3 +1067,28 @@ html.lenis, html.lenis body { height: auto; }
 .jj-back:focus-visible { outline: 3px solid var(--gold2); outline-offset: 4px; }
 .has-jj-back body { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
 #menu-overlay.open ~ .jj-back { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   ÉCRANS TACTILES — pas de « survol » qui reste collé après un appui,
+   mais un vrai retour sous le doigt
+   ═══════════════════════════════════════════════════════════════ */
+@media (hover: none) {
+  :root .btn:hover, :root .card:hover, :root .ess-tile:hover, :root .jj-action:hover,
+  :root .ride-join:hover:not(:disabled), :root .cv-submit:hover:not(:disabled) { transform: none; }
+  :root .card:hover, :root .ess-tile:hover, :root .btn-primary:hover { box-shadow: none; }
+  :root .btn:hover::after { transform: scaleX(0); }
+  :root .btn:hover .arr, :root .ess-tile:hover .arr, :root .jj-action:hover .jj-go { transform: none; }
+  :root .btn:active, :root a.card:active, :root .ess-tile:active, :root .jj-action:active {
+    transform: scale(.985); transition-duration: 90ms;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECOURS — si un script du site ne démarre pas (fichier absent, erreur),
+   la page pose la classe .tf-secours : plus rien ne reste masqué.
+   ═══════════════════════════════════════════════════════════════ */
+.tf-secours .reveal, .tf-secours .reveal-fade, .tf-secours .reveal-left,
+.tf-secours .reveal-right, .tf-secours .reveal-zoom, .tf-secours .reveal-pop {
+  opacity: 1 !important; transform: none !important;
+}
+.tf-secours svg[data-draw] * { stroke-dashoffset: 0 !important; }

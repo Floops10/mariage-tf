@@ -128,6 +128,39 @@
       openDoors(60);
     });
 
+    /* La page visée commence à se charger dès que l'intention est là
+       (survol, doigt posé) : derrière les portes, elle est déjà prête.
+       Rien n'est préchargé si le téléphone économise ses données. */
+    var warmed = {};
+    function internal(a) {
+      if (!a) return null;
+      var href = a.getAttribute('href');
+      if (!href || /^(#|https?:|mailto:|tel:|javascript)/i.test(href) || a.hasAttribute('target')) return null;
+      if (!/\.html([?#]|$)/i.test(href)) return null;
+      return href.replace(/#.*/, '');
+    }
+    function warm(href) {
+      if (!href || warmed[href]) return;
+      var c = navigator.connection;
+      if (c && (c.saveData || /2g/.test(c.effectiveType || ''))) return;
+      warmed[href] = 1;
+      try {
+        var l = document.createElement('link');
+        if (l.relList && l.relList.supports && l.relList.supports('prefetch')) {
+          l.rel = 'prefetch'; l.href = href; document.head.appendChild(l);
+        } else if (window.fetch) {
+          fetch(href, { credentials: 'same-origin' }).catch(function () {});
+        }
+      } catch (e) {}
+    }
+    function onIntent(e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      warm(internal(a));
+    }
+    document.addEventListener('pointerover', onIntent, { passive: true });
+    document.addEventListener('touchstart', onIntent, { passive: true });
+    document.addEventListener('focusin', onIntent);
+
     /* Interception des liens internes */
     document.addEventListener('click', function (e) {
       if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
@@ -143,6 +176,7 @@
       e.preventDefault();
       e.stopPropagation();
 
+      warm(internal(a));
       const fname = filename(href);
       const q = randomQuote();
       setMeta(fname, q);
