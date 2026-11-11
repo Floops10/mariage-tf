@@ -22,13 +22,20 @@
   /* La signature des mariés, en bas de chaque page, s'écrit comme à la plume
      quand on y arrive. La classe est posée ici, par le script : sans lui,
      la signature reste simplement affichée. */
+  var scrollHooks = [];          /* petites fonctions appelées à chaque image de défilement */
+  var slice = function (list) { return Array.prototype.slice.call(list); };
   if (!reduceMotion) {
-    Array.prototype.forEach.call(document.querySelectorAll('.footer-script, [data-write]'), function (el) {
+    slice(document.querySelectorAll('.footer-script, [data-write]')).forEach(function (el) {
       el.classList.add('reveal-write');
     });
+    /* les surtitres de section se tracent de gauche à droite, comme un trait de plume */
+    slice(document.querySelectorAll('.section-eyebrow.reveal')).forEach(function (el) {
+      el.classList.remove('reveal');
+      el.classList.add('reveal-wipe');
+    });
   }
-  var pendingReveal = Array.prototype.slice.call(
-    document.querySelectorAll('.reveal, .reveal-fade, .reveal-left, .reveal-right, .reveal-zoom, .reveal-pop, .reveal-write')
+  var pendingReveal = slice(
+    document.querySelectorAll('.reveal, .reveal-fade, .reveal-left, .reveal-right, .reveal-zoom, .reveal-pop, .reveal-write, .reveal-wipe')
   );
 
   /* [data-stagger] : les enfants d'un groupe apparaissent en cascade */
@@ -48,9 +55,21 @@
     e.currentTarget.removeEventListener('transitionend', releaseLayer);
   }
 
+  /* Ce qui apparaît en même temps apparaît en cascade : les éléments révélés
+     dans la même image se suivent à 70 ms d'écart (cartes, lignes, tuiles…),
+     sans rien avoir à régler page par page. */
+  function cascade(el, k) {
+    if (reduceMotion || !k || el.style.transitionDelay) return;
+    if (/reveal-(delay|write|wipe)/.test(el.className)) return;
+    el.style.transitionDelay = Math.min(k, 6) * 70 + 'ms';
+    /* le délai ne doit pas survivre à l'apparition : il retarderait ensuite les survols */
+    setTimeout(function () { el.style.transitionDelay = ''; }, 1700);
+  }
+
   function checkReveals() {
     if (!pendingReveal.length) return;
     var vh = window.innerHeight;
+    var together = 0;
     pendingReveal = pendingReveal.filter(function (el) {
       var r = el.getBoundingClientRect();
       /* 1) zone de préchauffe : l'élément approche → on prépare son calque,
@@ -59,6 +78,7 @@
       /* 2) déclenchement, un peu plus tôt qu'avant : l'apparition se
             termine pendant que l'élément entre, au lieu de démarrer au ras du bord */
       if (r.top < vh - 90 || r.bottom < 0) {
+        if (r.bottom >= 0) cascade(el, together++);
         el.classList.add('in-view');
         if (el.classList.contains('rv-warm')) {
           el.addEventListener('transitionend', releaseLayer);
@@ -267,6 +287,7 @@
       if (filGeo) updateFil(y);
       if (parallaxOn()) updateParallax(y);
       kickSheetZoom(y);
+      for (var h = 0; h < scrollHooks.length; h++) scrollHooks[h](y, window.innerHeight);
       ticking = false;
     });
   }
@@ -330,6 +351,145 @@
 
 
   /* ═════════════════════════════════════════════
+     NOMBRES QUI COMPTENT — [data-count] : « ≈ 30 min » part de zéro
+     quand il entre à l'écran
+     ═════════════════════════════════════════════ */
+  var pendingCount = reduceMotion ? [] : slice(document.querySelectorAll('[data-count]'));
+  function runCount(el) {
+    var txt = el.textContent, parts = txt.split(/(\d+)/), out = parts.slice(), nums = [];
+    for (var i = 0; i < parts.length; i++) if (/^\d+$/.test(parts[i])) nums.push({ i: i, to: parseInt(parts[i], 10), pad: parts[i].charAt(0) === '0' ? parts[i].length : 0 });
+    if (!nums.length) return;
+    var t0 = null, D = 1000, done = false;
+    function frame(t) {
+      if (done) return;
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - k, 3);
+      nums.forEach(function (n) {
+        var v = String(Math.round(n.to * e));
+        while (v.length < n.pad) v = '0' + v;
+        out[n.i] = v;
+      });
+      el.textContent = out.join('');
+      if (k < 1) requestAnimationFrame(frame); else { done = true; el.textContent = txt; }
+    }
+    requestAnimationFrame(frame);
+    setTimeout(function () { done = true; el.textContent = txt; }, D + 1400);   /* garde-fou */
+  }
+  if (pendingCount.length) scrollHooks.push(function (y, vh) {
+    if (!pendingCount.length) return;
+    pendingCount = pendingCount.filter(function (el) {
+      var r = el.getBoundingClientRect();
+      if (!r.width && !r.height) return true;
+      if (r.top < vh - 50 && r.bottom > 0) { runCount(el); return false; }
+      return r.bottom >= 0;
+    });
+  });
+
+  /* ═════════════════════════════════════════════
+     SOMMAIRE — sur les longues pages, une rangée d'onglets glisse sous la
+     barre du haut : on voit où l'on est, on saute à la partie voulue.
+     Il suffit de poser data-nav="Libellé" sur les parties de la page.
+     ═════════════════════════════════════════════ */
+  var navTargets = slice(document.querySelectorAll('[data-nav]'));
+  if (nav && navTargets.length >= 3) {
+    var bar = document.createElement('nav');
+    bar.className = 'sommaire';
+    bar.setAttribute('aria-label', 'Sur cette page');
+    var barIn = document.createElement('div');
+    barIn.className = 'sommaire-in';
+    bar.appendChild(barIn);
+    var goTo = function (t) {
+      var top = t.getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - nav.offsetHeight - bar.offsetHeight - 14;
+      if (window.tfLenis) window.tfLenis.scrollTo(top, { duration: 1.1 });
+      else window.scrollTo({ top: top, behavior: reduceMotion ? 'auto' : 'smooth' });
+    };
+    var chips = navTargets.map(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = t.getAttribute('data-nav');
+      b.addEventListener('click', function () { goTo(t); });
+      barIn.appendChild(b);
+      return b;
+    });
+    nav.parentNode.insertBefore(bar, nav.nextSibling);
+    document.documentElement.classList.add('has-sommaire');
+    var heroEl = document.querySelector('.page-hero');
+    var curChip = -1, barShown = false;
+    scrollHooks.push(function (y) {
+      var navH = nav.offsetHeight;
+      var show = heroEl ? heroEl.getBoundingClientRect().bottom < navH + 8 : y > 220;
+      if (show !== barShown) { barShown = show; bar.classList.toggle('on', show); }
+      if (!show) return;
+      var limit = navH + bar.offsetHeight + 70, idx = 0;
+      for (var i = 0; i < navTargets.length; i++) if (navTargets[i].getBoundingClientRect().top <= limit) idx = i;
+      if (idx === curChip) return;
+      curChip = idx;
+      chips.forEach(function (c, i) {
+        c.classList.toggle('on', i === idx);
+        if (i === idx) c.setAttribute('aria-current', 'true'); else c.removeAttribute('aria-current');
+      });
+      /* l'onglet courant reste au milieu de la rangée */
+      var c = chips[idx], left = c.offsetLeft - (barIn.clientWidth - c.offsetWidth) / 2;
+      try { barIn.scrollTo({ left: left, behavior: reduceMotion ? 'auto' : 'smooth' }); } catch (e) { barIn.scrollLeft = left; }
+    });
+  }
+
+  /* ═════════════════════════════════════════════
+     L'ÉCHO DU DOIGT — sur téléphone, un anneau d'or s'ouvre là où l'on
+     vient d'appuyer : on voit que l'appui a bien été pris en compte
+     ═════════════════════════════════════════════ */
+  if (!reduceMotion) {
+    var lastPointer = '';
+    document.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType || ''; }, { passive: true });
+    document.addEventListener('click', function (e) {
+      if (lastPointer !== 'touch' && lastPointer !== 'pen') return;
+      if (!e.clientX && !e.clientY) return;
+      var t = e.target && e.target.closest ? e.target.closest('a, button, label, .swatch, [role="button"]') : null;
+      if (!t) return;
+      var ring = document.createElement('span');
+      ring.className = 'tap-echo';
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+      document.body.appendChild(ring);
+      setTimeout(function () { if (ring.parentNode) ring.parentNode.removeChild(ring); }, 700);
+    }, true);
+  }
+
+  /* ═════════════════════════════════════════════
+     « EN CE MOMENT » — le 12 décembre, l'étape en cours de la journée est
+     signalée (accueil et programme). Les étapes portent data-start="HH:MM".
+     Pour essayer : ajouter ?maintenant=16:30 à l'adresse.
+     ═════════════════════════════════════════════ */
+  (function () {
+    var timed = slice(document.querySelectorAll('[data-start]'));
+    if (!timed.length) return;
+    var d = new Date(), minutes = -1;
+    var q = /[?&]maintenant=(\d{1,2})[:h](\d{2})/.exec(location.search);
+    if (q) minutes = (+q[1]) * 60 + (+q[2]);
+    else if (d.getFullYear() === 2026 && d.getMonth() === 11) {
+      if (d.getDate() === 12) minutes = d.getHours() * 60 + d.getMinutes();
+      else if (d.getDate() === 13 && d.getHours() < 4) minutes = 1440 + d.getHours() * 60 + d.getMinutes();
+    }
+    if (minutes < 0) return;
+    var lists = [];
+    timed.forEach(function (el) { if (lists.indexOf(el.parentNode) < 0) lists.push(el.parentNode); });
+    lists.forEach(function (list) {
+      var items = timed.filter(function (el) { return el.parentNode === list; });
+      var cur = -1;
+      items.forEach(function (el, i) {
+        var m = /^(\d{1,2}):(\d{2})$/.exec(el.getAttribute('data-start'));
+        if (m && (+m[1]) * 60 + (+m[2]) <= minutes) cur = i;
+      });
+      var el = items[cur < 0 ? 0 : cur];
+      var badge = document.createElement('span');
+      badge.className = 'now-badge' + (cur < 0 ? ' soon' : '');
+      badge.textContent = cur < 0 ? 'Tout à l’heure' : 'En ce moment';
+      el.classList.add('is-now');
+      (el.querySelector('[data-now-slot]') || el.firstElementChild || el).appendChild(badge);
+    });
+  }());
+
+  /* ═════════════════════════════════════════════
      LE JOUR J : un chemin de retour toujours visible
      Qui arrive par le QR code de la salle passe par jour-j.html.
      Ensuite, sur chaque page du site, un bouton fixe « Retour à l'accueil »
@@ -348,6 +508,8 @@
     document.body.appendChild(a);
     document.documentElement.classList.add('has-jj-back');
   }());
+
+  onScroll();     /* un premier passage pour les modules ajoutés plus haut */
 
   /* Tout a démarré : le filet de secours posé dans l'en-tête de chaque
      page (qui affiche tout si ce fichier ne s'exécute pas) reste au repos. */

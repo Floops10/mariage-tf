@@ -340,50 +340,18 @@ a[href="rsvp.html"], a[href^="rsvp.html?"] { display: none !important; }
   color: var(--cream);
   overflow-y: auto;
   overscroll-behavior: contain;
-  /* Le menu se lève comme une arche — le motif de la maison — depuis le bas
-     de l'écran : son sommet arrondi s'aplatit en arrivant en haut. À la
-     fermeture, il redescend. */
-  -webkit-clip-path: inset(100% 0 0 0 round 50vw 50vw 0 0 / 34vw 34vw 0 0);
-          clip-path: inset(100% 0 0 0 round 50vw 50vw 0 0 / 34vw 34vw 0 0);
+  /* Le menu se lève du bas de l'écran, d'un seul geste, le bord arrondi comme
+     une arche. Une simple transition (aller comme retour) : pas d'étape. */
+  -webkit-clip-path: ellipse(160% 0% at 50% 100%);
+          clip-path: ellipse(160% 0% at 50% 100%);
   visibility: hidden;
-  transition: visibility 0s linear .5s;
-  /* la descente est une animation (et non une transition) : un navigateur
-     n'enchaîne pas une transition derrière l'animation d'ouverture */
-  animation: menuTombe .5s var(--ease-inout) both;
-}
-@keyframes menuTombe {
-  from {
-    -webkit-clip-path: inset(0 0 0 0 round 0 0 0 0 / 0 0 0 0);
-            clip-path: inset(0 0 0 0 round 0 0 0 0 / 0 0 0 0);
-  }
-  to {
-    -webkit-clip-path: inset(100% 0 0 0 round 50vw 50vw 0 0 / 34vw 34vw 0 0);
-            clip-path: inset(100% 0 0 0 round 50vw 50vw 0 0 / 34vw 34vw 0 0);
-  }
+  transition: clip-path .5s cubic-bezier(.6, 0, .4, 1), -webkit-clip-path .5s cubic-bezier(.6, 0, .4, 1), visibility 0s linear .5s;
 }
 #menu-overlay.open {
-  -webkit-clip-path: inset(0 0 0 0 round 0 0 0 0 / 0 0 0 0);
-          clip-path: inset(0 0 0 0 round 0 0 0 0 / 0 0 0 0);
+  -webkit-clip-path: ellipse(160% 175% at 50% 100%);
+          clip-path: ellipse(160% 175% at 50% 100%);
   visibility: visible;
-  transition: none;
-  animation: menuArche .8s linear both;
-}
-/* l'arche garde son galbe pendant toute la montée, et ne s'aplatit qu'en touchant le haut */
-@keyframes menuArche {
-  0% {
-    -webkit-clip-path: inset(100% 0 0 0 round 50vw 50vw 0 0 / 34vw 34vw 0 0);
-            clip-path: inset(100% 0 0 0 round 50vw 50vw 0 0 / 34vw 34vw 0 0);
-    animation-timing-function: cubic-bezier(.55, 0, .25, 1);
-  }
-  68% {
-    -webkit-clip-path: inset(7% 0 0 0 round 50vw 50vw 0 0 / 27vw 27vw 0 0);
-            clip-path: inset(7% 0 0 0 round 50vw 50vw 0 0 / 27vw 27vw 0 0);
-    animation-timing-function: cubic-bezier(.2, .6, .3, 1);
-  }
-  100% {
-    -webkit-clip-path: inset(0 0 0 0 round 0 0 0 0 / 0 0 0 0);
-            clip-path: inset(0 0 0 0 round 0 0 0 0 / 0 0 0 0);
-  }
+  transition: clip-path .75s cubic-bezier(.5, 0, .15, 1), -webkit-clip-path .75s cubic-bezier(.5, 0, .15, 1);
 }
 /* la toile de Jouy, en filigrane sur le bleu nuit */
 #menu-overlay::before {
@@ -712,7 +680,7 @@ a[href="rsvp.html"], a[href^="rsvp.html?"] { display: none !important; }
 /* ═══════════════════════════════════════════════════════════════
    APPARITIONS AU SCROLL (pilotées par toile.js)
    ═══════════════════════════════════════════════════════════════ */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease-out), transform .8s var(--ease-out); }
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .75s var(--ease-out), transform .95s var(--ease-out); }
 .reveal.in-view { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 80ms; }
 .reveal-delay-2 { transition-delay: 160ms; }
@@ -725,6 +693,12 @@ a[href="rsvp.html"], a[href^="rsvp.html?"] { display: none !important; }
 .reveal-left.in-view { opacity: 1; transform: translateX(0); }
 .reveal-right { opacity: 0; transform: translateX(26px); transition: opacity .7s var(--ease-out), transform .8s var(--ease-out); }
 .reveal-right.in-view { opacity: 1; transform: translateX(0); }
+/* sur téléphone, une arrivée par le côté dépassait de l'écran avant d'apparaître
+   (la page devenait un peu plus large que l'écran) : elle arrive par le bas */
+@media (max-width: 900px) {
+  .reveal-left, .reveal-right { transform: translateY(26px); }
+  .reveal-left.in-view, .reveal-right.in-view { transform: translateY(0); }
+}
 .reveal-zoom { opacity: 0; transform: scale(.95); transition: opacity .85s var(--ease-out), transform .85s var(--ease-out); }
 .reveal-zoom.in-view { opacity: 1; transform: scale(1); }
 .reveal-pop { opacity: 0; transform: scale(.6); transition: opacity .5s var(--ease-out), transform .7s var(--ease-spring); }
@@ -736,6 +710,12 @@ a[href="rsvp.html"], a[href^="rsvp.html?"] { display: none !important; }
   transition: clip-path 1.9s cubic-bezier(.5, .05, .3, 1) .2s, -webkit-clip-path 1.9s cubic-bezier(.5, .05, .3, 1) .2s;
 }
 .reveal-write.in-view { -webkit-clip-path: inset(-30% -4% -40% -4%); clip-path: inset(-30% -4% -40% -4%); }
+/* un surtitre qui se trace */
+.reveal-wipe {
+  -webkit-clip-path: inset(-20% 100% -20% 0); clip-path: inset(-20% 100% -20% 0);
+  transition: clip-path 1s var(--ease-out), -webkit-clip-path 1s var(--ease-out);
+}
+.reveal-wipe.in-view { -webkit-clip-path: inset(-20% -3% -20% 0); clip-path: inset(-20% -3% -20% 0); }
 
 /* ═══════════════════════════════════════════════════════════════
    ORNEMENTS — filets nets, jamais estompés
@@ -1129,7 +1109,7 @@ html.lenis, html.lenis body { height: auto; }
   .reveal, .reveal-fade, .reveal-left, .reveal-right, .reveal-zoom, .reveal-pop {
     opacity: 1 !important; transform: none !important; transition: none !important;
   }
-  .reveal-write { -webkit-clip-path: none !important; clip-path: none !important; }
+  .reveal-write, .reveal-wipe { -webkit-clip-path: none !important; clip-path: none !important; }
   .btn:hover { transform: none; }
   .rv-warm { will-change: auto; }
   *, *::before, *::after {
@@ -1185,4 +1165,68 @@ html.lenis, html.lenis body { height: auto; }
   opacity: 1 !important; transform: none !important;
 }
 .tf-secours svg[data-draw] * { stroke-dashoffset: 0 !important; }
-.tf-secours .reveal-write { -webkit-clip-path: none !important; clip-path: none !important; }
+.tf-secours .reveal-write, .tf-secours .reveal-wipe { -webkit-clip-path: none !important; clip-path: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SOMMAIRE DES LONGUES PAGES (posé par toile.js)
+   ═══════════════════════════════════════════════════════════════ */
+.sommaire {
+  position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 140;
+  background: var(--cream);
+  border-bottom: 1px solid var(--gold-border2);
+  box-shadow: 0 8px 22px rgba(23,36,55,.07);
+  transform: translateY(-110%);
+  visibility: hidden;
+  transition: transform .5s var(--ease-out), visibility 0s linear .5s;
+}
+.sommaire.on { transform: none; visibility: visible; transition: transform .5s var(--ease-out); }
+.sommaire-in {
+  display: flex; gap: .45rem;
+  padding: .5rem var(--page-pad);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.sommaire-in::-webkit-scrollbar { display: none; }
+.sommaire-in::after { content: ''; flex: 0 0 .1px; }          /* la marge de droite reste, même en défilant */
+.sommaire button {
+  flex: 0 0 auto;
+  min-height: 40px; padding: 0 1rem;
+  font-family: var(--font-body); font-weight: 450; font-size: .82rem; letter-spacing: .05em;
+  color: var(--ocean2); background: var(--cream);
+  border: 1px solid var(--border2);
+  white-space: nowrap;
+  transition: background var(--dur-mid) var(--ease-out), color var(--dur-mid) var(--ease-out), border-color var(--dur-mid) var(--ease-out);
+}
+.sommaire button.on { background: var(--navy); border-color: var(--navy); color: var(--cream); }
+@media (min-width: 1021px) { .sommaire-in { justify-content: center; } }
+@media (hover: hover) { .sommaire button:not(.on):hover { border-color: var(--gold2); color: var(--navy); } }
+
+/* ═══════════════════════════════════════════════════════════════
+   L'ÉCHO DU DOIGT (téléphone)
+   ═══════════════════════════════════════════════════════════════ */
+.tap-echo {
+  position: fixed; z-index: 9500;
+  width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  pointer-events: none;
+  animation: tapEcho .62s var(--ease-out) forwards;
+}
+@keyframes tapEcho { from { transform: scale(.5); opacity: .95; } to { transform: scale(4.6); opacity: 0; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   « EN CE MOMENT » — le jour du mariage
+   ═══════════════════════════════════════════════════════════════ */
+.now-badge {
+  display: inline-flex; align-items: center; gap: .5em;
+  margin-left: .7em; padding: .34em .75em;
+  font-family: var(--font-body); font-weight: 500; font-size: .72rem; letter-spacing: .1em; line-height: 1.2;
+  text-transform: uppercase; white-space: nowrap; vertical-align: middle;
+  color: #FBF7F0; background: #7A1E2B;
+}
+.now-badge.soon { background: var(--navy); }
+.now-badge::before {
+  content: ''; width: .5em; height: .5em; border-radius: 50%; background: currentColor;
+  animation: nowPulse 1.6s ease-in-out infinite;
+}
+@keyframes nowPulse { 50% { opacity: .25; } }

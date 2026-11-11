@@ -110,7 +110,7 @@
       document.documentElement.removeAttribute('data-trans-in');
       const tc = document.getElementById('__tc');
       if (tc) tc.parentNode.removeChild(tc);
-      openDoors(620);
+      openDoors(430);
     } else {
       ov.style.pointerEvents = 'none';
     }

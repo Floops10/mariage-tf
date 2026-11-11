@@ -12,7 +12,7 @@
 <!-- Préférence « texte plus grand » appliquée avant tout affichage -->
 <script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
 <!-- secours:debut --><script>/* Filet de secours : si toile.js ne demarre pas, rien ne reste masque et le menu s ouvre quand meme. */(function(){var d=document.documentElement,fait=0;function sauve(){if(fait||window.__tfToile===1)return;fait=1;d.classList.add('tf-secours');var b=document.getElementById('navBurger'),m=document.getElementById('menu-overlay');if(!b||!m)return;b.addEventListener('click',function(){if(window.__tfToile===1)return;m.classList.add('open');m.setAttribute('aria-hidden','false')});m.addEventListener('click',function(e){if(window.__tfToile===1)return;var t=e.target;if(t&&t.closest&&(t.closest('a')||t.closest('.menu-close'))){m.classList.remove('open');m.setAttribute('aria-hidden','true')}})}window.addEventListener('error',function(e){var s=((e&&e.filename)||'')+((e&&e.target&&e.target.src)||'');if(/toile\.js/.test(s)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sauve);else sauve()}},true);window.addEventListener('load',function(){setTimeout(sauve,900)});setTimeout(sauve,7000)})();</script><noscript><style>.reveal,.reveal-fade,.reveal-left,.reveal-right,.reveal-zoom,.reveal-pop{opacity:1!important;transform:none!important}</style></noscript><!-- secours:fin -->
-<link rel="stylesheet" href="style.css?v=27">
+<link rel="stylesheet" href="style.css?v=28">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -623,35 +623,35 @@
                 </div>
 
                 <ol class="parch-list">
-                  <li class="parch-item" data-reveal>
+                  <li class="parch-item" data-reveal data-start="13:15">
                     <span class="parch-when">13h15</span>
                     <div class="parch-what">
                       <h3>Le rendez-vous</h3>
                       <p>À la maison, chez Florian — 156 rue de la Clouterie, Trith-Saint-Léger.</p>
                     </div>
                   </li>
-                  <li class="parch-item" data-reveal>
+                  <li class="parch-item" data-reveal data-start="14:00">
                     <span class="parch-when">14h00</span>
                     <div class="parch-what">
                       <h3>Le oui civil</h3>
                       <p>Mairie de Trith-Saint-Léger — place de la Résistance.</p>
                     </div>
                   </li>
-                  <li class="parch-item" data-reveal>
+                  <li class="parch-item" data-reveal data-start="16:00">
                     <span class="parch-when">16h00</span>
                     <div class="parch-what">
                       <h3>La cérémonie religieuse</h3>
                       <p>Au domaine, dans la salle de L'Étable.</p>
                     </div>
                   </li>
-                  <li class="parch-item" data-reveal>
+                  <li class="parch-item" data-reveal data-start="17:00">
                     <span class="parch-when">Ensuite</span>
                     <div class="parch-what">
                       <h3>Vin d'honneur &amp; apéritif</h3>
                       <p>On trinque ensemble, au domaine.</p>
                     </div>
                   </li>
-                  <li class="parch-item" data-reveal>
+                  <li class="parch-item" data-reveal data-start="19:00">
                     <span class="parch-when">Vers 19h</span>
                     <div class="parch-what">
                       <h3>La Grange</h3>
@@ -869,13 +869,13 @@
   }
 }());
 </script>
-<script src="toile.js?v=27"></script>
-<script src="transitions.js?v=27"></script>
+<script src="toile.js?v=28"></script>
+<script src="transitions.js?v=28"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script src="motion.js?v=27"></script>
+<script src="motion.js?v=28"></script>
 
 </body>
 </html>

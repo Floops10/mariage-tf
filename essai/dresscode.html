@@ -12,7 +12,7 @@
 <!-- Préférence « texte plus grand » appliquée avant tout affichage -->
 <script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
 <!-- secours:debut --><script>/* Filet de secours : si toile.js ne demarre pas, rien ne reste masque et le menu s ouvre quand meme. */(function(){var d=document.documentElement,fait=0;function sauve(){if(fait||window.__tfToile===1)return;fait=1;d.classList.add('tf-secours');var b=document.getElementById('navBurger'),m=document.getElementById('menu-overlay');if(!b||!m)return;b.addEventListener('click',function(){if(window.__tfToile===1)return;m.classList.add('open');m.setAttribute('aria-hidden','false')});m.addEventListener('click',function(e){if(window.__tfToile===1)return;var t=e.target;if(t&&t.closest&&(t.closest('a')||t.closest('.menu-close'))){m.classList.remove('open');m.setAttribute('aria-hidden','true')}})}window.addEventListener('error',function(e){var s=((e&&e.filename)||'')+((e&&e.target&&e.target.src)||'');if(/toile\.js/.test(s)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sauve);else sauve()}},true);window.addEventListener('load',function(){setTimeout(sauve,900)});setTimeout(sauve,7000)})();</script><noscript><style>.reveal,.reveal-fade,.reveal-left,.reveal-right,.reveal-zoom,.reveal-pop{opacity:1!important;transform:none!important}</style></noscript><!-- secours:fin -->
-<link rel="stylesheet" href="style.css?v=27">
+<link rel="stylesheet" href="style.css?v=28">
 
 <style>
 /* ═══════════════════════════════════════════════
@@ -581,7 +581,7 @@
       </p>
 
       <!-- ═══ 1 · LES MARIÉS ═══ -->
-      <div class="tier reveal-left" aria-labelledby="tier-maries">
+      <div class="tier reveal-left" aria-labelledby="tier-maries" data-nav="Les mariés">
         <div class="tier-fig" aria-hidden="true">
           <div class="fig-stage"><svg class="fig" viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="fig-arch">
@@ -667,7 +667,7 @@
       </div>
 
       <!-- ═══ 2 · LE CORTÈGE ═══ -->
-      <div class="tier reveal-right" aria-labelledby="tier-cortege">
+      <div class="tier reveal-right" aria-labelledby="tier-cortege" data-nav="Le cortège">
         <div class="tier-fig" aria-hidden="true">
           <div class="fig-stage"><svg class="fig" viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="fig-arch">
@@ -760,7 +760,7 @@
       </div>
 
       <!-- ═══ 3 · LES INVITÉS ═══ -->
-      <div class="tier reveal-left" aria-labelledby="tier-invites">
+      <div class="tier reveal-left" aria-labelledby="tier-invites" data-nav="Les invités">
         <div class="tier-fig" aria-hidden="true">
           <div class="fig-stage"><svg class="fig fig-guests" viewBox="0 0 260 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="fig-arch">
@@ -863,7 +863,7 @@
     </section>
 
     <!-- ═══ TROUVEZ VOTRE COULEUR — analyse colorimétrique ═══ -->
-    <section class="section" id="ma-couleur" aria-labelledby="cq-title">
+    <section class="section" id="ma-couleur" aria-labelledby="cq-title" data-nav="Mes couleurs">
       <span class="section-eyebrow reveal">Selon les règles des coloristes</span>
       <h2 class="section-title reveal" id="cq-title">Trouvez les couleurs qui vous vont</h2>
       <div class="section-flourish reveal" aria-hidden="true">
@@ -1322,14 +1322,14 @@
 }());
 </script>
 
-<script src="toile.js?v=27"></script>
-<script src="transitions.js?v=27"></script>
+<script src="toile.js?v=28"></script>
+<script src="transitions.js?v=28"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script src="motion.js?v=27"></script>
-<script src="silhouettes.js?v=27"></script>
+<script src="motion.js?v=28"></script>
+<script src="silhouettes.js?v=28"></script>
 
 </body>
 </html>

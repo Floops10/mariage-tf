@@ -15,7 +15,7 @@
 <link rel="preload" href="fonts/TANAngleton-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/ParfumerieScript-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <!-- secours:debut --><script>/* Filet de secours : si toile.js ne demarre pas, rien ne reste masque et le menu s ouvre quand meme. */(function(){var d=document.documentElement,fait=0;function sauve(){if(fait||window.__tfToile===1)return;fait=1;d.classList.add('tf-secours');var b=document.getElementById('navBurger'),m=document.getElementById('menu-overlay');if(!b||!m)return;b.addEventListener('click',function(){if(window.__tfToile===1)return;m.classList.add('open');m.setAttribute('aria-hidden','false')});m.addEventListener('click',function(e){if(window.__tfToile===1)return;var t=e.target;if(t&&t.closest&&(t.closest('a')||t.closest('.menu-close'))){m.classList.remove('open');m.setAttribute('aria-hidden','true')}})}window.addEventListener('error',function(e){var s=((e&&e.filename)||'')+((e&&e.target&&e.target.src)||'');if(/toile\.js/.test(s)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sauve);else sauve()}},true);window.addEventListener('load',function(){setTimeout(sauve,900)});setTimeout(sauve,7000)})();</script><noscript><style>.reveal,.reveal-fade,.reveal-left,.reveal-right,.reveal-zoom,.reveal-pop{opacity:1!important;transform:none!important}</style></noscript><!-- secours:fin -->
-<link rel="stylesheet" href="style.css?v=27">
+<link rel="stylesheet" href="style.css?v=28">
 
 <style>
 /* ═══════════════════════════════════════════════════════════════
@@ -907,7 +907,7 @@ html.tf-intro .suite .paper, html.tf-intro .scroll-cue { opacity: 0; animation: 
       </header>
 
       <ol class="ess-day">
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="13:15">
           <div class="ess-when"><b>13h15</b><span>Rendez-vous</span></div>
           <div class="ess-what">
             <h3>On se retrouve à la maison</h3>
@@ -915,7 +915,7 @@ html.tf-intro .suite .paper, html.tf-intro .scroll-cue { opacity: 0; animation: 
             <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=156+rue+de+la+Clouterie%2C+59125+Trith-Saint-L%C3%A9ger&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
           </div>
         </li>
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="14:00">
           <div class="ess-when"><b>14h00</b><span>Mairie</span></div>
           <div class="ess-what">
             <h3>Le mariage civil</h3>
@@ -923,7 +923,7 @@ html.tf-intro .suite .paper, html.tf-intro .scroll-cue { opacity: 0; animation: 
             <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=Mairie+de+Trith-Saint-L%C3%A9ger%2C+Place+de+la+R%C3%A9sistance%2C+59125+Trith-Saint-L%C3%A9ger&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
           </div>
         </li>
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="16:00">
           <div class="ess-when"><b>16h00</b><span>Au domaine</span></div>
           <div class="ess-what">
             <h3>La cérémonie religieuse</h3>
@@ -931,14 +931,14 @@ html.tf-intro .suite .paper, html.tf-intro .scroll-cue { opacity: 0; animation: 
             <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=Domaine+les+Hauts+de+Vertigneul%2C+5+Hameau+de+Vertigneul%2C+59730+Romeries&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
           </div>
         </li>
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="17:00">
           <div class="ess-when"><b>Ensuite</b><span>Au domaine</span></div>
           <div class="ess-what">
             <h3>Vin d'honneur &amp; apéritif</h3>
             <p>On trinque ensemble, juste après la cérémonie.</p>
           </div>
         </li>
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="19:00">
           <div class="ess-when"><b>19h00</b><span>Vers</span></div>
           <div class="ess-what">
             <h3>On rejoint La Grange</h3>
@@ -1036,14 +1036,14 @@ html.tf-intro .suite .paper, html.tf-intro .scroll-cue { opacity: 0; animation: 
   document.getElementById('cdDays').textContent = d;
 }());
 </script>
-<script src="toile.js?v=27"></script>
-<script src="transitions.js?v=27"></script>
+<script src="toile.js?v=28"></script>
+<script src="transitions.js?v=28"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script src="motion.js?v=27"></script>
-<script src="accueil.js?v=27"></script>
+<script src="motion.js?v=28"></script>
+<script src="accueil.js?v=28"></script>
 
 </body>
 </html>
