@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Le jour J — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="Le jour du mariage : envoyer ses photos, participer à l'urne, voir le programme.">
+<link rel="icon" type="image/png" href="logo-nav.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
+
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<!-- secours:debut --><script>/* Filet de secours : si toile.js ne demarre pas, rien ne reste masque et le menu s ouvre quand meme. */(function(){var d=document.documentElement,fait=0;function sauve(){if(fait||window.__tfToile===1)return;fait=1;d.classList.add('tf-secours');var b=document.getElementById('navBurger'),m=document.getElementById('menu-overlay');if(!b||!m)return;b.addEventListener('click',function(){if(window.__tfToile===1)return;m.classList.add('open');m.setAttribute('aria-hidden','false')});m.addEventListener('click',function(e){if(window.__tfToile===1)return;var t=e.target;if(t&&t.closest&&(t.closest('a')||t.closest('.menu-close'))){m.classList.remove('open');m.setAttribute('aria-hidden','true')}})}window.addEventListener('error',function(e){var s=((e&&e.filename)||'')+((e&&e.target&&e.target.src)||'');if(/toile\.js/.test(s)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sauve);else sauve()}},true);window.addEventListener('load',function(){setTimeout(sauve,900)});setTimeout(sauve,7000)})();</script><noscript><style>.reveal,.reveal-fade,.reveal-left,.reveal-right,.reveal-zoom,.reveal-pop{opacity:1!important;transform:none!important}</style></noscript><!-- secours:fin -->
+<link rel="stylesheet" href="style.css?v=27">
+
+<style>
+/* ═══════════════════════════════════════════════
+   LE JOUR J — la porte d'entrée unique du jour du mariage.
+   Un seul QR code dans la salle mène ici. Pensée pour quelqu'un
+   qui n'est pas à l'aise avec un téléphone : trois gros boutons,
+   un verbe chacun, une phrase pour dire ce qui va se passer.
+   Page non listée : aucun lien du site n'y mène.
+   ═══════════════════════════════════════════════ */
+.jj-intro {
+  margin: 0 auto 1.1rem;
+  text-align: center;
+  font-family: var(--font-title); font-weight: 400;
+  font-size: clamp(1.15rem, 5.5vw, 2.2rem); line-height: 1.15;
+  white-space: nowrap;                       /* une seule ligne, même sur un petit téléphone */
+  color: var(--navy);
+}
+/* texte agrandi : la phrase passe sur deux lignes plutôt que de déborder */
+.txt-big .jj-intro { white-space: normal; }
+
+.jj-actions { list-style: none; display: grid; gap: 1.1rem; max-width: 40rem; margin: 0 auto; padding: 0; }
+.jj-action {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.15rem;
+  min-height: 7rem;
+  padding: 1.25rem clamp(1.1rem, 3.5vw, 1.7rem);
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  color: var(--navy);
+  text-decoration: none;
+  box-shadow: var(--lift);
+  transition: border-color var(--dur-mid) ease, transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.jj-action:hover { border-color: var(--navy); transform: translateY(-2px); box-shadow: var(--lift-strong); }
+.jj-action:active { transform: translateY(0); background: var(--cream2); }
+.jj-action:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+/* ici, tout doit tenir dans le premier écran du téléphone */
+.jj-page .sheet { padding-top: clamp(1.1rem, 3vh, 2.4rem); }
+/* l'action la plus attendue ce jour-là : le double filet d'or, comme le moyen recommandé de l'urne */
+.jj-action.main { border-color: var(--gold-border2); box-shadow: 0 0 0 5px var(--cream), 0 0 0 6px var(--gold-border2), var(--lift); }
+/* au survol, l'action principale garde son double filet d'or */
+.jj-action.main:hover { border-color: var(--gold2); box-shadow: 0 0 0 5px var(--cream), 0 0 0 6px var(--gold-border2), var(--lift-strong); }
+.jj-ico {
+  width: 3.6rem; height: 3.6rem;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--navy); color: var(--cream);
+  flex-shrink: 0;
+}
+.jj-ico svg { width: 1.75rem; height: 1.75rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.jj-txt { min-width: 0; }
+.jj-name { display: block; font-family: var(--font-title); font-weight: 400; font-size: clamp(1.4rem, 4.4vw, 1.75rem); line-height: 1.2; color: var(--navy); text-wrap: balance; }
+.jj-help { display: block; margin-top: .35rem; font-size: 1.02rem; line-height: 1.55; color: var(--ocean2); }
+.jj-go { font-family: var(--font-title); font-size: 1.9rem; line-height: 1; color: var(--gold-text); transition: transform var(--dur-mid) var(--ease-out); }
+.jj-action:hover .jj-go { transform: translateX(4px); }
+
+.jj-more { max-width: 40rem; margin: 2.2rem auto 0; display: grid; gap: .8rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.jj-more .btn { width: 100%; }
+.jj-tip {
+  max-width: 34rem; margin: 2rem auto 0; padding: 1rem 1.2rem;
+  text-align: center; font-size: 1rem; line-height: 1.6; color: var(--ocean2);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.jj-tip b { color: var(--navy); font-weight: 500; }
+
+@media (max-width: 520px) {
+  .jj-action { grid-template-columns: auto minmax(0, 1fr); gap: .95rem; min-height: 6.4rem; }
+  .jj-go { display: none; }
+  .jj-ico { width: 3.1rem; height: 3.1rem; }
+  .jj-more { grid-template-columns: minmax(0, 1fr); }
+}
+/* petits écrans (anciens téléphones) : on resserre pour que les trois boutons restent visibles d'un coup */
+@media (max-height: 680px) {
+  .jj-actions { gap: .7rem; }
+  .jj-action { min-height: 0; padding: .85rem 1rem; gap: .8rem; }
+  .jj-name { font-size: 1.22rem; }
+  .jj-help { font-size: .92rem; margin-top: .2rem; }
+  .jj-ico { width: 2.6rem; height: 2.6rem; }
+  .jj-ico svg { width: 1.4rem; height: 1.4rem; }
+  .jj-page .sheet { padding-top: .9rem; }
+  .jj-intro { margin-bottom: .8rem; }
+}
+</style>
+</head>
+<body class="jj-page">
+
+<!-- ═══ TRANSITION OVERLAY ═══ -->
+<div id="t-overlay" aria-hidden="true" style="pointer-events:none">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <p id="t-eyebrow" class="t-eyebrow"></p>
+    <p id="t-title" class="t-title"></p>
+    <p id="t-quote" class="t-quote"></p>
+    <p id="t-quote-ref" class="t-quote-ref"></p>
+  </div>
+</div>
+<script>/* arrivée par les portes : le titre est là dès la première image */(function(){try{if(!sessionStorage.getItem('tfr_t'))return;var m=JSON.parse(sessionStorage.getItem('tfr_t_m')),q=JSON.parse(sessionStorage.getItem('tfr_t_q'));if(!m)return;var g=function(i){return document.getElementById(i)};g('t-eyebrow').textContent=m.eyebrow;g('t-title').textContent=m.title;if(q){g('t-quote').textContent=q.fr;g('t-quote-ref').textContent=q.ref||''}}catch(e){}})();</script>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="logo-nav.png" alt="T & F" width="54" height="54">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html">Venir au Domaine</a></li>
+    <li><a href="covoiturage.html">Covoiturer</a></li>
+    <li><a href="dresscode.html">Dress code</a></li>
+    <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="nav-burger-lbl">Menu</i><span class="nav-burger-ico" aria-hidden="true"><span></span><span></span><span></span></span></button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><i>Fermer</i><span class="x" aria-hidden="true"></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <nav class="menu-list" aria-label="Menu">
+    <a href="index.html"><b>Accueil</b><small>L'invitation et l'essentiel</small></a>
+    <a href="programme.html"><b>Le Programme</b><small>Les horaires de la journée</small></a>
+    <a href="sejour.html"><b>Venir au Domaine</b><small>Adresses, itinéraires, où dormir</small></a>
+    <a href="covoiturage.html"><b>Covoiturer</b><small>Proposer ou trouver une place</small></a>
+    <a href="dresscode.html"><b>Dress code</b><small>Les couleurs à porter</small></a>
+    <a href="histoire.html"><b>Photos &amp; poème</b><small>Nos plus belles images</small></a>
+    <a href="cadeaux.html"><b>Cadeaux</b><small>Une urne, tout simplement</small></a>
+    <a href="contact.html"><b>Contact</b><small>Une question ? Écrivez-nous</small></a>
+    <a href="rsvp.html"><b>Confirmer ma venue</b><small>Réponses closes</small></a>
+  </nav>
+  <div class="menu-foot">
+    <span class="menu-date">12 · 12 · 2026</span>
+  </div>
+</div>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+
+    <section class="section">
+      <h1 class="jj-intro">Que voulez-vous faire&nbsp;?</h1>
+
+      <ul class="jj-actions" role="list">
+        <li class="reveal">
+          <a class="jj-action main" href="https://ouistitii.by-tf.workers.dev/">
+            <span class="jj-ico" aria-hidden="true"><svg viewBox="0 0 24 24" data-draw data-draw-dur="900" data-draw-stagger="110"><path d="M4 8.5h3l1.6-2.5h6.8L17 8.5h3a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13.5" r="3.6"/></svg></span>
+            <span class="jj-txt">
+              <span class="jj-name">Envoyer vos photos et vidéos</span>
+              <span class="jj-help">Elles arrivent directement chez les mariés.</span>
+            </span>
+            <span class="jj-go" aria-hidden="true">→</span>
+          </a>
+        </li>
+        <li class="reveal reveal-delay-2">
+          <a class="jj-action" href="paiement.html">
+            <span class="jj-ico" aria-hidden="true"><svg viewBox="0 0 24 24" data-draw data-draw-dur="900" data-draw-stagger="110"><path d="M4 10h16v10H4z"/><path d="M3 7h18v3H3z"/><path d="M12 7v13"/><path d="M12 7c-1.6-3.2-5.6-3.2-5.6-.9C6.4 7 9 7 12 7Zm0 0c1.6-3.2 5.6-3.2 5.6-.9C17.6 7 15 7 12 7Z"/></svg></span>
+            <span class="jj-txt">
+              <span class="jj-name">Participer à&nbsp;l'urne</span>
+              <span class="jj-help">Wero, PayPal ou virement, depuis votre téléphone.</span>
+            </span>
+            <span class="jj-go" aria-hidden="true">→</span>
+          </a>
+        </li>
+        <li class="reveal reveal-delay-4">
+          <a class="jj-action" href="programme.html">
+            <span class="jj-ico" aria-hidden="true"><svg viewBox="0 0 24 24" data-draw data-draw-dur="900" data-draw-stagger="110"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3.2 2.1"/></svg></span>
+            <span class="jj-txt">
+              <span class="jj-name">Voir le programme</span>
+              <span class="jj-help">Les horaires de la journée.</span>
+            </span>
+            <span class="jj-go" aria-hidden="true">→</span>
+          </a>
+        </li>
+      </ul>
+
+      <p class="jj-tip">Les lettres sont trop petites&nbsp;? Touchez le <b>grand A</b>, tout en haut de l'écran.<br>Pour revenir ici à tout moment, touchez <b>«&nbsp;Retour à l'accueil&nbsp;»</b>.</p>
+
+      <div class="jj-more">
+        <a href="sejour.html" class="btn btn-outline">L'adresse du Domaine</a>
+        <a href="index.html" class="btn btn-outline">Le site du mariage</a>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy <span class="footer-amp">&amp;</span> Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir au Domaine</a>
+      <a href="covoiturage.html">Covoiturer</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Les réponses sont closes — merci à vous</p>
+  </div>
+</footer>
+
+<script src="toile.js?v=27"></script>
+<script src="transitions.js?v=27"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="motion.js?v=27"></script>
+
+</body>
+</html>

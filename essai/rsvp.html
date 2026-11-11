@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Confirmer ma venue — Thomy & Florian · 12 décembre 2026</title>
+<meta name="description" content="Mariage de Thomy & Florian — les réponses sont closes depuis le 1er août 2026.">
+<link rel="icon" type="image/png" href="logo-nav.png">
+<script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
+
+<!-- Préférence « texte plus grand » appliquée avant tout affichage -->
+<script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<!-- secours:debut --><script>/* Filet de secours : si toile.js ne demarre pas, rien ne reste masque et le menu s ouvre quand meme. */(function(){var d=document.documentElement,fait=0;function sauve(){if(fait||window.__tfToile===1)return;fait=1;d.classList.add('tf-secours');var b=document.getElementById('navBurger'),m=document.getElementById('menu-overlay');if(!b||!m)return;b.addEventListener('click',function(){if(window.__tfToile===1)return;m.classList.add('open');m.setAttribute('aria-hidden','false')});m.addEventListener('click',function(e){if(window.__tfToile===1)return;var t=e.target;if(t&&t.closest&&(t.closest('a')||t.closest('.menu-close'))){m.classList.remove('open');m.setAttribute('aria-hidden','true')}})}window.addEventListener('error',function(e){var s=((e&&e.filename)||'')+((e&&e.target&&e.target.src)||'');if(/toile\.js/.test(s)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sauve);else sauve()}},true);window.addEventListener('load',function(){setTimeout(sauve,900)});setTimeout(sauve,7000)})();</script><noscript><style>.reveal,.reveal-fade,.reveal-left,.reveal-right,.reveal-zoom,.reveal-pop{opacity:1!important;transform:none!important}</style></noscript><!-- secours:fin -->
+<link rel="stylesheet" href="style.css?v=27">
+<!-- génération de l'invitation PDF (rendu fidèle de la carte + export) -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+/* ═══════════════════════════════════════════════
+   RSVP
+   ═══════════════════════════════════════════════ */
+.rsvp-wrap { max-width: 680px; margin: 0 auto; }
+
+.deadline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .9rem;
+  margin-bottom: 2.6rem;
+}
+.deadline .line { flex: 1; max-width: 70px; height: 1px; background: var(--gold-border2); }
+.deadline p {
+  font-family: var(--font-sub);
+  font-size: .7rem;
+  letter-spacing: .2em;
+  line-height: 2;
+  color: var(--gold2);
+  text-align: center;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.6rem; }
+
+/* ─── Deux étapes ─── */
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .9rem;
+  margin-bottom: .8rem;
+}
+.step-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sub);
+  font-size: .66rem;
+  color: var(--text-light);
+  background: var(--cream);
+  transition: background .45s ease, color .45s ease, border-color .45s ease;
+}
+.step-dot.on { background: var(--navy); border-color: var(--navy); color: var(--cream); }
+.step-dot.done { border-color: var(--gold); color: var(--gold2); }
+.step-line {
+  position: relative;
+  width: 76px; height: 1px;
+  background: var(--border2);
+  overflow: hidden;
+}
+.step-line i {
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .6s var(--ease-inout);
+}
+.steps.s2 .step-line i { transform: scaleX(1); }
+.step-label {
+  text-align: center;
+  font-family: var(--font-sub);
+  font-size: .62rem;
+  letter-spacing: .2em;
+  color: var(--gold2);
+  margin-bottom: 2.2rem;
+}
+#nextBtn { width: 100%; margin-top: .4rem; }
+.step-btns { display: flex; gap: .7rem; margin-top: .6rem; }
+.step-btns #sendBtn { flex: 1; }
+#step1Err {
+  display: none;
+  margin-top: 1rem;
+  font-size: .8rem;
+  color: #8A3B4A;
+  text-align: center;
+}
+
+/* ─── Confirmation avant envoi ─── */
+#send-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem;
+  background: rgba(23,36,55,.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+}
+#send-modal.open { opacity: 1; visibility: visible; transition: opacity .3s ease; }
+.sd-card {
+  position: relative;
+  width: min(440px, 100%);
+  background: var(--cream);
+  border: 1px solid var(--border2);
+  box-shadow: 0 30px 80px rgba(23,36,55,.4);
+  padding: 2.3rem 1.9rem 1.9rem;
+  text-align: center;
+  transform: scale(.92) translateY(10px);
+  transition: transform .4s var(--ease-out);
+}
+#send-modal.open .sd-card { transform: scale(1) translateY(0); }
+.sd-card::after {
+  content: '';
+  position: absolute; inset: 8px;
+  border: 1px solid var(--gold-border2);
+  pointer-events: none;
+}
+.sd-card h3 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.4rem;
+  color: var(--navy);
+  margin-bottom: .7rem;
+}
+.sd-card p { font-size: .88rem; color: var(--text-mid); margin-bottom: .5rem; }
+.sd-card .sd-note {
+  font-family: var(--font-sub);
+  font-size: .64rem;
+  letter-spacing: .1em;
+  line-height: 2;
+  color: var(--gold2);
+  margin: .4rem 0 1.5rem;
+}
+.sd-btns {
+  display: flex;
+  gap: .7rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Bloc « qui vient » : une ligne par personne ─── */
+#people { margin-bottom: .4rem; }
+.field-hint {
+  font-size: .74rem;
+  font-style: italic;
+  color: var(--text-light);
+  margin: -.25rem 0 .8rem;
+}
+.person {
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--gold-border2);
+  padding: 1.1rem 1.2rem .35rem;
+  margin-bottom: .9rem;
+  transition: border-color var(--dur-mid) ease, opacity var(--dur-mid) ease;
+}
+.person:focus-within { border-left-color: var(--gold); }
+.person-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  flex-wrap: wrap;
+  margin-bottom: .7rem;
+}
+.person-tag {
+  display: block;
+  font-family: var(--font-sub);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  color: var(--gold2);
+}
+/* présence individuelle */
+.person-presence select {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: .72rem;
+  color: var(--navy);
+  background: transparent;
+  border: 1px solid var(--border2);
+  padding: .32rem 1.5rem .32rem .65rem;
+  border-radius: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%234F6D8A' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .45rem center;
+  transition: border-color var(--dur-mid) ease;
+}
+.person-presence select:focus { outline: none; border-color: var(--gold); }
+.person.absent { border-left-color: rgba(138,59,74,.45); }
+.person.absent [data-p="diet"] { opacity: .45; }
+.person.absent .person-presence select { color: #8A3B4A; border-color: rgba(138,59,74,.4); }
+.person .form-row { gap: 0 1.2rem; }
+.person .field { margin-bottom: 1.1rem; }
+.person .field-label { font-size: .58rem; }
+
+#sendBtn[disabled], #invBtn[disabled] { opacity: .55; cursor: wait; }
+
+/* ─── Carte d'invitation (rendue hors écran, exportée en PDF A4) ─── */
+#inv-card {
+  position: fixed;
+  left: -9999px; top: 0;
+  width: 1116px; height: 1578px;
+  background: url('toile-tf.jpg');
+  background-size: 740px;
+  padding: 62px;
+  z-index: -1;
+}
+#inv-card .inv-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  background: #FAF5EF;
+  border: 2px solid rgba(31,47,68,.4);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 90px;
+}
+#inv-card .inv-inner::before {
+  content: '';
+  position: absolute; inset: 16px;
+  border: 1.5px solid rgba(31,47,68,.3);
+  pointer-events: none;
+}
+#inv-card .inv-inner::after {
+  content: '';
+  position: absolute; inset: 24px;
+  border: 1.5px solid rgba(201,168,108,.55);
+  pointer-events: none;
+}
+#inv-card .inv-corner {
+  position: absolute;
+  width: 88px; height: 88px;
+  color: #B8913A;
+  opacity: .85;
+}
+#inv-card .inv-corner svg { width: 100%; height: 100%; display: block; }
+#inv-card .inv-corner.tl { top: 42px; left: 42px; }
+#inv-card .inv-corner.tr { top: 42px; right: 42px; transform: scaleX(-1); }
+#inv-card .inv-corner.bl { bottom: 42px; left: 42px; transform: scaleY(-1); }
+#inv-card .inv-corner.br { bottom: 42px; right: 42px; transform: scale(-1,-1); }
+#inv-card .inv-logo { width: 150px; height: auto; margin-bottom: 26px; }
+#inv-card .inv-date {
+  font-family: var(--font-sub);
+  font-size: 27px;
+  letter-spacing: .32em;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+#inv-card .inv-script {
+  font-family: var(--font-script);
+  font-size: 112px;
+  line-height: 1.15;
+  color: var(--navy);
+  margin-bottom: 22px;
+}
+#inv-card .inv-script .amp { color: #B8913A; }
+#inv-card .inv-sep {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 380px;
+  margin-bottom: 40px;
+}
+#inv-card .inv-sep span { flex: 1; height: 1.5px; background: rgba(31,47,68,.25); }
+#inv-card .inv-sep b {
+  width: 12px; height: 12px;
+  background: #C9A86C;
+  transform: rotate(45deg);
+}
+#inv-card .inv-line {
+  font-family: var(--font-sub);
+  font-size: 23px;
+  letter-spacing: .22em;
+  line-height: 1.9;
+  color: var(--ocean2);
+  margin-bottom: 26px;
+}
+#inv-card .inv-names {
+  font-family: var(--font-title);
+  font-size: 52px;
+  line-height: 1.3;
+  color: var(--navy);
+  margin-bottom: 26px;
+  max-width: 820px;
+}
+#inv-card .inv-line2 {
+  font-family: var(--font-sub);
+  font-size: 23px;
+  letter-spacing: .22em;
+  color: var(--ocean2);
+  margin-bottom: 56px;
+}
+#inv-card .inv-block {
+  border-top: 1.5px solid rgba(201,168,108,.5);
+  border-bottom: 1.5px solid rgba(201,168,108,.5);
+  padding: 30px 60px;
+  margin-bottom: 56px;
+}
+#inv-card .inv-sub {
+  font-family: var(--font-sub);
+  font-size: 26px;
+  letter-spacing: .18em;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+#inv-card .inv-sub2 {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 21px;
+  letter-spacing: .04em;
+  line-height: 1.8;
+  color: var(--ocean);
+}
+#inv-card .inv-foot {
+  font-family: var(--font-sub);
+  font-size: 17px;
+  letter-spacing: .22em;
+  color: #B8913A;
+}
+
+.form-note {
+  text-align: center;
+  font-family: var(--font-sub);
+  font-size: .66rem;
+  letter-spacing: .12em;
+  line-height: 2.1;
+  color: var(--text-light);
+  margin-top: 1.4rem;
+}
+
+/* ─── réponses closes ─── */
+#closedBox {
+  text-align: center;
+  border: 1px solid var(--border2);
+  padding: 2.6rem 1.6rem;
+}
+#closedBox .logo-mask { width: 64px; height: 64px; margin: 0 auto 1.1rem; }
+#closedBox h2 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  color: var(--navy);
+  margin-bottom: .7rem;
+}
+#closedBox p { font-size: .88rem; color: var(--text-mid); max-width: 30rem; margin: 0 auto; }
+#closedBox a { color: var(--gold2); border-bottom: 1px solid var(--gold-border2); }
+
+/* ─── retrouver son invitation ─── */
+#recover {
+  text-align: center;
+  margin-top: 2.6rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--gold-border);
+}
+#recToggle {
+  font-family: var(--font-sub);
+  font-size: .64rem;
+  letter-spacing: .16em;
+  color: var(--text-light);
+  border-bottom: 1px solid var(--border2);
+  padding-bottom: 2px;
+  transition: color var(--dur-mid) ease, border-color var(--dur-mid) ease;
+}
+#recToggle:hover { color: var(--gold2); border-color: var(--gold); }
+#recBox { max-width: 430px; margin: 1.4rem auto 0; }
+#recBox .rec-hint {
+  font-size: .78rem;
+  font-style: italic;
+  color: var(--text-light);
+  margin-bottom: .9rem;
+}
+.rec-row { display: flex; gap: .7rem; align-items: stretch; }
+.rec-row input {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: .95rem;
+  color: var(--navy);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border2);
+  padding: .45rem .1rem;
+  border-radius: 0;
+  transition: border-color var(--dur-mid) ease;
+}
+.rec-row input:focus { outline: none; border-color: var(--gold); }
+#recBtn[disabled] { opacity: .55; cursor: wait; }
+#recErr { display: none; margin-top: .9rem; font-size: .78rem; color: #8A3B4A; }
+
+/* déjà répondu */
+#prevAnswer {
+  display: none;
+  border: 1px solid var(--green-border);
+  background: var(--green-bg);
+  padding: 1rem 1.3rem;
+  margin-bottom: 2rem;
+  font-size: .85rem;
+  color: var(--green);
+}
+#prevAnswer b { font-weight: 500; }
+
+/* erreur */
+#sendError {
+  display: none;
+  border: 1px solid rgba(107,32,53,.3);
+  background: rgba(107,32,53,.05);
+  padding: 1rem 1.3rem;
+  margin-top: 1.4rem;
+  font-size: .85rem;
+  color: #6B2035;
+}
+#sendError a { text-decoration: underline; }
+
+/* ─── Confirmation ─── */
+#confirm {
+  display: none;
+  text-align: center;
+  padding: 1.5rem 0 .5rem;
+}
+#confirm.show { display: block; }
+#confirm .logo-mask {
+  width: 96px; height: 96px;
+  margin: 0 auto 1.4rem;
+}
+#confirm h2 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  color: var(--navy);
+  margin-bottom: .8rem;
+}
+#confirm .c-sub {
+  font-size: .95rem;
+  color: var(--text-mid);
+  max-width: 30rem;
+  margin: 0 auto 1.6rem;
+}
+#confirm .c-detail {
+  font-family: var(--font-sub);
+  font-size: .68rem;
+  letter-spacing: .14em;
+  line-height: 2;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+#confirm .btns { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .person .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ═══ OVERLAY DE TRANSITION ═══ -->
+<div id="t-overlay" aria-hidden="true">
+  <div class="t-door t-door-l"></div>
+  <div class="t-door t-door-r"></div>
+  <div class="t-center">
+    <span class="t-eyebrow" id="t-eyebrow"></span>
+    <span class="t-title" id="t-title"></span>
+    <span class="t-quote" id="t-quote"></span>
+    <span class="t-quote-ref" id="t-quote-ref"></span>
+  </div>
+</div>
+<script>/* arrivée par les portes : le titre est là dès la première image */(function(){try{if(!sessionStorage.getItem('tfr_t'))return;var m=JSON.parse(sessionStorage.getItem('tfr_t_m')),q=JSON.parse(sessionStorage.getItem('tfr_t_q'));if(!m)return;var g=function(i){return document.getElementById(i)};g('t-eyebrow').textContent=m.eyebrow;g('t-title').textContent=m.title;if(q){g('t-quote').textContent=q.fr;g('t-quote-ref').textContent=q.ref||''}}catch(e){}})();</script>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" id="mainNav" aria-label="Navigation principale">
+  <a href="index.html" class="nav-logo" aria-label="Accueil Thomy & Florian">
+    <img src="logo-nav.png" alt="T & F" width="54" height="54">
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="programme.html">Le Programme</a></li>
+    <li><a href="sejour.html">Venir au Domaine</a></li>
+    <li><a href="covoiturage.html">Covoiturer</a></li>
+    <li><a href="dresscode.html">Dress code</a></li>
+    <li><a href="histoire.html">Photos &amp; poème</a></li>
+    <li><a href="cadeaux.html">Cadeaux</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="rsvp.html" class="nav-cta" aria-current="page">Confirmer ma venue</a>
+  <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"><i class="nav-burger-lbl">Menu</i><span class="nav-burger-ico" aria-hidden="true"><span></span><span></span><span></span></span></button>
+</nav>
+
+<!-- ═══ MENU MOBILE ═══ -->
+<div id="menu-overlay" aria-hidden="true">
+  <button class="menu-close" aria-label="Fermer le menu"><i>Fermer</i><span class="x" aria-hidden="true"></span></button>
+  <span class="logo-mask menu-logo" aria-hidden="true"></span>
+  <nav class="menu-list" aria-label="Menu">
+    <a href="index.html"><b>Accueil</b><small>L'invitation et l'essentiel</small></a>
+    <a href="programme.html"><b>Le Programme</b><small>Les horaires de la journée</small></a>
+    <a href="sejour.html"><b>Venir au Domaine</b><small>Adresses, itinéraires, où dormir</small></a>
+    <a href="covoiturage.html"><b>Covoiturer</b><small>Proposer ou trouver une place</small></a>
+    <a href="dresscode.html"><b>Dress code</b><small>Les couleurs à porter</small></a>
+    <a href="histoire.html"><b>Photos &amp; poème</b><small>Nos plus belles images</small></a>
+    <a href="cadeaux.html"><b>Cadeaux</b><small>Une urne, tout simplement</small></a>
+    <a href="contact.html"><b>Contact</b><small>Une question ? Écrivez-nous</small></a>
+    <a href="rsvp.html"><b>Confirmer ma venue</b><small>Réponses closes</small></a>
+  </nav>
+  <div class="menu-foot">
+    <span class="menu-date">12 · 12 · 2026</span>
+  </div>
+</div>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<header class="page-hero">
+  <div class="toile-img blue" aria-hidden="true" data-parallax="0.1" style="inset:-140px 0"></div>
+  <div class="page-hero-inner">
+    <span class="page-eyebrow reveal">Serez-vous des nôtres&nbsp;?</span>
+    <h1 class="page-title reveal reveal-delay-1">Confirmer ma venue</h1>
+    <div class="gold-rule reveal reveal-delay-2" style="max-width:180px;margin:0 auto">
+      <span class="gold-rule-line"></span><span class="gold-rule-dot"></span><span class="gold-rule-line"></span>
+    </div>
+    <span class="page-sub reveal reveal-delay-3">Dites-nous tout</span>
+  </div>
+</header>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="page-body">
+  <div class="toile-img faded fixed" aria-hidden="true"></div>
+
+  <main class="sheet">
+    <div class="rsvp-wrap">
+
+      <div class="deadline reveal">
+        <span class="line"></span>
+        <p>Les réponses sont closes<br>depuis le 1ᵉʳ août 2026</p>
+        <span class="line"></span>
+      </div>
+
+      <div id="prevAnswer" role="status"></div>
+
+      <!-- ═══ FORMULAIRE ═══ -->
+      <form id="rsvpForm" novalidate>
+
+        <!-- ─── progression ─── -->
+        <div class="steps reveal" id="stepsBar" aria-hidden="true">
+          <span class="step-dot on" id="dot1">1</span>
+          <span class="step-line"><i></i></span>
+          <span class="step-dot" id="dot2">2</span>
+        </div>
+        <p class="step-label reveal" id="stepLabel">Étape 1 sur 2 — Votre réponse</p>
+
+        <!-- ═══ ÉTAPE 1 — qui répond, oui/non, combien ═══ -->
+        <div id="step1">
+          <div class="form-row">
+            <div class="field reveal">
+              <label class="field-label" for="fName">Qui répond&nbsp;? <span class="req">*</span></label>
+              <input type="text" id="fName" name="name" required autocomplete="name" placeholder="Prénom & Nom">
+            </div>
+            <div class="field reveal reveal-delay-1">
+              <label class="field-label" for="fContact">Téléphone ou e-mail</label>
+              <input type="text" id="fContact" name="contact" autocomplete="tel" placeholder="pour vous joindre si besoin">
+            </div>
+          </div>
+
+          <div class="field reveal">
+            <span class="field-label">Votre réponse <span class="req">*</span></span>
+            <div class="choice-row" role="radiogroup" aria-label="Votre réponse">
+              <label class="choice">
+                <input type="radio" name="presence" value="oui" required>
+                <span><b>Avec grande joie</b><small>nous serons là</small></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="presence" value="non">
+                <span><b>À regret, non</b><small>nous penserons à vous</small></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row" id="countBlock">
+            <div class="field reveal">
+              <label class="field-label" for="fAdults">Adultes</label>
+              <select id="fAdults" name="adults">
+                <option>1</option><option selected>2</option><option>3</option>
+                <option>4</option><option>5</option><option>6</option>
+              </select>
+            </div>
+            <div class="field reveal reveal-delay-1">
+              <label class="field-label" for="fKids">Enfants</label>
+              <select id="fKids" name="kids">
+                <option selected>0</option><option>1</option><option>2</option>
+                <option>3</option><option>4</option><option>5</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" id="nextBtn" class="btn btn-primary">Continuer</button>
+          <p id="step1Err" role="alert"></p>
+        </div>
+
+        <!-- ═══ ÉTAPE 2 — la tablée, le covoiturage, le petit mot ═══ -->
+        <div id="step2" hidden>
+          <div id="ouiBlock">
+            <!-- Une ligne par personne : prénom & nom + présence + allergies -->
+            <div class="field reveal">
+              <span class="field-label">Votre tablée, un par un</span>
+              <p class="field-hint">Quelqu'un du foyer ne peut pas venir&nbsp;? Indiquez-le sur sa ligne — les autres restent les bienvenus.</p>
+              <div id="people"></div>
+            </div>
+
+            <div class="field" id="rowCar">
+              <label class="field-label" for="fCar">Covoiturage</label>
+              <select id="fCar" name="covoiturage">
+                <option value="" selected>Non concerné·e</option>
+                <option value="propose">Je propose des places dans ma voiture</option>
+                <option value="cherche">Je cherche une place</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field reveal">
+            <label class="field-label" for="fMsg">Un petit mot pour les mariés</label>
+            <textarea id="fMsg" name="message" placeholder="à cœur ouvert…"></textarea>
+          </div>
+
+          <div class="step-btns">
+            <button type="button" id="backBtn" class="btn btn-outline">Retour</button>
+            <button type="submit" id="sendBtn" class="btn btn-primary">Envoyer notre réponse</button>
+          </div>
+        </div>
+
+        <div id="sendError" role="alert"></div>
+
+        <p class="form-note reveal">
+          Une réponse pour tout le foyer suffit — vous pourrez la modifier
+          en revenant sur cette page, jusqu'au 1ᵉʳ août 2026.
+        </p>
+      </form>
+
+      <!-- ═══ RÉPONSES CLOSES — après le 1ᵉʳ août 2026 ═══ -->
+      <div id="closedBox" hidden>
+        <span class="logo-mask" aria-hidden="true"></span>
+        <h2>La confirmation se fait ailleurs</h2>
+        <p>Les réponses ne se prennent pas sur cette page&nbsp;: vous avez reçu — ou recevrez —
+        le lien pour confirmer votre présence. Une question&nbsp;?
+        Écrivez-nous&nbsp;: <a href="mailto:florian.bouchart10@icloud.com">florian.bouchart10@icloud.com</a></p>
+      </div>
+
+      <!-- ═══ RETROUVER SON INVITATION ═══ -->
+      <div id="recover" class="reveal">
+        <button type="button" id="recToggle">Je n'ai pas enregistré mon invitation</button>
+        <div id="recBox" hidden>
+          <p class="rec-hint">Entrez le nom utilisé pour votre réponse — on retrouve tout, l'invitation comprise.</p>
+          <div class="rec-row">
+            <input type="text" id="recName" autocomplete="name" placeholder="Prénom & Nom">
+            <button type="button" id="recBtn" class="btn btn-outline btn-sm">Retrouver</button>
+          </div>
+          <p id="recErr" role="alert"></p>
+        </div>
+      </div>
+
+      <!-- ═══ CONFIRMATION ═══ -->
+      <section id="confirm" aria-live="polite">
+        <span class="logo-mask" role="img" aria-label="Monogramme T & F"></span>
+        <h2 id="cTitle">Quelle joie&nbsp;!</h2>
+        <p class="c-sub" id="cSub"></p>
+        <p class="c-detail" id="cDetail"></p>
+        <div class="btns">
+          <button type="button" id="invBtn" class="btn btn-primary">Mon invitation officielle (PDF)</button>
+          <a href="programme.html" class="btn btn-outline">Voir le programme</a>
+          <button type="button" id="editBtn" class="btn btn-outline">Modifier ma réponse</button>
+        </div>
+        <p id="invErr" role="alert" style="display:none;margin-top:1rem;font-size:.8rem;color:#8A3B4A"></p>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="logo-mask footer-logo" aria-hidden="true"></span>
+    <span class="footer-script">Thomy <span class="footer-amp">&amp;</span> Florian</span>
+    <p class="footer-date">12 · XII · MMXXVI</p>
+    <p class="footer-place">Domaine les Hauts de Vertigneul — 5 hameau de Vertigneul, 59730 Romeries</p>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="programme.html">Le Programme</a>
+      <a href="sejour.html">Venir au Domaine</a>
+      <a href="covoiturage.html">Covoiturer</a>
+      <a href="dresscode.html">Dress code</a>
+      <a href="histoire.html">Photos &amp; poème</a>
+      <a href="cadeaux.html">Cadeaux</a>
+      <a href="contact.html">Contact</a>
+      <a href="rsvp.html">RSVP</a>
+    </div>
+    <p class="footer-note">Les réponses sont closes — merci à vous</p>
+    <p class="footer-admin"><a href="admin.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="1.4"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg><span>Admin</span></a></p>
+  </div>
+</footer>
+
+<!-- ═══ CARTE D'INVITATION — rendue hors écran, exportée en PDF ═══ -->
+<!-- ═══ CONFIRMATION AVANT ENVOI ═══ -->
+<div id="send-modal" aria-hidden="true">
+  <div class="sd-card" role="alertdialog" aria-modal="true" aria-labelledby="sdTitle">
+    <h3 id="sdTitle">Envoyer votre réponse&nbsp;?</h3>
+    <p>C'est votre réponse officielle pour le mariage — celle qui comptera
+    pour la liste des invités.</p>
+    <p class="sd-note">Vous pourrez encore la modifier sur cette page jusqu'au
+    1ᵉʳ août 2026.<br>Passé cette date, la liste devient définitive.</p>
+    <div class="sd-btns">
+      <button type="button" id="sdCancel" class="btn btn-outline">Pas encore</button>
+      <button type="button" id="sdYes" class="btn btn-primary">Oui, envoyer</button>
+    </div>
+  </div>
+</div>
+
+<div id="inv-card" aria-hidden="true">
+  <div class="inv-inner">
+    <span class="inv-corner tl"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+    <span class="inv-corner tr"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+    <span class="inv-corner bl"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+    <span class="inv-corner br"><svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M2 50 V14 Q2 2 14 2 H50"/><path d="M9 43 Q9 9 43 9" opacity=".55"/><path d="M16 30 Q16 16 30 16 Q21 18 20 25 Q19.4 30 24 29.6 Q28 29 26.6 24.4" opacity=".8"/><circle cx="36" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="36" r="1.3" fill="currentColor" stroke="none"/></svg></span>
+
+    <img class="inv-logo" src="Logo.png" alt="">
+    <p class="inv-date">12 · 12 · 2026</p>
+    <p class="inv-script">Thomy <span class="amp">&amp;</span> Florian</p>
+    <div class="inv-sep"><span></span><b></b><span></span></div>
+    <p class="inv-line">Ont la joie de convier</p>
+    <p class="inv-names" id="invNames">—</p>
+    <p class="inv-line2">À la célébration de leur mariage</p>
+    <div class="inv-block">
+      <p class="inv-sub">Samedi 12 décembre 2026 · 14&nbsp;h</p>
+      <p class="inv-sub2">Domaine les Hauts de Vertigneul<br>5 hameau de Vertigneul — 59730 Romeries</p>
+    </div>
+    <p class="inv-foot">Invitation officielle — venue confirmée</p>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   RSVP — deux étapes, une ligne par personne,
+   enregistrement Firebase (/rsvp) + repli mailto,
+   invitation PDF nominative après confirmation.
+   ═══════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var FB_BASE = 'https://roles-du-mariage-default-rtdb.europe-west1.firebasedatabase.app/rsvp/';
+  var LS_KEY  = 'tf_rsvp';
+  var MAIL    = 'florian.bouchart10@icloud.com';
+
+  /* après le 1ᵉʳ août 2026, on ne peut plus répondre ni modifier
+     (l'invitation, elle, reste récupérable) ; ?closed=1 pour prévisualiser */
+  /* Le RSVP se fait désormais sur un autre site → réponse désactivée ici.
+     POUR RÉACTIVER LE RSVP SUR CE SITE : repasser RSVP_OPEN à true,
+     ET retirer le bloc qui masque a[href="rsvp.html"] dans style.css. */
+  var RSVP_OPEN = false;
+  var DEADLINE = new Date('2026-08-02T00:00:00+02:00').getTime();
+  var CLOSED   = !RSVP_OPEN || Date.now() > DEADLINE || /[?&]closed=1\b/.test(location.search);
+
+  var form     = document.getElementById('rsvpForm');
+  var confirm_ = document.getElementById('confirm');
+  var prevBox  = document.getElementById('prevAnswer');
+  var errBox   = document.getElementById('sendError');
+  var sendBtn  = document.getElementById('sendBtn');
+  var peopleEl = document.getElementById('people');
+  var ouiBlock = document.getElementById('ouiBlock');
+
+  /* ─── Deux étapes ─── */
+  var step1    = document.getElementById('step1');
+  var step2    = document.getElementById('step2');
+  var stepsBar = document.getElementById('stepsBar');
+  var stepLbl  = document.getElementById('stepLabel');
+  var s1Err    = document.getElementById('step1Err');
+
+  function presenceVal() {
+    return (form.querySelector('input[name="presence"]:checked') || {}).value || '';
+  }
+
+  function setStep(n) {
+    step1.hidden = n !== 1;
+    step2.hidden = n !== 2;
+    stepsBar.classList.toggle('s2', n === 2);
+    document.getElementById('dot1').className = 'step-dot ' + (n === 1 ? 'on' : 'done');
+    document.getElementById('dot2').className = 'step-dot' + (n === 2 ? ' on' : '');
+    stepLbl.textContent = n === 1
+      ? 'Étape 1 sur 2 — Votre réponse'
+      : 'Étape 2 sur 2 — ' + (presenceVal() === 'non' ? 'Un petit mot' : 'Votre tablée');
+    s1Err.style.display = 'none';
+    /* remonter au début du formulaire et resynchroniser les animations */
+    var top = form.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    setTimeout(function () { window.dispatchEvent(new Event('scroll')); }, 60);
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', function () {
+    if (!document.getElementById('fName').value.trim()) {
+      s1Err.textContent = 'Dites-nous qui répond — c’est le seul champ vraiment obligatoire.';
+      s1Err.style.display = 'block';
+      document.getElementById('fName').focus();
+      return;
+    }
+    if (!presenceVal()) {
+      s1Err.textContent = 'Avec grande joie, ou à regret ? Choisissez votre réponse.';
+      s1Err.style.display = 'block';
+      return;
+    }
+    setStep(2);
+  });
+  document.getElementById('backBtn').addEventListener('click', function () { setStep(1); });
+
+  function slugify(s) {
+    return s.toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      .slice(0, 60) || 'invite';
+  }
+
+  /* ─── Lignes « personne » ───
+     Regénère les blocs selon le nombre d'adultes/enfants
+     en conservant ce qui a déjà été saisi. */
+  function personRow(kind, i) {
+    var label = (kind === 'a' ? 'Adulte ' : 'Enfant ') + (i + 1);
+    var div = document.createElement('div');
+    div.className = 'person';
+    div.setAttribute('data-kind', kind);
+    div.innerHTML =
+      '<div class="person-head">' +
+        '<span class="person-tag">' + label + '</span>' +
+        '<label class="person-presence" aria-label="Présence de ' + label + '">' +
+          '<select data-p="present">' +
+            '<option value="oui" selected>Sera présent·e</option>' +
+            '<option value="non">Ne pourra pas venir</option>' +
+          '</select>' +
+        '</label>' +
+      '</div>' +
+      '<div class="form-row">' +
+        '<div class="field">' +
+          '<label class="field-label">Prénom & Nom</label>' +
+          '<input type="text" data-p="name" placeholder="' + (kind === 'a' ? 'Camille Dupont' : 'Jules Dupont') + '">' +
+        '</div>' +
+        '<div class="field">' +
+          '<label class="field-label">Allergies ou régime</label>' +
+          '<input type="text" data-p="diet" placeholder="aucun·e">' +
+        '</div>' +
+      '</div>';
+    return div;
+  }
+
+  function readPeople() {
+    var out = { adults: [], kids: [] };
+    peopleEl.querySelectorAll('.person').forEach(function (row) {
+      var entry = {
+        name: row.querySelector('[data-p="name"]').value.trim(),
+        diet: row.querySelector('[data-p="diet"]').value.trim(),
+        present: row.querySelector('[data-p="present"]').value
+      };
+      (row.getAttribute('data-kind') === 'a' ? out.adults : out.kids).push(entry);
+    });
+    return out;
+  }
+
+  /* griser une personne marquée absente */
+  peopleEl.addEventListener('change', function (e) {
+    if (e.target.matches('[data-p="present"]')) {
+      e.target.closest('.person').classList.toggle('absent', e.target.value === 'non');
+    }
+  });
+
+  function renderPeople(saved) {
+    var prev = saved || readPeople();
+    var nA = parseInt(document.getElementById('fAdults').value, 10) || 0;
+    var nK = parseInt(document.getElementById('fKids').value, 10) || 0;
+    peopleEl.innerHTML = '';
+    for (var i = 0; i < nA; i++) {
+      var row = personRow('a', i);
+      if (prev.adults && prev.adults[i]) {
+        row.querySelector('[data-p="name"]').value = prev.adults[i].name || '';
+        row.querySelector('[data-p="diet"]').value = prev.adults[i].diet || '';
+        row.querySelector('[data-p="present"]').value = prev.adults[i].present || 'oui';
+        row.classList.toggle('absent', prev.adults[i].present === 'non');
+      }
+      peopleEl.appendChild(row);
+    }
+    for (var j = 0; j < nK; j++) {
+      var rowK = personRow('k', j);
+      if (prev.kids && prev.kids[j]) {
+        rowK.querySelector('[data-p="name"]').value = prev.kids[j].name || '';
+        rowK.querySelector('[data-p="diet"]').value = prev.kids[j].diet || '';
+        rowK.querySelector('[data-p="present"]').value = prev.kids[j].present || 'oui';
+        rowK.classList.toggle('absent', prev.kids[j].present === 'non');
+      }
+      peopleEl.appendChild(rowK);
+    }
+  }
+
+  /* Le nom de la personne qui répond pré-remplit l'adulte 1 */
+  document.getElementById('fName').addEventListener('blur', function () {
+    var first = peopleEl.querySelector('.person[data-kind="a"] [data-p="name"]');
+    if (first && !first.value.trim()) first.value = this.value.trim();
+  });
+
+  document.getElementById('fAdults').addEventListener('change', function () { renderPeople(); });
+  document.getElementById('fKids').addEventListener('change', function () { renderPeople(); });
+
+  function getData() {
+    var presence = (form.querySelector('input[name="presence"]:checked') || {}).value || '';
+    var ppl = readPeople();
+    return {
+      name:      document.getElementById('fName').value.trim(),
+      contact:   document.getElementById('fContact').value.trim(),
+      presence:  presence,
+      adults:    document.getElementById('fAdults').value,
+      kids:      document.getElementById('fKids').value,
+      people:    ppl,
+      covoiturage: document.getElementById('fCar').value,
+      message:   document.getElementById('fMsg').value.trim(),
+      ts:        new Date().toISOString()
+    };
+  }
+
+  function fillForm(d) {
+    if (!d) return;
+    document.getElementById('fName').value = d.name || '';
+    document.getElementById('fContact').value = d.contact || '';
+    if (d.presence) {
+      var r = form.querySelector('input[name="presence"][value="' + d.presence + '"]');
+      if (r) r.checked = true;
+    }
+    if (d.adults) document.getElementById('fAdults').value = d.adults;
+    if (d.kids !== undefined) document.getElementById('fKids').value = d.kids;
+    renderPeople(d.people || null);
+    document.getElementById('fCar').value = d.covoiturage || '';
+    document.getElementById('fMsg').value = d.message || '';
+    syncOuiBlock();
+  }
+
+  function frDate(iso) {
+    try {
+      return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch (e) { return ''; }
+  }
+
+  function peopleNames(d) {
+    var names = [], absents = [];
+    var all = (d.people && d.people.adults || []).concat(d.people && d.people.kids || []);
+    all.forEach(function (p) {
+      if (!p.name) return;
+      (p.present === 'non' ? absents : names).push(p.name);
+    });
+    return { present: names, absents: absents };
+  }
+
+  function showConfirm(d) {
+    form.style.display = 'none';
+    prevBox.style.display = 'none';
+    document.getElementById('closedBox').hidden = true;
+    document.getElementById('recover').style.display = 'none';
+    confirm_.classList.add('show');
+    var oui = d.presence === 'oui';
+    document.getElementById('invBtn').style.display = oui ? '' : 'none';
+    document.getElementById('editBtn').style.display = CLOSED ? 'none' : '';
+    document.getElementById('cTitle').textContent = oui ? 'Quelle joie !' : 'Merci pour votre réponse';
+    document.getElementById('cSub').textContent = oui
+      ? 'Votre réponse est bien arrivée — on vous garde une place au chaud pour le 12 décembre 2026.'
+      : 'Vous nous manquerez le 12 décembre — merci d’avoir pris le temps de répondre.';
+    var names = peopleNames(d);
+    var who = oui
+      ? (names.present.length
+          ? names.present.join(' · ')
+          : (+d.adults || 0) + ' adulte(s)' + (+d.kids ? ' · ' + d.kids + ' enfant(s)' : ''))
+      : d.name;
+    if (oui && names.absents.length) {
+      who += ' — sans ' + names.absents.join(' ni ');
+    }
+    document.getElementById('cDetail').textContent =
+      (who || '') + (d.ts ? ' — envoyé le ' + frDate(d.ts) : '');
+    if (window.scrollTo) window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(function () { window.dispatchEvent(new Event('scroll')); }, 80);
+  }
+
+  function syncOuiBlock() {
+    var p = presenceVal();
+    ouiBlock.style.display = p === 'non' ? 'none' : '';
+    document.getElementById('countBlock').style.display = p === 'non' ? 'none' : '';
+  }
+  form.addEventListener('change', function (e) {
+    if (e.target.name === 'presence') syncOuiBlock();
+  });
+
+  /* Déjà répondu ? Réponses closes ? */
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+  if (CLOSED) {
+    form.style.display = 'none';
+    var dl = document.querySelector('.deadline'); if (dl) dl.style.display = 'none';
+    document.getElementById('recover').style.display = 'none';
+    document.getElementById('closedBox').hidden = false;
+  } else if (saved && saved.name) {
+    fillForm(saved);
+    prevBox.style.display = 'block';
+    prevBox.innerHTML = '<b>Vous avez déjà répondu</b> (' +
+      (saved.presence === 'oui' ? 'présent·s' : 'absent·s') + ', le ' + frDate(saved.ts) +
+      ') — vous pouvez modifier votre réponse ci-dessous, elle remplacera la précédente.';
+  } else {
+    renderPeople();
+  }
+
+  /* avant d'envoyer : une confirmation, pour que chacun sache
+     que c'est sa réponse officielle (modifiable jusqu'au 1ᵉʳ août) */
+  var sendModal = document.getElementById('send-modal');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errBox.style.display = 'none';
+
+    var d = getData();
+    if (!d.name || !d.presence) { setStep(1); return; }
+    sendModal.classList.add('open');
+  });
+
+  function closeSendModal() { sendModal.classList.remove('open'); }
+  document.getElementById('sdCancel').addEventListener('click', closeSendModal);
+  sendModal.addEventListener('click', function (e) {
+    if (e.target === sendModal) closeSendModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSendModal();
+  });
+  document.getElementById('sdYes').addEventListener('click', function () {
+    closeSendModal();
+    doSend(getData());
+  });
+
+  function doSend(d) {
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Envoi en cours…';
+
+    fetch(FB_BASE + slugify(d.name) + '.json', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(d)
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        try { localStorage.setItem(LS_KEY, JSON.stringify(d)); } catch (e2) {}
+        showConfirm(d);
+      })
+      .catch(function () {
+        var lines = ['RSVP Mariage T & F', '',
+          'Répondant : ' + d.name,
+          'Réponse : ' + (d.presence === 'oui' ? 'présents' : 'absents'),
+          'Adultes : ' + d.adults, 'Enfants : ' + d.kids];
+        (d.people.adults || []).forEach(function (p, i) {
+          lines.push('Adulte ' + (i + 1) + ' : ' + (p.name || '—')
+            + (p.present === 'non' ? ' [ABSENT·E]' : '')
+            + (p.diet ? ' (' + p.diet + ')' : ''));
+        });
+        (d.people.kids || []).forEach(function (p, i) {
+          lines.push('Enfant ' + (i + 1) + ' : ' + (p.name || '—')
+            + (p.present === 'non' ? ' [ABSENT·E]' : '')
+            + (p.diet ? ' (' + p.diet + ')' : ''));
+        });
+        lines.push('Covoiturage : ' + (d.covoiturage || '—'));
+        lines.push('Contact : ' + (d.contact || '—'));
+        lines.push('Message : ' + (d.message || '—'));
+        var body = encodeURIComponent(lines.join('\n'));
+        errBox.style.display = 'block';
+        errBox.innerHTML = 'Oups — votre réponse n’a pas pu partir (connexion ?). Réessayez dans un instant, ou ' +
+          '<a href="mailto:' + MAIL + '?subject=RSVP%20Mariage%20T%20%26%20F&body=' + body + '">envoyez-la-nous par e-mail en un clic</a>.';
+      })
+      .finally(function () {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Envoyer notre réponse';
+      });
+  }
+
+  document.getElementById('editBtn').addEventListener('click', function () {
+    confirm_.classList.remove('show');
+    form.style.display = '';
+    document.getElementById('recover').style.display = '';
+    var d2 = null;
+    try { d2 = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+    fillForm(d2);
+    setStep(1);
+  });
+
+  /* ═══════════════════════════════════════════════
+     RETROUVER SON INVITATION — on cherche la réponse
+     par le nom dans Firebase, puis on raffiche la
+     confirmation (invitation + modification si ouvert).
+     ═══════════════════════════════════════════════ */
+  document.getElementById('recToggle').addEventListener('click', function () {
+    var box = document.getElementById('recBox');
+    box.hidden = !box.hidden;
+    if (!box.hidden) document.getElementById('recName').focus();
+  });
+
+  function doRecover() {
+    var recErr = document.getElementById('recErr');
+    recErr.style.display = 'none';
+    var name = document.getElementById('recName').value.trim();
+    if (!name) { document.getElementById('recName').focus(); return; }
+
+    var btn = document.getElementById('recBtn');
+    btn.disabled = true;
+    btn.textContent = 'Recherche…';
+
+    fetch(FB_BASE + slugify(name) + '.json')
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        if (!d || !d.name) {
+          recErr.textContent = 'Aucune réponse trouvée à ce nom — essayez l’orthographe exacte utilisée en répondant.';
+          recErr.style.display = 'block';
+          return;
+        }
+        try { localStorage.setItem(LS_KEY, JSON.stringify(d)); } catch (e) {}
+        fillForm(d);
+        showConfirm(d);
+      })
+      .catch(function () {
+        recErr.textContent = 'Impossible de vérifier pour le moment — réessayez dans un instant.';
+        recErr.style.display = 'block';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = 'Retrouver';
+      });
+  }
+  document.getElementById('recBtn').addEventListener('click', doRecover);
+  document.getElementById('recName').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); doRecover(); }
+  });
+
+  /* ═══════════════════════════════════════════════
+     INVITATION PDF — la carte cachée #inv-card est rendue
+     en image (html2canvas) puis posée sur un A4 (jsPDF).
+     ═══════════════════════════════════════════════ */
+  function joinNames(list) {
+    if (list.length <= 1) return list[0] || '';
+    return list.slice(0, -1).join(', ') + ' & ' + list[list.length - 1];
+  }
+
+  document.getElementById('invBtn').addEventListener('click', function () {
+    var invBtn = this;
+    var invErr = document.getElementById('invErr');
+    invErr.style.display = 'none';
+
+    var d = null;
+    try { d = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
+    if (!d || !d.name) return;
+
+    if (!window.html2canvas || !window.jspdf) {
+      invErr.textContent = 'L’invitation n’a pas pu être préparée (connexion ?) — rechargez la page et réessayez.';
+      invErr.style.display = 'block';
+      return;
+    }
+
+    var names = peopleNames(d).present;
+    if (!names.length) names = [d.name];
+    document.getElementById('invNames').textContent = joinNames(names);
+
+    invBtn.disabled = true;
+    var oldTxt = invBtn.textContent;
+    invBtn.textContent = 'Préparation de votre invitation…';
+
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    fontsReady
+      .then(function () {
+        return html2canvas(document.getElementById('inv-card'), {
+          scale: 2,
+          logging: false,
+          backgroundColor: '#FAF5EF',
+          onclone: function (doc) {
+            var c = doc.getElementById('inv-card');
+            c.style.left = '0';
+            c.style.top = '0';
+            c.style.zIndex = '0';
+          }
+        });
+      })
+      .then(function (canvas) {
+        var pdf = new window.jspdf.jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, 210, 297);
+        pdf.save('Invitation-Thomy-Florian-' + slugify(d.name) + '.pdf');
+      })
+      .catch(function () {
+        invErr.textContent = 'Oups, la génération a échoué — réessayez dans un instant.';
+        invErr.style.display = 'block';
+      })
+      .finally(function () {
+        invBtn.disabled = false;
+        invBtn.textContent = oldTxt;
+      });
+  });
+}());
+</script>
+<script src="toile.js?v=27"></script>
+<script src="transitions.js?v=27"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/SplitText.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="motion.js?v=27"></script>
+
+</body>
+</html>
