@@ -11,10 +11,11 @@
 <script>(function(){if(!sessionStorage.getItem('tfr_t'))return;var d=document.documentElement;d.setAttribute('data-trans-in','');d.style.background='#0e1e35';var s=document.createElement('style');s.id='__tc';s.textContent='#t-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;display:flex;align-items:center;justify-content:center}.t-door{position:absolute;top:0;height:100%;width:50.5%;background:#1F2F44}.t-door-l{left:0;transform:translateX(0)}.t-door-r{right:0;transform:translateX(0)}.t-door::before{opacity:1!important;transition:none!important}.t-center{opacity:1!important;transform:none!important;transition:none!important}';document.head.appendChild(s);})();</script>
 <!-- Préférence « texte plus grand » appliquée avant tout affichage -->
 <script>try{if(localStorage.getItem('tf_txt')==='1')document.documentElement.classList.add('txt-big')}catch(e){}</script>
+<script>/* accueil : les cartes attendent leur animation sans clignoter (voir accueil.js) */try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('tf-intro')}catch(e){}</script>
 <link rel="preload" href="fonts/TANAngleton-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/ParfumerieScript-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <!-- secours:debut --><script>/* Filet de secours : si toile.js ne demarre pas, rien ne reste masque et le menu s ouvre quand meme. */(function(){var d=document.documentElement,fait=0;function sauve(){if(fait||window.__tfToile===1)return;fait=1;d.classList.add('tf-secours');var b=document.getElementById('navBurger'),m=document.getElementById('menu-overlay');if(!b||!m)return;b.addEventListener('click',function(){if(window.__tfToile===1)return;m.classList.add('open');m.setAttribute('aria-hidden','false')});m.addEventListener('click',function(e){if(window.__tfToile===1)return;var t=e.target;if(t&&t.closest&&(t.closest('a')||t.closest('.menu-close'))){m.classList.remove('open');m.setAttribute('aria-hidden','true')}})}window.addEventListener('error',function(e){var s=((e&&e.filename)||'')+((e&&e.target&&e.target.src)||'');if(/toile\.js/.test(s)){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sauve);else sauve()}},true);window.addEventListener('load',function(){setTimeout(sauve,900)});setTimeout(sauve,7000)})();</script><noscript><style>.reveal,.reveal-fade,.reveal-left,.reveal-right,.reveal-zoom,.reveal-pop{opacity:1!important;transform:none!important}</style></noscript><!-- secours:fin -->
-<link rel="stylesheet" href="style.css?v=26">
+<link rel="stylesheet" href="style.css?v=28">
 
 <style>
 /* ═══════════════════════════════════════════════════════════════
@@ -184,6 +185,12 @@ body { background: var(--cream2); }
   color: var(--text-light);
 }
 
+/* Avant que l'animation d'arrivée ne prenne la main, les cartes ne s'affichent
+   pas une fraction de seconde pour disparaître aussitôt. Garde-fou : si le
+   script n'arrive jamais, elles réapparaissent seules au bout de 4,5 s. */
+html.tf-intro .suite .paper, html.tf-intro .scroll-cue { opacity: 0; animation: tfIntroSafe .01s linear 4.5s forwards; }
+@keyframes tfIntroSafe { to { opacity: 1; } }
+
 /* ─── L'enveloppe (introduction) ───
    Toutes ses pièces sont sœurs des cartes : c'est ce qui permet au
    faire-part de glisser ENTRE le dos et la poche avant. */
@@ -191,54 +198,85 @@ body { background: var(--cream2); }
    calque, sinon le faire-part ne pourrait plus glisser entre ses pièces */
 .env { position: absolute; inset: 0; pointer-events: none; }
 .env[hidden] { display: none !important; }
-.env-part {
+/* une vraie lettre : au format paysage (C6), avec ses quatre rabats */
+.env-part, .env-flip {
   position: absolute;
   left: 50%; top: 50%;
-  width: var(--ew, 330px);
-  height: var(--eh, 450px);
-  margin-left: calc(var(--ew, 330px) / -2);
-  margin-top: calc(var(--eh, 450px) / -2);
+  width: var(--ew, 340px);
+  height: var(--eh, 240px);
+  margin-left: calc(var(--ew, 340px) / -2);
+  margin-top: calc(var(--eh, 240px) / -2);
 }
+.env svg { display: block; width: 100%; height: 100%; overflow: visible; }
+/* le papier bleu nuit : trois tons à peine écartés, comme des rabats qui se recouvrent */
+.env-paper  { fill: #1F2F44; }
+.env-side   { fill: #24374F; }
+.env-pocket { fill: #203249; }
+.env-seam   { fill: none; stroke: rgba(250,245,239,.2); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.env-gold   { fill: none; stroke: var(--gold); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.env-tri    { fill: #1A293D; }
+
+/* ─ l'enveloppe entière, qui arrive côté adresse puis se retourne ─ */
+.env-flip { z-index: 8; perspective: 1500px; }
+.env-flip-in { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+.env-side-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  box-shadow: var(--lift-strong);
+}
+.env-recto { background: #1F2F44; }
+.env-verso { transform: rotateY(180deg); background: #1F2F44; }
+/* l'adresse */
+.env-recto .to    { font-family: var(--font-title); font-size: 15px; fill: #FBF7F0; }
+.env-recto .date  { font-family: var(--font-sub); font-size: 4.1px; letter-spacing: .32em; fill: var(--gold-light); }
+.env-recto .rule  { stroke: var(--gold); stroke-width: .35; }
+.env-recto .dia   { fill: var(--gold); }
+/* le timbre : dentelé, la toile de Jouy et le monogramme */
+.env-recto .stamp-paper { fill: #FBF7F0; }
+.env-recto .stamp-teeth { fill: none; stroke: #1F2F44; stroke-width: 1.5; stroke-dasharray: 0 2.25; stroke-linecap: round; }
+.env-recto .stamp-field { fill: var(--toile-tint); }
+.env-recto .stamp-frame { fill: none; stroke: #1F2F44; stroke-width: .3; }
+/* le cachet de la poste */
+.env-recto .pm { fill: none; stroke: var(--gold-light); stroke-width: .45; opacity: .9; }
+.env-recto .pm-txt { font-family: var(--font-sub); font-size: 2.7px; letter-spacing: .14em; fill: var(--gold-light); opacity: .9; }
+.env-recto .pm-day { font-family: var(--font-sub); font-size: 3.4px; letter-spacing: .06em; fill: var(--gold-light); opacity: .9; }
+
+/* ─ les pièces à plat, entre lesquelles glissent les cartes ─ */
 .env-back {
   z-index: 1;
-  background: #1F2F44;
+  background: #16243A;
   box-shadow: var(--lift-strong);
   overflow: hidden;
 }
 .env-liner {               /* doublure : la toile de Jouy, dans un bleu plus profond
                              que le fond de la page — sinon le rabat ouvert s'y fondrait */
-  position: absolute; inset: 9px 9px 0;
+  position: absolute; inset: 5px 5px 0;
   background: #8EA4C0 url('toile-tf.jpg') 0 0 / 300px;
   background-blend-mode: multiply;
 }
 .env-front { z-index: 4; }
-.env-front svg, .env-flap svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.env-pocket { fill: #213249; }
-.env-seam { fill: none; stroke: rgba(250,245,239,.16); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .env-flap {
   z-index: 5;
-  height: calc(var(--eh, 450px) * .44);
+  height: calc(var(--eh, 240px) * .6);
   perspective: 1400px;
 }
 .env-flap-in { position: relative; width: 100%; height: 100%; transform-origin: 50% 0; transform-style: preserve-3d; }
 .env-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.env-face.front .tri { fill: #1B2A3E; }
-.env-face.front .edge { fill: none; stroke: var(--gold); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
 .env-face.back { transform: rotateX(180deg); }
 .env-face.back .env-liner { inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); }
 .env-face.back svg { position: absolute; inset: 0; }
-.env-face.back .edge { fill: none; stroke: var(--gold); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
 /* le cachet de cire : le monogramme des mariés, pressé à la main */
 .env-seal {
   position: absolute;
-  left: 50%; top: 100%;
-  width: 66px; height: 66px;
-  margin: -46px 0 0 -33px;
+  left: 50%; top: 60%;
+  width: var(--seal, 60px); height: var(--seal, 60px);
+  margin: calc(var(--seal, 60px) * -.7) 0 0 calc(var(--seal, 60px) / -2);
   border-radius: 47% 53% 44% 56% / 54% 46% 55% 45%;
   background: #7A1E2B;
   box-shadow: inset 0 0 0 4px #8C2836, inset 0 0 0 5px #64161F, 0 2px 0 rgba(0,0,0,.28);
   transform: rotate(-8deg);
 }
+.env-flap .env-seal { top: 100%; }
 .env-seal i {
   position: absolute; inset: 21%;
   background: #551019;
@@ -494,6 +532,16 @@ body { background: var(--cream2); }
   width: 1px;
   background: var(--gold-border2);
 }
+/* le fil d'or qui descend avec le défilement (accueil.js règle --p de 0 à 1) */
+.ess-day::after {
+  content: '';
+  position: absolute;
+  left: calc(9rem + 1.3rem - .5px); top: 1.6rem; bottom: 1.6rem;
+  width: 2px;
+  background: var(--gold2);
+  transform: scaleY(var(--p, 0)); transform-origin: 50% 0;
+  pointer-events: none;
+}
 .ess-step {
   position: relative;
   display: grid;
@@ -510,7 +558,11 @@ body { background: var(--cream2); }
   background: var(--cream);
   border: 1.5px solid var(--gold2);
   transform: rotate(45deg);
+  z-index: 1;
+  transition: background .4s var(--ease-out), box-shadow .4s var(--ease-out);
 }
+/* l'étape est atteinte : son losange se remplit */
+.ess-step.is-past::before { background: var(--gold2); box-shadow: 0 0 0 4px rgba(201,168,108,.24); }
 .ess-when { text-align: right; padding-top: .1rem; }
 .ess-when b {
   display: block;
@@ -607,6 +659,7 @@ body { background: var(--cream2); }
 @media (min-width: 641px) and (max-width: 1280px) { html.txt-big .ess-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) {
   .ess-day::before { left: 5px; top: 1.5rem; bottom: 1.5rem; }
+  .ess-day::after { left: 4.5px; top: 1.5rem; bottom: 1.5rem; }
   .ess-step { grid-template-columns: 1fr; padding: 1.1rem 0 1.1rem 1.9rem; }
   .ess-step::before { left: 0; top: 1.55rem; }
   .ess-when { text-align: left; display: flex; align-items: baseline; flex-wrap: wrap; gap: .3rem .7rem; margin-bottom: .35rem; }
@@ -686,17 +739,64 @@ body { background: var(--cream2); }
 
     <!-- l'enveloppe : introduction, retirée une fois les cartes sorties -->
     <div class="env" aria-hidden="true" hidden>
+      <!-- 1. la lettre arrive côté adresse, puis se retourne -->
+      <div class="env-flip">
+        <div class="env-flip-in">
+          <div class="env-side-face env-recto">
+            <svg viewBox="0 0 142 100">
+              <!-- le cachet de la poste, à cheval sur le timbre -->
+              <g transform="rotate(-9 101 25)">
+                <path class="pm" d="M66 19.5q2.6-2 5.2 0t5.2 0 5.2 0 5.2 0M66 23.2q2.6-2 5.2 0t5.2 0 5.2 0 5.2 0M66 26.9q2.6-2 5.2 0t5.2 0 5.2 0 5.2 0M66 30.6q2.6-2 5.2 0t5.2 0 5.2 0 5.2 0"/>
+                <circle class="pm" cx="101" cy="25" r="11.5"/>
+                <circle class="pm" cx="101" cy="25" r="7.6"/>
+                <path id="pm-arc" d="M92.2 25a8.8 8.8 0 0 1 17.6 0" fill="none"/>
+                <text class="pm-txt" text-anchor="middle"><textPath href="#pm-arc" startOffset="50%">ROMERIES</textPath></text>
+                <text class="pm-day" x="101" y="26.4" text-anchor="middle">12 XII</text>
+                <text class="pm-txt" x="101" y="31" text-anchor="middle">2026</text>
+              </g>
+              <!-- le timbre -->
+              <g transform="rotate(2 122 23)">
+                <rect class="stamp-paper" x="111" y="9" width="22" height="28"/>
+                <rect class="stamp-teeth" x="111" y="9" width="22" height="28"/>
+                <rect class="stamp-field" x="113.2" y="11.2" width="17.6" height="23.6"/>
+                <rect class="stamp-frame" x="114" y="12" width="16" height="22"/>
+                <image href="logo-navy.png" x="115.5" y="16.5" width="13" height="13"/>
+              </g>
+              <!-- l'adresse -->
+              <text class="to" x="71" y="64" text-anchor="middle">Pour vous</text>
+              <path class="rule" d="M52 73.5h14M76 73.5h14"/>
+              <path class="dia" d="M71 71.9l1.6 1.6-1.6 1.6-1.6-1.6z"/>
+              <text class="date" x="71" y="83" text-anchor="middle">12 · XII · MMXXVI</text>
+            </svg>
+          </div>
+          <div class="env-side-face env-verso">
+            <svg viewBox="0 0 142 100">
+              <path class="env-side" d="M0 0L71 56 0 100zM142 0L71 56l71 44z"/>
+              <path class="env-pocket" d="M0 100L71 46l71 54z"/>
+              <path class="env-seam" d="M0 0l64.5 50.9M142 0L77.5 50.9M0 100L71 46l71 54"/>
+              <path class="env-tri" d="M0 0h142L71 60z"/>
+              <path class="env-gold" d="M0 0l71 60L142 0"/>
+            </svg>
+            <span class="env-seal"><i></i></span>
+          </div>
+        </div>
+      </div>
+      <!-- 2. les mêmes pièces, à plat : le dos, la poche et le rabat qui s'ouvre -->
       <div class="env-part env-back"><i class="env-liner"></i></div>
       <div class="env-part env-front">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="env-pocket" d="M0 42 L50 63 L100 42 L100 100 L0 100 Z"/><path class="env-seam" d="M0 100 L50 63 L100 100"/></svg>
+        <svg viewBox="0 0 142 100">
+          <path class="env-side" d="M0 0L71 56 0 100zM142 0L71 56l71 44z"/>
+          <path class="env-pocket" d="M0 100L71 46l71 54z"/>
+          <path class="env-seam" d="M0 0l64.5 50.9M142 0L77.5 50.9M0 100L71 46l71 54"/>
+        </svg>
       </div>
       <div class="env-part env-flap">
         <div class="env-flap-in">
           <div class="env-face front">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="tri" d="M0 0 L100 0 L50 100 Z"/><path class="edge" d="M0 0 L50 100 L100 0"/></svg>
+            <svg viewBox="0 0 142 60" preserveAspectRatio="none"><path class="env-tri" d="M0 0h142L71 60z"/><path class="env-gold" d="M0 0l71 60L142 0"/></svg>
             <span class="env-seal"><i></i></span>
           </div>
-          <div class="env-face back"><i class="env-liner"></i><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="edge" d="M0 0 L50 100 L100 0"/></svg></div>
+          <div class="env-face back"><i class="env-liner"></i><svg viewBox="0 0 142 60" preserveAspectRatio="none"><path class="env-gold" d="M0 0l71 60L142 0"/></svg></div>
         </div>
       </div>
     </div>
@@ -807,7 +907,7 @@ body { background: var(--cream2); }
       </header>
 
       <ol class="ess-day">
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="13:15">
           <div class="ess-when"><b>13h15</b><span>Rendez-vous</span></div>
           <div class="ess-what">
             <h3>On se retrouve à la maison</h3>
@@ -815,7 +915,7 @@ body { background: var(--cream2); }
             <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=156+rue+de+la+Clouterie%2C+59125+Trith-Saint-L%C3%A9ger&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
           </div>
         </li>
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="14:00">
           <div class="ess-when"><b>14h00</b><span>Mairie</span></div>
           <div class="ess-what">
             <h3>Le mariage civil</h3>
@@ -823,7 +923,7 @@ body { background: var(--cream2); }
             <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=Mairie+de+Trith-Saint-L%C3%A9ger%2C+Place+de+la+R%C3%A9sistance%2C+59125+Trith-Saint-L%C3%A9ger&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
           </div>
         </li>
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="16:00">
           <div class="ess-when"><b>16h00</b><span>Au domaine</span></div>
           <div class="ess-what">
             <h3>La cérémonie religieuse</h3>
@@ -831,14 +931,14 @@ body { background: var(--cream2); }
             <a class="ess-go" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=Domaine+les+Hauts+de+Vertigneul%2C+5+Hameau+de+Vertigneul%2C+59730+Romeries&amp;travelmode=driving"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Itinéraire</a>
           </div>
         </li>
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="17:00">
           <div class="ess-when"><b>Ensuite</b><span>Au domaine</span></div>
           <div class="ess-what">
             <h3>Vin d'honneur &amp; apéritif</h3>
             <p>On trinque ensemble, juste après la cérémonie.</p>
           </div>
         </li>
-        <li class="ess-step reveal">
+        <li class="ess-step reveal" data-start="19:00">
           <div class="ess-when"><b>19h00</b><span>Vers</span></div>
           <div class="ess-what">
             <h3>On rejoint La Grange</h3>
@@ -936,14 +1036,14 @@ body { background: var(--cream2); }
   document.getElementById('cdDays').textContent = d;
 }());
 </script>
-<script src="toile.js?v=26"></script>
-<script src="transitions.js?v=26"></script>
+<script src="toile.js?v=28"></script>
+<script src="transitions.js?v=28"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/lenis.min.js"></script>
-<script src="motion.js?v=26"></script>
-<script src="accueil.js?v=26"></script>
+<script src="motion.js?v=28"></script>
+<script src="accueil.js?v=28"></script>
 
 </body>
 </html>

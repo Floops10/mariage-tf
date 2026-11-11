@@ -33,7 +33,14 @@
   var souv = document.getElementById('souvenirs');
   var nav = document.getElementById('mainNav');
 
+  /* l'en-tête de la page masque les cartes dès la première image (classe
+     tf-intro) pour qu'elles ne clignotent pas avant l'animation d'arrivée :
+     on rend la main dès que GSAP les tient — ou tout de suite s'il n'y a pas
+     d'animation. (Sans ce fichier, une minuterie CSS les réaffiche seule.) */
+  function introReady() { root.classList.remove('tf-intro'); }
+
   if (!gsap || !ST || reduce) {
+    introReady();
     if (souv) souv.classList.add('is-static');
     return;
   }
@@ -79,7 +86,8 @@
     if (introDone) return;
     introDone = true;
     if (env) env.hidden = true;
-    gsap.set([inv, det], { clearProps: 'zIndex' });
+    gsap.set([inv, det], { clearProps: 'zIndex,clipPath' });
+    [inv, det].forEach(function (c) { c.style.webkitClipPath = ''; });
     gsap.set([inv, det, cue], { opacity: 1 });
     restingRotation();
     addParallax();
@@ -87,11 +95,14 @@
 
   var seen = false;
   try { seen = sessionStorage.getItem('tf_env') === '1'; } catch (e) {}
+  /* pour revoir la lettre à volonté : ajouter ?lettre à l'adresse de l'accueil */
+  if (/[?&]lettre\b/.test(location.search)) seen = false;
 
   if (inv && det) {
     if (seen || !env) simpleEntrance(); else envelopeEntrance();
     window.addEventListener('resize', function () { if (introDone) restingRotation(); });
   }
+  introReady();
 
   function simpleEntrance() {
     restingRotation();
@@ -112,62 +123,100 @@
     var wide = isWide();
     var navH = nav ? nav.offsetHeight : 64;
     var areaH = Math.min(hero.clientHeight, window.innerHeight - navH);
-    var EH = Math.round(Math.min(areaH * (wide ? 0.56 : 0.42), wide ? 440 : 330));
-    var EW = Math.round(EH * 0.74);
-    var EY = Math.round(areaH * (wide ? 0.54 : 0.5));
+    var areaW = hero.clientWidth;
+    /* une lettre au format paysage : 1,42 de large pour 1 de haut */
+    var EW = Math.round(Math.min(wide ? 520 : 350, areaW * (wide ? 0.36 : 0.84), areaH * 0.62));
+    var EH = Math.round(EW / 1.42);
+    /* posée dans le bas de l'écran : la carte a toute la hauteur pour en sortir */
+    var EY = Math.round(Math.min(areaH * (wide ? 0.62 : 0.66), areaH - EH / 2 - 18));
     env.style.setProperty('--ew', EW + 'px');
     env.style.setProperty('--eh', EH + 'px');
+    env.style.setProperty('--seal', Math.round(Math.max(44, Math.min(66, EW * 0.17))) + 'px');
     env.hidden = false;
+
+    var flip = env.querySelector('.env-flip');
+    var flipIn = env.querySelector('.env-flip-in');
     var parts = env.querySelectorAll('.env-part');
-    Array.prototype.forEach.call(parts, function (p) { p.style.top = EY + 'px'; });
     var flap = env.querySelector('.env-flap');
+    var flapIn = env.querySelector('.env-flap-in');
+    var seals = env.querySelectorAll('.env-seal');
+    flip.style.top = EY + 'px';
+    Array.prototype.forEach.call(parts, function (p) { p.style.top = EY + 'px'; });
     flap.style.top = (EY - EH / 2) + 'px';
     flap.style.marginTop = '0px';
-    var flapIn = env.querySelector('.env-flap-in');
 
     /* positions finales des cartes, mesurées sans aucune transformation */
     gsap.set([inv, det], { clearProps: 'transform' });
     var eb = env.querySelector('.env-back').getBoundingClientRect();
-    var ri = inv.getBoundingClientRect(), rd = det.getBoundingClientRect();
-    var ecx = eb.left + eb.width / 2, ecy = eb.top + eb.height / 2;
+    var ecx = eb.left + eb.width / 2;
 
-    function inside(r) {          /* rangée dans l'enveloppe */
-      var s = Math.min((EW * 0.86) / r.width, (EH * 0.84) / r.height);
-      return { x: ecx - (r.left + r.width / 2), y: ecy + EH * 0.02 - (r.top + r.height / 2), scale: s };
+    /* Une carte, rangée dans la lettre : réduite à sa largeur, le haut juste
+       sous le pli du rabat. Elle est plus haute que l'enveloppe : ce qui
+       dépasserait en bas est rogné tant qu'elle n'est pas sortie. */
+    function plan(card, k, delay) {
+      var r = card.getBoundingClientRect();
+      var sc = (EW * k) / r.width;
+      var hs = r.height * sc;
+      var top0 = eb.top + EH * 0.1;
+      var excess = Math.max(0, top0 + hs - (eb.top + EH) + 3);
+      /* elle monte jusqu'à ce que son pied arrive au creux de la poche,
+         sans jamais passer sous la barre du haut */
+      var rise = Math.max(0, Math.min(hs - EH * 0.42, top0 - (navH + 14)));
+      var x = ecx - (r.left + r.width / 2);
+      var y0 = top0 + hs / 2 - (r.top + r.height / 2);
+      function clip() {
+        var risen = y0 - gsap.getProperty(card, 'y');
+        var ex = (excess - risen) / sc;
+        var v = ex > 0.5 ? 'inset(-90px -90px ' + ex.toFixed(1) + 'px -90px)' : 'none';
+        card.style.clipPath = v; card.style.webkitClipPath = v;
+      }
+      return { x: x, y0: y0, y1: y0 - rise, sc: sc, clip: clip, delay: delay };
     }
-    function out(r, s) {          /* sortie : le bas de la carte franchit la poche */
-      var cy = eb.top + EH * 0.4 - (r.height * s) / 2 - 10;
-      return { x: ecx - (r.left + r.width / 2), y: cy - (r.top + r.height / 2) };
-    }
-    var si = inside(ri), sd = inside(rd);
-    var oi = out(ri, si.scale), od = out(rd, sd.scale);
+    var pi = plan(inv, 0.8, 0);
+    var pd = wide ? plan(det, 0.74, 0.32) : null;
 
-    /* dans l'enveloppe : dos (1) < encart (2) < faire-part (3) < poche (4) < rabat (5) */
-    gsap.set(inv, { x: si.x, y: si.y, scale: si.scale, rotation: 0, zIndex: 3, opacity: 0, transformOrigin: '50% 50%' });
-    if (wide) gsap.set(det, { x: sd.x, y: sd.y, scale: sd.scale, rotation: 0, zIndex: 2, opacity: 0, transformOrigin: '50% 50%' });
+    /* dans la lettre : dos (1) < encart (2) < faire-part (3) < poche (4) < rabat (5) */
+    gsap.set(inv, { x: pi.x, y: pi.y0, scale: pi.sc, rotation: 0, zIndex: 3, opacity: 0, transformOrigin: '50% 50%' });
+    pi.clip();
+    if (pd) { gsap.set(det, { x: pd.x, y: pd.y0, scale: pd.sc, rotation: 0, zIndex: 2, opacity: 0, transformOrigin: '50% 50%' }); pd.clip(); }
     else gsap.set(det, { opacity: 0, y: 34 });
-    gsap.set(parts, { opacity: 0, y: 24 });
+    gsap.set(parts, { autoAlpha: 0 });
+    gsap.set(flip, { autoAlpha: 0, y: 90, rotation: -7, scale: 0.92 });
+    gsap.set(flipIn, { rotationY: 0 });
     gsap.set(flapIn, { rotationX: 0 });
     gsap.set(flap, { zIndex: 5 });
     gsap.set(cue, { opacity: 0 });
 
+    var T_FLIP = 0.95, T_OPEN = 1.8, T_RISE = 2.3, T_LAND = 3.0;
     var tl = gsap.timeline({ paused: true, onComplete: finishIntro });
-    tl.to(parts, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0)
-      .set(wide ? [inv, det] : inv, { opacity: 1 }, 0.72)
-      .to(flapIn, { rotationX: 180, duration: 0.72, ease: 'power2.inOut' }, 0.78)
-      .set(flap, { zIndex: 0 }, 1.15)
-      .to(inv, { x: oi.x, y: oi.y, duration: 0.66, ease: 'power2.out' }, 1.38)
-      .set(inv, { zIndex: 6 }, 2.04)
-      .to(inv, { x: 0, y: 0, scale: 1, rotation: wide ? ROT_INV : 0, duration: 0.95, ease: 'expo.inOut' }, 2.04);
-    if (wide) {
-      tl.to(det, { x: od.x, y: od.y, duration: 0.62, ease: 'power2.out' }, 1.8)
-        .set(det, { zIndex: 7 }, 2.42)
-        .to(det, { x: 0, y: 0, scale: 1, rotation: ROT_DET, duration: 0.95, ease: 'expo.inOut' }, 2.42);
+    /* 1. la lettre arrive, côté adresse */
+    tl.to(flip, { autoAlpha: 1, y: 0, rotation: -2.5, scale: 1, duration: 0.85, ease: 'expo.out' }, 0)
+    /* 2. on la retourne : le dos, ses rabats, le cachet */
+      .to(flipIn, { rotationY: 180, duration: 0.8, ease: 'power2.inOut' }, T_FLIP)
+      .to(flip, { rotation: 0, duration: 0.8, ease: 'power2.inOut' }, T_FLIP)
+      .to(flip, { scale: 1.06, duration: 0.4, ease: 'power2.out' }, T_FLIP)
+      .to(flip, { scale: 1, duration: 0.4, ease: 'power2.in' }, T_FLIP + 0.4)
+      .set(parts, { autoAlpha: 1 }, T_FLIP + 0.8)
+      .set(flip, { autoAlpha: 0 }, T_FLIP + 0.82)
+    /* 3. le cachet cède sous le doigt, le rabat s'ouvre */
+      .to(seals, { scale: 0.86, duration: 0.12, ease: 'power2.in' }, T_OPEN - 0.14)
+      .to(seals, { scale: 1, duration: 0.3, ease: 'back.out(2.2)' }, T_OPEN - 0.02)
+      .set(wide ? [inv, det] : inv, { opacity: 1 }, T_OPEN)
+      .to(flapIn, { rotationX: 180, duration: 0.7, ease: 'power2.inOut' }, T_OPEN)
+      .set(flap, { zIndex: 0 }, T_OPEN + 0.38)
+    /* 4. le faire-part sort de la lettre… */
+      .to(inv, { y: pi.y1, duration: 0.72, ease: 'power2.out', onUpdate: pi.clip }, T_RISE)
+    /* 5. …la lettre glisse hors de l'écran par le bas, et il vient se poser en grand */
+      .to(parts, { y: areaH - EY + EH, duration: 0.7, ease: 'power2.in' }, T_LAND)
+      .set(parts, { autoAlpha: 0 }, T_LAND + 0.7)
+      .to(inv, { x: 0, y: 0, scale: 1, rotation: wide ? ROT_INV : 0, duration: 0.95, ease: 'expo.inOut', onUpdate: pi.clip }, T_LAND);
+    if (pd) {
+      tl.to(det, { y: pd.y1, duration: 0.66, ease: 'power2.out', onUpdate: pd.clip }, T_RISE + pd.delay)
+        .to(det, { x: 0, y: 0, scale: 1, rotation: ROT_DET, duration: 0.95, ease: 'expo.inOut', onUpdate: pd.clip }, T_LAND + 0.18);
     } else {
-      tl.to(det, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 2.55);
+      tl.to(det, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, T_LAND + 0.5);
     }
-    tl.to(parts, { opacity: 0, y: 64, duration: 0.6, ease: 'power2.in' }, wide ? 2.5 : 2.25)
-      .to(cue, { opacity: 1, duration: 0.5 }, wide ? 3.05 : 2.85);
+    tl.to(cue, { opacity: 1, duration: 0.5 }, T_LAND + (wide ? 0.95 : 0.8));
 
     /* le moindre geste termine l'animation : on ne fait jamais attendre */
     function skip() { if (tl.progress() < 1) tl.progress(1); }
@@ -175,8 +224,54 @@
       window.addEventListener(ev, skip, { once: true, passive: true });
     });
     whenDoorsOpen(function (d) { gsap.delayedCall(d, function () { tl.play(); }); });
-    setTimeout(skip, 8000);       /* garde-fou : jamais d'enveloppe figée */
+    setTimeout(skip, 9000);       /* garde-fou : jamais d'enveloppe figée */
     window.__tfIntro = tl;        /* pour les vérifications image par image */
+  }
+
+  /* ═════════════════════════════════════════════
+     1 bis. LE COMPTE À REBOURS — il compte, quand on y arrive
+     ═════════════════════════════════════════════ */
+  var cd = document.getElementById('cdDays');
+  var cdTarget = cd ? parseInt(cd.textContent, 10) : 0;
+  if (cd && cdTarget > 0) {
+    ST.create({
+      trigger: cd, start: 'top 94%', once: true,
+      onEnter: function count() {
+        /* tant que les cartes ne sont pas posées (enveloppe), on attend : sinon il compterait sans témoin */
+        if (!introDone) { setTimeout(count, 250); return; }
+        var o = { v: 0 };
+        cd.textContent = '0';
+        var tw = gsap.to(o, {
+          v: cdTarget, duration: 1.3, ease: 'power2.out', delay: 0.25,
+          onUpdate: function () { cd.textContent = String(Math.round(o.v)); }
+        });
+        setTimeout(function () { if (tw.progress() < 1) tw.progress(1); cd.textContent = String(cdTarget); }, 3400);
+      }
+    });
+  }
+
+  /* ═════════════════════════════════════════════
+     1 ter. L'ESSENTIEL — le fil de la journée se trace en descendant,
+     chaque étape s'allume quand on l'atteint
+     ═════════════════════════════════════════════ */
+  var day = document.querySelector('.ess-day');
+  if (day) {
+    var steps = Array.prototype.slice.call(day.querySelectorAll('.ess-step'));
+    var marks = [];
+    var measureDay = function () {
+      var h = day.offsetHeight || 1;
+      marks = steps.map(function (st) { return (st.offsetTop + 30) / h; });
+    };
+    measureDay();
+    ST.create({
+      trigger: day, start: 'top 64%', end: 'bottom 64%', scrub: 0.5,
+      onRefresh: measureDay,
+      onUpdate: function (self) {
+        var p = self.progress;
+        day.style.setProperty('--p', p.toFixed(4));
+        for (var i = 0; i < steps.length; i++) steps[i].classList.toggle('is-past', p >= marks[i] - 0.015);
+      }
+    });
   }
 
   /* ═════════════════════════════════════════════

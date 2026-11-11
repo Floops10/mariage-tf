@@ -132,7 +132,7 @@
      que tout le monde connaît) : on n'y touche pas.
      ═════════════════════════════════════════════ */
   if (!reduce && window.Lenis && !root.hasAttribute('data-no-lenis')) {
-    var navH = nav ? nav.offsetHeight : 72;
+    var navH = (nav ? nav.offsetHeight : 72) + (document.querySelector('.sommaire') ? 54 : 0);
     lenis = new window.Lenis({
       lerp: 0.11,
       smoothWheel: true,
