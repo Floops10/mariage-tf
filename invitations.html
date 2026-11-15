@@ -249,6 +249,24 @@
   color: #B8913A;
 }
 
+.inv-field select {
+  width: 100%; padding: .7rem .8rem; font: inherit; font-size: .95rem;
+  color: var(--navy); background: #fff; border: 1px solid var(--border2);
+}
+.inv-field select:focus { outline: none; border-color: var(--gold); }
+#inv-card .inv-note {
+  display: none;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 20px;
+  letter-spacing: .03em;
+  line-height: 1.75;
+  color: var(--ocean);
+  max-width: 760px;
+  margin: -24px 0 40px;
+}
+#inv-card.is-vin .inv-note { display: block; }
+
 /* En aperçu la carte doit se voir : on annule le hors-champ du RSVP. */
 .inv-stage #inv-card { position: relative; left: 0; top: 0; z-index: 0; }
 </style>
@@ -281,6 +299,14 @@
     <div class="inv-cols">
 
       <div class="inv-panel">
+        <div class="inv-field">
+          <label for="invType">Type d'invitation</label>
+          <select id="invType">
+            <option value="mariage">Le mariage — cérémonies et soirée</option>
+            <option value="vin">Le vin d'honneur seulement</option>
+          </select>
+        </div>
+
         <h2>Qui est convié</h2>
         <p class="hint">Une ligne par personne. Les noms s'écrivent sur la carte comme dans le RSVP&nbsp;: séparés par des virgules, le dernier introduit par «&nbsp;&amp;&nbsp;».</p>
 
@@ -326,6 +352,7 @@
                   <p class="inv-sub">Samedi 12 décembre 2026 · 14&nbsp;h</p>
                   <p class="inv-sub2">Domaine les Hauts de Vertigneul<br>5 hameau de Vertigneul — 59730 Romeries</p>
                 </div>
+                <p class="inv-note" id="invNote">Vous êtes aussi les bienvenus à la mairie de Trith-Saint-Léger à 14&nbsp;h, puis à la cérémonie religieuse à 16&nbsp;h, au domaine&nbsp;: venez à celle de votre choix.</p>
                 <p class="inv-foot">Invitation officielle — venue confirmée</p>
               </div>
             </div>
@@ -445,9 +472,38 @@
     return joinNames(out);
   }
 
+  /* ═══ Le type d'invitation : mariage complet, ou vin d'honneur seul ═══ */
+  var TYPES = {
+    mariage: {
+      line2: 'À la célébration de leur mariage',
+      sub:   'Samedi 12 décembre 2026 · 14\u00a0h',
+      foot:  'Invitation officielle — venue confirmée',
+      slug:  'mariage'
+    },
+    vin: {
+      line2: 'Au vin d\u2019honneur de leur mariage',
+      sub:   'Samedi 12 décembre 2026<br>de 17\u00a0h à 19\u00a0h',
+      foot:  'Invitation officielle',
+      slug:  'vin-d-honneur'
+    }
+  };
+  var invType = document.getElementById('invType');
+  var lastFoot = TYPES.mariage.foot;
+  invType.addEventListener('change', function () {
+    var t = TYPES[invType.value], foot = document.getElementById('footTxt');
+    /* la mention du bas suit le type, sauf si elle a été réécrite à la main */
+    if (foot.value === lastFoot) foot.value = t.foot;
+    lastFoot = t.foot;
+    render();
+  });
+
   function render() {
+    var t = TYPES[invType.value], card = document.getElementById('inv-card');
+    card.classList.toggle('is-vin', invType.value === 'vin');
     document.getElementById('invNames').textContent = names() || '—';
-    document.querySelector('#inv-card .inv-foot').textContent = document.getElementById('footTxt').value;
+    card.querySelector('.inv-line2').textContent = t.line2;
+    card.querySelector('.inv-sub').innerHTML = t.sub;   /* textes fixes définis ci-dessus */
+    card.querySelector('.inv-foot').textContent = document.getElementById('footTxt').value;
   }
 
   /* ═══ L'aperçu : la carte réelle, réduite à la largeur disponible ═══ */
@@ -515,7 +571,7 @@
       .then(function (canvas) {
         var pdf = new window.jspdf.jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
         pdf.addImage(canvas.toDataURL('image/jpeg', 0.93), 'JPEG', 0, 0, 210, 297);
-        pdf.save('Invitation-Thomy-Florian-' + slugify(who) + '.pdf');
+        pdf.save('Invitation-' + TYPES[invType.value].slug + '-Thomy-Florian-' + slugify(who) + '.pdf');
       })
       .catch(function () {
         err.textContent = 'La génération a échoué — réessayez dans un instant.';
